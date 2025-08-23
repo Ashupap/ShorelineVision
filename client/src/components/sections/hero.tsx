@@ -64,15 +64,15 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
-      {/* Two Column Layout */}
-      <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center min-h-screen">
+      {/* Responsive Layout */}
+      <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-5 gap-8 items-center min-h-screen">
         
-        {/* Left Column - Text and Buttons */}
+        {/* Text and Buttons */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-white space-y-6 lg:col-span-3"
+          className="text-white space-y-6 lg:col-span-3 order-1 lg:order-1"
         >
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight text-white">
             Premium{" "}
@@ -116,12 +116,12 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Right Column - Seafood Image Slider */}
+        {/* Seafood Image Slider */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 overflow-hidden"
+          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 overflow-hidden order-2 lg:order-2 w-full"
         >
           {/* Slider Container */}
           <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-hidden">
@@ -129,28 +129,23 @@ export default function Hero() {
               <motion.div
                 key={currentImage}
                 initial={{ 
-                  x: currentImage % 2 === 0 ? 300 : -300,
+                  x: 300,
                   opacity: 0,
-                  scale: 0.8,
-                  rotateY: currentImage % 2 === 0 ? 25 : -25
+                  scale: 0.8
                 }}
                 animate={{ 
                   x: 0,
                   opacity: 1,
-                  scale: 1,
-                  rotateY: 0
+                  scale: 1
                 }}
                 exit={{ 
-                  x: currentImage % 2 === 0 ? -300 : 300,
+                  x: -300,
                   opacity: 0,
-                  scale: 0.8,
-                  rotateY: currentImage % 2 === 0 ? -25 : 25
+                  scale: 0.8
                 }}
                 transition={{
-                  duration: 1.2,
-                  ease: "easeInOut",
-                  scale: { duration: 1.4 },
-                  rotateY: { duration: 1.6 }
+                  duration: 0.8,
+                  ease: "easeInOut"
                 }}
                 className="absolute inset-0 w-full h-full"
               >
