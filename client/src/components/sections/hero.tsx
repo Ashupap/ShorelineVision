@@ -271,10 +271,10 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-2 lg:order-2 w-full"
+          className="relative h-96 lg:h-full flex items-center justify-start lg:col-span-1 order-2 lg:order-2 w-full lg:-ml-8 lg:pl-0"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-hidden px-4 flex items-center justify-center">
+          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-visible lg:overflow-visible flex items-center justify-center lg:justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
