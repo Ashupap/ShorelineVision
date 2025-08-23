@@ -65,108 +65,91 @@ export default function Testimonials() {
   const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials;
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
-            Don't Just Take Our Word For It
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Witness it first hand, directly from our lovely customers
-          </p>
-        </motion.div>
+        <div className="grid lg:grid-cols-2 gap-0 max-w-6xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl">
 
-        {isLoading ? (
-          <div className="max-w-4xl mx-auto">
-            <div className="h-64 bg-gray-200 rounded-xl animate-pulse"></div>
-          </div>
-        ) : (
+          {/* Left Side - Teal Background with Text */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
+            className="bg-teal-500 p-12 lg:p-16 flex flex-col justify-center relative"
           >
-            <Carousel
-              opts={{
-                align: "center",
-                loop: true,
-              }}
-              plugins={[Autoplay({ delay: 5000 })]}
-              className="w-full"
+            {/* Quote Icon */}
+            <Quote size={64} className="text-white/30 mb-8" />
+            
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              Don't just take our word for it
+            </h2>
+            <p className="text-white/90 text-lg leading-relaxed">
+              Witness it first hand, directly from our lovely customers
+            </p>
+          </motion.div>
+
+          {/* Right Side - White Testimonial Card */}
+          {isLoading ? (
+            <div className="bg-gray-100 p-12 lg:p-16 flex items-center justify-center">
+              <div className="w-full h-64 bg-gray-200 rounded-lg animate-pulse"></div>
+            </div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-gray-50 p-12 lg:p-16 flex flex-col justify-center"
             >
-              <CarouselContent>
-                {displayTestimonials.map((testimonial: any, index: number) => (
-                  <CarouselItem key={testimonial.id}>
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="text-center px-8"
-                    >
-                      {/* Large Quote */}
-                      <div className="mb-8">
-                        <Quote size={48} className="text-ocean-blue mx-auto mb-6 opacity-30" />
-                        <blockquote className="text-2xl md:text-3xl font-light text-gray-700 leading-relaxed italic mb-8">
+              <Carousel
+                opts={{
+                  align: "center",
+                  loop: true,
+                }}
+                plugins={[Autoplay({ delay: 6000 })]}
+                className="w-full"
+              >
+                <CarouselContent>
+                  {displayTestimonials.map((testimonial: any, index: number) => (
+                    <CarouselItem key={testimonial.id}>
+                      <div className="bg-white p-8 rounded-lg shadow-sm">
+                        {/* Testimonial Quote */}
+                        <blockquote className="text-gray-600 text-lg leading-relaxed mb-8 italic">
                           "{testimonial.content}"
                         </blockquote>
-                      </div>
 
-                      {/* Customer Info */}
-                      <div className="flex flex-col items-center">
-                        <div className="w-20 h-20 rounded-full bg-ocean-blue/10 flex items-center justify-center mb-4">
-                          {testimonial.avatar ? (
-                            <img 
-                              src={testimonial.avatar} 
-                              alt={testimonial.name}
-                              className="w-18 h-18 rounded-full object-cover"
-                            />
-                          ) : (
-                            <User className="text-ocean-blue" size={32} />
-                          )}
+                        {/* Customer Info */}
+                        <div className="flex items-center gap-4">
+                          <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                            {testimonial.avatar ? (
+                              <img 
+                                src={testimonial.avatar} 
+                                alt={testimonial.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-teal-100 flex items-center justify-center">
+                                <User className="text-teal-600" size={24} />
+                              </div>
+                            )}
+                          </div>
+                          
+                          <div>
+                            <h4 className="font-bold text-gray-900 text-lg">{testimonial.name}</h4>
+                            <p className="text-gray-500 text-sm font-medium uppercase tracking-wide">
+                              {testimonial.company || 'FOUNDER, SOME COMPANY'}
+                            </p>
+                          </div>
                         </div>
-                        
-                        <h4 className="font-bold text-gray-900 text-lg mb-1">{testimonial.name}</h4>
-                        {testimonial.company && (
-                          <p className="text-gray-500 text-sm font-medium">{testimonial.company}</p>
-                        )}
                       </div>
-                    </motion.div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="-left-4 md:-left-12 bg-white hover:bg-gray-50 border-gray-200 text-gray-600 hover:text-gray-800" />
-              <CarouselNext className="-right-4 md:-right-12 bg-white hover:bg-gray-50 border-gray-200 text-gray-600 hover:text-gray-800" />
-            </Carousel>
-          </motion.div>
-        )}
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </motion.div>
+          )}
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <motion.a
-            href="#"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block text-ocean-blue font-semibold text-lg hover:text-deep-navy transition-colors duration-300 underline underline-offset-4"
-            data-testid="link-see-all-reviews"
-          >
-            see all reviews
-          </motion.a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
