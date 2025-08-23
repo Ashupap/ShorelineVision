@@ -18,36 +18,42 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Ocean waves background with parallax effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy"></div>
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      ></div>
-
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          className="w-full h-full object-cover"
         >
-          <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 leading-tight">
+          <source src="https://videos.pexels.com/video-files/8047887/8047887-hd_1920_1080_24fps.mp4" type="video/mp4" />
+        </video>
+        {/* Video overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/80 via-marine-teal/70 to-deep-navy/80"></div>
+      </div>
+
+      {/* Two Column Layout */}
+      <div className="relative z-10 container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen">
+        
+        {/* Left Column - Text and Buttons */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-white space-y-6"
+        >
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
             Welcome to<br />
             <span className="text-gradient bg-gradient-to-r from-white to-light-marine bg-clip-text text-transparent">
               ALASHORE MARINE
             </span>
             <br />
-            <span className="text-2xl md:text-3xl font-normal">EXPORTS Pvt. Ltd.</span>
+            <span className="text-xl md:text-2xl lg:text-3xl font-normal">EXPORTS Pvt. Ltd.</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-light-marine max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl">
             Your quest for quality seafood ends here
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -69,22 +75,96 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Floating animation elements */}
+        {/* Right Column - Animated Seafood */}
         <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-10 w-4 h-4 bg-white/30 rounded-full"
-        />
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-1/3 right-16 w-6 h-6 bg-marine-teal/40 rounded-full"
-        />
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-1/4 left-1/4 w-3 h-3 bg-coral-accent/50 rounded-full"
-        />
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="relative h-96 lg:h-full flex items-center justify-center"
+        >
+          {/* Vannamei Shrimp */}
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-16 left-8 text-6xl md:text-8xl filter drop-shadow-lg"
+          >
+            🦐
+          </motion.div>
+
+          {/* Pomfret Fish */}
+          <motion.div
+            animate={{
+              y: [0, -15, 0],
+              x: [0, 10, 0],
+              rotate: [0, -3, 3, 0],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+            className="absolute top-32 right-12 text-5xl md:text-7xl filter drop-shadow-lg"
+          >
+            🐟
+          </motion.div>
+
+          {/* Sheer Fish */}
+          <motion.div
+            animate={{
+              y: [0, -25, 0],
+              x: [0, -15, 0],
+              rotate: [0, 8, -8, 0],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            className="absolute bottom-24 left-16 text-5xl md:text-7xl filter drop-shadow-lg"
+          >
+            🐠
+          </motion.div>
+
+          {/* Additional animated elements for depth */}
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-r from-marine-teal/20 to-coral-accent/20 rounded-full blur-xl"
+          />
+
+          {/* Floating bubbles for ocean effect */}
+          <motion.div
+            animate={{ y: [0, -100] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-0 left-1/4 w-3 h-3 bg-white/40 rounded-full"
+          />
+          <motion.div
+            animate={{ y: [0, -120] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 1 }}
+            className="absolute bottom-0 right-1/3 w-2 h-2 bg-white/30 rounded-full"
+          />
+          <motion.div
+            animate={{ y: [0, -80] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: 2 }}
+            className="absolute bottom-0 left-1/2 w-4 h-4 bg-white/20 rounded-full"
+          />
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
