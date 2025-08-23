@@ -96,7 +96,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-gray-100 px-8 py-16 lg:px-16 lg:py-20 flex items-center justify-center"
+            className="bg-teal-500 px-8 py-16 lg:px-16 lg:py-20 flex items-center justify-center"
           >
             <Carousel
               opts={{
