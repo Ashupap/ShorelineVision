@@ -143,7 +143,7 @@ const Hero = memo(function Hero() {
       {/* Enhanced Responsive Layout */}
       <motion.div 
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-2 gap-8 items-center min-h-screen"
+        className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-2 items-center min-h-screen"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div
@@ -317,7 +317,7 @@ const Hero = memo(function Hero() {
                   <OptimizedImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`w-full h-full drop-shadow-2xl filter brightness-110 contrast-105 ${
+                    className={`w-full h-full filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
                     placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzFmMjkzNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NzM4NSIgZm9udC1zaXplPSIxNCI+TG9hZGluZy4uLjwvdGV4dD48L3N2Zz4="
@@ -327,11 +327,12 @@ const Hero = memo(function Hero() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Visible Shadow Under Image */}
+            {/* Custom Shadow Component */}
             <motion.div
+              key={`shadow-${currentImage}`}
               animate={{
-                scale: [0.8, 1, 0.9],
-                opacity: [0.4, 0.7, 0.5],
+                scale: [0.7, 0.9, 0.8],
+                opacity: [0.3, 0.6, 0.4],
               }}
               transition={{
                 duration: 4,
@@ -339,7 +340,7 @@ const Hero = memo(function Hero() {
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-8 bg-black/30 rounded-full blur-lg"
+              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-2/3 h-6 bg-black/40 rounded-full blur-md"
             />
           </div>
 
