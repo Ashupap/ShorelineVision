@@ -12,6 +12,7 @@ export default function Header() {
     { name: "About", href: "/about-us" },
     { name: "Products", href: "/products" },
     { name: "Sustainability", href: "/sustainability" },
+    { name: "Media", href: "/media" },
     { name: "Blog", href: "/blog" },
     { name: "Contact", href: "/contact" },
   ];

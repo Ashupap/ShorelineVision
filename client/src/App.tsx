@@ -11,6 +11,7 @@ import Products from "@/pages/products";
 import Sustainability from "@/pages/sustainability";
 import Contact from "@/pages/contact";
 import AboutUs from "@/pages/about-us";
+import Media from "@/pages/media";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/about-us" component={AboutUs} />
       <Route path="/products" component={Products} />
       <Route path="/sustainability" component={Sustainability} />
+      <Route path="/media" component={Media} />
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={Blog} />
