@@ -1,19 +1,38 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
+import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
+import fishImage from "@assets/ChatGPT Image Jun 18, 2025, 04_27_29 PM_1755932209808.png";
+import tunaImage from "@assets/ChatGPT Image Jun 18, 2025, 04_34_39 PM_1755932236429.png";
 
 export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
+  const [currentImage, setCurrentImage] = useState(0);
   const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
+  
+  // Seafood images in the exact order specified
+  const seafoodImages = [
+    { src: shrimpImage, alt: "Premium Vannamei Shrimp", title: "Vannamei Shrimp" },
+    { src: fishImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
+    { src: tunaImage, alt: "Premium Tuna Fish", title: "Tuna Fish" }
+  ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const textInterval = setInterval(() => {
       setCurrentText((prev) => (prev + 1) % seafoodTypes.length);
     }, 2500); // Change every 2.5 seconds
 
-    return () => clearInterval(interval);
+    return () => clearInterval(textInterval);
   }, [seafoodTypes.length]);
+
+  useEffect(() => {
+    const imageInterval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % seafoodImages.length);
+    }, 4000); // Change every 4 seconds for longer viewing
+
+    return () => clearInterval(imageInterval);
+  }, [seafoodImages.length]);
   const scrollToAbout = () => {
     const element = document.querySelector("#about");
     if (element) {
@@ -97,80 +116,103 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Right Column - Animated Seafood */}
+        {/* Right Column - Seafood Image Slider */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2"
+          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 overflow-hidden"
         >
-          {/* Vannamei Shrimp */}
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-16 left-8 text-6xl md:text-8xl filter drop-shadow-lg"
-          >
-            🦐
-          </motion.div>
+          {/* Slider Container */}
+          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentImage}
+                initial={{ 
+                  x: currentImage % 2 === 0 ? 300 : -300,
+                  opacity: 0,
+                  scale: 0.8,
+                  rotateY: currentImage % 2 === 0 ? 25 : -25
+                }}
+                animate={{ 
+                  x: 0,
+                  opacity: 1,
+                  scale: 1,
+                  rotateY: 0
+                }}
+                exit={{ 
+                  x: currentImage % 2 === 0 ? -300 : 300,
+                  opacity: 0,
+                  scale: 0.8,
+                  rotateY: currentImage % 2 === 0 ? -25 : 25
+                }}
+                transition={{
+                  duration: 1.2,
+                  ease: "easeInOut",
+                  scale: { duration: 1.4 },
+                  rotateY: { duration: 1.6 }
+                }}
+                className="absolute inset-0 w-full h-full"
+              >
+                {/* Ken Burns Effect Container */}
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1.05],
+                    x: [0, -10, 5],
+                    y: [0, -5, 0]
+                  }}
+                  transition={{
+                    duration: 4,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }}
+                  className="w-full h-full"
+                >
+                  <img
+                    src={seafoodImages[currentImage].src}
+                    alt={seafoodImages[currentImage].alt}
+                    className="w-full h-full object-contain drop-shadow-2xl filter brightness-110 contrast-105"
+                  />
+                </motion.div>
 
-          {/* Pomfret Fish */}
-          <motion.div
-            animate={{
-              y: [0, -15, 0],
-              x: [0, 10, 0],
-              rotate: [0, -3, 3, 0],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-            className="absolute top-32 right-12 text-5xl md:text-7xl filter drop-shadow-lg"
-          >
-            🐟
-          </motion.div>
+                {/* Image Title Overlay */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="absolute bottom-4 left-4 right-4 text-center"
+                >
+                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2">
+                    <h3 className="text-white font-semibold text-lg">
+                      {seafoodImages[currentImage].title}
+                    </h3>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
 
-          {/* Sheer Fish */}
-          <motion.div
-            animate={{
-              y: [0, -25, 0],
-              x: [0, -15, 0],
-              rotate: [0, 8, -8, 0],
-            }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-            className="absolute bottom-24 left-16 text-5xl md:text-7xl filter drop-shadow-lg"
-          >
-            🐠
-          </motion.div>
+            {/* Slider Indicators */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {seafoodImages.map((_, index) => (
+                <motion.div
+                  key={index}
+                  initial={false}
+                  animate={{
+                    scale: currentImage === index ? 1.2 : 1,
+                    opacity: currentImage === index ? 1 : 0.5
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className={`w-2 h-2 rounded-full ${
+                    currentImage === index ? 'bg-golden-orange' : 'bg-white/60'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
 
-          {/* Additional animated elements for depth */}
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-r from-marine-teal/20 to-coral-accent/20 rounded-full blur-xl"
-          />
-
-          {/* Floating bubbles for ocean effect */}
+          {/* Floating particles for ambiance */}
           <motion.div
             animate={{ y: [0, -100] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
