@@ -50,204 +50,277 @@ const Home = memo(function Home() {
             }}
             className="absolute top-10 right-10 w-40 h-40 bg-marine-teal/10 rounded-full backdrop-blur-sm"
           />
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Text Column */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="text-center lg:text-left"
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-ocean-blue text-lg font-semibold mb-2">Our Network</h3>
+              <h2 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
+                90+ Customers <span className="text-coral-accent">Globally</span>
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                Trusted by leading seafood companies across the globe, we deliver premium quality 
+                and sustainable practices that set industry standards. Our extensive network spans 
+                multiple continents, serving diverse markets with excellence.
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                From premium restaurants to major retail chains, our customers rely on our 
+                commitment to quality, consistency, and reliability in every shipment.
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-ocean-blue text-white px-8 py-3 rounded-lg hover:bg-deep-navy transition-colors duration-300"
+                data-testid="button-view-customers"
               >
-                <motion.p 
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                  viewport={{ once: true }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ocean-blue mb-6 leading-tight"
-                >
-                  90+ Customers
-                  <br />
-                  <span className="text-coral-accent">Globally</span>
-                </motion.p>
+                View Our Partners
+              </motion.button>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              {/* Enhanced Orbital Animation Container */}
+              <div className="relative h-[500px] w-full overflow-hidden rounded-xl">
+                {/* Gradient Background */}
                 <motion.div
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  viewport={{ once: true }}
-                  className="w-24 h-1 bg-gradient-to-r from-coral-accent to-golden-orange mx-auto lg:mx-0 rounded-full mb-6"
-                />
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                  viewport={{ once: true }}
-                  className="text-lg md:text-xl text-ocean-blue/70 max-w-lg mx-auto lg:mx-0 leading-relaxed"
-                >
-                  Trusted by leading seafood companies across the globe, delivering premium quality and sustainable practices that set industry standards.
-                </motion.p>
-              </motion.div>
-              
-              {/* Animation Column */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="flex justify-center lg:justify-end"
-              >
-                {/* Orbital Animation Container */}
-            <div className="relative h-[500px] w-full max-w-4xl mx-auto">
-              {/* Central Hub */}
-              <motion.div
-                animate={{
-                  rotate: [0, 360],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-              >
-                <motion.div
-                  className="relative w-24 h-24 bg-gradient-to-br from-white via-coral-accent/10 to-golden-orange/10 rounded-full shadow-2xl border-2 border-white/50 backdrop-blur-xl flex items-center justify-center"
-                  whileHover={{
-                    scale: 1.3,
-                    boxShadow: "0 0 50px rgba(255, 107, 107, 0.5)"
+                  animate={{
+                    background: [
+                      "radial-gradient(circle, rgba(255,107,107,0.1) 0%, rgba(255,165,0,0.05) 50%, transparent 100%)",
+                      "radial-gradient(circle, rgba(255,165,0,0.1) 0%, rgba(255,107,107,0.05) 50%, transparent 100%)",
+                      "radial-gradient(circle, rgba(255,107,107,0.1) 0%, rgba(255,165,0,0.05) 50%, transparent 100%)"
+                    ]
                   }}
-                >
-                  <motion.div
-                    animate={{ rotate: [0, -360] }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="text-ocean-blue font-bold text-sm"
-                  >
-                    TRUSTED
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-
-              {/* Orbital Rings */}
-              {[
-                { radius: 120, logos: [{ name: "AZURE", img: azureLogo }, { name: "COSTAR", img: costarLogo }, { name: "GEISHA", img: geishaLogo }], duration: 15 },
-                { radius: 180, logos: [{ name: "GENSEA", img: genseaLogo }, { name: "GOLDEN BAY", img: goldenBayLogo }], duration: 25 },
-                { radius: 240, logos: [{ name: "SEASTAR", img: seastarLogo }, { name: "SELECT", img: selectLogo }], duration: 35 }
-              ].map((ring, ringIndex) => (
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                />
+                
+                {/* Central Hub - Enhanced */}
                 <motion.div
-                  key={ringIndex}
-                  animate={{ rotate: [0, 360] }}
+                  animate={{
+                    rotate: [0, 360],
+                    scale: [1, 1.2, 1]
+                  }}
                   transition={{
-                    duration: ring.duration,
+                    duration: 20,
                     repeat: Infinity,
                     ease: "linear"
                   }}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                  style={{
-                    width: ring.radius * 2,
-                    height: ring.radius * 2
-                  }}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
                 >
-                  {ring.logos.map((logo, logoIndex) => {
-                    const angle = (360 / ring.logos.length) * logoIndex;
-                    const radian = (angle * Math.PI) / 180;
-                    const x = Math.cos(radian) * ring.radius;
-                    const y = Math.sin(radian) * ring.radius;
+                  <motion.div
+                    className="relative w-28 h-28 bg-gradient-to-br from-white via-coral-accent/20 to-golden-orange/20 rounded-full shadow-2xl border-3 border-white/60 backdrop-blur-xl flex items-center justify-center"
+                    whileHover={{
+                      scale: 1.4,
+                      boxShadow: "0 0 60px rgba(255, 107, 107, 0.6)",
+                      transition: { type: "spring", stiffness: 300 }
+                    }}
+                  >
+                    <motion.div
+                      animate={{ rotate: [0, -360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      className="text-ocean-blue font-bold text-xs text-center leading-tight"
+                    >
+                      GLOBAL<br/>TRUST
+                    </motion.div>
+                    {/* Pulsing ring */}
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.8, 1],
+                        opacity: [0.8, 0, 0.8]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeOut"
+                      }}
+                      className="absolute inset-0 border-2 border-coral-accent rounded-full"
+                    />
+                  </motion.div>
+                </motion.div>
+
+                {/* Enhanced Orbital Rings with Dynamic Effects */}
+                {[
+                  { radius: 100, logos: [{ name: "AZURE", img: azureLogo }, { name: "COSTAR", img: costarLogo }, { name: "GEISHA", img: geishaLogo }], duration: 12, size: 16 },
+                  { radius: 150, logos: [{ name: "GENSEA", img: genseaLogo }, { name: "GOLDEN BAY", img: goldenBayLogo }], duration: 18, size: 18 },
+                  { radius: 200, logos: [{ name: "SEASTAR", img: seastarLogo }, { name: "SELECT", img: selectLogo }], duration: 25, size: 20 }
+                ].map((ring, ringIndex) => (
+                  <motion.div
+                    key={ringIndex}
+                    animate={{ rotate: ringIndex % 2 === 0 ? [0, 360] : [360, 0] }}
+                    transition={{
+                      duration: ring.duration,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                    style={{
+                      width: ring.radius * 2,
+                      height: ring.radius * 2
+                    }}
+                  >
+                    {/* Orbital path visualization */}
+                    <motion.div
+                      animate={{ opacity: [0.1, 0.3, 0.1] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute inset-0 border border-dashed border-coral-accent/20 rounded-full"
+                    />
                     
-                    return (
-                      <motion.div
-                        key={`${ringIndex}-${logoIndex}`}
-                        className="absolute transform -translate-x-1/2 -translate-y-1/2"
-                        style={{
-                          left: `50%`,
-                          top: `50%`,
-                          x: x,
-                          y: y
-                        }}
-                        whileHover={{
-                          scale: 1.4,
-                          zIndex: 50,
-                          transition: { type: "spring", stiffness: 400, damping: 10 }
-                        }}
-                      >
+                    {ring.logos.map((logo, logoIndex) => {
+                      const angle = (360 / ring.logos.length) * logoIndex;
+                      const radian = (angle * Math.PI) / 180;
+                      const x = Math.cos(radian) * ring.radius;
+                      const y = Math.sin(radian) * ring.radius;
+                      
+                      return (
                         <motion.div
-                          animate={{ rotate: [0, -360] }}
-                          transition={{
-                            duration: ring.duration,
-                            repeat: Infinity,
-                            ease: "linear"
+                          key={`${ringIndex}-${logoIndex}`}
+                          className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                          style={{
+                            left: `50%`,
+                            top: `50%`,
+                            x: x,
+                            y: y
                           }}
-                          className="relative group cursor-pointer"
+                          animate={{
+                            y: [0, -8, 0],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{
+                            duration: 3 + Math.random() * 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: Math.random() * 2
+                          }}
+                          whileHover={{
+                            scale: 1.6,
+                            zIndex: 50,
+                            transition: { type: "spring", stiffness: 500, damping: 15 }
+                          }}
                         >
                           <motion.div
-                            className="w-20 h-20 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/60 flex items-center justify-center transform-gpu relative overflow-hidden"
-                            whileHover={{
-                              boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-                              y: -5
+                            animate={{ rotate: ringIndex % 2 === 0 ? [0, -360] : [360, 0] }}
+                            transition={{
+                              duration: ring.duration,
+                              repeat: Infinity,
+                              ease: "linear"
                             }}
+                            className="relative group cursor-pointer"
                           >
-                            {/* Magnetic ripple effect */}
                             <motion.div
-                              className="absolute inset-0 bg-gradient-to-br from-coral-accent/20 to-golden-orange/20 rounded-2xl opacity-0 group-hover:opacity-100"
-                              initial={{ scale: 0 }}
+                              className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-white/70 flex items-center justify-center transform-gpu relative overflow-hidden"
+                              style={{ width: `${ring.size * 4}px`, height: `${ring.size * 4}px` }}
                               whileHover={{
-                                scale: [0, 1.5, 1],
-                                transition: { duration: 0.6 }
+                                boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
+                                y: -8,
+                                rotateY: 10
                               }}
-                            />
-                            <img
-                              src={logo.img}
-                              alt={logo.name}
-                              className="max-w-full max-h-full object-contain relative z-10 filter drop-shadow-md"
-                            />
+                            >
+                              {/* Enhanced ripple effect */}
+                              <motion.div
+                                className="absolute inset-0 bg-gradient-to-br from-coral-accent/30 to-golden-orange/30 rounded-2xl opacity-0 group-hover:opacity-100"
+                                initial={{ scale: 0, rotate: 0 }}
+                                whileHover={{
+                                  scale: [0, 2, 1],
+                                  rotate: [0, 180],
+                                  transition: { duration: 0.8 }
+                                }}
+                              />
+                              {/* Glow effect */}
+                              <motion.div
+                                className="absolute inset-0 bg-white/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100"
+                                animate={{
+                                  scale: [1, 1.2, 1],
+                                  opacity: [0, 0.6, 0]
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut"
+                                }}
+                              />
+                              <img
+                                src={logo.img}
+                                alt={logo.name}
+                                className="max-w-full max-h-full object-contain relative z-10 filter drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
+                              />
+                            </motion.div>
                           </motion.div>
                         </motion.div>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-              ))}
+                      );
+                    })}
+                  </motion.div>
+                ))}
 
-              {/* Floating Particles */}
-              {Array.from({ length: 8 }).map((_, index) => (
+                {/* Enhanced Floating Particles */}
+                {Array.from({ length: 12 }).map((_, index) => {
+                  const randomLeft = 20 + Math.random() * 60;
+                  const randomTop = 20 + Math.random() * 60;
+                  const randomSize = 2 + Math.random() * 4;
+                  const randomOpacity = 0.3 + Math.random() * 0.4;
+                  
+                  return (
+                    <motion.div
+                      key={`particle-${index}`}
+                      className="absolute rounded-full"
+                      style={{
+                        width: `${randomSize}px`,
+                        height: `${randomSize}px`,
+                        background: `linear-gradient(45deg, rgba(255,107,107,${randomOpacity}), rgba(255,165,0,${randomOpacity}))`,
+                        left: `${randomLeft}%`,
+                        top: `${randomTop}%`
+                      }}
+                      animate={{
+                        x: [0, Math.random() * 500 - 250, Math.random() * 300 - 150, 0],
+                        y: [0, Math.random() * 400 - 200, Math.random() * 200 - 100, 0],
+                        opacity: [0.2, 0.8, 0.5, 0.2],
+                        scale: [0.5, 1.5, 1, 0.5]
+                      }}
+                      transition={{
+                        duration: 10 + Math.random() * 8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: Math.random() * 5
+                      }}
+                    />
+                  );
+                })}
+
+                {/* Enhanced Connecting Lines */}
                 <motion.div
-                  key={`particle-${index}`}
-                  className="absolute w-2 h-2 bg-coral-accent/40 rounded-full"
-                  animate={{
-                    x: [0, Math.random() * 400 - 200, 0],
-                    y: [0, Math.random() * 300 - 150, 0],
-                    opacity: [0.3, 0.8, 0.3],
-                    scale: [0.5, 1.2, 0.5]
-                  }}
-                  transition={{
-                    duration: 8 + Math.random() * 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: Math.random() * 2
-                  }}
-                  style={{
-                    left: `50%`,
-                    top: `50%`
-                  }}
+                  animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-coral-accent/15 rounded-full"
                 />
-              ))}
-
-              {/* Connecting Lines */}
+                <motion.div
+                  animate={{ rotate: [360, 0], scale: [1, 0.9, 1] }}
+                  transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 border border-golden-orange/15 rounded-full"
+                />
+              </div>
+              
+              {/* Quality badge - matching About section style */}
               <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-coral-accent/20 rounded-full"
-              />
-              <motion.div
-                animate={{ rotate: [360, 0] }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 border border-golden-orange/20 rounded-full"
-              />
-                </div>
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="absolute -bottom-6 -left-6 bg-coral-accent text-white p-6 rounded-xl shadow-lg z-30"
+              >
+                <h4 className="text-2xl font-bold">90+</h4>
+                <p className="text-sm">Global Partners</p>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
+        </div>
         </motion.section>
         <About />
         <Stats />
