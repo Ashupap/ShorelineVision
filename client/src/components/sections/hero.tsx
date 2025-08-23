@@ -1,8 +1,19 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 
 export default function Hero() {
+  const [currentText, setCurrentText] = useState(0);
+  const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentText((prev) => (prev + 1) % seafoodTypes.length);
+    }, 2500); // Change every 2.5 seconds
+
+    return () => clearInterval(interval);
+  }, [seafoodTypes.length]);
   const scrollToAbout = () => {
     const element = document.querySelector("#about");
     if (element) {
@@ -45,12 +56,21 @@ export default function Hero() {
           className="text-white space-y-6"
         >
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
-            Welcome to<br />
-            <span className="text-gradient bg-gradient-to-r from-white to-light-marine bg-clip-text text-transparent">
-              ALASHORE MARINE
-            </span>
+            Your Premium<br />
+            <motion.span
+              key={currentText}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="text-gradient bg-gradient-to-r from-coral-accent to-golden-orange bg-clip-text text-transparent inline-block"
+            >
+              {seafoodTypes[currentText]}
+            </motion.span>
             <br />
-            <span className="text-xl md:text-2xl lg:text-3xl font-normal">EXPORTS Pvt. Ltd.</span>
+            <span className="text-gradient bg-gradient-to-r from-white to-light-marine bg-clip-text text-transparent">
+              Exporter
+            </span>
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl">
             Your quest for quality seafood ends here
