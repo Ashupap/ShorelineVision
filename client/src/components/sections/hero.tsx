@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 
 export default function Hero() {
   const scrollToAbout = () => {
@@ -26,7 +27,7 @@ export default function Hero() {
           loop
           className="w-full h-full object-cover"
         >
-          <source src="/attached_assets/Alashore-Marine-Factory_1755929476699.mp4" type="video/mp4" />
+          <source src={factoryVideo} type="video/mp4" />
         </video>
         {/* Video overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/80 via-marine-teal/70 to-deep-navy/80"></div>
