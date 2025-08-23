@@ -67,7 +67,10 @@ export default function Hero() {
             >
               {seafoodTypes[currentText]}
             </motion.span>
-            {" "}Exporter From India
+            <br />
+            Exporter From
+            <br />
+            India
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl">
             Your quest for quality seafood ends here
