@@ -10,6 +10,7 @@ import Blog from "@/pages/blog";
 import Products from "@/pages/products";
 import Sustainability from "@/pages/sustainability";
 import Contact from "@/pages/contact";
+import AboutUs from "@/pages/about-us";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/about-us" component={AboutUs} />
       <Route path="/products" component={Products} />
       <Route path="/sustainability" component={Sustainability} />
       <Route path="/contact" component={Contact} />
