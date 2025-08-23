@@ -368,7 +368,7 @@ const Hero = memo(function Hero() {
           className="relative h-80 sm:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg max-h-80 sm:max-h-96 rounded-2xl overflow-visible flex items-center justify-center lg:justify-start">
+          <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg aspect-square rounded-2xl overflow-visible flex items-center justify-center lg:justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -406,12 +406,12 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center"
+                  className="w-full h-full flex items-center justify-center p-4"
                 >
                   <OptimizedImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
+                    className={`max-w-full max-h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
                     placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzFmMjkzNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NzM4NSIgZm9udC1zaXplPSIxNCI+TG9hZGluZy4uLjwvdGV4dD48L3N2Zz4="
