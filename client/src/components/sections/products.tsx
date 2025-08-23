@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Clock, Package } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import type { Product } from "@shared/schema";
 
 export default function Products() {
-  const { data: products, isLoading } = useQuery({
+  const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products?published=true"],
   });
 
@@ -56,7 +58,7 @@ export default function Products() {
   const displayProducts = products && products.length > 0 ? products : defaultProducts;
 
   return (
-    <section id="products" className="py-20 bg-white">
+    <section id="products" className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -66,69 +68,111 @@ export default function Products() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
-            Quality Products
+            Premium Seafood Collection
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience top-quality seafood with Alashore Marine. Our carefully sourced and processed products 
-            set new standards, offering delicious and sustainable choices in the seafood industry.
+            Discover our exceptional range of fresh, sustainably sourced seafood products
           </p>
         </motion.div>
 
         {isLoading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
-                <div className="w-full h-48 bg-gray-200"></div>
-                <div className="p-6">
-                  <div className="h-6 bg-gray-200 rounded mb-3"></div>
-                  <div className="h-20 bg-gray-200 rounded mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-24"></div>
-                </div>
-              </div>
-            ))}
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="h-96 bg-gray-200 rounded-2xl animate-pulse"></div>
+              ))}
+            </div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
-              >
-                <div className="relative overflow-hidden">
-                  <motion.img
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                    src={product.featuredImage}
-                    alt={product.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-4 right-4 bg-ocean-blue text-white px-2 py-1 rounded text-xs">
-                    {product.category}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-heading font-semibold text-gray-900 mb-3">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {product.description}
-                  </p>
-                  <motion.button
-                    whileHover={{ x: 5 }}
-                    className="text-ocean-blue font-semibold hover:text-deep-navy transition-colors flex items-center"
-                    data-testid={`button-product-${product.id}`}
-                  >
-                    Learn More <ArrowRight size={16} className="ml-1" />
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-6xl mx-auto"
+          >
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {displayProducts.map((product: any, index: number) => (
+                  <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="group relative h-96 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                      whileHover={{ y: -8 }}
+                      data-testid={`card-product-${product.id}`}
+                    >
+                      {/* Background Image */}
+                      <div className="absolute inset-0">
+                        <img
+                          src={product.featuredImage}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                      </div>
+
+                      {/* Content Overlay */}
+                      <div className="relative z-10 h-full flex flex-col justify-end p-6 text-white">
+                        {/* Category Badge */}
+                        <div className="absolute top-4 right-4">
+                          <span className="bg-ocean-blue/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                            {product.category}
+                          </span>
+                        </div>
+
+                        {/* Product Info */}
+                        <div className="transform transition-transform duration-300 group-hover:translate-y-0 translate-y-2">
+                          <h3 className="text-xl md:text-2xl font-heading font-bold mb-2 leading-tight">
+                            {product.name}
+                          </h3>
+                          
+                          <p className="text-gray-100 mb-4 text-sm line-clamp-2 opacity-90">
+                            {product.description}
+                          </p>
+
+                          {/* Product Details */}
+                          <div className="flex items-center gap-4 mb-4 text-sm">
+                            <div className="flex items-center gap-1">
+                              <Package size={14} className="text-blue-300" />
+                              <span className="text-gray-200">Fresh Frozen</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock size={14} className="text-blue-300" />
+                              <span className="text-gray-200">Ready to Cook</span>
+                            </div>
+                          </div>
+
+                          {/* Action Button */}
+                          <motion.button
+                            whileHover={{ x: 5 }}
+                            className="inline-flex items-center gap-2 text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 border border-white/30 hover:border-white/50"
+                            data-testid={`button-product-${product.id}`}
+                          >
+                            <span className="font-medium">View Details</span>
+                            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                          </motion.button>
+                        </div>
+                      </div>
+
+                      {/* Hover Effect Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="-left-4 md:-left-12 bg-white/90 hover:bg-white border-gray-200 text-gray-700 hover:text-gray-900" />
+              <CarouselNext className="-right-4 md:-right-12 bg-white/90 hover:bg-white border-gray-200 text-gray-700 hover:text-gray-900" />
+            </Carousel>
+          </motion.div>
         )}
 
         <motion.div
@@ -136,15 +180,15 @@ export default function Products() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          className="text-center mt-16"
         >
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-ocean-blue text-white px-8 py-3 rounded-lg hover:bg-deep-navy transition-colors duration-300"
+            className="bg-ocean-blue text-white px-8 py-4 rounded-xl hover:bg-deep-navy transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl"
             data-testid="button-view-all-products"
           >
-            View All Products
+            Explore Full Catalog
           </motion.button>
         </motion.div>
       </div>
