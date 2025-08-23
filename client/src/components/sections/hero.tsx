@@ -94,7 +94,7 @@ const Hero = memo(function Hero() {
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute inset-0"
         />
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/35"></div>
       </motion.div>
 
       {/* Enhanced Floating Elements & Sea Creatures */}
@@ -368,7 +368,7 @@ const Hero = memo(function Hero() {
           className="relative h-96 lg:h-full flex items-center justify-start lg:col-span-1 order-2 lg:order-2 w-full lg:-ml-8 lg:pl-0"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-visible lg:overflow-visible flex items-center justify-center lg:justify-start">
+          <div className="relative w-full h-full max-w-lg max-h-96 rounded-2xl overflow-visible lg:overflow-visible flex items-center justify-center lg:justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -396,9 +396,9 @@ const Hero = memo(function Hero() {
                 {/* Ken Burns Effect Container */}
                 <motion.div
                   animate={{
-                    scale: [1, 1.1, 1.05],
-                    x: [0, -10, 5],
-                    y: [0, -5, 0],
+                    scale: [1, 1.08, 1.04],
+                    x: [0, -8, 3],
+                    y: [0, -3, 0],
                   }}
                   transition={{
                     duration: 4,
@@ -406,7 +406,7 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full"
+                  className="w-full h-full flex items-center justify-center"
                 >
                   <OptimizedImage
                     src={seafoodImages[currentImage].src}
