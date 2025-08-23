@@ -274,7 +274,7 @@ const Hero = memo(function Hero() {
           className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 order-2 lg:order-2 w-full"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-visible px-4">
+          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-hidden px-4 flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -317,9 +317,10 @@ const Hero = memo(function Hero() {
                   <OptimizedImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`w-full h-full object-contain drop-shadow-2xl filter brightness-110 contrast-105 ${
+                    className={`w-full h-full drop-shadow-2xl filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
+                    placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzFmMjkzNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NzM4NSIgZm9udC1zaXplPSIxNCI+TG9hZGluZy4uLjwvdGV4dD48L3N2Zz4="
                     priority
                   />
                 </motion.div>

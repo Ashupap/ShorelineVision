@@ -77,7 +77,7 @@ export function OptimizedImage({
           src={src}
           alt={alt}
           sizes={sizes}
-          className="w-full h-full object-cover"
+          className={`w-full h-full ${className.includes('object-') ? '' : 'object-cover'}`}
           style={{ 
             willChange: isLoaded ? 'auto' : 'opacity',
             transform: 'translateZ(0)' // Force hardware acceleration
