@@ -30,7 +30,8 @@ export default function Hero() {
           <source src={factoryVideo} type="video/mp4" />
         </video>
         {/* Video overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/80 via-marine-teal/70 to-deep-navy/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
       {/* Two Column Layout */}
