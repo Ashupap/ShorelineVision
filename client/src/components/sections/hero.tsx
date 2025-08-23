@@ -35,7 +35,7 @@ export default function Hero() {
       </div>
 
       {/* Two Column Layout */}
-      <div className="relative z-10 container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen">
         
         {/* Left Column - Text and Buttons */}
         <motion.div
