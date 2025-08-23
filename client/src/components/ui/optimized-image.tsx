@@ -26,6 +26,7 @@ export function OptimizedImage({
   const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (priority) return;
@@ -74,13 +75,16 @@ export function OptimizedImage({
       {/* Actual image */}
       {isInView && (
         <motion.img
+          ref={imageRef}
           src={src}
           alt={alt}
           sizes={sizes}
           className={`w-full h-full ${className.includes('object-') ? '' : 'object-cover'}`}
           style={{ 
             willChange: isLoaded ? 'auto' : 'opacity',
-            transform: 'translateZ(0)' // Force hardware acceleration
+            transform: 'translateZ(0)', // Force hardware acceleration
+            imageRendering: 'auto',
+            backfaceVisibility: 'hidden'
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoaded ? 1 : 0 }}

@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, memo, useMemo } from "react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
-import fishImage from "@assets/ChatGPT Image Jun 18, 2025, 04_27_29 PM_1755934453469.png";
-import tunaImage from "@assets/ChatGPT Image Jun 18, 2025, 04_34_39 PM_1755932236429.png";
+import pomfretImage from "@assets/Pomfret_1755943114147.png";
+import sheerFishImage from "@assets/Sheer Fish_1755943118147.png";
 
 const Hero = memo(function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,8 +31,8 @@ const Hero = memo(function Hero() {
       alt: "Premium Vannamei Shrimp",
       title: "Vannamei Shrimp",
     },
-    { src: fishImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
-    { src: tunaImage, alt: "Premium Tuna Fish", title: "Tuna Fish" },
+    { src: pomfretImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
+    { src: sheerFishImage, alt: "Premium Sheer Fish", title: "Sheer Fish" },
   ];
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Hero = memo(function Hero() {
         <div className="absolute inset-0 bg-black/60"></div>
       </motion.div>
 
-      {/* Floating Elements */}
+      {/* Enhanced Floating Elements & Sea Creatures */}
       <motion.div
         animate={{ 
           y: [0, -30, 0],
@@ -138,6 +138,100 @@ const Hero = memo(function Hero() {
           delay: 4
         }}
         className="absolute top-1/2 left-10 w-16 h-16 bg-white/20 rounded-full backdrop-blur-sm z-5"
+      />
+      
+      {/* Additional Bubble Effects */}
+      <motion.div
+        animate={{ 
+          y: [0, -60, 0],
+          x: [0, 20, 0],
+          scale: [0.8, 1.2, 0.8],
+          opacity: [0.4, 0.8, 0.4]
+        }}
+        transition={{ 
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+        className="absolute top-1/3 right-1/3 w-20 h-20 bg-marine-teal/25 rounded-full backdrop-blur-sm border border-white/25 z-5"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, -40, 0],
+          x: [0, -30, 0],
+          scale: [1, 1.3, 1],
+          opacity: [0.2, 0.6, 0.2]
+        }}
+        transition={{ 
+          duration: 9,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3
+        }}
+        className="absolute bottom-1/4 right-1/4 w-28 h-28 bg-coral-accent/15 rounded-full backdrop-blur-sm border border-white/15 z-5"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, -25, 0],
+          x: [0, 15, 0],
+          scale: [0.9, 1.1, 0.9],
+          opacity: [0.3, 0.7, 0.3]
+        }}
+        transition={{ 
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 5
+        }}
+        className="absolute top-3/4 left-1/3 w-14 h-14 bg-white/25 rounded-full backdrop-blur-sm z-5"
+      />
+      
+      {/* Swimming Sea Creatures */}
+      <motion.div
+        animate={{ 
+          x: [-100, 1400],
+          y: [0, -20, 0, 20, 0],
+          rotate: [0, 5, 0, -5, 0]
+        }}
+        transition={{ 
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear",
+          delay: 0
+        }}
+        className="absolute top-1/4 -left-20 w-8 h-4 bg-gradient-to-r from-marine-teal/60 to-coral-accent/60 rounded-full z-5"
+        style={{ clipPath: 'polygon(0% 50%, 60% 0%, 100% 50%, 60% 100%)' }}
+      />
+      <motion.div
+        animate={{ 
+          x: [1450, -150],
+          y: [0, 15, 0, -15, 0],
+          rotate: [180, 185, 180, 175, 180]
+        }}
+        transition={{ 
+          duration: 30,
+          repeat: Infinity,
+          ease: "linear",
+          delay: 8
+        }}
+        className="absolute bottom-1/3 -right-20 w-6 h-3 bg-gradient-to-l from-white/50 to-marine-teal/50 rounded-full z-5"
+        style={{ clipPath: 'polygon(0% 50%, 60% 0%, 100% 50%, 60% 100%)' }}
+      />
+      <motion.div
+        animate={{ 
+          x: [-80, 1380],
+          y: [0, -10, 0, 10, 0],
+          rotate: [0, 3, 0, -3, 0]
+        }}
+        transition={{ 
+          duration: 35,
+          repeat: Infinity,
+          ease: "linear",
+          delay: 15
+        }}
+        className="absolute top-2/3 -left-16 w-5 h-2 bg-gradient-to-r from-coral-accent/40 to-golden-orange/40 rounded-full z-5"
+        style={{ clipPath: 'polygon(0% 50%, 70% 0%, 100% 50%, 70% 100%)' }}
       />
 
       {/* Enhanced Responsive Layout */}
@@ -344,14 +438,14 @@ const Hero = memo(function Hero() {
             />
           </div>
 
-          {/* Floating particles for ambiance */}
+          {/* Enhanced Bubble Particles */}
           <motion.div
-            animate={{ y: [0, -100] }}
+            animate={{ y: [0, -100], x: [0, 10], opacity: [0.4, 0.8, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             className="absolute bottom-0 left-1/4 w-3 h-3 bg-white/40 rounded-full"
           />
           <motion.div
-            animate={{ y: [0, -120] }}
+            animate={{ y: [0, -120], x: [0, -5], opacity: [0.3, 0.7, 0] }}
             transition={{
               duration: 4,
               repeat: Infinity,
@@ -361,7 +455,7 @@ const Hero = memo(function Hero() {
             className="absolute bottom-0 right-1/3 w-2 h-2 bg-white/30 rounded-full"
           />
           <motion.div
-            animate={{ y: [0, -80] }}
+            animate={{ y: [0, -80], x: [0, 8], opacity: [0.2, 0.6, 0] }}
             transition={{
               duration: 2.5,
               repeat: Infinity,
@@ -369,6 +463,36 @@ const Hero = memo(function Hero() {
               delay: 2,
             }}
             className="absolute bottom-0 left-1/2 w-4 h-4 bg-white/20 rounded-full"
+          />
+          <motion.div
+            animate={{ y: [0, -110], x: [0, -8], opacity: [0.5, 0.9, 0] }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 0.5,
+            }}
+            className="absolute bottom-0 left-1/3 w-2 h-2 bg-marine-teal/50 rounded-full"
+          />
+          <motion.div
+            animate={{ y: [0, -90], x: [0, 12], opacity: [0.3, 0.8, 0] }}
+            transition={{
+              duration: 4.5,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 1.5,
+            }}
+            className="absolute bottom-0 right-1/4 w-3 h-3 bg-coral-accent/40 rounded-full"
+          />
+          <motion.div
+            animate={{ y: [0, -95], x: [0, -6], opacity: [0.4, 0.7, 0] }}
+            transition={{
+              duration: 3.2,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 2.5,
+            }}
+            className="absolute bottom-0 right-1/2 w-1 h-1 bg-white/60 rounded-full"
           />
         </motion.div>
       </motion.div>
