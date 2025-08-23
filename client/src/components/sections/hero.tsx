@@ -56,7 +56,7 @@ export default function Hero() {
           className="text-white space-y-6"
         >
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
-            Your Premium<br />
+            Premium{" "}
             <motion.span
               key={currentText}
               initial={{ opacity: 0, y: 20 }}
@@ -69,7 +69,7 @@ export default function Hero() {
             </motion.span>
             <br />
             <span className="text-gradient bg-gradient-to-r from-white to-light-marine bg-clip-text text-transparent">
-              Exporter
+              Exporter From India
             </span>
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl">
