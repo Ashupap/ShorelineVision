@@ -7,6 +7,9 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Admin from "@/pages/admin";
 import Blog from "@/pages/blog";
+import Products from "@/pages/products";
+import Sustainability from "@/pages/sustainability";
+import Contact from "@/pages/contact";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
@@ -15,6 +18,9 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/products" component={Products} />
+      <Route path="/sustainability" component={Sustainability} />
+      <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={Blog} />
       {isAuthenticated && <Route path="/admin" component={Admin} />}

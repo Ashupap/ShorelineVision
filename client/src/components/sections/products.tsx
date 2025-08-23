@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Products() {
   const { data: products, isLoading } = useQuery({
-    queryKey: ["/api/products", { published: true }],
+    queryKey: ["/api/products?published=true"],
   });
 
   // Default products data if API returns empty

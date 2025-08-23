@@ -10,10 +10,10 @@ export default function Header() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "About", href: "/#about" },
-    { name: "Products", href: "/#products" },
-    { name: "Sustainability", href: "/#sustainability" },
+    { name: "Products", href: "/products" },
+    { name: "Sustainability", href: "/sustainability" },
     { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const scrollToSection = (href: string) => {
@@ -21,6 +21,18 @@ export default function Header() {
       const element = document.querySelector(href.substring(1));
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleNavigation = (href: string) => {
+    if (href.startsWith("/#")) {
+      // If we're not on the home page, navigate to home first
+      if (location !== "/") {
+        window.location.href = "/" + href;
+      } else {
+        scrollToSection(href);
       }
     }
     setIsMenuOpen(false);
@@ -57,7 +69,7 @@ export default function Header() {
               <div key={item.name}>
                 {item.href.startsWith("/#") ? (
                   <button
-                    onClick={() => scrollToSection(item.href)}
+                    onClick={() => handleNavigation(item.href)}
                     className="text-gray-700 hover:text-ocean-blue transition-colors duration-300"
                     data-testid={`button-nav-${item.name.toLowerCase()}`}
                   >
@@ -116,7 +128,7 @@ export default function Header() {
                 <div key={item.name}>
                   {item.href.startsWith("/#") ? (
                     <button
-                      onClick={() => scrollToSection(item.href)}
+                      onClick={() => handleNavigation(item.href)}
                       className="block text-gray-700 hover:text-ocean-blue transition-colors"
                       data-testid={`button-mobile-nav-${item.name.toLowerCase()}`}
                     >

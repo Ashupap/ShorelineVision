@@ -10,12 +10,12 @@ export default function Blog() {
   const { slug } = useParams();
 
   const { data: posts, isLoading: postsLoading } = useQuery({
-    queryKey: ["/api/blog", { published: true }],
+    queryKey: ["/api/blog?published=true"],
     enabled: !slug,
   });
 
   const { data: post, isLoading: postLoading } = useQuery({
-    queryKey: ["/api/blog/slug", slug],
+    queryKey: [`/api/blog/slug/${slug}`],
     enabled: !!slug,
   });
 

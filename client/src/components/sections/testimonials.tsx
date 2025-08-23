@@ -4,7 +4,7 @@ import { Star, User } from "lucide-react";
 
 export default function Testimonials() {
   const { data: testimonials, isLoading } = useQuery({
-    queryKey: ["/api/testimonials", { published: true }],
+    queryKey: ["/api/testimonials?published=true"],
   });
 
   // Default testimonials data if API returns empty

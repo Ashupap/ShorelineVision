@@ -153,6 +153,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                           type="url"
                           placeholder="https://images.unsplash.com/..."
                           {...field}
+                          value={field.value || ""}
                           data-testid="input-featured-image"
                         />
                       </FormControl>
@@ -173,6 +174,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                         rows={3}
                         placeholder="Brief description of the post..."
                         {...field}
+                        value={field.value || ""}
                         data-testid="textarea-excerpt"
                       />
                     </FormControl>
@@ -207,7 +209,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
                       <Checkbox
-                        checked={field.value}
+                        checked={field.value || false}
                         onCheckedChange={field.onChange}
                         data-testid="checkbox-published"
                       />
