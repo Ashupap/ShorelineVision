@@ -69,57 +69,118 @@ export default function AboutUs() {
               </motion.div>
             </div>
 
+            {/* Message From Our Managing Director */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-20"
+            >
+              <div className="text-center mb-12">
+                <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
+                  Message From Our Managing Director
+                </h3>
+                <div className="w-24 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full"></div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-white to-light-marine/30 rounded-3xl shadow-2xl overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-0">
+                  <div className="p-12 md:p-16">
+                    <blockquote className="text-gray-700 text-lg leading-relaxed italic mb-8">
+                      "At Alashore Marine, we believe that quality is not just a standard but a commitment to excellence that defines every aspect of our operations. Our journey from a small seafood processing unit to becoming a leading exporter has been guided by our unwavering dedication to sustainable practices, innovation, and customer satisfaction.
+                      <br /><br />
+                      We are not just exporting seafood; we are sharing the rich maritime heritage of our region with the world. Each product that leaves our facility carries with it our promise of freshness, quality, and environmental responsibility."
+                    </blockquote>
+                    <div className="flex items-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-full flex items-center justify-center mr-4">
+                        <span className="text-white text-xl font-bold">GRD</span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900 text-lg">Gyana Ranjan Dash</p>
+                        <p className="text-ocean-blue font-semibold">Managing Director</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <img
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800"
+                      alt="Managing Director - Gyana Ranjan Dash"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ocean-blue/20 to-transparent"></div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Mission and Vision Section */}
             <div className="grid md:grid-cols-2 gap-12 mb-20">
               <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="relative overflow-hidden bg-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+                className="group relative"
               >
-                <div className="absolute inset-0">
+                {/* Background Image with Parallax Effect */}
+                <div className="absolute inset-0 rounded-3xl overflow-hidden">
                   <img
                     src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
                     alt="Our Mission - Innovation in Seafood"
-                    className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/5 to-marine-teal/10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-ocean-blue/90"></div>
                 </div>
-                <div className="relative p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-2xl font-bold">🎯</span>
+                
+                {/* Content */}
+                <div className="relative p-10 h-full flex flex-col justify-between min-h-[500px]">
+                  <div>
+                    <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <span className="text-white text-3xl">🎯</span>
+                    </div>
+                    <h3 className="text-white text-3xl font-bold mb-6 group-hover:text-yellow-200 transition-colors duration-300">Our Mission</h3>
                   </div>
-                  <h3 className="text-ocean-blue text-2xl font-bold mb-6">Our Mission</h3>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    We're on a mission to introduce a 'New Taste for Life' by creating innovative breaded products. We believe in continuous improvement through technological advancements in our processes. Additionally, we're committed to supporting farmers for a more sustainable future. Our goal is not only to offer delicious and innovative food but also to use technology responsibly and promote sustainability, ensuring a better future for everyone involved.
-                  </p>
+                  <div>
+                    <p className="text-white/90 text-lg leading-relaxed mb-6">
+                      We're on a mission to introduce a 'New Taste for Life' by creating innovative breaded products. We believe in continuous improvement through technological advancements in our processes. Additionally, we're committed to supporting farmers for a more sustainable future.
+                    </p>
+                    <div className="w-full h-1 bg-gradient-to-r from-white/30 to-yellow-200/50 rounded-full group-hover:from-yellow-200 group-hover:to-white transition-all duration-500"></div>
+                  </div>
                 </div>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="relative overflow-hidden bg-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 group"
+                className="group relative"
               >
-                <div className="absolute inset-0">
+                {/* Background Image with Parallax Effect */}
+                <div className="absolute inset-0 rounded-3xl overflow-hidden">
                   <img
                     src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
                     alt="Our Vision - Global Leadership"
-                    className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/5 to-coral-accent/10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/90 via-coral-accent/85 to-marine-teal/90"></div>
                 </div>
-                <div className="relative p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-marine-teal to-coral-accent rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-2xl font-bold">🌟</span>
+                
+                {/* Content */}
+                <div className="relative p-10 h-full flex flex-col justify-between min-h-[500px]">
+                  <div>
+                    <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <span className="text-white text-3xl">🌟</span>
+                    </div>
+                    <h3 className="text-white text-3xl font-bold mb-6 group-hover:text-yellow-200 transition-colors duration-300">Our Vision</h3>
                   </div>
-                  <h3 className="text-marine-teal text-2xl font-bold mb-6">Our Vision</h3>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    Alashore Marine's vision is to be a leading global brand in the frozen food industry and to become a top global brand and a leading frozen seafood exporter. We strive for this by investing in top-notch infrastructure, adopting industry best practices, adhering to global quality standards, and implementing strict safety policies. We aim to establish ourselves as the world's largest supplier of frozen food products, providing protein from farms to fork with the best taste.
-                  </p>
+                  <div>
+                    <p className="text-white/90 text-lg leading-relaxed mb-6">
+                      Alashore Marine's vision is to be a leading global brand in the frozen food industry and to become a top global brand and a leading frozen seafood exporter. We strive for this by investing in top-notch infrastructure, adopting industry best practices, adhering to global quality standards.
+                    </p>
+                    <div className="w-full h-1 bg-gradient-to-r from-white/30 to-yellow-200/50 rounded-full group-hover:from-yellow-200 group-hover:to-white transition-all duration-500"></div>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -174,6 +235,83 @@ export default function AboutUs() {
               ))}
             </div>
 
+            {/* Journey of Alashore Marine Group */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-20"
+            >
+              <div className="text-center mb-12">
+                <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
+                  Journey of Alashore Marine Group
+                </h3>
+                <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+                  From humble beginnings to global excellence - discover our remarkable journey of growth, innovation, and commitment to sustainable seafood practices
+                </p>
+                <div className="w-24 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full mt-6"></div>
+              </div>
+              
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {[
+                  {
+                    year: "2008",
+                    title: "Foundation",
+                    description: "Alashore Marine was established with a vision to become a leading seafood exporter, starting with small-scale operations in Odisha.",
+                    icon: "🏗️"
+                  },
+                  {
+                    year: "2012",
+                    title: "First Export",
+                    description: "Successfully completed our first international export, marking the beginning of our global journey in seafood trade.",
+                    icon: "🚢"
+                  },
+                  {
+                    year: "2016",
+                    title: "Facility Expansion",
+                    description: "Expanded our processing facilities with state-of-the-art technology to meet growing international demand for quality seafood.",
+                    icon: "🏭"
+                  },
+                  {
+                    year: "2024",
+                    title: "Global Leader",
+                    description: "Today, we proudly serve customers across USA, Canada, Europe, and Asia with premium quality frozen seafood products.",
+                    icon: "🌍"
+                  }
+                ].map((milestone, index) => (
+                  <motion.div
+                    key={milestone.year}
+                    initial={{ opacity: 0, y: 60 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.15 }}
+                    viewport={{ once: true }}
+                    className="group relative bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+                  >
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
+                        <span className="text-2xl">{milestone.icon}</span>
+                      </div>
+                      <div className="text-3xl font-bold text-ocean-blue mb-2 group-hover:text-marine-teal transition-colors duration-300">
+                        {milestone.year}
+                      </div>
+                      <h4 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-ocean-blue transition-colors duration-300">
+                        {milestone.title}
+                      </h4>
+                      <p className="text-gray-600 leading-relaxed">
+                        {milestone.description}
+                      </p>
+                    </div>
+                    
+                    {/* Timeline connector line */}
+                    {index < 3 && (
+                      <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-ocean-blue to-marine-teal"></div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
             {/* Business Evolution Section */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -183,7 +321,7 @@ export default function AboutUs() {
               className="text-center mb-12"
             >
               <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
-                Our Business Evolution
+                Our Global Presence
               </h3>
               <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
                 Embark on a journey through our business evolution, tracing our growth, milestones, and commitment to excellence in the seafood export industry
