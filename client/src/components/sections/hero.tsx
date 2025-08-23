@@ -5,7 +5,7 @@ import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 
 export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
-  const seafoodTypes = ["Vannamei", "Pomfret", "Sheer Fish"];
+  const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,7 +56,7 @@ export default function Hero() {
           className="text-white space-y-6"
         >
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight text-white">
-            Premium Seafood{" "}
+            Premium{" "}
             <motion.span
               key={currentText}
               initial={{ opacity: 0, y: 20 }}
