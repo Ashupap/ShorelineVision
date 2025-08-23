@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
-import fishImage from "@assets/ChatGPT Image Jun 18, 2025, 04_27_29 PM_1755932209808.png";
+import fishImage from "@assets/ChatGPT Image Jun 18, 2025, 04_27_29 PM_1755934453469.png";
 import tunaImage from "@assets/ChatGPT Image Jun 18, 2025, 04_34_39 PM_1755932236429.png";
 
 export default function Hero() {
