@@ -46,14 +46,14 @@ export default function Hero() {
       </div>
 
       {/* Two Column Layout */}
-      <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center min-h-screen">
         
         {/* Left Column - Text and Buttons */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-white space-y-6"
+          className="text-white space-y-6 lg:col-span-3"
         >
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight text-white">
             Premium{" "}
@@ -102,7 +102,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative h-96 lg:h-full flex items-center justify-center"
+          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2"
         >
           {/* Vannamei Shrimp */}
           <motion.div
