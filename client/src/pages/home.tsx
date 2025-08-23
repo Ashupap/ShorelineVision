@@ -9,6 +9,15 @@ import Stats from "@/components/sections/stats";
 import Testimonials from "@/components/sections/testimonials";
 import Contact from "@/components/sections/contact";
 
+// Customer Logo Imports
+import azureLogo from "@assets/AZURE_1755944927383.png";
+import costarLogo from "@assets/Costar_1755944927383.png";
+import geishaLogo from "@assets/GEISHA_1755944927383.png";
+import genseaLogo from "@assets/GENSEA_1755944927383.png";
+import goldenBayLogo from "@assets/Golden-bay_1755944927383.png";
+import seastarLogo from "@assets/Seastar_1755944927383.png";
+import selectLogo from "@assets/SELECT_1755944927384.png";
+
 const Home = memo(function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -118,17 +127,17 @@ const Home = memo(function Home() {
                   className="absolute flex space-x-8 items-center"
                 >
                   {[
-                    { name: "AZURE", img: "@assets/AZURE_1755944927383.png" },
-                    { name: "COSTAR", img: "@assets/Costar_1755944927383.png" },
-                    { name: "GEISHA", img: "@assets/GEISHA_1755944927383.png" },
-                    { name: "GENSEA", img: "@assets/GENSEA_1755944927383.png" },
-                    { name: "GOLDEN BAY", img: "@assets/Golden-bay_1755944927383.png" },
-                    { name: "SEASTAR", img: "@assets/Seastar_1755944927383.png" },
-                    { name: "SELECT", img: "@assets/SELECT_1755944927384.png" }
+                    { name: "AZURE", img: azureLogo },
+                    { name: "COSTAR", img: costarLogo },
+                    { name: "GEISHA", img: geishaLogo },
+                    { name: "GENSEA", img: genseaLogo },
+                    { name: "GOLDEN BAY", img: goldenBayLogo },
+                    { name: "SEASTAR", img: seastarLogo },
+                    { name: "SELECT", img: selectLogo }
                   ].concat([
-                    { name: "AZURE", img: "@assets/AZURE_1755944927383.png" },
-                    { name: "COSTAR", img: "@assets/Costar_1755944927383.png" },
-                    { name: "GEISHA", img: "@assets/GEISHA_1755944927383.png" }
+                    { name: "AZURE", img: azureLogo },
+                    { name: "COSTAR", img: costarLogo },
+                    { name: "GEISHA", img: geishaLogo }
                   ]).map((logo, index) => (
                     <motion.div
                       key={`primary-${index}`}
@@ -172,14 +181,14 @@ const Home = memo(function Home() {
                   className="absolute flex space-x-8 items-center top-24"
                 >
                   {[
-                    { name: "SEASTAR", img: "@assets/Seastar_1755944927383.png" },
-                    { name: "SELECT", img: "@assets/SELECT_1755944927384.png" },
-                    { name: "AZURE", img: "@assets/AZURE_1755944927383.png" },
-                    { name: "GENSEA", img: "@assets/GENSEA_1755944927383.png" },
-                    { name: "GOLDEN BAY", img: "@assets/Golden-bay_1755944927383.png" }
+                    { name: "SEASTAR", img: seastarLogo },
+                    { name: "SELECT", img: selectLogo },
+                    { name: "AZURE", img: azureLogo },
+                    { name: "GENSEA", img: genseaLogo },
+                    { name: "GOLDEN BAY", img: goldenBayLogo }
                   ].concat([
-                    { name: "COSTAR", img: "@assets/Costar_1755944927383.png" },
-                    { name: "GEISHA", img: "@assets/GEISHA_1755944927383.png" }
+                    { name: "COSTAR", img: costarLogo },
+                    { name: "GEISHA", img: geishaLogo }
                   ]).map((logo, index) => (
                     <motion.div
                       key={`secondary-${index}`}
@@ -250,7 +259,7 @@ const Home = memo(function Home() {
                       }}
                     />
                     <img
-                      src="@assets/Golden-bay_1755944927383.png"
+                      src={goldenBayLogo}
                       alt="Featured Customer"
                       className="max-w-full max-h-full object-contain relative z-10"
                     />
