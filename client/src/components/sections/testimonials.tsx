@@ -96,7 +96,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-teal-500 px-8 py-16 lg:px-16 lg:py-20 flex items-center justify-center"
+            className="bg-teal-500 px-8 py-16 lg:px-16 lg:py-20 flex items-center justify-center relative z-10"
           >
             <Carousel
               opts={{
@@ -137,18 +137,22 @@ export default function Testimonials() {
                         rotate: Math.random() * 6 - 3,
                         transition: { duration: 0.6, type: "spring" }
                       }}
-                      animate={{
-                        y: [0, Math.random() * 8 - 4, 0],
-                        x: [0, Math.random() * 6 - 3, 0],
-                        rotate: [0, Math.random() * 2 - 1, 0],
-                      }}
-                      transition={{
-                        duration: 4 + Math.random() * 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="bg-white p-12 rounded-sm shadow-2xl drop-shadow-xl min-h-[320px] flex flex-col justify-between"
+                      className="bg-white p-12 rounded-sm shadow-2xl drop-shadow-xl min-h-[320px] flex flex-col justify-between relative z-20 border border-gray-100"
                     >
+                      <motion.div
+                        animate={{
+                          y: [0, Math.random() * 8 - 4, 0],
+                          x: [0, Math.random() * 6 - 3, 0],
+                          rotate: [0, Math.random() * 2 - 1, 0],
+                        }}
+                        transition={{
+                          duration: 4 + Math.random() * 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: Math.random() * 2
+                        }}
+                        className="w-full h-full flex flex-col justify-between"
+                      >
                       {/* Testimonial Quote */}
                       <blockquote className="text-gray-700 text-lg leading-relaxed mb-10 italic flex-grow">
                         "{testimonial.content}"
@@ -177,6 +181,7 @@ export default function Testimonials() {
                           </p>
                         </div>
                       </div>
+                      </motion.div>
                     </motion.div>
                   </CarouselItem>
                 ))}
