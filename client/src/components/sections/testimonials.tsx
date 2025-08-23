@@ -65,16 +65,16 @@ export default function Testimonials() {
   const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials;
 
   return (
-    <section className="py-0">
-      <div className="grid lg:grid-cols-2 min-h-[500px]">
-
-        {/* Left Side - Teal Background */}
+    <section className="py-0 relative min-h-[500px] bg-teal-500 overflow-hidden">
+      {/* Background Content */}
+      <div className="grid lg:grid-cols-2 min-h-[500px] relative z-10">
+        {/* Left Side - Content */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="bg-teal-500 px-8 py-16 lg:px-16 lg:py-20 flex flex-col justify-center"
+          className="px-8 py-16 lg:px-16 lg:py-20 flex flex-col justify-center"
         >
           <Quote size={64} className="text-white/30 mb-8" />
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
@@ -85,19 +85,23 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        {/* Right Side - White Testimonial Card */}
-        {isLoading ? (
-          <div className="bg-gray-100 px-8 py-16 lg:px-16 lg:py-20 flex items-center justify-center">
-            <div className="w-full max-w-md h-64 bg-gray-200 rounded-lg animate-pulse"></div>
-          </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="bg-teal-500 px-8 py-16 lg:px-16 lg:py-20 flex items-center justify-center relative z-10"
-          >
+        {/* Right Side - Empty Space for Cards */}
+        <div className="relative"></div>
+      </div>
+
+      {/* Floating Testimonial Cards */}
+      {isLoading ? (
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <div className="w-full max-w-md h-64 bg-gray-200 rounded-lg animate-pulse"></div>
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="absolute top-1/2 right-8 lg:right-16 transform -translate-y-1/2 z-20"
+        >
             <Carousel
               opts={{
                 align: "center",
@@ -189,8 +193,6 @@ export default function Testimonials() {
             </Carousel>
           </motion.div>
         )}
-
-      </div>
     </section>
   );
 }
