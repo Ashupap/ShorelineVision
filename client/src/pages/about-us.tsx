@@ -1,28 +1,90 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { Star, Award, Globe, Users, Leaf, Target } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 
 export default function AboutUs() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const y = useSpring(parallaxY, springConfig);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background">
       <Header />
       
       <main className="pt-16">
-        {/* Hero Section with Gradient Header */}
-        <section className="py-20 bg-gradient-to-br from-ocean-blue to-marine-teal text-white">
-          <div className="container mx-auto px-4">
+        {/* Enhanced Hero Section with Parallax */}
+        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          <motion.div 
+            style={{ y, opacity: parallaxOpacity }}
+            className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
+          />
+          <motion.div
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ 
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full backdrop-blur-sm"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, -30, 0],
+              x: [0, 20, 0]
+            }}
+            transition={{ 
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 5
+            }}
+            className="absolute bottom-20 left-10 w-32 h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm"
+          />
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               className="text-center"
             >
-              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4">
-                About Us
-              </h1>
-              <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-                Dedicated to Quality Product - Leading the way in premium seafood exports with sustainable practices and unmatched quality standards
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="inline-flex items-center bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-8"
+              >
+                <Star className="text-coral-accent mr-2" size={20} />
+                <span className="text-white/90 font-medium">Excellence Since 2012</span>
+              </motion.div>
+              <motion.h1 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.2 }}
+                className="text-6xl md:text-8xl font-heading font-bold mb-8"
+              >
+                About <span className="text-coral-accent">Us</span>
+              </motion.h1>
+              <motion.p 
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="text-xl md:text-2xl text-light-marine max-w-4xl mx-auto leading-relaxed"
+              >
+                Dedicated to Quality Product - Leading the way in premium seafood exports 
+                with sustainable practices and unmatched quality standards
+              </motion.p>
             </motion.div>
           </div>
         </section>

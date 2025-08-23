@@ -1,12 +1,24 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
+import { ChevronDown, Sparkles } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
 import fishImage from "@assets/ChatGPT Image Jun 18, 2025, 04_27_29 PM_1755934453469.png";
 import tunaImage from "@assets/ChatGPT Image Jun 18, 2025, 04_34_39 PM_1755932236429.png";
 
 export default function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scaleEffect = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const y = useSpring(parallaxY, springConfig);
+  
   const [currentText, setCurrentText] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
   const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
@@ -52,77 +64,204 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
-      <div className="absolute inset-0 z-0">
+    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Video with Parallax */}
+      <motion.div 
+        style={{ scale: scaleEffect, opacity: parallaxOpacity }}
+        className="absolute inset-0 z-0"
+      >
         <video autoPlay muted loop className="w-full h-full object-cover">
           <source src={factoryVideo} type="video/mp4" />
         </video>
-        {/* Video overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90"></div>
-        <div className="absolute inset-0 bg-black/70"></div>
-      </div>
+        {/* Enhanced Video overlay with gradient animation */}
+        <motion.div 
+          animate={{ 
+            background: [
+              "linear-gradient(45deg, rgba(20, 78, 117, 0.9), rgba(29, 155, 155, 0.85), rgba(15, 23, 42, 0.9))",
+              "linear-gradient(45deg, rgba(29, 155, 155, 0.9), rgba(15, 23, 42, 0.85), rgba(20, 78, 117, 0.9))",
+              "linear-gradient(45deg, rgba(20, 78, 117, 0.9), rgba(29, 155, 155, 0.85), rgba(15, 23, 42, 0.9))"
+            ]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-0"
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+      </motion.div>
 
-      {/* Responsive Layout */}
-      <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-5 gap-8 items-center min-h-screen">
-        {/* Text and Buttons */}
+      {/* Floating Elements */}
+      <motion.div
+        animate={{ 
+          y: [0, -30, 0],
+          rotate: [0, 10, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ 
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-20 right-20 w-32 h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm border border-white/20 z-5"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, 20, 0],
+          rotate: [0, -10, 0],
+          scale: [1, 0.9, 1]
+        }}
+        transition={{ 
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2
+        }}
+        className="absolute bottom-32 left-16 w-24 h-24 bg-marine-teal/30 rounded-full backdrop-blur-sm border border-white/30 z-5"
+      />
+      <motion.div
+        animate={{ 
+          x: [0, 40, 0],
+          y: [0, -20, 0],
+          opacity: [0.3, 0.7, 0.3]
+        }}
+        transition={{ 
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 4
+        }}
+        className="absolute top-1/2 left-10 w-16 h-16 bg-white/20 rounded-full backdrop-blur-sm z-5"
+      />
+
+      {/* Enhanced Responsive Layout */}
+      <motion.div 
+        style={{ y }}
+        className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-5 gap-8 items-center min-h-screen"
+      >
+        {/* Enhanced Text and Buttons */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-white space-y-6 lg:col-span-3 order-1 lg:order-1"
+          initial={{ opacity: 0, x: -80, scale: 0.9 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="text-white space-y-8 lg:col-span-3 order-1 lg:order-1"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight text-white">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="inline-flex items-center bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20"
+          >
+            <Sparkles className="text-coral-accent mr-2" size={20} />
+            <span className="text-white/90 font-medium">Premium Quality Since 2012</span>
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, delay: 0.5 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold leading-tight text-white"
+          >
             Premium{" "}
             <motion.span
               key={currentText}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-red-500 inline-block"
+              initial={{ opacity: 0, y: 30, rotateX: -90 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, y: -30, rotateX: 90 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-coral-accent inline-block relative"
             >
               {seafoodTypes[currentText]}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-coral-accent to-golden-orange origin-left"
+              />
             </motion.span>
             <br />
-            Exporter From
+            <motion.span
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              Exporter From
+            </motion.span>
             <br />
-            India
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl">
+            <motion.span
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 1 }}
+              className="text-marine-teal"
+            >
+              India
+            </motion.span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="text-xl md:text-2xl lg:text-3xl text-light-marine max-w-xl leading-relaxed"
+          >
             Your quest for quality seafood ends here
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.5 }}
+            className="flex flex-col sm:flex-row gap-6"
+          >
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.08,
+                boxShadow: "0 25px 50px rgba(255, 107, 107, 0.3)"
+              }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToContact}
-              className="bg-coral-accent hover:bg-golden-orange text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300"
+              className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group"
               data-testid="button-hero-get-in-touch"
             >
-              GET IN TOUCH
+              <motion.div
+                className="absolute inset-0 bg-white/20"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
+              />
+              <span className="relative z-10">GET IN TOUCH</span>
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.08,
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                borderColor: "rgba(255, 107, 107, 1)"
+              }}
               whileTap={{ scale: 0.95 }}
               onClick={() =>
                 document
                   .getElementById("products")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="border-2 border-white text-white hover:bg-white hover:text-ocean-blue px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300"
+              className="relative border-2 border-white/70 text-white backdrop-blur-md px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-500 hover:text-coral-accent group overflow-hidden"
               data-testid="button-hero-view-products"
             >
-              View Products
+              <motion.div
+                className="absolute inset-0 bg-white"
+                initial={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+                transition={{ duration: 0.4 }}
+                style={{ originX: 0.5, originY: 0.5 }}
+              />
+              <span className="relative z-10 group-hover:text-ocean-blue transition-colors duration-300">
+                View Products
+              </span>
             </motion.button>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Seafood Image Slider */}
+        {/* Enhanced Seafood Image Slider */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          initial={{ opacity: 0, x: 80, rotateY: -30 }}
+          animate={{ opacity: 1, x: 0, rotateY: 0 }}
+          transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
           className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 overflow-hidden order-2 lg:order-2 w-full"
         >
           {/* Slider Container */}
@@ -229,7 +368,7 @@ export default function Hero() {
             className="absolute bottom-0 left-1/2 w-4 h-4 bg-white/20 rounded-full"
           />
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div

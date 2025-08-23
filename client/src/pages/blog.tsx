@@ -1,12 +1,25 @@
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { BookOpen, Calendar, User, Eye } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import BlogPostCard from "@/components/blog/blog-post-card";
 import { formatDistanceToNow } from "date-fns";
 
 export default function Blog() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const y = useSpring(parallaxY, springConfig);
+  
   const { slug } = useParams();
 
   const { data: posts, isLoading: postsLoading } = useQuery({
@@ -24,42 +37,74 @@ export default function Blog() {
       <div className="min-h-screen bg-background">
         <Header />
         <main className="pt-16">
-          <article className="container mx-auto px-4 py-16 max-w-4xl">
+          <article className="container mx-auto px-4 py-24 max-w-5xl">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="bg-white rounded-3xl shadow-2xl overflow-hidden"
             >
-              <div className="mb-8">
-                <div className="flex items-center text-sm text-gray-500 mb-4">
-                  <span>{formatDistanceToNow(new Date(post.createdAt!))} ago</span>
-                  <span className="mx-2">•</span>
-                  <span className="bg-ocean-blue text-white px-2 py-1 rounded text-xs">
-                    {post.category}
-                  </span>
-                </div>
-                <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
-                  {post.title}
-                </h1>
-                {post.excerpt && (
-                  <p className="text-xl text-gray-600 leading-relaxed">
-                    {post.excerpt}
-                  </p>
+              <div className="p-12 md:p-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="mb-12"
+                >
+                  <div className="flex items-center text-sm text-gray-500 mb-6">
+                    <Calendar className="mr-2" size={16} />
+                    <span>{formatDistanceToNow(new Date((post as any).createdAt!))} ago</span>
+                    <span className="mx-3">•</span>
+                    <motion.span 
+                      whileHover={{ scale: 1.05 }}
+                      className="bg-gradient-to-r from-ocean-blue to-marine-teal text-white px-4 py-2 rounded-full text-xs font-semibold"
+                    >
+                      {(post as any).category}
+                    </motion.span>
+                  </div>
+                  <motion.h1 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.4 }}
+                    className="text-5xl md:text-6xl font-heading font-bold text-gray-900 mb-8 leading-tight"
+                  >
+                    {(post as any).title}
+                  </motion.h1>
+                  {(post as any).excerpt && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.6 }}
+                      className="text-xl md:text-2xl text-gray-600 leading-relaxed"
+                    >
+                      {(post as any).excerpt}
+                    </motion.p>
+                  )}
+                </motion.div>
+
+                {(post as any).featuredImage && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, delay: 0.8 }}
+                    className="mb-12 rounded-2xl overflow-hidden shadow-2xl"
+                  >
+                    <img
+                      src={(post as any).featuredImage}
+                      alt={(post as any).title}
+                      className="w-full h-96 md:h-[500px] object-cover"
+                    />
+                  </motion.div>
                 )}
-              </div>
 
-              {post.featuredImage && (
-                <div className="mb-8 rounded-xl overflow-hidden">
-                  <img
-                    src={post.featuredImage}
-                    alt={post.title}
-                    className="w-full h-96 object-cover"
-                  />
-                </div>
-              )}
-
-              <div className="prose prose-lg max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                  className="prose prose-lg md:prose-xl max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-a:text-ocean-blue hover:prose-a:text-marine-teal"
+                >
+                  <div dangerouslySetInnerHTML={{ __html: (post as any).content }} />
+                </motion.div>
               </div>
             </motion.div>
           </article>
@@ -70,24 +115,91 @@ export default function Blog() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background">
       <Header />
       <main className="pt-16">
-        <section className="py-20 bg-gradient-to-br from-light-marine to-white">
-          <div className="container mx-auto px-4">
+        {/* Enhanced Hero Section */}
+        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          <motion.div 
+            style={{ y, opacity: parallaxOpacity }}
+            className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
+          />
+          <motion.div
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.3, 1]
+            }}
+            transition={{ 
+              duration: 22,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-10 right-10 w-48 h-48 bg-white/10 rounded-full backdrop-blur-sm"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, -40, 0],
+              x: [0, 30, 0]
+            }}
+            transition={{ 
+              duration: 16,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 5
+            }}
+            className="absolute bottom-20 left-10 w-36 h-36 bg-coral-accent/20 rounded-full backdrop-blur-sm"
+          />
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="text-center"
             >
-              <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
-                Latest News & Insights
-              </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="inline-flex items-center bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-8"
+              >
+                <BookOpen className="text-coral-accent mr-2" size={20} />
+                <span className="text-white/90 font-medium">Industry Insights</span>
+              </motion.div>
+              <motion.h1 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.2 }}
+                className="text-6xl md:text-8xl font-heading font-bold mb-8"
+              >
+                Latest <span className="text-coral-accent">News</span>
+                <br />& Insights
+              </motion.h1>
+              <motion.p 
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="text-xl md:text-2xl text-light-marine max-w-4xl mx-auto leading-relaxed"
+              >
                 Stay updated with the latest news, industry insights, and stories from the world of sustainable seafood.
-              </p>
+              </motion.p>
             </motion.div>
+          </div>
+        </section>
+        
+        <section className="py-24 bg-gradient-to-br from-light-marine/10 to-white relative overflow-hidden">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-20 right-20 w-64 h-64 bg-marine-teal/10 rounded-full backdrop-blur-sm"
+          />
+          <div className="container mx-auto px-4 relative z-10">
 
             {postsLoading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -110,27 +222,49 @@ export default function Blog() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
-                {posts.map((post, index) => (
+                {(posts || []).map((post: any, index: number) => (
                   <motion.div
                     key={post.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    whileHover={{ 
+                      y: -10, 
+                      scale: 1.02,
+                      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
+                    }}
+                    className="group"
                   >
                     <BlogPostCard post={post} />
                   </motion.div>
                 ))}
               </motion.div>
             ) : (
-              <div className="text-center py-16">
-                <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No blog posts yet</h3>
-                <p className="text-gray-600 mb-6">Check back soon for our latest insights and news.</p>
-              </div>
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="text-center py-24 bg-gradient-to-br from-white to-light-marine/20 rounded-3xl border border-gray-100 backdrop-blur-md"
+              >
+                <motion.div
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="mb-8"
+                >
+                  <BookOpen size={64} className="text-gray-400 mx-auto" />
+                </motion.div>
+                <h3 className="text-2xl font-heading font-bold text-gray-600 mb-4">No blog posts available</h3>
+                <p className="text-gray-500">Check back soon for the latest news and insights!</p>
+              </motion.div>
             )}
           </div>
         </section>

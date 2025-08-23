@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +26,17 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 
 export default function Contact() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const y = useSpring(parallaxY, springConfig);
+  
   const { toast } = useToast();
 
   const form = useForm<InsertInquirySchema>({
@@ -102,25 +113,73 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background">
       <Header />
       <main className="pt-16">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-ocean-blue to-deep-navy text-white">
-          <div className="container mx-auto px-4">
+        {/* Enhanced Hero Section */}
+        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-deep-navy to-marine-teal text-white overflow-hidden">
+          <motion.div 
+            style={{ y, opacity: parallaxOpacity }}
+            className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"
+          />
+          <motion.div
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.4, 1]
+            }}
+            transition={{ 
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-10 right-10 w-56 h-56 bg-white/10 rounded-full backdrop-blur-sm"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, -50, 0],
+              x: [0, 40, 0]
+            }}
+            transition={{ 
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 8
+            }}
+            className="absolute bottom-20 left-10 w-40 h-40 bg-coral-accent/20 rounded-full backdrop-blur-sm"
+          />
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               className="text-center"
             >
-              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-                Contact Us
-              </h1>
-              <p className="text-xl md:text-2xl text-light-marine max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="inline-flex items-center bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-8"
+              >
+                <Send className="text-coral-accent mr-2" size={20} />
+                <span className="text-white/90 font-medium">Let's Connect</span>
+              </motion.div>
+              <motion.h1 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.2 }}
+                className="text-6xl md:text-8xl font-heading font-bold mb-8"
+              >
+                Contact <span className="text-coral-accent">Us</span>
+              </motion.h1>
+              <motion.p 
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="text-xl md:text-2xl text-light-marine max-w-4xl mx-auto leading-relaxed"
+              >
                 Ready to experience premium seafood quality? Get in touch with our team today 
                 and let's discuss your requirements.
-              </p>
+              </motion.p>
             </motion.div>
           </div>
         </section>

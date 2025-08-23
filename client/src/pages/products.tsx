@@ -1,10 +1,24 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Package, Star, Award, Sparkles, Filter } from "lucide-react";
+import { useRef, useState } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 
 export default function Products() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const y = useSpring(parallaxY, springConfig);
+
   const { data: products, isLoading } = useQuery({
     queryKey: ["/api/products?published=true"],
   });
@@ -63,33 +77,161 @@ export default function Products() {
 
   const displayProducts = products && Array.isArray(products) && products.length > 0 ? products : defaultProducts;
 
+  const categories = ["All", "IQF Shrimp", "Raw Frozen", "Shell-On", "Whole Shrimp"];
+  const filteredProducts = selectedCategory === "All" 
+    ? displayProducts 
+    : displayProducts.filter(product => product.category === selectedCategory);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background">
       <Header />
       <main className="pt-16">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-ocean-blue to-marine-teal text-white">
-          <div className="container mx-auto px-4">
+        {/* Enhanced Hero Section */}
+        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          <motion.div 
+            style={{ y, opacity: parallaxOpacity }}
+            className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
+          />
+          <motion.div
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.3, 1]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-10 right-10 w-48 h-48 bg-white/10 rounded-full backdrop-blur-sm"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, -40, 0],
+              x: [0, 30, 0]
+            }}
+            transition={{ 
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 3
+            }}
+            className="absolute bottom-20 left-10 w-32 h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm"
+          />
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               className="text-center"
             >
-              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-                Premium Seafood Products
-              </h1>
-              <p className="text-xl md:text-2xl text-light-marine max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="inline-flex items-center bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-8"
+              >
+                <Package className="text-coral-accent mr-2" size={20} />
+                <span className="text-white/90 font-medium">Premium Quality Products</span>
+              </motion.div>
+              <motion.h1 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 0.2 }}
+                className="text-6xl md:text-8xl font-heading font-bold mb-8"
+              >
+                Premium <span className="text-coral-accent">Seafood</span>
+                <br />Products
+              </motion.h1>
+              <motion.p 
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="text-xl md:text-2xl text-light-marine max-w-4xl mx-auto leading-relaxed"
+              >
                 Experience top-quality seafood with Alashore Marine. Our carefully sourced and processed products 
                 set new standards, offering delicious and sustainable choices in the seafood industry.
-              </p>
+              </motion.p>
             </motion.div>
           </div>
         </section>
 
-        {/* Products Grid */}
-        <section className="py-20 bg-white">
+        {/* Category Filter */}
+        <motion.section 
+          style={{ y: useTransform(scrollYProgress, [0.1, 0.3], [50, 0]) }}
+          className="py-16 bg-gradient-to-br from-light-marine/20 to-white relative overflow-hidden"
+        >
           <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <motion.h2
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6"
+              >
+                Browse Our Collection
+              </motion.h2>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="w-24 h-1 bg-gradient-to-r from-coral-accent to-golden-orange mx-auto rounded-full mb-8"
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="flex flex-wrap justify-center gap-4 mb-8"
+            >
+              {categories.map((category, index) => (
+                <motion.button
+                  key={category}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-md border ${
+                    selectedCategory === category
+                      ? "bg-gradient-to-r from-coral-accent to-golden-orange text-white border-transparent shadow-lg"
+                      : "bg-white/70 text-gray-700 border-gray-200 hover:bg-white/90 hover:border-coral-accent"
+                  }`}
+                >
+                  <Filter className="inline mr-2" size={16} />
+                  {category}
+                </motion.button>
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Enhanced Products Grid */}
+        <section className="py-24 bg-white relative overflow-hidden">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{ 
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-20 right-20 w-64 h-64 bg-marine-teal/10 rounded-full backdrop-blur-sm"
+          />
+          <div className="container mx-auto px-4 relative z-10">
             {isLoading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {Array.from({ length: 6 }).map((_, index) => (
@@ -105,16 +247,26 @@ export default function Products() {
                 ))}
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {displayProducts.map((product, index) => (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
+              >
+                {filteredProducts.map((product, index) => (
                   <motion.div
                     key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    whileHover={{ y: -5 }}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+                    whileHover={{ 
+                      y: -15, 
+                      scale: 1.02,
+                      boxShadow: "0 25px 60px rgba(0, 0, 0, 0.15)"
+                    }}
+                    className="group bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl border border-gray-100/50 backdrop-blur-md"
                   >
                     <div className="relative overflow-hidden">
                       <motion.img
@@ -154,7 +306,7 @@ export default function Products() {
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         </section>
