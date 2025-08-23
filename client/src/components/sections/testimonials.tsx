@@ -104,20 +104,59 @@ export default function Testimonials() {
                 loop: true,
               }}
               plugins={[Autoplay({ delay: 6000 })]}
-              className="w-full max-w-md"
+              className="w-full max-w-lg"
             >
               <CarouselContent>
                 {displayTestimonials.map((testimonial: any) => (
                   <CarouselItem key={testimonial.id}>
-                    <div className="bg-white p-8 rounded-lg shadow-sm">
+                    <motion.div
+                      initial={{ 
+                        opacity: 0, 
+                        y: Math.random() * 100 + 50,
+                        x: Math.random() * 60 - 30,
+                        rotate: Math.random() * 20 - 10,
+                        scale: 0.8
+                      }}
+                      whileInView={{ 
+                        opacity: 1, 
+                        y: 0,
+                        x: 0,
+                        rotate: 0,
+                        scale: 1
+                      }}
+                      transition={{ 
+                        duration: 1.2,
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 15
+                      }}
+                      viewport={{ once: true }}
+                      whileHover={{
+                        y: Math.random() * 20 - 10,
+                        x: Math.random() * 20 - 10,
+                        rotate: Math.random() * 6 - 3,
+                        transition: { duration: 0.6, type: "spring" }
+                      }}
+                      animate={{
+                        y: [0, Math.random() * 8 - 4, 0],
+                        x: [0, Math.random() * 6 - 3, 0],
+                        rotate: [0, Math.random() * 2 - 1, 0],
+                      }}
+                      transition={{
+                        duration: 4 + Math.random() * 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="bg-white p-12 rounded-sm shadow-2xl drop-shadow-xl min-h-[320px] flex flex-col justify-between"
+                    >
                       {/* Testimonial Quote */}
-                      <blockquote className="text-gray-600 text-base leading-relaxed mb-8">
+                      <blockquote className="text-gray-700 text-lg leading-relaxed mb-10 italic flex-grow">
                         "{testimonial.content}"
                       </blockquote>
 
                       {/* Customer Info */}
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                      <div className="flex items-center gap-5">
+                        <div className="w-18 h-18 rounded-full overflow-hidden bg-gray-200 flex-shrink-0 ring-2 ring-gray-100">
                           {testimonial.avatar ? (
                             <img 
                               src={testimonial.avatar} 
@@ -126,19 +165,19 @@ export default function Testimonials() {
                             />
                           ) : (
                             <div className="w-full h-full bg-teal-100 flex items-center justify-center">
-                              <User className="text-teal-600" size={24} />
+                              <User className="text-teal-600" size={28} />
                             </div>
                           )}
                         </div>
                         
                         <div>
-                          <h4 className="font-bold text-gray-900 text-lg">{testimonial.name}</h4>
+                          <h4 className="font-bold text-gray-900 text-xl mb-1">{testimonial.name}</h4>
                           <p className="text-gray-400 text-sm font-medium uppercase tracking-wide">
                             {testimonial.company || 'FOUNDER, SOME COMPANY'}
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
