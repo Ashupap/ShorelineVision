@@ -55,7 +55,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="text-white space-y-6"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight text-white">
             Premium{" "}
             <motion.span
               key={currentText}
@@ -63,14 +63,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="text-gradient bg-gradient-to-r from-coral-accent to-golden-orange bg-clip-text text-transparent inline-block"
+              className="text-golden-orange inline-block"
             >
               {seafoodTypes[currentText]}
             </motion.span>
-            <br />
-            <span className="text-gradient bg-gradient-to-r from-white to-light-marine bg-clip-text text-transparent">
-              Exporter From India
-            </span>
+            {" "}Exporter From India
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl">
             Your quest for quality seafood ends here
