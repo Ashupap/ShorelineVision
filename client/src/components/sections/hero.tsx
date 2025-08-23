@@ -182,40 +182,23 @@ export default function Hero() {
                   />
                 </motion.div>
 
-                {/* Image Title Overlay */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="absolute bottom-4 left-4 right-4 text-center"
-                >
-                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2">
-                    <h3 className="text-white font-semibold text-lg">
-                      {seafoodImages[currentImage].title}
-                    </h3>
-                  </div>
-                </motion.div>
               </motion.div>
             </AnimatePresence>
-
-            {/* Slider Indicators */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {seafoodImages.map((_, index) => (
-                <motion.div
-                  key={index}
-                  initial={false}
-                  animate={{
-                    scale: currentImage === index ? 1.2 : 1,
-                    opacity: currentImage === index ? 1 : 0.5
-                  }}
-                  transition={{ duration: 0.3 }}
-                  className={`w-2 h-2 rounded-full ${
-                    currentImage === index ? 'bg-golden-orange' : 'bg-white/60'
-                  }`}
-                />
-              ))}
-            </div>
+            
+            {/* Visible Shadow Under Image */}
+            <motion.div
+              animate={{
+                scale: [0.8, 1, 0.9],
+                opacity: [0.4, 0.7, 0.5]
+              }}
+              transition={{
+                duration: 4,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-8 bg-black/30 rounded-full blur-lg"
+            />
           </div>
 
           {/* Floating particles for ambiance */}
