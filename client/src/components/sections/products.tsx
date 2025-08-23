@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Clock, Package } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import type { Product } from "@shared/schema";
 
 export default function Products() {
@@ -96,6 +97,7 @@ export default function Products() {
                 align: "start",
                 loop: true,
               }}
+              plugins={[Autoplay({ delay: 4000 })]}
               className="w-full"
             >
               <CarouselContent className="-ml-2 md:-ml-4">
