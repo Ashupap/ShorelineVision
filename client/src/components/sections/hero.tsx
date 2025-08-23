@@ -237,14 +237,14 @@ const Hero = memo(function Hero() {
       {/* Enhanced Responsive Layout */}
       <motion.div 
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-2 items-center min-h-screen"
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-0 items-center min-h-screen"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div
           initial={{ opacity: 0, x: -80, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="text-white space-y-8 lg:col-span-1 order-1 lg:order-1"
+          className="text-white space-y-6 lg:space-y-8 lg:col-span-1 order-2 lg:order-1 text-center lg:text-left"
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -260,7 +260,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-white"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-white"
           >
             Premium{" "}
             <motion.span
@@ -302,7 +302,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl leading-relaxed"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl mx-auto lg:mx-0 leading-relaxed"
           >
             Your quest for quality seafood ends here
           </motion.p>
@@ -311,7 +311,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="flex flex-col sm:flex-row gap-6"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start"
           >
             <motion.button
               whileHover={{ 
@@ -320,7 +320,7 @@ const Hero = memo(function Hero() {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToContact}
-              className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group"
+              className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-6 sm:px-8 lg:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group w-full sm:w-auto"
               data-testid="button-hero-get-in-touch"
             >
               <motion.div
@@ -343,7 +343,7 @@ const Hero = memo(function Hero() {
                   .getElementById("products")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="relative border-2 border-white/70 text-white backdrop-blur-md px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-500 hover:text-coral-accent group overflow-hidden"
+              className="relative border-2 border-white/70 text-white backdrop-blur-md px-6 sm:px-8 lg:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 hover:text-coral-accent group overflow-hidden w-full sm:w-auto"
               data-testid="button-hero-view-products"
             >
               <motion.div
@@ -365,10 +365,10 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-96 lg:h-full flex items-center justify-start lg:col-span-1 order-2 lg:order-2 w-full lg:-ml-8 lg:pl-0"
+          className="relative h-80 sm:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-lg max-h-96 rounded-2xl overflow-visible lg:overflow-visible flex items-center justify-center lg:justify-start">
+          <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg max-h-80 sm:max-h-96 rounded-2xl overflow-visible flex items-center justify-center lg:justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -396,9 +396,9 @@ const Hero = memo(function Hero() {
                 {/* Ken Burns Effect Container */}
                 <motion.div
                   animate={{
-                    scale: [1, 1.08, 1.04],
-                    x: [0, -8, 3],
-                    y: [0, -3, 0],
+                    scale: [1, 1.05, 1.02],
+                    x: [0, -4, 2],
+                    y: [0, -2, 0],
                   }}
                   transition={{
                     duration: 4,
@@ -411,7 +411,7 @@ const Hero = memo(function Hero() {
                   <OptimizedImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`w-full h-full filter brightness-110 contrast-105 ${
+                    className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
                     placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzFmMjkzNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NzM4NSIgZm9udC1zaXplPSIxNCI+TG9hZGluZy4uLjwvdGV4dD48L3N2Zz4="
