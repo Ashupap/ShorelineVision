@@ -166,7 +166,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold leading-tight text-white"
+            className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-white"
           >
             Premium{" "}
             <motion.span
@@ -208,7 +208,7 @@ const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="text-xl md:text-2xl lg:text-3xl text-light-marine max-w-xl leading-relaxed"
+            className="text-lg md:text-xl lg:text-2xl text-light-marine max-w-xl leading-relaxed"
           >
             Your quest for quality seafood ends here
           </motion.p>
@@ -271,10 +271,10 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 overflow-hidden order-2 lg:order-2 w-full"
+          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 order-2 lg:order-2 w-full"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-hidden">
+          <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-visible px-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
