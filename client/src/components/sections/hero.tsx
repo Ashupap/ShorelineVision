@@ -10,12 +10,16 @@ export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
   const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
-  
+
   // Seafood images in the exact order specified
   const seafoodImages = [
-    { src: shrimpImage, alt: "Premium Vannamei Shrimp", title: "Vannamei Shrimp" },
+    {
+      src: shrimpImage,
+      alt: "Premium Vannamei Shrimp",
+      title: "Vannamei Shrimp",
+    },
     { src: fishImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
-    { src: tunaImage, alt: "Premium Tuna Fish", title: "Tuna Fish" }
+    { src: tunaImage, alt: "Premium Tuna Fish", title: "Tuna Fish" },
   ];
 
   useEffect(() => {
@@ -51,22 +55,16 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          className="w-full h-full object-cover"
-        >
+        <video autoPlay muted loop className="w-full h-full object-cover">
           <source src={factoryVideo} type="video/mp4" />
         </video>
         {/* Video overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90"></div>
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
       {/* Responsive Layout */}
       <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-5 gap-8 items-center min-h-screen">
-        
         {/* Text and Buttons */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -107,7 +105,11 @@ export default function Hero() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .getElementById("products")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               className="border-2 border-white text-white hover:bg-white hover:text-ocean-blue px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300"
               data-testid="button-hero-view-products"
             >
@@ -128,24 +130,24 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
-                initial={{ 
+                initial={{
                   x: 300,
                   opacity: 0,
-                  scale: 0.8
+                  scale: 0.8,
                 }}
-                animate={{ 
+                animate={{
                   x: 0,
                   opacity: 1,
-                  scale: 1
+                  scale: 1,
                 }}
-                exit={{ 
+                exit={{
                   x: -300,
                   opacity: 0,
-                  scale: 0.8
+                  scale: 0.8,
                 }}
                 transition={{
                   duration: 0.8,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
                 className="absolute inset-0 w-full h-full"
               >
@@ -154,13 +156,13 @@ export default function Hero() {
                   animate={{
                     scale: [1, 1.1, 1.05],
                     x: [0, -10, 5],
-                    y: [0, -5, 0]
+                    y: [0, -5, 0],
                   }}
                   transition={{
                     duration: 4,
                     ease: "easeInOut",
                     repeat: Infinity,
-                    repeatType: "reverse"
+                    repeatType: "reverse",
                   }}
                   className="w-full h-full"
                 >
@@ -168,29 +170,33 @@ export default function Hero() {
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
                     className={`w-full h-full object-contain drop-shadow-2xl filter brightness-110 contrast-105 ${
-                      currentImage === 1 ? 'mix-blend-multiply' : ''
+                      currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    style={currentImage === 1 ? { 
-                      filter: 'brightness(110%) contrast(105%) drop-shadow(0 25px 25px rgba(0,0,0,0.5))',
-                      mixBlendMode: 'multiply'
-                    } : {}}
+                    style={
+                      currentImage === 1
+                        ? {
+                            filter:
+                              "brightness(110%) contrast(105%) drop-shadow(0 25px 25px rgba(0,0,0,0.5))",
+                            mixBlendMode: "multiply",
+                          }
+                        : {}
+                    }
                   />
                 </motion.div>
-
               </motion.div>
             </AnimatePresence>
-            
+
             {/* Visible Shadow Under Image */}
             <motion.div
               animate={{
                 scale: [0.8, 1, 0.9],
-                opacity: [0.4, 0.7, 0.5]
+                opacity: [0.4, 0.7, 0.5],
               }}
               transition={{
                 duration: 4,
                 ease: "easeInOut",
                 repeat: Infinity,
-                repeatType: "reverse"
+                repeatType: "reverse",
               }}
               className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-8 bg-black/30 rounded-full blur-lg"
             />
@@ -204,12 +210,22 @@ export default function Hero() {
           />
           <motion.div
             animate={{ y: [0, -120] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 1 }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 1,
+            }}
             className="absolute bottom-0 right-1/3 w-2 h-2 bg-white/30 rounded-full"
           />
           <motion.div
             animate={{ y: [0, -80] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: 2 }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 2,
+            }}
             className="absolute bottom-0 left-1/2 w-4 h-4 bg-white/20 rounded-full"
           />
         </motion.div>
