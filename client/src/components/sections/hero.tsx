@@ -172,7 +172,13 @@ export default function Hero() {
                   <img
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className="w-full h-full object-contain drop-shadow-2xl filter brightness-110 contrast-105"
+                    className={`w-full h-full object-contain drop-shadow-2xl filter brightness-110 contrast-105 ${
+                      currentImage === 1 ? 'mix-blend-multiply' : ''
+                    }`}
+                    style={currentImage === 1 ? { 
+                      filter: 'brightness(110%) contrast(105%) drop-shadow(0 25px 25px rgba(0,0,0,0.5))',
+                      mixBlendMode: 'multiply'
+                    } : {}}
                   />
                 </motion.div>
 
