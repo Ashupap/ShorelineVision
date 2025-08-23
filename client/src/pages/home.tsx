@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import Hero from "@/components/sections/hero";
@@ -9,7 +9,7 @@ import Stats from "@/components/sections/stats";
 import Testimonials from "@/components/sections/testimonials";
 import Contact from "@/components/sections/contact";
 
-export default function Home() {
+const Home = memo(function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -183,4 +183,6 @@ export default function Home() {
       <Footer />
     </div>
   );
-}
+});
+
+export default Home;

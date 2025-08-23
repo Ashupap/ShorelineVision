@@ -1,12 +1,13 @@
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo, useMemo } from "react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
 import fishImage from "@assets/ChatGPT Image Jun 18, 2025, 04_27_29 PM_1755934453469.png";
 import tunaImage from "@assets/ChatGPT Image Jun 18, 2025, 04_34_39 PM_1755932236429.png";
 
-export default function Hero() {
+const Hero = memo(function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -70,7 +71,15 @@ export default function Hero() {
         style={{ scale: scaleEffect, opacity: parallaxOpacity }}
         className="absolute inset-0 z-0"
       >
-        <video autoPlay muted loop className="w-full h-full object-cover">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          preload="metadata"
+          className="w-full h-full object-cover"
+          style={{ willChange: 'transform' }}
+        >
           <source src={factoryVideo} type="video/mp4" />
         </video>
         {/* Enhanced Video overlay with gradient animation */}
@@ -305,21 +314,13 @@ export default function Hero() {
                   }}
                   className="w-full h-full"
                 >
-                  <img
+                  <OptimizedImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
                     className={`w-full h-full object-contain drop-shadow-2xl filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    style={
-                      currentImage === 1
-                        ? {
-                            filter:
-                              "brightness(110%) contrast(105%) drop-shadow(0 25px 25px rgba(0,0,0,0.5))",
-                            mixBlendMode: "multiply",
-                          }
-                        : {}
-                    }
+                    priority
                   />
                 </motion.div>
               </motion.div>
@@ -382,4 +383,6 @@ export default function Hero() {
       </motion.div>
     </section>
   );
-}
+});
+
+export default Hero;
