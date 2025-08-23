@@ -143,14 +143,14 @@ const Hero = memo(function Hero() {
       {/* Enhanced Responsive Layout */}
       <motion.div 
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-5 gap-8 items-center min-h-screen"
+        className="relative z-10 container mx-auto px-4 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-2 gap-8 items-center min-h-screen"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div
           initial={{ opacity: 0, x: -80, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="text-white space-y-8 lg:col-span-3 order-1 lg:order-1"
+          className="text-white space-y-8 lg:col-span-1 order-1 lg:order-1"
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -271,7 +271,7 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-2 order-2 lg:order-2 w-full"
+          className="relative h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-2 lg:order-2 w-full"
         >
           {/* Slider Container */}
           <div className="relative w-full h-full max-w-md max-h-96 rounded-2xl overflow-hidden px-4 flex items-center justify-center">
