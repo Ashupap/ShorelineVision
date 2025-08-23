@@ -51,31 +51,53 @@ const Home = memo(function Home() {
             className="absolute top-10 right-10 w-40 h-40 bg-marine-teal/10 rounded-full backdrop-blur-sm"
           />
           <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <motion.p 
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="text-2xl md:text-3xl font-heading font-bold text-ocean-blue mb-6"
-              >
-                90+ Customers Globally
-              </motion.p>
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Text Column */}
               <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 0.5 }}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="w-24 h-1 bg-gradient-to-r from-coral-accent to-golden-orange mx-auto rounded-full"
-              />
-            </motion.div>
-            {/* Orbital Animation Container */}
+                className="text-center lg:text-left"
+              >
+                <motion.p 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-ocean-blue mb-6 leading-tight"
+                >
+                  90+ Customers
+                  <br />
+                  <span className="text-coral-accent">Globally</span>
+                </motion.p>
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  viewport={{ once: true }}
+                  className="w-24 h-1 bg-gradient-to-r from-coral-accent to-golden-orange mx-auto lg:mx-0 rounded-full mb-6"
+                />
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                  viewport={{ once: true }}
+                  className="text-lg md:text-xl text-ocean-blue/70 max-w-lg mx-auto lg:mx-0 leading-relaxed"
+                >
+                  Trusted by leading seafood companies across the globe, delivering premium quality and sustainable practices that set industry standards.
+                </motion.p>
+              </motion.div>
+              
+              {/* Animation Column */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="flex justify-center lg:justify-end"
+              >
+                {/* Orbital Animation Container */}
             <div className="relative h-[500px] w-full max-w-4xl mx-auto">
               {/* Central Hub */}
               <motion.div
@@ -222,6 +244,8 @@ const Home = memo(function Home() {
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 border border-golden-orange/20 rounded-full"
               />
+                </div>
+              </motion.div>
             </div>
           </div>
         </motion.section>
