@@ -26,7 +26,7 @@ export default function Hero() {
           loop
           className="w-full h-full object-cover"
         >
-          <source src="https://videos.pexels.com/video-files/8047887/8047887-hd_1920_1080_24fps.mp4" type="video/mp4" />
+          <source src="/attached_assets/Alashore-Marine-Factory_1755929476699.mp4" type="video/mp4" />
         </video>
         {/* Video overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/80 via-marine-teal/70 to-deep-navy/80"></div>
