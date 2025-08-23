@@ -75,209 +75,153 @@ const Home = memo(function Home() {
                 className="w-24 h-1 bg-gradient-to-r from-coral-accent to-golden-orange mx-auto rounded-full"
               />
             </motion.div>
-            {/* Main Container with 3D perspective */}
-            <div className="relative perspective-1000 h-96">
-              {/* Background animated elements */}
+            {/* Orbital Animation Container */}
+            <div className="relative h-[500px] w-full max-w-4xl mx-auto">
+              {/* Central Hub */}
               <motion.div
                 animate={{
                   rotate: [0, 360],
                   scale: [1, 1.1, 1]
                 }}
                 transition={{
-                  duration: 25,
+                  duration: 20,
                   repeat: Infinity,
                   ease: "linear"
                 }}
-                className="absolute inset-0 bg-gradient-to-r from-coral-accent/5 to-golden-orange/5 rounded-3xl"
-              />
-              
-              {/* Multi-layer slider container */}
-              <div className="relative h-full flex items-center justify-center overflow-hidden rounded-3xl bg-white/20 backdrop-blur-xl border border-white/40 shadow-2xl">
-                {/* Floating particles effect */}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+              >
                 <motion.div
-                  animate={{
-                    y: [-20, 20, -20],
-                    opacity: [0.3, 0.7, 0.3]
+                  className="relative w-24 h-24 bg-gradient-to-br from-white via-coral-accent/10 to-golden-orange/10 rounded-full shadow-2xl border-2 border-white/50 backdrop-blur-xl flex items-center justify-center"
+                  whileHover={{
+                    scale: 1.3,
+                    boxShadow: "0 0 50px rgba(255, 107, 107, 0.5)"
                   }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute top-4 left-4 w-2 h-2 bg-coral-accent rounded-full"
-                />
-                <motion.div
-                  animate={{
-                    y: [20, -20, 20],
-                    opacity: [0.3, 0.7, 0.3]
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 2
-                  }}
-                  className="absolute bottom-4 right-4 w-3 h-3 bg-golden-orange rounded-full"
-                />
-                
-                {/* Primary slider - Forward direction */}
-                <motion.div
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                  className="absolute flex space-x-8 items-center"
-                >
-                  {[
-                    { name: "AZURE", img: azureLogo },
-                    { name: "COSTAR", img: costarLogo },
-                    { name: "GEISHA", img: geishaLogo },
-                    { name: "GENSEA", img: genseaLogo },
-                    { name: "GOLDEN BAY", img: goldenBayLogo },
-                    { name: "SEASTAR", img: seastarLogo },
-                    { name: "SELECT", img: selectLogo }
-                  ].concat([
-                    { name: "AZURE", img: azureLogo },
-                    { name: "COSTAR", img: costarLogo },
-                    { name: "GEISHA", img: geishaLogo }
-                  ]).map((logo, index) => (
-                    <motion.div
-                      key={`primary-${index}`}
-                      initial={{ rotateY: 0, z: 0 }}
-                      whileHover={{ 
-                        rotateY: 15,
-                        z: 50,
-                        scale: 1.15,
-                        transition: { duration: 0.4, type: "spring", stiffness: 300 }
-                      }}
-                      className="flex-shrink-0 preserve-3d group cursor-pointer"
-                    >
-                      <motion.div
-                        className="relative w-32 h-20 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/50 flex items-center justify-center transform-gpu"
-                        whileHover={{
-                          boxShadow: "0 25px 50px rgba(0,0,0,0.2)",
-                          y: -10
-                        }}
-                      >
-                        {/* Shine effect */}
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-2xl"
-                          initial={{ x: "-100%" }}
-                          whileHover={{ x: "100%" }}
-                          transition={{ duration: 0.6 }}
-                        />
-                        <img
-                          src={logo.img}
-                          alt={logo.name}
-                          className="max-w-full max-h-full object-contain filter drop-shadow-sm group-hover:filter-none transition-all duration-300"
-                        />
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-                
-                {/* Secondary slider - Reverse direction with offset */}
-                <motion.div
-                  animate={{ x: ["100%", "-100%"] }}
-                  transition={{ duration: 35, repeat: Infinity, ease: "linear", delay: 5 }}
-                  className="absolute flex space-x-8 items-center top-24"
-                >
-                  {[
-                    { name: "SEASTAR", img: seastarLogo },
-                    { name: "SELECT", img: selectLogo },
-                    { name: "AZURE", img: azureLogo },
-                    { name: "GENSEA", img: genseaLogo },
-                    { name: "GOLDEN BAY", img: goldenBayLogo }
-                  ].concat([
-                    { name: "COSTAR", img: costarLogo },
-                    { name: "GEISHA", img: geishaLogo }
-                  ]).map((logo, index) => (
-                    <motion.div
-                      key={`secondary-${index}`}
-                      initial={{ rotateY: 0, scale: 0.8, opacity: 0.7 }}
-                      whileHover={{ 
-                        rotateY: -15,
-                        scale: 1.05,
-                        opacity: 1,
-                        transition: { duration: 0.4, type: "spring", stiffness: 300 }
-                      }}
-                      className="flex-shrink-0 preserve-3d group cursor-pointer"
-                    >
-                      <motion.div
-                        className="relative w-28 h-16 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/40 flex items-center justify-center transform-gpu"
-                        whileHover={{
-                          boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-                          y: -8
-                        }}
-                      >
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-transparent rounded-xl"
-                          initial={{ x: "100%" }}
-                          whileHover={{ x: "-100%" }}
-                          transition={{ duration: 0.8 }}
-                        />
-                        <img
-                          src={logo.img}
-                          alt={logo.name}
-                          className="max-w-full max-h-full object-contain filter drop-shadow-sm group-hover:filter-none transition-all duration-300"
-                        />
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-                
-                {/* Floating center showcase */}
-                <motion.div
-                  animate={{
-                    y: [-10, 10, -10],
-                    rotateY: [0, 5, 0, -5, 0],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{
-                    duration: 12,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute z-20 transform-gpu preserve-3d"
                 >
                   <motion.div
-                    className="relative w-40 h-24 bg-white backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 flex items-center justify-center"
-                    whileHover={{
-                      scale: 1.2,
-                      rotateY: 10,
-                      z: 100,
-                      boxShadow: "0 30px 60px rgba(0,0,0,0.3)"
-                    }}
+                    animate={{ rotate: [0, -360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="text-ocean-blue font-bold text-sm"
                   >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-coral-accent/20 to-golden-orange/20 rounded-3xl"
-                      animate={{
-                        opacity: [0.3, 0.6, 0.3]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
-                    <img
-                      src={goldenBayLogo}
-                      alt="Featured Customer"
-                      className="max-w-full max-h-full object-contain relative z-10"
-                    />
+                    TRUSTED
                   </motion.div>
                 </motion.div>
-                
-                {/* Corner accents */}
+              </motion.div>
+
+              {/* Orbital Rings */}
+              {[
+                { radius: 120, logos: [{ name: "AZURE", img: azureLogo }, { name: "COSTAR", img: costarLogo }, { name: "GEISHA", img: geishaLogo }], duration: 15 },
+                { radius: 180, logos: [{ name: "GENSEA", img: genseaLogo }, { name: "GOLDEN BAY", img: goldenBayLogo }], duration: 25 },
+                { radius: 240, logos: [{ name: "SEASTAR", img: seastarLogo }, { name: "SELECT", img: selectLogo }], duration: 35 }
+              ].map((ring, ringIndex) => (
                 <motion.div
-                  animate={{ rotate: [0, 90, 180, 270, 360] }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-coral-accent/50 rounded-tl-lg"
-                />
+                  key={ringIndex}
+                  animate={{ rotate: [0, 360] }}
+                  transition={{
+                    duration: ring.duration,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    width: ring.radius * 2,
+                    height: ring.radius * 2
+                  }}
+                >
+                  {ring.logos.map((logo, logoIndex) => {
+                    const angle = (360 / ring.logos.length) * logoIndex;
+                    const radian = (angle * Math.PI) / 180;
+                    const x = Math.cos(radian) * ring.radius;
+                    const y = Math.sin(radian) * ring.radius;
+                    
+                    return (
+                      <motion.div
+                        key={`${ringIndex}-${logoIndex}`}
+                        className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                        style={{
+                          left: `50%`,
+                          top: `50%`,
+                          x: x,
+                          y: y
+                        }}
+                        whileHover={{
+                          scale: 1.4,
+                          zIndex: 50,
+                          transition: { type: "spring", stiffness: 400, damping: 10 }
+                        }}
+                      >
+                        <motion.div
+                          animate={{ rotate: [0, -360] }}
+                          transition={{
+                            duration: ring.duration,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                          className="relative group cursor-pointer"
+                        >
+                          <motion.div
+                            className="w-20 h-20 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/60 flex items-center justify-center transform-gpu relative overflow-hidden"
+                            whileHover={{
+                              boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                              y: -5
+                            }}
+                          >
+                            {/* Magnetic ripple effect */}
+                            <motion.div
+                              className="absolute inset-0 bg-gradient-to-br from-coral-accent/20 to-golden-orange/20 rounded-2xl opacity-0 group-hover:opacity-100"
+                              initial={{ scale: 0 }}
+                              whileHover={{
+                                scale: [0, 1.5, 1],
+                                transition: { duration: 0.6 }
+                              }}
+                            />
+                            <img
+                              src={logo.img}
+                              alt={logo.name}
+                              className="max-w-full max-h-full object-contain relative z-10 filter drop-shadow-md"
+                            />
+                          </motion.div>
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              ))}
+
+              {/* Floating Particles */}
+              {Array.from({ length: 8 }).map((_, index) => (
                 <motion.div
-                  animate={{ rotate: [360, 270, 180, 90, 0] }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-golden-orange/50 rounded-br-lg"
+                  key={`particle-${index}`}
+                  className="absolute w-2 h-2 bg-coral-accent/40 rounded-full"
+                  animate={{
+                    x: [0, Math.random() * 400 - 200, 0],
+                    y: [0, Math.random() * 300 - 150, 0],
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [0.5, 1.2, 0.5]
+                  }}
+                  transition={{
+                    duration: 8 + Math.random() * 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: Math.random() * 2
+                  }}
+                  style={{
+                    left: `50%`,
+                    top: `50%`
+                  }}
                 />
-              </div>
+              ))}
+
+              {/* Connecting Lines */}
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-coral-accent/20 rounded-full"
+              />
+              <motion.div
+                animate={{ rotate: [360, 0] }}
+                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 border border-golden-orange/20 rounded-full"
+              />
             </div>
           </div>
         </motion.section>
