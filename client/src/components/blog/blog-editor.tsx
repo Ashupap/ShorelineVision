@@ -107,7 +107,14 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
   const onSubmit = (data: InsertBlogPostSchema) => {
     console.log("Form submitted with data:", data);
     console.log("Form errors:", form.formState.errors);
-    createBlogPost.mutate(data);
+    
+    // Generate slug from title if not provided
+    const slugifiedData = {
+      ...data,
+      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+    };
+    
+    createBlogPost.mutate(slugifiedData);
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
