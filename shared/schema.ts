@@ -93,6 +93,48 @@ export const inquiries = pgTable("inquiries", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Website content management table
+export const websiteContent = pgTable("website_content", {
+  id: serial("id").primaryKey(),
+  section: varchar("section", { length: 100 }).notNull().unique(), // hero, about, contact, etc.
+  title: varchar("title", { length: 500 }),
+  subtitle: varchar("subtitle", { length: 500 }),
+  content: text("content"),
+  imageUrl: varchar("image_url", { length: 512 }),
+  buttonText: varchar("button_text", { length: 100 }),
+  buttonLink: varchar("button_link", { length: 255 }),
+  additionalData: jsonb("additional_data"), // For flexible content storage
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Media files table for image management
+export const mediaFiles = pgTable("media_files", {
+  id: serial("id").primaryKey(),
+  filename: varchar("filename", { length: 255 }).notNull(),
+  originalName: varchar("original_name", { length: 255 }).notNull(),
+  mimeType: varchar("mime_type", { length: 100 }).notNull(),
+  size: integer("size").notNull(),
+  url: varchar("url", { length: 512 }).notNull(),
+  alt: varchar("alt", { length: 255 }),
+  category: varchar("category", { length: 100 }).default("general"),
+  uploadedBy: varchar("uploaded_by").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Website settings table for global configurations
+export const websiteSettings = pgTable("website_settings", {
+  id: serial("id").primaryKey(),
+  key: varchar("key", { length: 100 }).notNull().unique(),
+  value: text("value"),
+  type: varchar("type", { length: 50 }).default("text"), // text, number, boolean, json
+  description: varchar("description", { length: 255 }),
+  category: varchar("category", { length: 100 }).default("general"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Schema types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -108,6 +150,15 @@ export type InsertProduct = typeof products.$inferInsert;
 
 export type Inquiry = typeof inquiries.$inferSelect;
 export type InsertInquiry = typeof inquiries.$inferInsert;
+
+export type WebsiteContent = typeof websiteContent.$inferSelect;
+export type InsertWebsiteContent = typeof websiteContent.$inferInsert;
+
+export type MediaFile = typeof mediaFiles.$inferSelect;
+export type InsertMediaFile = typeof mediaFiles.$inferInsert;
+
+export type WebsiteSetting = typeof websiteSettings.$inferSelect;
+export type InsertWebsiteSetting = typeof websiteSettings.$inferInsert;
 
 // Insert schemas
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
@@ -136,7 +187,28 @@ export const insertInquirySchema = createInsertSchema(inquiries).omit({
   status: true,
 });
 
+export const insertWebsiteContentSchema = createInsertSchema(websiteContent).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertMediaFileSchema = createInsertSchema(mediaFiles).omit({
+  id: true,
+  createdAt: true,
+  uploadedBy: true,
+});
+
+export const insertWebsiteSettingSchema = createInsertSchema(websiteSettings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type InsertBlogPostSchema = z.infer<typeof insertBlogPostSchema>;
 export type InsertTestimonialSchema = z.infer<typeof insertTestimonialSchema>;
 export type InsertProductSchema = z.infer<typeof insertProductSchema>;
 export type InsertInquirySchema = z.infer<typeof insertInquirySchema>;
+export type InsertWebsiteContentSchema = z.infer<typeof insertWebsiteContentSchema>;
+export type InsertMediaFileSchema = z.infer<typeof insertMediaFileSchema>;
+export type InsertWebsiteSettingSchema = z.infer<typeof insertWebsiteSettingSchema>;

@@ -4,7 +4,11 @@ import AdminSidebar from "./admin-sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { useToast } from "@/hooks/use-toast";
+import type { BlogPost, Product, Testimonial, Inquiry } from "@shared/schema";
 import BlogEditor from "@/components/blog/blog-editor";
+import ContentEditor from "./content-editor";
+import MediaManager from "./media-manager";
+import BlogManager from "./blog-manager";
 import { 
   BarChart3, 
   FileText, 
@@ -22,33 +26,23 @@ import { formatDistanceToNow } from "date-fns";
 export default function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [showBlogEditor, setShowBlogEditor] = useState(false);
+  const [showContentEditor, setShowContentEditor] = useState<string | null>(null);
+  const [showMediaManager, setShowMediaManager] = useState(false);
   const { toast } = useToast();
 
-  const { data: blogPosts, isLoading: blogLoading } = useQuery({
+  const { data: blogPosts, isLoading: blogLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
-    onError: (error) => {
-      if (isUnauthorizedError(error)) {
-        toast({
-          title: "Unauthorized",
-          description: "You are logged out. Logging in again...",
-          variant: "destructive",
-        });
-        setTimeout(() => {
-          window.location.href = "/api/login";
-        }, 500);
-      }
-    },
   });
 
-  const { data: testimonials } = useQuery({
+  const { data: testimonials } = useQuery<Testimonial[]>({
     queryKey: ["/api/testimonials"],
   });
 
-  const { data: products } = useQuery({
+  const { data: products } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
 
-  const { data: inquiries } = useQuery({
+  const { data: inquiries } = useQuery<Inquiry[]>({
     queryKey: ["/api/inquiries"],
   });
 
@@ -163,133 +157,211 @@ export default function AdminDashboard() {
     </div>
   );
 
-  const renderBlogManagement = () => (
+  const renderBlogManagement = () => <BlogManager />;
+
+  const renderContentManagement = () => (
+    <div>
+      <h1 className="text-3xl font-heading font-bold text-gray-900 mb-8">
+        Website Content Management
+      </h1>
+      <div className="grid md:grid-cols-2 gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">Hero Section</h3>
+          <p className="text-gray-600 mb-4">Manage your homepage hero section content</p>
+          <Button 
+            className="bg-ocean-blue hover:bg-deep-navy" 
+            onClick={() => setShowContentEditor("hero")}
+            data-testid="button-edit-hero"
+          >
+            Edit Hero Content
+          </Button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">About Section</h3>
+          <p className="text-gray-600 mb-4">Update your company information and about content</p>
+          <Button 
+            className="bg-ocean-blue hover:bg-deep-navy" 
+            onClick={() => setShowContentEditor("about")}
+            data-testid="button-edit-about"
+          >
+            Edit About Content
+          </Button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">Contact Information</h3>
+          <p className="text-gray-600 mb-4">Manage contact details and company information</p>
+          <Button 
+            className="bg-ocean-blue hover:bg-deep-navy" 
+            onClick={() => setShowContentEditor("contact")}
+            data-testid="button-edit-contact"
+          >
+            Edit Contact Info
+          </Button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">Footer Content</h3>
+          <p className="text-gray-600 mb-4">Update footer links and information</p>
+          <Button 
+            className="bg-ocean-blue hover:bg-deep-navy" 
+            onClick={() => setShowContentEditor("footer")}
+            data-testid="button-edit-footer"
+          >
+            Edit Footer Content
+          </Button>
+        </motion.div>
+      </div>
+    </div>
+  );
+
+  const renderMediaLibrary = () => (
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-heading font-bold text-gray-900">
-          Blog Management
+          Media Library
         </h1>
-        <Button
-          onClick={() => setShowBlogEditor(true)}
-          className="bg-ocean-blue hover:bg-deep-navy"
-          data-testid="button-new-post"
+        <Button 
+          className="bg-ocean-blue hover:bg-deep-navy" 
+          onClick={() => setShowMediaManager(true)}
+          data-testid="button-upload-media"
         >
           <Plus size={20} className="mr-2" />
-          New Post
+          Upload Media
         </Button>
       </div>
+      <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+        <Image className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No media files yet</h3>
+        <p className="text-gray-600 mb-6">Upload images and files to get started.</p>
+        <Button 
+          className="bg-ocean-blue hover:bg-deep-navy" 
+          onClick={() => setShowMediaManager(true)}
+          data-testid="button-upload-first-media"
+        >
+          Upload First File
+        </Button>
+      </div>
+    </div>
+  );
 
-      {blogLoading ? (
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="p-6 border-b">
-            <h3 className="text-xl font-heading font-semibold text-gray-900">
-              Published Posts
-            </h3>
-          </div>
+  const renderInquiriesManagement = () => (
+    <div>
+      <h1 className="text-3xl font-heading font-bold text-gray-900 mb-8">
+        Contact Inquiries
+      </h1>
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="p-6 border-b">
+          <h3 className="text-xl font-heading font-semibold text-gray-900">
+            Recent Inquiries
+          </h3>
+        </div>
+        
+        {inquiries && inquiries.length > 0 ? (
           <div className="divide-y">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className="p-6 animate-pulse">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="w-16 h-16 bg-gray-200 rounded-lg mr-4"></div>
-                    <div>
-                      <div className="h-6 bg-gray-200 rounded w-64 mb-2"></div>
-                      <div className="h-4 bg-gray-200 rounded w-48"></div>
-                    </div>
-                  </div>
-                  <div className="flex space-x-2">
-                    <div className="w-8 h-8 bg-gray-200 rounded"></div>
-                    <div className="w-8 h-8 bg-gray-200 rounded"></div>
-                  </div>
+            {inquiries.map((inquiry) => (
+              <div key={inquiry.id} className="p-6 flex items-center justify-between">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-1">
+                    {inquiry.firstName} {inquiry.lastName}
+                  </h4>
+                  <p className="text-sm text-gray-600 mb-2">{inquiry.email}</p>
+                  <p className="text-gray-700">{inquiry.message.substring(0, 100)}...</p>
+                </div>
+                <div className="text-sm text-gray-500">
+                  {formatDistanceToNow(new Date(inquiry.createdAt!))} ago
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      ) : (
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="p-6 border-b">
-            <h3 className="text-xl font-heading font-semibold text-gray-900">
-              Published Posts
-            </h3>
+        ) : (
+          <div className="p-12 text-center">
+            <Mail className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No inquiries yet</h3>
+            <p className="text-gray-600">Contact inquiries will appear here when received.</p>
           </div>
+        )}
+      </div>
+    </div>
+  );
 
-          {blogPosts && blogPosts.length > 0 ? (
-            <div className="divide-y">
-              {blogPosts.map((post) => (
-                <div key={post.id} className="p-6 flex items-center justify-between">
-                  <div className="flex items-center">
-                    {post.featuredImage ? (
-                      <img
-                        src={post.featuredImage}
-                        alt={post.title}
-                        className="w-16 h-16 rounded-lg object-cover mr-4"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 bg-gray-200 rounded-lg mr-4 flex items-center justify-center">
-                        <FileText className="text-gray-400" size={20} />
-                      </div>
-                    )}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">
-                        {post.title}
-                      </h4>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Calendar size={14} className="mr-1" />
-                        <span>{formatDistanceToNow(new Date(post.createdAt!))} ago</span>
-                        <span className="mx-2">•</span>
-                        <Tag size={14} className="mr-1" />
-                        <span>{post.category}</span>
-                        <span className="mx-2">•</span>
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          post.published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {post.published ? 'Published' : 'Draft'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-ocean-blue hover:text-deep-navy"
-                      data-testid={`button-edit-post-${post.id}`}
-                    >
-                      <Edit size={16} />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-coral-accent hover:text-red-600"
-                      data-testid={`button-delete-post-${post.id}`}
-                    >
-                      <Trash2 size={16} />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-12 text-center">
-              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                No blog posts yet
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Create your first blog post to get started.
-              </p>
-              <Button
-                onClick={() => setShowBlogEditor(true)}
-                className="bg-ocean-blue hover:bg-deep-navy"
-                data-testid="button-create-first-post"
-              >
-                Create First Post
-              </Button>
-            </div>
-          )}
-        </div>
-      )}
+  const renderWebsiteSettings = () => (
+    <div>
+      <h1 className="text-3xl font-heading font-bold text-gray-900 mb-8">
+        Website Settings
+      </h1>
+      <div className="grid md:grid-cols-2 gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">Site Information</h3>
+          <p className="text-gray-600 mb-4">Company name, tagline, and basic information</p>
+          <Button className="bg-ocean-blue hover:bg-deep-navy" data-testid="button-edit-site-info">
+            Edit Site Information
+          </Button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">SEO Settings</h3>
+          <p className="text-gray-600 mb-4">Meta titles, descriptions, and SEO configuration</p>
+          <Button className="bg-ocean-blue hover:bg-deep-navy" data-testid="button-edit-seo">
+            Edit SEO Settings
+          </Button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">Social Media</h3>
+          <p className="text-gray-600 mb-4">Social media links and sharing settings</p>
+          <Button className="bg-ocean-blue hover:bg-deep-navy" data-testid="button-edit-social">
+            Edit Social Media
+          </Button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-white p-6 rounded-xl shadow-lg"
+        >
+          <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">Analytics</h3>
+          <p className="text-gray-600 mb-4">Google Analytics and tracking configuration</p>
+          <Button className="bg-ocean-blue hover:bg-deep-navy" data-testid="button-edit-analytics">
+            Edit Analytics
+          </Button>
+        </motion.div>
+      </div>
     </div>
   );
 
@@ -297,6 +369,10 @@ export default function AdminDashboard() {
     switch (activeSection) {
       case "dashboard":
         return renderDashboard();
+      case "content":
+        return renderContentManagement();
+      case "media":
+        return renderMediaLibrary();
       case "blog":
         return renderBlogManagement();
       case "products":
@@ -321,17 +397,10 @@ export default function AdminDashboard() {
             </div>
           </div>
         );
+      case "inquiries":
+        return renderInquiriesManagement();
       case "settings":
-        return (
-          <div>
-            <h1 className="text-3xl font-heading font-bold text-gray-900 mb-8">
-              Settings
-            </h1>
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              <p className="text-gray-600">Settings panel coming soon...</p>
-            </div>
-          </div>
-        );
+        return renderWebsiteSettings();
       default:
         return renderDashboard();
     }
@@ -353,6 +422,17 @@ export default function AdminDashboard() {
 
       {showBlogEditor && (
         <BlogEditor onClose={() => setShowBlogEditor(false)} />
+      )}
+
+      {showContentEditor && (
+        <ContentEditor 
+          section={showContentEditor} 
+          onClose={() => setShowContentEditor(null)} 
+        />
+      )}
+
+      {showMediaManager && (
+        <MediaManager onClose={() => setShowMediaManager(false)} />
       )}
     </>
   );

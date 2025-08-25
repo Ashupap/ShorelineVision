@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
@@ -6,11 +7,50 @@ import {
   insertBlogPostSchema, 
   insertTestimonialSchema, 
   insertProductSchema, 
-  insertInquirySchema 
+  insertInquirySchema,
+  insertWebsiteContentSchema,
+  insertMediaFileSchema,
+  insertWebsiteSettingSchema
 } from "@shared/schema";
 import { z } from "zod";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Multer configuration for file uploads
+  const storage_config = multer.diskStorage({
+    destination: function (req, file, cb) {
+      const uploadPath = path.join(process.cwd(), 'uploads/media');
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+      }
+      cb(null, uploadPath);
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+  });
+
+  const upload = multer({ 
+    storage: storage_config,
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB limit
+    },
+    fileFilter: function (req, file, cb) {
+      // Allow only image files
+      if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only image files are allowed!'));
+      }
+    }
+  });
+
+  // Serve uploaded files statically
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
   // Auth middleware
   await setupAuth(app);
 
@@ -295,6 +335,247 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating inquiry:", error);
       res.status(500).json({ message: "Failed to update inquiry" });
+    }
+  });
+
+  // Website Content routes
+  app.get('/api/content', async (req, res) => {
+    try {
+      const section = req.query.section as string;
+      const content = await storage.getWebsiteContent(section);
+      res.json(content);
+    } catch (error) {
+      console.error("Error fetching website content:", error);
+      res.status(500).json({ message: "Failed to fetch website content" });
+    }
+  });
+
+  app.get('/api/content/:section', async (req, res) => {
+    try {
+      const section = req.params.section;
+      const content = await storage.getWebsiteContentBySection(section);
+      if (!content) {
+        return res.status(404).json({ message: "Content not found" });
+      }
+      res.json(content);
+    } catch (error) {
+      console.error("Error fetching website content:", error);
+      res.status(500).json({ message: "Failed to fetch website content" });
+    }
+  });
+
+  app.post('/api/content', isAuthenticated, async (req, res) => {
+    try {
+      const contentData = insertWebsiteContentSchema.parse(req.body);
+      const content = await storage.createWebsiteContent(contentData);
+      res.status(201).json(content);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid content data", errors: error.errors });
+      }
+      console.error("Error creating website content:", error);
+      res.status(500).json({ message: "Failed to create website content" });
+    }
+  });
+
+  app.put('/api/content/:section', isAuthenticated, async (req, res) => {
+    try {
+      const section = req.params.section;
+      const contentData = insertWebsiteContentSchema.partial().parse(req.body);
+      const content = await storage.updateWebsiteContentBySection(section, contentData);
+      res.json(content);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid content data", errors: error.errors });
+      }
+      console.error("Error updating website content:", error);
+      res.status(500).json({ message: "Failed to update website content" });
+    }
+  });
+
+  app.delete('/api/content/:section', isAuthenticated, async (req, res) => {
+    try {
+      const section = req.params.section;
+      await storage.deleteWebsiteContentBySection(section);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting website content:", error);
+      res.status(500).json({ message: "Failed to delete website content" });
+    }
+  });
+
+  // Media Files routes
+  app.get('/api/media', isAuthenticated, async (req, res) => {
+    try {
+      const category = req.query.category as string;
+      const mediaFiles = await storage.getMediaFiles(category);
+      res.json(mediaFiles);
+    } catch (error) {
+      console.error("Error fetching media files:", error);
+      res.status(500).json({ message: "Failed to fetch media files" });
+    }
+  });
+
+  app.get('/api/media/:id', isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid media file ID" });
+      }
+      
+      const mediaFile = await storage.getMediaFile(id);
+      if (!mediaFile) {
+        return res.status(404).json({ message: "Media file not found" });
+      }
+      
+      res.json(mediaFile);
+    } catch (error) {
+      console.error("Error fetching media file:", error);
+      res.status(500).json({ message: "Failed to fetch media file" });
+    }
+  });
+
+  // File upload endpoint
+  app.post('/api/media/upload', isAuthenticated, upload.single('file'), async (req: any, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      const uploadedBy = req.user.claims.sub;
+      const fileUrl = `/uploads/media/${req.file.filename}`;
+      
+      const mediaData = {
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        mimeType: req.file.mimetype,
+        size: req.file.size,
+        url: fileUrl,
+        alt: req.body.alt || req.file.originalname,
+        category: req.body.category || 'general',
+        uploadedBy,
+      };
+
+      const mediaFile = await storage.createMediaFile(mediaData);
+      res.status(201).json(mediaFile);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).json({ message: "Failed to upload file" });
+    }
+  });
+
+  app.post('/api/media', isAuthenticated, async (req: any, res) => {
+    try {
+      const mediaData = insertMediaFileSchema.parse(req.body);
+      const uploadedBy = req.user.claims.sub;
+      const mediaFile = await storage.createMediaFile({ ...mediaData, uploadedBy });
+      res.status(201).json(mediaFile);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid media file data", errors: error.errors });
+      }
+      console.error("Error creating media file:", error);
+      res.status(500).json({ message: "Failed to create media file" });
+    }
+  });
+
+  app.put('/api/media/:id', isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid media file ID" });
+      }
+      
+      const mediaData = insertMediaFileSchema.partial().parse(req.body);
+      const mediaFile = await storage.updateMediaFile(id, mediaData);
+      res.json(mediaFile);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid media file data", errors: error.errors });
+      }
+      console.error("Error updating media file:", error);
+      res.status(500).json({ message: "Failed to update media file" });
+    }
+  });
+
+  app.delete('/api/media/:id', isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid media file ID" });
+      }
+      
+      await storage.deleteMediaFile(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting media file:", error);
+      res.status(500).json({ message: "Failed to delete media file" });
+    }
+  });
+
+  // Website Settings routes
+  app.get('/api/settings', isAuthenticated, async (req, res) => {
+    try {
+      const category = req.query.category as string;
+      const settings = await storage.getWebsiteSettings(category);
+      res.json(settings);
+    } catch (error) {
+      console.error("Error fetching website settings:", error);
+      res.status(500).json({ message: "Failed to fetch website settings" });
+    }
+  });
+
+  app.get('/api/settings/:key', async (req, res) => {
+    try {
+      const key = req.params.key;
+      const setting = await storage.getWebsiteSettingByKey(key);
+      if (!setting) {
+        return res.status(404).json({ message: "Setting not found" });
+      }
+      res.json(setting);
+    } catch (error) {
+      console.error("Error fetching website setting:", error);
+      res.status(500).json({ message: "Failed to fetch website setting" });
+    }
+  });
+
+  app.post('/api/settings', isAuthenticated, async (req, res) => {
+    try {
+      const settingData = insertWebsiteSettingSchema.parse(req.body);
+      const setting = await storage.createWebsiteSetting(settingData);
+      res.status(201).json(setting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid setting data", errors: error.errors });
+      }
+      console.error("Error creating website setting:", error);
+      res.status(500).json({ message: "Failed to create website setting" });
+    }
+  });
+
+  app.put('/api/settings/:key', isAuthenticated, async (req, res) => {
+    try {
+      const key = req.params.key;
+      const settingData = insertWebsiteSettingSchema.partial().parse(req.body);
+      const setting = await storage.updateWebsiteSettingByKey(key, settingData);
+      res.json(setting);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid setting data", errors: error.errors });
+      }
+      console.error("Error updating website setting:", error);
+      res.status(500).json({ message: "Failed to update website setting" });
+    }
+  });
+
+  app.delete('/api/settings/:key', isAuthenticated, async (req, res) => {
+    try {
+      const key = req.params.key;
+      await storage.deleteWebsiteSettingByKey(key);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting website setting:", error);
+      res.status(500).json({ message: "Failed to delete website setting" });
     }
   });
 

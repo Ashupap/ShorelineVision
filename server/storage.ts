@@ -4,6 +4,9 @@ import {
   testimonials,
   products,
   inquiries,
+  websiteContent,
+  mediaFiles,
+  websiteSettings,
   type User,
   type UpsertUser,
   type BlogPost,
@@ -14,6 +17,12 @@ import {
   type InsertProduct,
   type Inquiry,
   type InsertInquiry,
+  type WebsiteContent,
+  type InsertWebsiteContent,
+  type MediaFile,
+  type InsertMediaFile,
+  type WebsiteSetting,
+  type InsertWebsiteSetting,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, like, and } from "drizzle-orm";
@@ -53,6 +62,27 @@ export interface IStorage {
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
   updateInquiry(id: number, inquiry: Partial<InsertInquiry>): Promise<Inquiry>;
   deleteInquiry(id: number): Promise<void>;
+  
+  // Website Content operations
+  getWebsiteContent(section?: string): Promise<WebsiteContent[]>;
+  getWebsiteContentBySection(section: string): Promise<WebsiteContent | undefined>;
+  createWebsiteContent(content: InsertWebsiteContent): Promise<WebsiteContent>;
+  updateWebsiteContentBySection(section: string, content: Partial<InsertWebsiteContent>): Promise<WebsiteContent>;
+  deleteWebsiteContentBySection(section: string): Promise<void>;
+  
+  // Media File operations
+  getMediaFiles(category?: string): Promise<MediaFile[]>;
+  getMediaFile(id: number): Promise<MediaFile | undefined>;
+  createMediaFile(media: InsertMediaFile & { uploadedBy: string }): Promise<MediaFile>;
+  updateMediaFile(id: number, media: Partial<InsertMediaFile>): Promise<MediaFile>;
+  deleteMediaFile(id: number): Promise<void>;
+  
+  // Website Settings operations
+  getWebsiteSettings(category?: string): Promise<WebsiteSetting[]>;
+  getWebsiteSettingByKey(key: string): Promise<WebsiteSetting | undefined>;
+  createWebsiteSetting(setting: InsertWebsiteSetting): Promise<WebsiteSetting>;
+  updateWebsiteSettingByKey(key: string, setting: Partial<InsertWebsiteSetting>): Promise<WebsiteSetting>;
+  deleteWebsiteSettingByKey(key: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -218,6 +248,111 @@ export class DatabaseStorage implements IStorage {
 
   async deleteInquiry(id: number): Promise<void> {
     await db.delete(inquiries).where(eq(inquiries.id, id));
+  }
+
+  // Website Content operations
+  async getWebsiteContent(section?: string): Promise<WebsiteContent[]> {
+    const query = db.select().from(websiteContent);
+    if (section) {
+      query.where(eq(websiteContent.section, section));
+    }
+    return await query.orderBy(websiteContent.section);
+  }
+
+  async getWebsiteContentBySection(section: string): Promise<WebsiteContent | undefined> {
+    const [content] = await db.select().from(websiteContent).where(eq(websiteContent.section, section));
+    return content;
+  }
+
+  async createWebsiteContent(content: InsertWebsiteContent): Promise<WebsiteContent> {
+    const [created] = await db
+      .insert(websiteContent)
+      .values(content)
+      .returning();
+    return created;
+  }
+
+  async updateWebsiteContentBySection(section: string, content: Partial<InsertWebsiteContent>): Promise<WebsiteContent> {
+    const [updated] = await db
+      .update(websiteContent)
+      .set({ ...content, updatedAt: new Date() })
+      .where(eq(websiteContent.section, section))
+      .returning();
+    return updated;
+  }
+
+  async deleteWebsiteContentBySection(section: string): Promise<void> {
+    await db.delete(websiteContent).where(eq(websiteContent.section, section));
+  }
+
+  // Media File operations
+  async getMediaFiles(category?: string): Promise<MediaFile[]> {
+    const query = db.select().from(mediaFiles);
+    if (category) {
+      query.where(eq(mediaFiles.category, category));
+    }
+    return await query.orderBy(desc(mediaFiles.createdAt));
+  }
+
+  async getMediaFile(id: number): Promise<MediaFile | undefined> {
+    const [media] = await db.select().from(mediaFiles).where(eq(mediaFiles.id, id));
+    return media;
+  }
+
+  async createMediaFile(media: InsertMediaFile & { uploadedBy: string }): Promise<MediaFile> {
+    const [created] = await db
+      .insert(mediaFiles)
+      .values(media)
+      .returning();
+    return created;
+  }
+
+  async updateMediaFile(id: number, media: Partial<InsertMediaFile>): Promise<MediaFile> {
+    const [updated] = await db
+      .update(mediaFiles)
+      .set(media)
+      .where(eq(mediaFiles.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteMediaFile(id: number): Promise<void> {
+    await db.delete(mediaFiles).where(eq(mediaFiles.id, id));
+  }
+
+  // Website Settings operations
+  async getWebsiteSettings(category?: string): Promise<WebsiteSetting[]> {
+    const query = db.select().from(websiteSettings);
+    if (category) {
+      query.where(eq(websiteSettings.category, category));
+    }
+    return await query.orderBy(websiteSettings.category, websiteSettings.key);
+  }
+
+  async getWebsiteSettingByKey(key: string): Promise<WebsiteSetting | undefined> {
+    const [setting] = await db.select().from(websiteSettings).where(eq(websiteSettings.key, key));
+    return setting;
+  }
+
+  async createWebsiteSetting(setting: InsertWebsiteSetting): Promise<WebsiteSetting> {
+    const [created] = await db
+      .insert(websiteSettings)
+      .values(setting)
+      .returning();
+    return created;
+  }
+
+  async updateWebsiteSettingByKey(key: string, setting: Partial<InsertWebsiteSetting>): Promise<WebsiteSetting> {
+    const [updated] = await db
+      .update(websiteSettings)
+      .set({ ...setting, updatedAt: new Date() })
+      .where(eq(websiteSettings.key, key))
+      .returning();
+    return updated;
+  }
+
+  async deleteWebsiteSettingByKey(key: string): Promise<void> {
+    await db.delete(websiteSettings).where(eq(websiteSettings.key, key));
   }
 }
 

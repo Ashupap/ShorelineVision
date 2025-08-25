@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { X, BarChart3, FileText, Star, Cog, Fish } from "lucide-react";
+import { X, BarChart3, FileText, Star, Cog, Fish, Edit3, Image, Mail, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface AdminSidebarProps {
@@ -10,10 +10,13 @@ interface AdminSidebarProps {
 export default function AdminSidebar({ activeSection, onSectionChange }: AdminSidebarProps) {
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: BarChart3 },
+    { id: "content", label: "Website Content", icon: Edit3 },
+    { id: "media", label: "Media Library", icon: Image },
     { id: "blog", label: "Blog Management", icon: FileText },
     { id: "products", label: "Products", icon: Fish },
     { id: "testimonials", label: "Testimonials", icon: Star },
-    { id: "settings", label: "Settings", icon: Cog },
+    { id: "inquiries", label: "Inquiries", icon: Mail },
+    { id: "settings", label: "Website Settings", icon: Globe },
   ];
 
   const handleLogout = () => {
