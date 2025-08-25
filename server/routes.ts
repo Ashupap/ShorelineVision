@@ -61,20 +61,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Simple temp credentials for testing
       if (username === 'admin' && password === 'admin123') {
-        // Simulate user session
-        (req.session as any).tempUser = {
+        const tempUserData = {
           id: 'temp-admin-123',
           email: 'admin@alashoremarine.com',
           firstName: 'Admin',
           lastName: 'User'
         };
         
-        res.json({
-          id: 'temp-admin-123',
-          email: 'admin@alashoremarine.com',
-          firstName: 'Admin',
-          lastName: 'User'
-        });
+        // Create the user in database if it doesn't exist
+        await storage.upsertUser(tempUserData);
+        
+        // Simulate user session
+        (req.session as any).tempUser = tempUserData;
+        
+        res.json(tempUserData);
       } else {
         res.status(401).json({ message: 'Invalid credentials' });
       }
