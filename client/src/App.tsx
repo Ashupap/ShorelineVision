@@ -15,6 +15,7 @@ const Media = lazy(() => import("@/pages/media"));
 const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const Admin = lazy(() => import("@/pages/admin"));
+const TempLogin = lazy(() => import("@/pages/temp-login"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 // Loading component
@@ -41,7 +42,8 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={Blog} />
-        {isAuthenticated && <Route path="/meadmin" component={Admin} />}
+        <Route path="/temp-login" component={TempLogin} />
+        <Route path="/admin" component={Admin} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

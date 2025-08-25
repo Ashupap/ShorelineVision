@@ -54,6 +54,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
+  // Temp admin login for development/testing
+  app.post('/api/auth/temp-login', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      // Simple temp credentials for testing
+      if (username === 'admin' && password === 'admin123') {
+        // Simulate user session
+        (req.session as any).tempUser = {
+          id: 'temp-admin-123',
+          email: 'admin@alashoremarine.com',
+          firstName: 'Admin',
+          lastName: 'User'
+        };
+        
+        res.json({
+          id: 'temp-admin-123',
+          email: 'admin@alashoremarine.com',
+          firstName: 'Admin',
+          lastName: 'User'
+        });
+      } else {
+        res.status(401).json({ message: 'Invalid credentials' });
+      }
+    } catch (error) {
+      console.error("Error in temp login:", error);
+      res.status(500).json({ message: "Login failed" });
+    }
+  });
+
+  // Check temp user session
+  app.get('/api/auth/temp-user', async (req: any, res) => {
+    try {
+      if ((req.session as any).tempUser) {
+        res.json((req.session as any).tempUser);
+      } else {
+        res.status(401).json({ message: "Not authenticated" });
+      }
+    } catch (error) {
+      console.error("Error fetching temp user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {

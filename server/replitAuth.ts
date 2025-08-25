@@ -127,9 +127,17 @@ export async function setupAuth(app: Express) {
   });
 }
 
+// Temp auth middleware that checks both Replit auth and temp session
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
   const user = req.user as any;
+  const tempUser = (req.session as any)?.tempUser;
 
+  // Check temp user session first (for development/testing)
+  if (tempUser) {
+    return next();
+  }
+
+  // Original Replit auth logic
   if (!req.isAuthenticated() || !user.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
   }
