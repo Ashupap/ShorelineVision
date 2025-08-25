@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import BlueWorldMap from "@/components/blue-world-map";
+import InteractiveWorldMap from "@/components/interactive-world-map";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -938,7 +938,7 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <BlueWorldMap />
+              <InteractiveWorldMap />
             </motion.div>
 
             {/* Alternative Animation Designs - Floating Destination Bubbles */}
