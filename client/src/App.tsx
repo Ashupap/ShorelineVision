@@ -41,7 +41,7 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={Blog} />
-        {isAuthenticated && <Route path="/admin" component={Admin} />}
+        {isAuthenticated && <Route path="/meadmin" component={Admin} />}
         <Route component={NotFound} />
       </Switch>
     </Suspense>

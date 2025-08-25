@@ -53,7 +53,7 @@ export default function Header() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[100]">
-      {/* Animated Information Bar */}
+      {/* Animated Information Bar - Hidden on mobile and tablet */}
       <motion.div
         initial={{ y: -50, opacity: 0 }}
         animate={{ 
@@ -62,7 +62,7 @@ export default function Header() {
           height: isScrolled ? 0 : 'auto'
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="relative overflow-hidden"
+        className="relative overflow-hidden hidden lg:block"
       >
         {/* Animated Background */}
         <motion.div
@@ -228,8 +228,8 @@ export default function Header() {
           {/* CTA Buttons */}
           <div className="flex items-center space-x-4">
             <Link
-              href="/admin"
-              className={`hidden md:flex items-center text-sm ${isScrolled ? 'text-gray-600' : 'text-white/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300`}
+              href="/meadmin"
+              className={`hidden lg:flex items-center text-sm ${isScrolled ? 'text-gray-600' : 'text-white/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300`}
               data-testid="link-admin"
             >
               <Shield size={16} className="mr-1" />
@@ -283,14 +283,6 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <Link
-                href="/admin"
-                className="block text-gray-700 hover:text-coral-accent transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-                data-testid="link-mobile-admin"
-              >
-                Admin Login
-              </Link>
             </div>
           </motion.div>
         )}
