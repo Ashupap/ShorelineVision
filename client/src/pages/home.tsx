@@ -86,10 +86,10 @@ const Home = memo(function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="relative"
+              className="relative flex items-center justify-center"
             >
               {/* Enhanced Orbital Animation Container */}
-              <div className="relative h-[500px] w-full overflow-hidden rounded-xl">
+              <div className="relative h-[500px] w-full overflow-hidden rounded-xl flex items-center justify-center">
                 {/* Gradient Background */}
                 <motion.div
                   animate={{
