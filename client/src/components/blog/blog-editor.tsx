@@ -105,6 +105,8 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
   });
 
   const onSubmit = (data: InsertBlogPostSchema) => {
+    console.log("Form submitted with data:", data);
+    console.log("Form errors:", form.formState.errors);
     createBlogPost.mutate(data);
   };
 
@@ -360,6 +362,11 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                   disabled={createBlogPost.isPending}
                   className="bg-ocean-blue hover:bg-deep-navy"
                   data-testid="button-publish"
+                  onClick={() => {
+                    console.log("Publish button clicked");
+                    console.log("Form is valid:", form.formState.isValid);
+                    console.log("Form errors:", form.formState.errors);
+                  }}
                 >
                   {createBlogPost.isPending ? "Publishing..." : "Publish Post"}
                 </Button>
