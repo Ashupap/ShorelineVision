@@ -126,7 +126,7 @@ export default function Testimonials() {
                 boxShadow: "0 35px 60px rgba(0,0,0,0.2), 0 15px 40px rgba(0,0,0,0.15)",
                 transition: { duration: 0.3, type: "spring", stiffness: 300, damping: 20 }
               }}
-              className="bg-white p-8 lg:p-10 rounded-lg shadow-[0_15px_35px_rgba(0,0,0,0.1)] max-w-md w-full border border-gray-100 transform-gpu"
+              className="bg-gradient-to-br from-teal-50 to-cyan-50 p-8 lg:p-10 rounded-lg shadow-[0_15px_35px_rgba(0,0,0,0.1)] max-w-md w-full border border-teal-100 transform-gpu"
             >
               {/* Display current testimonial */}
               {currentTestimonial && (
