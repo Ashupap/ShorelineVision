@@ -259,7 +259,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                         {/* URL Input (alternative) */}
                         <FormControl>
                           <Input
-                            type="url"
+                            type="text"
                             placeholder="Or paste image URL..."
                             {...field}
                             value={field.value || ""}
