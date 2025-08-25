@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Star, Award, Globe, Users, Leaf, Target } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import AnimatedWorldMap from "@/components/animated-world-map";
+import AnimatedEarthMap from "@/components/animated-earth-map";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +21,7 @@ export default function AboutUs() {
     <div ref={containerRef} className="min-h-screen bg-background">
       <Header />
       
-      <main className="pt-16">
+      <main>
         {/* Enhanced Hero Section with Parallax */}
         <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
           <motion.div 
@@ -91,7 +91,7 @@ export default function AboutUs() {
         </section>
 
         {/* Main Content */}
-        <section className="py-20 bg-gradient-to-br from-light-marine to-white">
+        <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
           <div className="container mx-auto px-4">
 
             {/* Who We Are Section */}
@@ -193,7 +193,7 @@ export default function AboutUs() {
                     alt="Our Mission - Innovation in Seafood"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-ocean-blue/90"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600/95 via-red-600/90 to-purple-600/95"></div>
                 </div>
                 
                 {/* Content */}
@@ -227,7 +227,7 @@ export default function AboutUs() {
                     alt="Our Vision - Global Leadership"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/90 via-coral-accent/85 to-marine-teal/90"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/95 via-green-600/90 to-purple-600/95"></div>
                 </div>
                 
                 {/* Content */}
@@ -420,117 +420,175 @@ export default function AboutUs() {
               ))}
             </div>
 
-            {/* Journey of Alashore Marine Group */}
+            {/* Journey Section - Winery Timeline Style */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-20"
+              className="mb-20 relative"
             >
-              <div className="text-center mb-12">
-                <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
-                  Journey of Alashore Marine Group
-                </h3>
-                <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-                  From 1997, in the past 24 years, we have come so far and the journey has been amazing
-                </p>
-                <div className="w-24 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full mt-6"></div>
+              {/* Background with vintage wine texture */}
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-red-900/10 to-purple-900/20 rounded-3xl"></div>
+              
+              <div className="relative z-10 text-center mb-16 py-12">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1 }}
+                  className="inline-block"
+                >
+                  <h3 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6 drop-shadow-2xl">
+                    Our <span className="text-amber-400">Journey</span>
+                  </h3>
+                  <div className="w-32 h-2 bg-gradient-to-r from-amber-400 via-red-500 to-purple-600 mx-auto rounded-full mb-6"></div>
+                  <p className="text-white/90 text-xl max-w-3xl mx-auto drop-shadow-lg">
+                    A story of excellence, crafted through decades of dedication
+                  </p>
+                </motion.div>
               </div>
               
-              {/* Timeline Table */}
-              <div className="bg-white rounded-3xl shadow-2xl p-8 mb-12">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left">
-                    <thead>
-                      <tr className="border-b-2 border-ocean-blue">
-                        <th className="text-2xl font-bold text-ocean-blue py-4 px-6">Year</th>
-                        <th className="text-2xl font-bold text-ocean-blue py-4 px-6">Key Milestones</th>
-                        <th className="text-2xl font-bold text-ocean-blue py-4 px-6">Impact on the Business</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <motion.tr 
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        viewport={{ once: true }}
-                        className="border-b border-gray-200 hover:bg-light-marine/30 transition-colors duration-300"
-                      >
-                        <td className="text-3xl font-bold text-ocean-blue py-6 px-6">2009</td>
-                        <td className="text-lg text-gray-700 py-6 px-6 font-semibold">Balasore Marine Exports Pvt. Ltd.</td>
-                        <td className="text-lg text-gray-600 py-6 px-6">
-                          <div className="space-y-1">
-                            <div className="font-medium text-marine-teal">Destination</div>
-                            <div>China, Vietnam, UAE</div>
-                          </div>
-                        </td>
-                      </motion.tr>
-                      <motion.tr 
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        viewport={{ once: true }}
-                        className="hover:bg-light-marine/30 transition-colors duration-300"
-                      >
-                        <td className="text-3xl font-bold text-ocean-blue py-6 px-6">2012</td>
-                        <td className="text-lg text-gray-700 py-6 px-6 font-semibold">Alashore Marine Exports Pvt. Ltd.</td>
-                        <td className="text-lg text-gray-600 py-6 px-6">
-                          <div className="space-y-1">
-                            <div className="font-medium text-marine-teal">Destination</div>
-                            <div>USA, EU, Canada, Malaysia, Japan, Mauritius</div>
-                          </div>
-                        </td>
-                      </motion.tr>
-                    </tbody>
-                  </table>
+              {/* Winery Timeline */}
+              <div className="relative max-w-6xl mx-auto">
+                {/* Wine Bottle Timeline Line */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 h-full">
+                  <div className="w-2 h-full bg-gradient-to-b from-amber-600 via-red-700 to-purple-800 rounded-full shadow-xl"></div>
+                  {/* Cork tops */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-200 rounded-full border-4 border-amber-600 shadow-lg"></div>
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-purple-200 rounded-full border-4 border-purple-600 shadow-lg"></div>
                 </div>
-              </div>
-
-              {/* Timeline Visual */}
-              <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-ocean-blue to-marine-teal rounded-full"></div>
                 
-                <div className="space-y-16">
+                <div className="space-y-20 py-16">
                   {[
                     {
                       year: "2009",
                       title: "Balasore Marine Exports",
-                      description: "Started operations with focus on Asian markets including China, Vietnam, and UAE. Building foundation for seafood export excellence.",
-                      icon: "🏭",
-                      side: "left"
+                      subtitle: "The Foundation Vintage",
+                      description: "Like a carefully selected grape harvest, we began our journey in the Asian markets with China, Vietnam, and UAE. This was our foundation year, where we established our commitment to quality.",
+                      destinations: ["China", "Vietnam", "UAE"],
+                      color: "from-amber-500 to-orange-600",
+                      side: "left",
+                      icon: "🍇"
                     },
                     {
                       year: "2012",
                       title: "Alashore Marine Exports",
-                      description: "Expanded globally to USA, EU, Canada, Malaysia, Japan, and Mauritius. Achieved international recognition for quality standards.",
-                      icon: "🌍",
-                      side: "right"
+                      subtitle: "The Global Reserve",
+                      description: "Our finest vintage year - expanding our reach globally like a premium wine finding its way to the most prestigious tables worldwide. We conquered new territories with unwavering quality.",
+                      destinations: ["USA", "EU", "Canada", "Malaysia", "Japan", "Mauritius"],
+                      color: "from-red-500 to-purple-600",
+                      side: "right",
+                      icon: "🌍"
                     }
                   ].map((milestone, index) => (
                     <motion.div
                       key={milestone.year}
-                      initial={{ opacity: 0, x: milestone.side === 'left' ? -100 : 100 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: index * 0.3 }}
+                      initial={{ 
+                        opacity: 0, 
+                        x: milestone.side === 'left' ? -100 : 100,
+                        scale: 0.8
+                      }}
+                      whileInView={{ 
+                        opacity: 1, 
+                        x: 0,
+                        scale: 1
+                      }}
+                      transition={{ 
+                        duration: 1.2, 
+                        delay: index * 0.5,
+                        type: "spring",
+                        stiffness: 100
+                      }}
                       viewport={{ once: true }}
                       className={`flex items-center ${milestone.side === 'left' ? 'justify-start' : 'justify-end'}`}
                     >
-                      <div className={`w-5/12 ${milestone.side === 'left' ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                        <div className="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                          <div className={`flex items-center ${milestone.side === 'left' ? 'justify-end' : 'justify-start'} mb-4`}>
-                            <div className="w-12 h-12 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-xl flex items-center justify-center mr-3">
-                              <span className="text-xl">{milestone.icon}</span>
-                            </div>
-                            <div className="text-2xl font-bold text-ocean-blue">{milestone.year}</div>
+                      {/* Wine Bottle Card */}
+                      <div className={`w-5/12 ${milestone.side === 'left' ? 'pr-12' : 'pl-12'}`}>
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.05,
+                            rotateY: milestone.side === 'left' ? 5 : -5
+                          }}
+                          className="group relative bg-gradient-to-br from-black/80 to-gray-900/90 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl border border-amber-500/30"
+                        >
+                          {/* Wine Label Background */}
+                          <div className={`absolute inset-0 bg-gradient-to-br ${milestone.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div>
+                          
+                          {/* Decorative Wine Elements */}
+                          <div className="absolute top-4 right-4 text-4xl opacity-20 group-hover:opacity-40 transition-opacity duration-500">
+                            {milestone.icon}
                           </div>
-                          <h4 className="text-xl font-bold text-gray-900 mb-3">{milestone.title}</h4>
-                          <p className="text-gray-600 leading-relaxed">{milestone.description}</p>
-                        </div>
+                          
+                          <div className="relative p-8">
+                            {/* Year Badge - Wine Vintage Style */}
+                            <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-6 py-2 rounded-full font-bold text-lg mb-4 shadow-lg`}>
+                              {milestone.year}
+                            </div>
+                            
+                            {/* Wine Label Content */}
+                            <div className="text-center mb-6">
+                              <h4 className="text-white text-2xl font-bold mb-2 group-hover:text-amber-200 transition-colors duration-300">
+                                {milestone.title}
+                              </h4>
+                              <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider">
+                                {milestone.subtitle}
+                              </p>
+                              <div className="w-16 h-0.5 bg-gradient-to-r from-amber-400 to-red-500 mx-auto mt-3"></div>
+                            </div>
+                            
+                            <p className="text-white/90 leading-relaxed mb-6 text-center italic">
+                              {milestone.description}
+                            </p>
+                            
+                            {/* Destinations - Wine Tasting Notes Style */}
+                            <div className="text-center">
+                              <p className="text-amber-300 text-sm font-semibold mb-2">Market Destinations</p>
+                              <div className="flex flex-wrap justify-center gap-2">
+                                {milestone.destinations.map((destination, i) => (
+                                  <motion.span
+                                    key={destination}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.3, delay: i * 0.1 }}
+                                    className="bg-amber-900/50 text-amber-200 px-3 py-1 rounded-full text-xs border border-amber-500/30 hover:bg-amber-800/70 transition-colors duration-300"
+                                  >
+                                    {destination}
+                                  </motion.span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Wine Cork */}
+                          <div className={`absolute ${milestone.side === 'left' ? '-right-2' : '-left-2'} top-1/2 transform -translate-y-1/2 w-4 h-12 bg-gradient-to-b from-amber-200 to-amber-600 rounded-full border-2 border-amber-700 shadow-lg`}></div>
+                        </motion.div>
                       </div>
                       
-                      {/* Timeline dot */}
-                      <div className="w-6 h-6 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-full border-4 border-white shadow-lg z-10"></div>
+                      {/* Central Wine Glass */}
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        whileInView={{ scale: 1, rotate: 0 }}
+                        transition={{ duration: 0.8, delay: index * 0.5 + 0.3 }}
+                        className="relative z-20"
+                      >
+                        <div className={`w-16 h-16 bg-gradient-to-br ${milestone.color} rounded-full border-4 border-white shadow-2xl flex items-center justify-center`}>
+                          <span className="text-white text-2xl font-bold">{milestone.icon}</span>
+                        </div>
+                        {/* Wine Pour Effect */}
+                        <motion.div
+                          animate={{
+                            scaleY: [0, 1, 0.8, 1],
+                            opacity: [0, 0.6, 0.3, 0.6]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 2
+                          }}
+                          className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-1 h-8 bg-gradient-to-b ${milestone.color} rounded-full opacity-30`}
+                        />
+                      </motion.div>
                       
                       <div className="w-5/12"></div>
                     </motion.div>
@@ -547,15 +605,15 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
+              <h3 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
                 Our Global Presence
               </h3>
-              <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
-                Embark on a journey through our business evolution, tracing our growth, milestones, and commitment to excellence in the seafood export industry
+              <p className="text-white/90 text-lg max-w-3xl mx-auto mb-12">
+                Connecting oceans worldwide - Discover how our premium seafood reaches tables across continents through our extensive global network
               </p>
             </motion.div>
 
-            {/* Animated World Map */}
+            {/* Animated Earth Map */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -563,7 +621,7 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <AnimatedWorldMap />
+              <AnimatedEarthMap />
             </motion.div>
 
             {/* Global Presence - Original Style Cards */}
