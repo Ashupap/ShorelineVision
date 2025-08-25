@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Star, User, Quote } from "lucide-react";
+import { useState, useEffect } from "react";
 import type { Testimonial } from "@shared/schema";
 
 export default function Testimonials() {
   const { data: testimonials, isLoading } = useQuery<Testimonial[]>({
     queryKey: ["/api/testimonials?published=true"],
   });
+  
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
   // Default testimonials data if API returns empty
   const defaultTestimonials = [
@@ -61,6 +64,19 @@ export default function Testimonials() {
   ];
 
   const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials;
+  
+  // Auto-rotate testimonials every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonialIndex(prev => 
+        prev === displayTestimonials.length - 1 ? 0 : prev + 1
+      );
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [displayTestimonials.length]);
+  
+  const currentTestimonial = displayTestimonials[currentTestimonialIndex];
 
   return (
     <section className="py-0 relative min-h-[500px] overflow-hidden">
@@ -88,16 +104,17 @@ export default function Testimonials() {
             <div className="w-full max-w-md h-64 bg-gray-200 rounded-lg animate-pulse"></div>
           ) : (
             <motion.div
+              key={currentTestimonialIndex}
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              animate={{
-                y: [0, -8, 0],
-                rotate: [0, 1, -1, 0],
+              animate={{ 
+                opacity: 1, 
+                y: [0, -8, 0], 
                 scale: [1, 1.02, 1],
+                rotate: [0, 1, -1, 0]
               }}
+              exit={{ opacity: 0, y: -30, scale: 0.9 }}
               transition={{
-                opacity: { duration: 0.8, delay: 0.2 },
+                opacity: { duration: 0.8 },
                 y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
                 rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
                 scale: { duration: 5, repeat: Infinity, ease: "easeInOut" },
@@ -111,8 +128,8 @@ export default function Testimonials() {
               }}
               className="bg-white p-8 lg:p-10 rounded-lg shadow-[0_15px_35px_rgba(0,0,0,0.1)] max-w-md w-full border border-gray-100 transform-gpu"
             >
-              {/* Display first testimonial */}
-              {displayTestimonials[0] && (
+              {/* Display current testimonial */}
+              {currentTestimonial && (
                 <>
                   {/* Animated Stars Rating */}
                   <motion.div 
@@ -162,7 +179,7 @@ export default function Testimonials() {
                     >
                       "
                     </motion.span>
-                    <span className="relative z-10">{displayTestimonials[0].content}</span>
+                    <span className="relative z-10">{currentTestimonial.content}</span>
                     <motion.span
                       animate={{ opacity: [0.5, 1, 0.5] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
@@ -185,10 +202,10 @@ export default function Testimonials() {
                       transition={{ type: "spring", stiffness: 300 }}
                       className="w-12 h-12 lg:w-14 lg:h-14 rounded-full overflow-hidden bg-gray-200 flex-shrink-0 ring-2 ring-teal-100 shadow-lg"
                     >
-                      {displayTestimonials[0].avatar ? (
+                      {currentTestimonial.avatar ? (
                         <img 
-                          src={displayTestimonials[0].avatar} 
-                          alt={displayTestimonials[0].name}
+                          src={currentTestimonial.avatar} 
+                          alt={currentTestimonial.name}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -206,7 +223,7 @@ export default function Testimonials() {
                         whileHover={{ scale: 1.05 }}
                         className="font-bold text-gray-900 text-lg mb-1 cursor-default"
                       >
-                        {displayTestimonials[0].name}
+                        {currentTestimonial.name}
                       </motion.h4>
                       <motion.p 
                         initial={{ opacity: 0 }}
@@ -215,7 +232,7 @@ export default function Testimonials() {
                         viewport={{ once: true }}
                         className="text-gray-400 text-sm font-medium uppercase tracking-wide"
                       >
-                        {displayTestimonials[0].company || 'VALUED CUSTOMER'}
+                        {currentTestimonial.company || 'VALUED CUSTOMER'}
                       </motion.p>
                     </div>
                   </motion.div>
