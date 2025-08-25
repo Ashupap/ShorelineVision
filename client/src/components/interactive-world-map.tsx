@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import mapImage from "@assets/daae0035-cb27-4e73-bc2e-dd558b71a9d3_1756123214469.png";
 
 interface Destination {
   name: string;
@@ -11,37 +12,39 @@ interface Destination {
 }
 
 const destinations: Destination[] = [
-  // North America
-  { name: "Houston", country: "USA", x: 292, y: 185, region: "North America", products: ["Shrimp", "Fish"] },
-  { name: "New York", country: "USA", x: 315, y: 165, region: "North America", products: ["Premium Seafood"] },
-  { name: "New Jersey", country: "USA", x: 318, y: 167, region: "North America", products: ["Frozen Fish"] },
-  { name: "Los Angeles", country: "USA", x: 245, y: 180, region: "North America", products: ["Crab", "Lobster"] },
-  { name: "Miami", country: "USA", x: 305, y: 205, region: "North America", products: ["Tropical Fish"] },
-  { name: "Chicago", country: "USA", x: 295, y: 160, region: "North America", products: ["Seafood Mix"] },
-  { name: "Seattle", country: "USA", x: 260, y: 145, region: "North America", products: ["Salmon"] },
-  { name: "Toronto", country: "Canada", x: 310, y: 150, region: "North America", products: ["Atlantic Fish"] },
-  { name: "Vancouver", country: "Canada", x: 260, y: 135, region: "North America", products: ["Pacific Seafood"] },
+  // USA
+  { name: "Houston", country: "USA", x: 28, y: 48, region: "North America", products: ["Shrimp", "Fish"] },
+  { name: "New York", country: "USA", x: 32, y: 42, region: "North America", products: ["Premium Seafood"] },
+  { name: "New Jersey", country: "USA", x: 32.5, y: 43, region: "North America", products: ["Frozen Fish"] },
+  { name: "LA", country: "USA", x: 22, y: 45, region: "North America", products: ["Crab", "Lobster"] },
+  { name: "Miami", country: "USA", x: 30, y: 52, region: "North America", products: ["Tropical Fish"] },
+  { name: "Chicago", country: "USA", x: 28, y: 40, region: "North America", products: ["Seafood Mix"] },
+  { name: "Seattle", country: "USA", x: 20, y: 35, region: "North America", products: ["Salmon"] },
+  
+  // Canada
+  { name: "Toronto", country: "Canada", x: 30, y: 38, region: "North America", products: ["Atlantic Fish"] },
+  { name: "Vancouver", country: "Canada", x: 20, y: 33, region: "North America", products: ["Pacific Seafood"] },
   
   // Europe
-  { name: "Antwerp", country: "Belgium", x: 484, y: 125, region: "Europe", products: ["European Mix"] },
-  { name: "Amsterdam", country: "Netherlands", x: 485, y: 120, region: "Europe", products: ["Premium Selection"] },
-  { name: "Rotterdam", country: "Netherlands", x: 482, y: 122, region: "Europe", products: ["Bulk Seafood"] },
+  { name: "Antwerp", country: "Belgium", x: 52, y: 32, region: "Europe", products: ["European Mix"] },
+  { name: "Amsterdam", country: "Netherlands", x: 52.5, y: 31, region: "Europe", products: ["Premium Selection"] },
+  { name: "Rotterdam", country: "Netherlands", x: 52, y: 32.5, region: "Europe", products: ["Bulk Seafood"] },
   
   // Asia
-  { name: "Tokyo", country: "Japan", x: 735, y: 170, region: "Asia", products: ["Sushi Grade"] },
-  { name: "Osaka", country: "Japan", x: 732, y: 175, region: "Asia", products: ["Premium Fish"] },
-  { name: "Zhanjiang", country: "China", x: 680, y: 190, region: "Asia", products: ["Bulk Export"] },
-  { name: "Xiamen", country: "China", x: 690, y: 200, region: "Asia", products: ["Frozen Seafood"] },
-  { name: "Port Penang", country: "Malaysia", x: 640, y: 240, region: "Asia", products: ["Tropical Catch"] },
-  { name: "Catlai", country: "Vietnam", x: 665, y: 235, region: "Asia", products: ["River & Sea"] },
+  { name: "Tokyo", country: "Japan", x: 85, y: 42, region: "Asia", products: ["Sushi Grade"] },
+  { name: "Osaka", country: "Japan", x: 84, y: 44, region: "Asia", products: ["Premium Fish"] },
+  { name: "Zhanjiang", country: "China", x: 78, y: 48, region: "Asia", products: ["Bulk Export"] },
+  { name: "Xiamen", country: "China", x: 80, y: 50, region: "Asia", products: ["Frozen Seafood"] },
+  { name: "Port Penang", country: "Malaysia", x: 74, y: 58, region: "Asia", products: ["Tropical Catch"] },
+  { name: "Catlai", country: "Vietnam", x: 76, y: 56, region: "Asia", products: ["River & Sea"] },
   
   // Middle East & Others
-  { name: "Sharjah", country: "UAE", x: 570, y: 205, region: "Middle East", products: ["Desert Port Mix"] },
-  { name: "Port Louis", country: "Mauritius", x: 580, y: 285, region: "Africa", products: ["Island Seafood"] },
+  { name: "Sharjah", country: "UAE", x: 60, y: 52, region: "Middle East", products: ["Desert Port Mix"] },
+  { name: "Port Louis", country: "Mauritius", x: 62, y: 72, region: "Africa", products: ["Island Seafood"] },
 ];
 
 // India (origin point) - Odisha location
-const indiaLocation = { x: 605, y: 215, name: "Alashore Marine - Odisha, India" };
+const indiaLocation = { x: 65, y: 55, name: "Alashore Marine - Odisha, India" };
 
 export default function InteractiveWorldMap() {
   const [hoveredDestination, setHoveredDestination] = useState<Destination | null>(null);
@@ -62,129 +65,57 @@ export default function InteractiveWorldMap() {
   }, []);
 
   return (
-    <div className="relative w-full h-[600px] bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
-      {/* World Map SVG */}
+    <div className="relative w-full h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+      {/* HD Network World Map Background */}
       <div className="absolute inset-0">
-        <svg 
-          viewBox="0 0 900 450" 
-          className="w-full h-full"
-          style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))' }}
-        >
-          <defs>
-            <linearGradient id="landGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#22c55e" stopOpacity="0.8"/>
-              <stop offset="50%" stopColor="#16a34a" stopOpacity="0.9"/>
-              <stop offset="100%" stopColor="#15803d" stopOpacity="0.8"/>
-            </linearGradient>
-            <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.3"/>
-              <stop offset="50%" stopColor="#0284c7" stopOpacity="0.4"/>
-              <stop offset="100%" stopColor="#0369a1" stopOpacity="0.3"/>
-            </linearGradient>
-            <filter id="landShadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow dx="1" dy="1" stdDeviation="2" floodColor="#000000" floodOpacity="0.2"/>
-            </filter>
-          </defs>
-
-          {/* Ocean Background */}
-          <rect width="900" height="450" fill="url(#oceanGradient)" />
-
-          {/* Continents - Detailed outlines */}
-          
-          {/* North America */}
-          <path 
-            d="M150 80 L180 75 L220 85 L250 90 L280 95 L320 100 L350 110 L360 130 L355 150 L340 170 L320 185 L300 200 L280 210 L260 215 L240 210 L220 200 L200 185 L180 170 L160 150 L150 130 L145 110 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-          
-          {/* South America */}
-          <path 
-            d="M280 220 L320 210 L340 220 L350 240 L355 270 L350 300 L340 330 L320 350 L300 360 L280 355 L260 340 L250 320 L245 300 L250 280 L260 260 L270 240 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-          
-          {/* Europe */}
-          <path 
-            d="M450 90 L490 85 L520 90 L540 100 L550 115 L545 130 L530 140 L510 145 L490 140 L470 135 L455 125 L450 110 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-          
-          {/* Africa */}
-          <path 
-            d="M460 150 L500 145 L530 150 L550 160 L565 180 L570 210 L575 240 L570 270 L560 295 L545 315 L525 330 L500 335 L475 330 L455 315 L445 295 L450 270 L455 240 L460 210 L465 180 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-          
-          {/* Asia */}
-          <path 
-            d="M540 80 L620 75 L680 80 L720 85 L750 90 L780 100 L800 115 L810 135 L805 155 L790 175 L770 190 L740 200 L710 205 L680 200 L650 195 L620 185 L590 170 L570 150 L560 130 L550 110 L545 95 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-          
-          {/* Australia */}
-          <path 
-            d="M720 280 L780 275 L820 280 L840 290 L845 305 L840 320 L820 330 L780 335 L740 330 L720 320 L715 305 L720 290 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-
-          {/* Antarctica */}
-          <path 
-            d="M200 380 L700 380 L750 390 L800 400 L850 410 L850 450 L50 450 L50 410 L100 400 L150 390 Z" 
-            fill="url(#landGradient)" 
-            filter="url(#landShadow)"
-            stroke="#16a34a" 
-            strokeWidth="1"
-            className="hover:fill-green-500 transition-colors duration-300"
-          />
-
-          {/* Shipping Routes */}
-          {destinations.map((destination, index) => (
-            <motion.path
-              key={`route-${destination.name}`}
-              d={`M${indiaLocation.x} ${indiaLocation.y} Q${(indiaLocation.x + destination.x) / 2} ${Math.min(indiaLocation.y, destination.y) - 50} ${destination.x} ${destination.y}`}
-              stroke="#f59e0b"
-              strokeWidth="2"
-              fill="none"
-              strokeDasharray="5,3"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ 
-                pathLength: activeShipping.includes(destination.name) ? 1 : 0, 
-                opacity: activeShipping.includes(destination.name) ? 0.7 : 0,
-                strokeDashoffset: [0, -8]
-              }}
-              transition={{ 
-                pathLength: { duration: 2, ease: "easeInOut" },
-                opacity: { duration: 1 },
-                strokeDashoffset: { duration: 2, repeat: Infinity, ease: "linear" }
-              }}
-            />
-          ))}
-        </svg>
+        <img 
+          src={mapImage} 
+          alt="Global Network Map" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
       </div>
+
+      {/* Shipping Routes Overlay */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#ff6b35" stopOpacity="0.9"/>
+            <stop offset="50%" stopColor="#00f5ff" stopOpacity="0.7"/>
+            <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.9"/>
+          </linearGradient>
+          <filter id="routeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
+        {destinations.map((destination, index) => (
+          <motion.path
+            key={`route-${destination.name}`}
+            d={`M${indiaLocation.x} ${indiaLocation.y} Q${(indiaLocation.x + destination.x) / 2} ${Math.min(indiaLocation.y, destination.y) - 10} ${destination.x} ${destination.y}`}
+            stroke="url(#routeGradient)"
+            strokeWidth="0.4"
+            fill="none"
+            strokeDasharray="3,1"
+            filter="url(#routeGlow)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ 
+              pathLength: activeShipping.includes(destination.name) ? 1 : 0, 
+              opacity: activeShipping.includes(destination.name) ? 0.8 : 0,
+              strokeDashoffset: [0, -6]
+            }}
+            transition={{ 
+              pathLength: { duration: 2.5, ease: "easeInOut" },
+              opacity: { duration: 1.5 },
+              strokeDashoffset: { duration: 3, repeat: Infinity, ease: "linear" }
+            }}
+          />
+        ))}
+      </svg>
 
       {/* Origin Point - India */}
       <motion.div
@@ -193,8 +124,8 @@ export default function InteractiveWorldMap() {
         transition={{ duration: 1, delay: 1 }}
         style={{
           position: 'absolute',
-          left: `${(indiaLocation.x / 900) * 100}%`,
-          top: `${(indiaLocation.y / 450) * 100}%`,
+          left: `${indiaLocation.x}%`,
+          top: `${indiaLocation.y}%`,
           transform: 'translate(-50%, -50%)'
         }}
         className="z-30"
@@ -203,9 +134,9 @@ export default function InteractiveWorldMap() {
           animate={{
             scale: [1, 1.3, 1],
             boxShadow: [
-              "0 0 20px rgba(239, 68, 68, 0.5)",
-              "0 0 40px rgba(239, 68, 68, 0.8)",
-              "0 0 20px rgba(239, 68, 68, 0.5)"
+              "0 0 30px rgba(255, 107, 53, 0.6)",
+              "0 0 50px rgba(255, 107, 53, 0.9)",
+              "0 0 30px rgba(255, 107, 53, 0.6)"
             ]
           }}
           transition={{
@@ -213,7 +144,7 @@ export default function InteractiveWorldMap() {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-full border-4 border-white shadow-2xl flex items-center justify-center relative cursor-pointer"
+          className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-full border-4 border-white shadow-2xl flex items-center justify-center relative cursor-pointer"
           onMouseEnter={() => setHoveredDestination({ 
             name: indiaLocation.name, 
             country: "India", 
@@ -224,101 +155,219 @@ export default function InteractiveWorldMap() {
           })}
           onMouseLeave={() => setHoveredDestination(null)}
         >
-          <span className="text-white text-lg font-bold">🏭</span>
-          <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-40"></div>
+          <span className="text-white text-xl font-bold">🏭</span>
+          <motion.div 
+            animate={{
+              scale: [1, 2.5, 1],
+              opacity: [0.6, 0, 0.6]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeOut"
+            }}
+            className="absolute inset-0 bg-orange-500 rounded-full"
+          />
         </motion.div>
       </motion.div>
 
-      {/* Shipping Animations */}
+      {/* Enhanced Shipping Animations */}
       <AnimatePresence>
         {destinations.map((destination, index) => {
           if (!activeShipping.includes(destination.name)) return null;
           
-          const startX = (indiaLocation.x / 900) * 100;
-          const startY = (indiaLocation.y / 450) * 100;
-          const endX = (destination.x / 900) * 100;
-          const endY = (destination.y / 450) * 100;
+          const startX = indiaLocation.x;
+          const startY = indiaLocation.y;
+          const endX = destination.x;
+          const endY = destination.y;
+          
+          // Calculate curved path
+          const controlX = (startX + endX) / 2 + (Math.random() - 0.5) * 15;
+          const controlY = Math.min(startY, endY) - 8 - Math.random() * 10;
           
           return (
             <motion.div
               key={`ship-${destination.name}`}
               initial={{ 
-                left: `${startX}%`, 
-                top: `${startY}%`,
                 opacity: 0,
                 scale: 0.5
               }}
               animate={{ 
-                left: `${endX}%`, 
-                top: `${endY}%`,
-                opacity: [0, 1, 1, 0],
-                scale: [0.5, 1, 1, 0.8]
+                opacity: [0, 1, 1, 0.7, 0],
+                scale: [0.5, 1.2, 1, 1, 0.8]
               }}
               transition={{
-                duration: 4 + Math.random() * 2,
+                duration: 5 + Math.random() * 3,
                 repeat: Infinity,
-                repeatDelay: 3 + Math.random() * 4,
+                repeatDelay: 4 + Math.random() * 6,
                 ease: "easeInOut",
-                delay: index * 0.3
+                delay: index * 0.4
               }}
               className="absolute z-20 pointer-events-none"
-              style={{ transform: 'translate(-50%, -50%)' }}
+              style={{ 
+                left: `${startX}%`,
+                top: `${startY}%`,
+                transform: 'translate(-50%, -50%)'
+              }}
             >
+              {/* Ship with curved path animation */}
               <motion.div
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="text-2xl filter drop-shadow-lg"
+                animate={{
+                  x: [`0%`, `${(controlX - startX) * 4}px`, `${(endX - startX) * 4}px`],
+                  y: [`0%`, `${(controlY - startY) * 4}px`, `${(endY - startY) * 4}px`],
+                  rotate: [0, 15, -10, 5, 0],
+                  scale: [1, 1.1, 0.9, 1]
+                }}
+                transition={{
+                  duration: 5 + Math.random() * 3,
+                  repeat: Infinity,
+                  repeatDelay: 4 + Math.random() * 6,
+                  ease: "easeInOut",
+                  times: [0, 0.5, 1]
+                }}
+                className="relative"
               >
-                🚢
+                <div className="text-3xl filter drop-shadow-2xl">🚢</div>
+                
+                {/* Ship wake effect */}
+                <motion.div
+                  animate={{
+                    scale: [0, 1.5, 0],
+                    opacity: [0, 0.6, 0]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeOut"
+                  }}
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-white/40 rounded-full"
+                />
+                
+                {/* Cargo containers */}
+                <motion.div
+                  animate={{
+                    y: [-3, 3, -3],
+                    rotate: [0, 2, -2, 0]
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-sm"
+                >
+                  📦
+                </motion.div>
               </motion.div>
             </motion.div>
           );
         })}
       </AnimatePresence>
 
-      {/* Destination Markers */}
+      {/* Enhanced Destination Markers */}
       {destinations.map((destination, index) => (
         <motion.div
           key={`${destination.name}-${destination.country}`}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ 
-            duration: 0.6, 
-            delay: index * 0.1 + 2,
+            duration: 0.8, 
+            delay: index * 0.1 + 2.5,
             type: "spring",
-            stiffness: 200
+            stiffness: 150
           }}
           style={{
             position: 'absolute',
-            left: `${(destination.x / 900) * 100}%`,
-            top: `${(destination.y / 450) * 100}%`,
+            left: `${destination.x}%`,
+            top: `${destination.y}%`,
             transform: 'translate(-50%, -50%)'
           }}
           className="group cursor-pointer z-20"
           onMouseEnter={() => setHoveredDestination(destination)}
           onMouseLeave={() => setHoveredDestination(null)}
         >
-          {/* Pulse rings */}
+          {/* Animated pulse rings */}
           <motion.div
             animate={{
-              scale: [1, 2.5, 1],
-              opacity: [0.8, 0, 0.8]
+              scale: [1, 3, 1],
+              opacity: [0.9, 0, 0.9]
             }}
             transition={{
-              duration: 3,
+              duration: 3.5,
               repeat: Infinity,
               ease: "easeOut",
-              delay: index * 0.2
+              delay: index * 0.3
             }}
-            className="absolute inset-0 w-6 h-6 bg-blue-400 rounded-full"
+            className="absolute inset-0 w-8 h-8 bg-cyan-400 rounded-full"
           />
           
-          {/* Main marker */}
+          {/* Secondary pulse ring */}
           <motion.div
-            whileHover={{ scale: 1.5 }}
-            className="relative w-4 h-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full border-2 border-white shadow-xl z-10 flex items-center justify-center group-hover:from-orange-400 group-hover:to-orange-600 transition-colors duration-300"
+            animate={{
+              scale: [1, 2, 1],
+              opacity: [0.6, 0, 0.6]
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeOut",
+              delay: (index * 0.3) + 1
+            }}
+            className="absolute inset-0 w-6 h-6 bg-blue-300 rounded-full"
+          />
+          
+          {/* Port activity indicator */}
+          <motion.div
+            animate={{
+              scale: [1, 1.8, 1],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              delay: (index * 0.5) + 2,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0 w-10 h-10 bg-green-400/20 rounded-full"
+          />
+          
+          {/* Main marker with glow */}
+          <motion.div
+            whileHover={{ scale: 1.6 }}
+            animate={{
+              boxShadow: [
+                "0 0 15px rgba(59, 130, 246, 0.6)",
+                "0 0 25px rgba(59, 130, 246, 0.8)",
+                "0 0 15px rgba(59, 130, 246, 0.6)"
+              ]
+            }}
+            transition={{
+              boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+            }}
+            className="relative w-5 h-5 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full border-3 border-white shadow-2xl z-10 flex items-center justify-center group-hover:from-orange-400 group-hover:to-orange-600 transition-all duration-300"
           >
-            <div className="w-2 h-2 bg-white rounded-full opacity-90"></div>
+            <motion.div 
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="w-2 h-2 bg-white rounded-full opacity-95"
+            />
+          </motion.div>
+          
+          {/* Port crane activity */}
+          <motion.div
+            animate={{
+              rotate: [0, 30, -30, 0],
+              scale: [0.8, 1, 0.8]
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              delay: (index * 0.4) + 1,
+              ease: "easeInOut"
+            }}
+            className="absolute -top-6 -right-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            🏗️
           </motion.div>
 
           {/* Enhanced Tooltip */}
