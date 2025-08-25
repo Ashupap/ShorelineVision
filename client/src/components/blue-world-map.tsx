@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 interface Location {
   name: string;
@@ -47,9 +47,35 @@ const locations: Location[] = [
 // India (origin point)
 const indiaLocation = { x: 65, y: 55 };
 
+// Ship types for different routes
+const shipTypes = ["🚢", "🛳️", "⛴️", "🚤", "🛥️"];
+
+// Generate shipping routes with different cargo ships
+const generateShippingRoutes = () => {
+  return locations.map((location, index) => ({
+    id: `route-${index}`,
+    destination: location,
+    shipType: shipTypes[index % shipTypes.length],
+    duration: 8 + Math.random() * 4, // 8-12 seconds
+    delay: index * 0.8,
+    active: true
+  }));
+};
+
 export default function BlueWorldMap() {
   const [hoveredLocation, setHoveredLocation] = useState<Location | null>(null);
   const [activeShipping, setActiveShipping] = useState<string | null>(null);
+  const [shippingRoutes] = useState(generateShippingRoutes());
+  const [currentShips, setCurrentShips] = useState<{id: string, progress: number}[]>([]);
+
+  useEffect(() => {
+    // Initialize animated ships
+    const ships = shippingRoutes.map(route => ({
+      id: route.id,
+      progress: 0
+    }));
+    setCurrentShips(ships);
+  }, []);
 
   return (
     <div className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-900 via-blue-900 to-black rounded-3xl overflow-hidden shadow-2xl">
@@ -210,39 +236,117 @@ export default function BlueWorldMap() {
         ))}
       </svg>
 
-      {/* Shipping Animation */}
-      {locations.map((location, index) => (
-        <motion.div
-          key={`ship-${location.name}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: index * 0.2 + 3 }}
-          style={{
-            position: 'absolute',
-            left: `${indiaLocation.x}%`,
-            top: `${indiaLocation.y}%`,
-            transform: 'translate(-50%, -50%)'
-          }}
-          className="pointer-events-none z-15"
-        >
-          <motion.div
-            animate={{
-              x: [(location.x - indiaLocation.x) * 8, 0],
-              y: [(location.y - indiaLocation.y) * 8, 0]
-            }}
-            transition={{
-              duration: 4 + index * 0.5,
-              repeat: Infinity,
-              repeatDelay: 8,
-              ease: "easeInOut",
-              delay: index * 0.3
-            }}
-            className="text-xl filter drop-shadow-lg"
-          >
-            🚢
-          </motion.div>
-        </motion.div>
-      ))}
+      {/* Enhanced Shipping Animation with Different Vessel Types */}
+      <AnimatePresence>
+        {shippingRoutes.map((route, index) => {
+          const location = route.destination;
+          const startX = indiaLocation.x;
+          const startY = indiaLocation.y;
+          const endX = location.x;
+          const endY = location.y;
+          
+          // Calculate curved path points
+          const controlX = (startX + endX) / 2 + (Math.random() - 0.5) * 20;
+          const controlY = Math.min(startY, endY) - 10 - Math.random() * 10;
+          
+          return (
+            <motion.div
+              key={`ship-${route.id}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: route.delay }}
+              className="pointer-events-none z-15 absolute"
+            >
+              {/* Cargo Ship Animation */}
+              <motion.div
+                initial={{
+                  x: startX * 8,
+                  y: startY * 8,
+                  rotate: 0,
+                  scale: 0.8
+                }}
+                animate={{
+                  x: [startX * 8, controlX * 8, endX * 8],
+                  y: [startY * 8, controlY * 8, endY * 8],
+                  rotate: [0, 15, -10, 0],
+                  scale: [0.8, 1.2, 0.9, 1]
+                }}
+                transition={{
+                  duration: route.duration,
+                  repeat: Infinity,
+                  repeatDelay: 3 + Math.random() * 4,
+                  ease: "easeInOut",
+                  times: [0, 0.5, 1]
+                }}
+                className="text-2xl filter drop-shadow-xl relative"
+              >
+                {route.shipType}
+                
+                {/* Ship Wake Effect */}
+                <motion.div
+                  animate={{
+                    scale: [0, 1.5, 0],
+                    opacity: [0, 0.6, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeOut"
+                  }}
+                  className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-4 h-2 bg-white/30 rounded-full"
+                />
+                
+                {/* Cargo Indicator */}
+                <motion.div
+                  animate={{
+                    y: [-2, 2, -2],
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-xs"
+                >
+                  📦
+                </motion.div>
+              </motion.div>
+              
+              {/* Shipping Route Progress Line */}
+              <motion.div
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{
+                  duration: route.duration,
+                  repeat: Infinity,
+                  repeatDelay: 3 + Math.random() * 4,
+                  ease: "easeInOut"
+                }}
+                className="absolute inset-0"
+              >
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 480">
+                  <motion.path
+                    d={`M${startX * 8} ${startY * 8} Q${controlX * 8} ${controlY * 8} ${endX * 8} ${endY * 8}`}
+                    stroke="rgba(34, 197, 94, 0.6)"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeDasharray="4,2"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 0.8 }}
+                    transition={{
+                      duration: route.duration,
+                      repeat: Infinity,
+                      repeatDelay: 3 + Math.random() * 4
+                    }}
+                  />
+                </svg>
+              </motion.div>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
 
       {/* Destination Markers */}
       {locations.map((location, index) => (
@@ -281,6 +385,21 @@ export default function BlueWorldMap() {
             className="absolute inset-0 w-6 h-6 bg-cyan-400 rounded-full"
           />
           
+          {/* Port Activity Indicator */}
+          <motion.div
+            animate={{
+              scale: [1, 2, 1],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              delay: (index * 0.8) + 2,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0 w-8 h-8 bg-green-400/30 rounded-full"
+          />
+          
           {/* Main marker */}
           <motion.div
             whileHover={{ scale: 1.5 }}
@@ -288,33 +407,94 @@ export default function BlueWorldMap() {
           >
             <div className="w-2 h-2 bg-white rounded-full opacity-90"></div>
           </motion.div>
+          
+          {/* Port Crane Animation */}
+          <motion.div
+            animate={{
+              rotate: [0, 45, -45, 0],
+              scale: [0.8, 1, 0.8]
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              delay: (index * 0.5) + 1,
+              ease: "easeInOut"
+            }}
+            className="absolute -top-6 -right-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            🏗️
+          </motion.div>
+          
+          {/* Cargo Containers */}
+          <motion.div
+            animate={{
+              y: [0, -3, 0],
+              opacity: [0.6, 1, 0.6]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              delay: (index * 0.3) + 0.5,
+              ease: "easeInOut"
+            }}
+            className="absolute -bottom-4 -left-3 text-xs"
+          >
+            📦
+          </motion.div>
 
-          {/* Enhanced Tooltip */}
-          {hoveredLocation?.name === location.name && (
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.8 }}
-              animate={{ opacity: 1, y: -15, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.8 }}
-              className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 z-30"
-            >
-              <div className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-cyan-400/50 backdrop-blur-sm min-w-[200px]">
-                <div className="text-sm font-bold text-cyan-400 mb-1">{location.name}</div>
-                <div className="text-xs text-blue-200 mb-2">{location.country} • {location.region}</div>
-                <div className="border-t border-blue-700 pt-2">
-                  <div className="text-xs text-blue-300 mb-1">Products:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {location.products.map((product, i) => (
-                      <span key={i} className="text-xs bg-cyan-900/50 text-cyan-200 px-2 py-1 rounded-full border border-cyan-600/30">
-                        {product}
-                      </span>
-                    ))}
+          {/* Enhanced Tooltip with Shipping Info */}
+          <AnimatePresence>
+            {hoveredLocation?.name === location.name && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: -15, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.8 }}
+                className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 z-30"
+              >
+                <div className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-cyan-400/50 backdrop-blur-sm min-w-[220px]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="text-sm font-bold text-cyan-400">{location.name}</div>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                      className="text-xs"
+                    >
+                      🚢
+                    </motion.div>
                   </div>
+                  <div className="text-xs text-blue-200 mb-2">{location.country} • {location.region}</div>
+                  
+                  {/* Shipping Status */}
+                  <div className="bg-green-900/30 border border-green-500/50 rounded-lg p-2 mb-2">
+                    <div className="flex items-center gap-2 text-xs text-green-400">
+                      <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                        className="w-2 h-2 bg-green-400 rounded-full"
+                      />
+                      <span>Active Shipping Route</span>
+                    </div>
+                    <div className="text-xs text-green-300 mt-1">
+                      Transit Time: {8 + Math.floor(Math.random() * 4)} days
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-blue-700 pt-2">
+                    <div className="text-xs text-blue-300 mb-1">Products:</div>
+                    <div className="flex flex-wrap gap-1">
+                      {location.products.map((product, i) => (
+                        <span key={i} className="text-xs bg-cyan-900/50 text-cyan-200 px-2 py-1 rounded-full border border-cyan-600/30">
+                          {product}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Arrow */}
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900"></div>
                 </div>
-                {/* Arrow */}
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900"></div>
-              </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       ))}
 
@@ -334,6 +514,47 @@ export default function BlueWorldMap() {
         />
       </motion.div>
 
+      {/* Shipping Traffic Indicators */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        className="absolute top-4 left-4 z-30"
+      >
+        <div className="bg-slate-900/80 backdrop-blur-sm rounded-xl p-3 border border-green-400/30">
+          <div className="text-green-400 text-xs font-bold mb-2 flex items-center gap-2">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            >
+              ⚓
+            </motion.div>
+            Live Shipping Traffic
+          </div>
+          <div className="space-y-1 text-xs text-green-200">
+            {shippingRoutes.slice(0, 3).map((route, i) => (
+              <motion.div
+                key={route.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.2 + 2.5 }}
+                className="flex items-center gap-2"
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
+                  className="w-1.5 h-1.5 bg-green-400 rounded-full"
+                />
+                <span>{route.shipType} → {route.destination.name}</span>
+              </motion.div>
+            ))}
+            <div className="text-xs text-gray-400 mt-2">
+              +{shippingRoutes.length - 3} more routes
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Stats overlay */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
@@ -342,7 +563,15 @@ export default function BlueWorldMap() {
         className="absolute top-4 right-4 z-30"
       >
         <div className="bg-slate-900/80 backdrop-blur-sm rounded-xl p-4 border border-cyan-400/30">
-          <div className="text-cyan-400 text-sm font-bold mb-3">🌊 Global Network</div>
+          <div className="text-cyan-400 text-sm font-bold mb-3 flex items-center gap-2">
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            >
+              🌊
+            </motion.span>
+            Global Network
+          </div>
           <div className="space-y-2 text-xs text-blue-200">
             <div className="flex justify-between">
               <span>Countries:</span>
@@ -352,9 +581,20 @@ export default function BlueWorldMap() {
               <span>Destinations:</span>
               <span className="text-cyan-400 font-bold">{locations.length}</span>
             </div>
+            <div className="flex justify-between items-center">
+              <span>Active Ships:</span>
+              <div className="flex items-center gap-1">
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-2 h-2 bg-green-400 rounded-full"
+                />
+                <span className="text-green-400 font-bold">{shippingRoutes.length}</span>
+              </div>
+            </div>
             <div className="flex justify-between">
-              <span>Active Routes:</span>
-              <span className="text-green-400 font-bold">24/7</span>
+              <span>Status:</span>
+              <span className="text-green-400 font-bold">24/7 Active</span>
             </div>
           </div>
         </div>
