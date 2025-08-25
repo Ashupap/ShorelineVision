@@ -34,17 +34,21 @@ export default function AboutUs() {
       const cardsContainer = container.querySelector(".timeline-cards");
       const cards = container.querySelectorAll(".timeline-card");
       const progressFill = container.querySelector(".timeline-progress-fill");
-      const milestoneMarkers = container.querySelectorAll(
-        ".timeline-milestone",
-      );
+      const currentIcon = container.querySelector(".timeline-current-icon");
+      const currentYear = container.querySelector(".timeline-current-year");
+      const progressPercentage = container.querySelector(".timeline-progress-percentage");
 
-      if (
-        !cardsContainer ||
-        cards.length === 0 ||
-        !progressFill ||
-        milestoneMarkers.length === 0
-      )
-        return;
+      if (!cardsContainer || cards.length === 0 || !progressFill) return;
+
+      // Milestone data
+      const milestones = [
+        { year: "1997", icon: "🏗️" },
+        { year: "2000-2005", icon: "📈" },
+        { year: "2009", icon: "🌏" },
+        { year: "2012", icon: "🚀" },
+        { year: "2015-2020", icon: "🏆" },
+        { year: "2021-Present", icon: "🌟" }
+      ];
 
       // Horizontal scroll timeline
       gsap.to(cards, {
@@ -61,59 +65,44 @@ export default function AboutUs() {
           onUpdate: (self) => {
             const progress = self.progress;
             const currentIndex = Math.round(progress * (cards.length - 1));
-
-            // Update progress bar to current milestone
+            const progressPercentageValue = Math.round(((currentIndex + 1) / cards.length) * 100);
+            
+            // Update circular progress bar (283 is the total circumference)
             if (progressFill) {
+              const offset = 283 - (283 * progress);
               gsap.to(progressFill, {
-                width: `${((currentIndex + 1) / cards.length) * 100}%`,
+                strokeDashoffset: offset,
                 duration: 0.3,
                 ease: "power2.out",
               });
             }
 
-            // Activate current milestone marker
-            milestoneMarkers.forEach((marker, index) => {
-              if (index <= currentIndex) {
-                marker.classList.add("completed");
-              } else {
-                marker.classList.remove("completed");
-              }
+            // Update current milestone icon and year
+            if (currentIcon && milestones[currentIndex]) {
+              currentIcon.textContent = milestones[currentIndex].icon;
+              gsap.fromTo(currentIcon, 
+                { scale: 1 },
+                { scale: 1.1, duration: 0.3, yoyo: true, repeat: 1, ease: "power2.inOut" }
+              );
+            }
 
-              if (index === currentIndex) {
-                marker.classList.add("active");
-              } else {
-                marker.classList.remove("active");
-              }
-            });
+            if (currentYear && milestones[currentIndex]) {
+              currentYear.textContent = milestones[currentIndex].year;
+            }
+
+            // Update progress percentage
+            if (progressPercentage) {
+              progressPercentage.textContent = `${progressPercentageValue}%`;
+            }
           },
         },
       });
-
-      // Animate individual milestone markers as they become active
-      milestoneMarkers.forEach((marker, index) => {
-        ScrollTrigger.create({
-          trigger: container,
-          start: () =>
-            `top+=${(index / (cards.length - 1)) * window.innerHeight} center`,
-          end: () =>
-            `top+=${((index + 1) / (cards.length - 1)) * window.innerHeight} center`,
-          onEnter: () => {
-            const dot = marker.querySelector(".milestone-dot");
-            if (dot) {
-              gsap.fromTo(
-                dot,
-                { scale: 1, rotation: 0 },
-                {
-                  scale: 1.3,
-                  rotation: 360,
-                  duration: 0.6,
-                  ease: "back.out(1.7)",
-                },
-              );
-            }
-          },
-        });
-      });
+      
+      // Floating progress indicator entrance animation
+      gsap.fromTo(container.querySelector('.fixed'), 
+        { opacity: 0, x: 100 },
+        { opacity: 1, x: 0, duration: 1, delay: 0.5, ease: "back.out(1.7)" }
+      );
     };
 
     // Delay initialization to ensure DOM is ready
@@ -610,75 +599,62 @@ export default function AboutUs() {
                 ref={timelineRef}
                 className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50"
               >
-                {/* Top Progress Bar Section */}
-                <div className="absolute top-16 left-0 right-0 z-10">
-                  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Progress Bar */}
-                    <div className="relative mb-8">
-                      <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                        <div className="timeline-progress-fill h-full bg-gradient-to-r from-ocean-blue via-marine-teal to-coral-accent rounded-full w-0 relative overflow-hidden">
-                          {/* Shimmer Effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer"></div>
-                        </div>
+                {/* Circular Progress Indicator */}
+                <div className="fixed top-1/2 right-8 transform -translate-y-1/2 z-50">
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28">
+                    {/* Background Circle */}
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        stroke="rgb(229, 231, 235)"
+                        strokeWidth="6"
+                        fill="none"
+                        className="opacity-30"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        stroke="url(#progressGradient)"
+                        strokeWidth="6"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeDasharray="283"
+                        strokeDashoffset="283"
+                        className="timeline-progress-fill transition-all duration-500 ease-out"
+                      />
+                      <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="rgb(59, 130, 246)" />
+                          <stop offset="50%" stopColor="rgb(6, 182, 212)" />
+                          <stop offset="100%" stopColor="rgb(239, 68, 68)" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    
+                    {/* Current Milestone Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="timeline-current-icon w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full shadow-lg flex items-center justify-center text-xl sm:text-2xl transition-all duration-300 border-2 border-gray-200">
+                        🏗️
                       </div>
-
-                      {/* Milestone Markers */}
-                      <div className="absolute -top-2 left-0 w-full flex justify-between">
-                        {[
-                          {
-                            year: "1997",
-                            color: "from-blue-500 to-cyan-500",
-                            icon: "🏗️",
-                          },
-                          {
-                            year: "2000",
-                            color: "from-green-500 to-teal-500",
-                            icon: "📈",
-                          },
-                          {
-                            year: "2009",
-                            color: "from-purple-500 to-pink-500",
-                            icon: "🌏",
-                          },
-                          {
-                            year: "2012",
-                            color: "from-orange-500 to-red-500",
-                            icon: "🚀",
-                          },
-                          {
-                            year: "2015",
-                            color: "from-yellow-500 to-orange-500",
-                            icon: "🏆",
-                          },
-                          {
-                            year: "2021",
-                            color: "from-indigo-500 to-purple-500",
-                            icon: "🌟",
-                          },
-                        ].map((milestone, index) => (
-                          <div
-                            key={milestone.year}
-                            className="timeline-milestone flex flex-col items-center"
-                          >
-                            <div
-                              className={`milestone-dot w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br ${milestone.color} rounded-full shadow-lg border-3 border-white flex items-center justify-center transition-all duration-300`}
-                            >
-                              <span className="text-xs sm:text-sm">
-                                {milestone.icon}
-                              </span>
-                            </div>
-                            <div className="mt-2 text-xs sm:text-sm font-semibold text-gray-600">
-                              {milestone.year}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                    </div>
+                    
+                    {/* Current Year */}
+                    <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-gray-700 bg-white px-3 py-1 rounded-full shadow-md timeline-current-year border border-gray-200">
+                      1997
+                    </div>
+                    
+                    {/* Progress Percentage */}
+                    <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-gray-600 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm timeline-progress-percentage">
+                      0%
                     </div>
                   </div>
                 </div>
 
                 {/* Horizontal Scrolling Cards */}
-                <div className="timeline-cards absolute top-48 left-0 w-max h-full flex">
+                <div className="timeline-cards absolute top-16 left-0 w-max h-full flex">
                   {[
                     {
                       year: "1997",
