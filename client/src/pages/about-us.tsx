@@ -768,75 +768,8 @@ export default function AboutUs() {
                 ref={timelineRef}
                 className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50"
               >
-                {/* Top Progress Bar Section */}
-                <div className="absolute top-16 left-0 right-0 z-10">
-                  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Progress Bar */}
-                    <div className="relative mb-8">
-                      <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                        <div className="timeline-progress-fill h-full bg-gradient-to-r from-ocean-blue via-marine-teal to-coral-accent rounded-full w-0 relative overflow-hidden">
-                          {/* Shimmer Effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer"></div>
-                        </div>
-                      </div>
-
-                      {/* Milestone Markers */}
-                      <div className="absolute -top-2 left-0 w-full flex justify-between">
-                        {[
-                          {
-                            year: "1997",
-                            color: "from-blue-500 to-cyan-500",
-                            icon: "🏗️",
-                          },
-                          {
-                            year: "2000",
-                            color: "from-green-500 to-teal-500",
-                            icon: "📈",
-                          },
-                          {
-                            year: "2009",
-                            color: "from-purple-500 to-pink-500",
-                            icon: "🌏",
-                          },
-                          {
-                            year: "2012",
-                            color: "from-orange-500 to-red-500",
-                            icon: "🚀",
-                          },
-                          {
-                            year: "2015",
-                            color: "from-yellow-500 to-orange-500",
-                            icon: "🏆",
-                          },
-                          {
-                            year: "2021",
-                            color: "from-indigo-500 to-purple-500",
-                            icon: "🌟",
-                          },
-                        ].map((milestone, index) => (
-                          <div
-                            key={milestone.year}
-                            className="timeline-milestone flex flex-col items-center"
-                          >
-                            <div
-                              className={`milestone-dot w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br ${milestone.color} rounded-full shadow-lg border-3 border-white flex items-center justify-center transition-all duration-300`}
-                            >
-                              <span className="text-xs sm:text-sm">
-                                {milestone.icon}
-                              </span>
-                            </div>
-                            <div className="mt-2 text-xs sm:text-sm font-semibold text-gray-600">
-                              {milestone.year}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Horizontal Scrolling Cards */}
-                <div className="timeline-cards absolute top-48 left-0 w-max h-full flex">
+                <div className="timeline-cards absolute top-16 left-0 w-max h-full flex">
                   {[
                     {
                       year: "1997",
@@ -923,36 +856,36 @@ export default function AboutUs() {
                     >
                       <div className="max-w-5xl w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                         {/* Content Side */}
-                        <div className="space-y-6">
+                        <div className="space-y-3">
                           <div
-                            className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-6 py-3 rounded-full text-lg sm:text-xl font-bold shadow-lg`}
+                            className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg`}
                           >
                             {milestone.year}
                           </div>
 
-                          <h3 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 leading-tight">
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold text-gray-900 leading-tight">
                             {milestone.title}
                           </h3>
 
-                          <p className="text-xl sm:text-2xl text-gray-600 leading-relaxed">
+                          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                             {milestone.description}
                           </p>
 
                           {/* Achievements */}
-                          <div className="space-y-4">
-                            <h4 className="text-ocean-blue text-lg sm:text-xl font-semibold uppercase tracking-wider">
+                          <div className="space-y-2">
+                            <h4 className="text-ocean-blue text-sm font-semibold uppercase tracking-wider">
                               Key Achievements
                             </h4>
-                            <div className="grid gap-4">
+                            <div className="grid gap-2">
                               {milestone.achievements.map((achievement, i) => (
                                 <div
                                   key={achievement}
-                                  className="flex items-center space-x-4 bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+                                  className="flex items-center space-x-2 bg-white/70 backdrop-blur-sm rounded-lg p-2 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
                                 >
                                   <div
-                                    className={`w-4 h-4 bg-gradient-to-r ${milestone.color} rounded-full flex-shrink-0`}
+                                    className={`w-3 h-3 bg-gradient-to-r ${milestone.color} rounded-full flex-shrink-0`}
                                   ></div>
-                                  <span className="text-gray-700 font-medium text-lg">
+                                  <span className="text-gray-700 font-medium text-sm">
                                     {achievement}
                                   </span>
                                 </div>
@@ -964,9 +897,9 @@ export default function AboutUs() {
                         {/* Visual Side */}
                         <div className="flex items-center justify-center">
                           <div
-                            className={`relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl group`}
+                            className={`relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl group`}
                           >
-                            <div className="text-8xl sm:text-9xl lg:text-[200px] transition-transform duration-300 group-hover:scale-110">
+                            <div className="text-3xl sm:text-4xl lg:text-5xl transition-transform duration-300 group-hover:scale-110">
                               {milestone.icon}
                             </div>
 
@@ -975,7 +908,7 @@ export default function AboutUs() {
                               {[...Array(8)].map((_, i) => (
                                 <div
                                   key={i}
-                                  className="absolute w-4 h-4 sm:w-6 sm:h-6 bg-white/30 rounded-full animate-float"
+                                  className="absolute w-2 h-2 sm:w-3 sm:h-3 bg-white/30 rounded-full animate-float"
                                   style={{
                                     top: `${20 + Math.sin((i * 45 * Math.PI) / 180) * 35}%`,
                                     left: `${50 + Math.cos((i * 45 * Math.PI) / 180) * 40}%`,
