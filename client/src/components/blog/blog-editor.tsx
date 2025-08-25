@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "lucide-react";
+import { X, Upload, Image as ImageIcon } from "lucide-react";
 import { insertBlogPostSchema, type InsertBlogPostSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +22,7 @@ interface BlogEditorProps {
 export default function BlogEditor({ onClose }: BlogEditorProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const form = useForm<InsertBlogPostSchema>({
     resolver: zodResolver(insertBlogPostSchema),
@@ -55,7 +56,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
           variant: "destructive",
         });
         setTimeout(() => {
-          window.location.href = "/api/login";
+          window.location.href = "/temp-login";
         }, 500);
         return;
       }
@@ -67,8 +68,67 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
     },
   });
 
+  const uploadImage = useMutation({
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('alt', file.name);
+      formData.append('category', 'blog');
+
+      const response = await fetch('/api/media/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      return response.json();
+    },
+    onSuccess: (data) => {
+      form.setValue('featuredImage', data.url);
+      toast({
+        title: "Success",
+        description: "Image uploaded successfully!",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Upload Failed",
+        description: error.message || "Failed to upload image",
+        variant: "destructive",
+      });
+    },
+  });
+
   const onSubmit = (data: InsertBlogPostSchema) => {
     createBlogPost.mutate(data);
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) { // 10MB limit
+        toast({
+          title: "File too large",
+          description: "Please select an image under 10MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: "Invalid file type",
+          description: "Please select an image file",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      uploadImage.mutate(file);
+    }
   };
 
   const categories = ["Industry", "Sustainability", "Quality", "Company News", "Technology"];
@@ -147,16 +207,61 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                   name="featuredImage"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Featured Image URL</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="url"
-                          placeholder="https://images.unsplash.com/..."
-                          {...field}
-                          value={field.value || ""}
-                          data-testid="input-featured-image"
-                        />
-                      </FormControl>
+                      <FormLabel>Featured Image</FormLabel>
+                      <div className="space-y-4">
+                        {/* Image Upload Button */}
+                        <div className="flex items-center space-x-4">
+                          <input
+                            type="file"
+                            id="image-upload"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => document.getElementById('image-upload')?.click()}
+                            disabled={uploadImage.isPending}
+                            data-testid="button-upload-image"
+                          >
+                            <Upload size={16} className="mr-2" />
+                            {uploadImage.isPending ? "Uploading..." : "Upload Image"}
+                          </Button>
+                          {field.value && (
+                            <div className="flex items-center text-sm text-green-600">
+                              <ImageIcon size={16} className="mr-1" />
+                              Image uploaded
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* URL Input (alternative) */}
+                        <FormControl>
+                          <Input
+                            type="url"
+                            placeholder="Or paste image URL..."
+                            {...field}
+                            value={field.value || ""}
+                            data-testid="input-featured-image"
+                          />
+                        </FormControl>
+                        
+                        {/* Image Preview */}
+                        {field.value && (
+                          <div className="border rounded-lg p-2 bg-gray-50">
+                            <img 
+                              src={field.value} 
+                              alt="Featured image preview" 
+                              className="max-h-32 w-auto rounded object-cover"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
