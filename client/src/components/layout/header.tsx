@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Menu, X, Anchor, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Menu, X, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import logoImage from "@assets/Asset 3_1756100807050.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,7 +52,7 @@ export default function Header() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <div className="fixed top-0 left-0 right-0 z-[100]">
       {/* Animated Information Bar */}
       <motion.div
         initial={{ y: -50, opacity: 0 }}
@@ -191,12 +192,11 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer"
               data-testid="link-logo"
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-lg flex items-center justify-center">
-                <Anchor className="text-white" size={20} />
-              </div>
-              <span className="text-xl font-heading font-bold text-ocean-blue">
-                Alashore Marine
-              </span>
+              <img 
+                src={logoImage} 
+                alt="Alashore Marine Exports" 
+                className="h-12 w-auto object-contain"
+              />
             </motion.div>
           </Link>
 
