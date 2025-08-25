@@ -604,172 +604,81 @@ export default function AboutUs() {
                 <div className="w-24 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full mt-6"></div>
               </div>
 
-              {/* Animated Progress Bar */}
-              <div className="mb-12">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                  className="relative max-w-6xl mx-auto"
-                >
-                  {/* Progress Background */}
-                  <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                    {/* Animated Progress Fill */}
-                    <motion.div
-                      initial={{ width: "0%" }}
-                      whileInView={{ width: "100%" }}
-                      transition={{
-                        duration: 3,
-                        ease: "easeInOut",
-                        delay: 0.5,
-                      }}
-                      viewport={{ once: true }}
-                      className="h-full bg-gradient-to-r from-ocean-blue via-marine-teal to-coral-accent rounded-full relative overflow-hidden"
-                    >
-                      {/* Shimmer Effect */}
-                      <motion.div
-                        animate={{
-                          x: ["-100%", "100%"],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
-                      />
-                    </motion.div>
-                  </div>
-
-                  {/* Milestone Markers */}
-                  <div className="absolute -top-2 left-0 w-full h-7 flex justify-between items-center">
-                    {[
-                      {
-                        year: "1997",
-                        color: "from-blue-500 to-cyan-500",
-                        delay: 0.8,
-                      },
-                      {
-                        year: "2000",
-                        color: "from-green-500 to-teal-500",
-                        delay: 1.3,
-                      },
-                      {
-                        year: "2009",
-                        color: "from-purple-500 to-pink-500",
-                        delay: 1.8,
-                      },
-                      {
-                        year: "2012",
-                        color: "from-orange-500 to-red-500",
-                        delay: 2.3,
-                      },
-                      {
-                        year: "2015",
-                        color: "from-yellow-500 to-orange-500",
-                        delay: 2.8,
-                      },
-                      {
-                        year: "2021",
-                        color: "from-indigo-500 to-purple-500",
-                        delay: 3.3,
-                      },
-                    ].map((milestone, index) => (
-                      <motion.div
-                        key={milestone.year}
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        transition={{
-                          duration: 0.6,
-                          delay: milestone.delay,
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 10,
-                        }}
-                        viewport={{ once: true }}
-                        className="relative flex flex-col items-center"
-                      >
-                        {/* Milestone Dot */}
-                        <motion.div
-                          whileHover={{ scale: 1.3, y: -5 }}
-                          className={`w-7 h-7 bg-gradient-to-br ${milestone.color} rounded-full shadow-lg border-3 border-white relative z-10 cursor-pointer group`}
-                        >
-                          {/* Pulse Animation */}
-                          <motion.div
-                            animate={{
-                              scale: [1, 1.5, 1],
-                              opacity: [0.5, 0, 0.5],
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              delay: milestone.delay + 1,
-                            }}
-                            className={`absolute inset-0 bg-gradient-to-br ${milestone.color} rounded-full`}
-                          />
-
-                          {/* Checkmark Animation */}
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            whileInView={{ scale: 1, opacity: 1 }}
-                            transition={{
-                              duration: 0.3,
-                              delay: milestone.delay + 0.3,
-                            }}
-                            viewport={{ once: true }}
-                            className="absolute inset-0 flex items-center justify-center text-white text-xs font-bold"
-                          >
-                            ✓
-                          </motion.div>
-                        </motion.div>
-
-                        {/* Year Label */}
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: milestone.delay + 0.5,
-                          }}
-                          viewport={{ once: true }}
-                          className="absolute -bottom-8 text-xs font-semibold text-gray-600 whitespace-nowrap"
-                        >
-                          {milestone.year}
-                        </motion.div>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  {/* Progress Percentage */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 3.5 }}
-                    viewport={{ once: true }}
-                    className="absolute -right-16 top-1/2 transform -translate-y-1/2"
-                  >
-                    <div className="bg-gradient-to-r from-ocean-blue to-marine-teal text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 3.5 }}
-                        viewport={{ once: true }}
-                      >
-                        100%
-                      </motion.span>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </div>
 
               {/* Horizontal Timeline with Progress Bar */}
               <div
                 ref={timelineRef}
                 className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50"
               >
+                {/* Top Progress Bar Section */}
+                <div className="absolute top-16 left-0 right-0 z-10">
+                  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Progress Bar */}
+                    <div className="relative mb-8">
+                      <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                        <div className="timeline-progress-fill h-full bg-gradient-to-r from-ocean-blue via-marine-teal to-coral-accent rounded-full w-0 relative overflow-hidden">
+                          {/* Shimmer Effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer"></div>
+                        </div>
+                      </div>
+
+                      {/* Milestone Markers */}
+                      <div className="absolute -top-2 left-0 w-full flex justify-between">
+                        {[
+                          {
+                            year: "1997",
+                            color: "from-blue-500 to-cyan-500",
+                            icon: "🏗️",
+                          },
+                          {
+                            year: "2000",
+                            color: "from-green-500 to-teal-500",
+                            icon: "📈",
+                          },
+                          {
+                            year: "2009",
+                            color: "from-purple-500 to-pink-500",
+                            icon: "🌏",
+                          },
+                          {
+                            year: "2012",
+                            color: "from-orange-500 to-red-500",
+                            icon: "🚀",
+                          },
+                          {
+                            year: "2015",
+                            color: "from-yellow-500 to-orange-500",
+                            icon: "🏆",
+                          },
+                          {
+                            year: "2021",
+                            color: "from-indigo-500 to-purple-500",
+                            icon: "🌟",
+                          },
+                        ].map((milestone, index) => (
+                          <div
+                            key={milestone.year}
+                            className="timeline-milestone flex flex-col items-center"
+                          >
+                            <div
+                              className={`milestone-dot w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br ${milestone.color} rounded-full shadow-lg border-3 border-white flex items-center justify-center transition-all duration-300`}
+                            >
+                              <span className="text-xs sm:text-sm">
+                                {milestone.icon}
+                              </span>
+                            </div>
+                            <div className="mt-2 text-xs sm:text-sm font-semibold text-gray-600">
+                              {milestone.year}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Horizontal Scrolling Cards */}
-                <div className="timeline-cards absolute top-16 left-0 w-max h-full flex">
+                <div className="timeline-cards absolute top-48 left-0 w-max h-full flex">
                   {[
                     {
                       year: "1997",
