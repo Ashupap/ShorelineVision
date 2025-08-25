@@ -1,12 +1,15 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Star, Award, Globe, Users, Leaf, Target } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import BlueWorldMap from "@/components/blue-world-map";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -16,6 +19,78 @@ export default function AboutUs() {
   const parallaxOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
   const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
   const y = useSpring(parallaxY, springConfig);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    if (timelineRef.current) {
+      const timeline = timelineRef.current;
+      const milestones = timeline.querySelectorAll('.milestone-card');
+      
+      // Horizontal scroll animation
+      gsap.to(milestones, {
+        xPercent: -100 * (milestones.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: timeline,
+          pin: true,
+          scrub: 1,
+          snap: 1 / (milestones.length - 1),
+          end: () => "+=" + timeline.offsetWidth
+        }
+      });
+
+      // Reveal milestone details progressively
+      milestones.forEach((milestone, index) => {
+        const details = milestone.querySelector('.milestone-details');
+        const icon = milestone.querySelector('.milestone-icon');
+        
+        gsap.fromTo(details, 
+          { 
+            opacity: 0, 
+            y: 50,
+            scale: 0.8
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: milestone,
+              start: "left center",
+              end: "right center",
+              scrub: 1,
+            }
+          }
+        );
+
+        gsap.fromTo(icon,
+          { 
+            rotation: 0,
+            scale: 1
+          },
+          {
+            rotation: 360,
+            scale: 1.2,
+            duration: 1,
+            ease: "elastic.out(1, 0.3)",
+            scrollTrigger: {
+              trigger: milestone,
+              start: "left center",
+              end: "right center",
+              scrub: 1,
+            }
+          }
+        );
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background">
@@ -563,154 +638,130 @@ export default function AboutUs() {
                 </motion.div>
               </div>
 
-              {/* Horizontal Scroll Timeline */}
-              <div className="relative">
-                <div className="overflow-x-auto pb-6">
-                  <div className="flex space-x-8 min-w-max px-8">
-                    {[
-                      {
-                        year: "1997",
-                        title: "Foundation Year",
-                        description: "Started our journey in the seafood industry with a vision to become a leading exporter",
-                        icon: "🏗️",
-                        color: "from-blue-500 to-cyan-500",
-                        achievements: ["Established Company", "First Processing Unit", "Local Market Entry"]
-                      },
-                      {
-                        year: "2000-2005",
-                        title: "Growth Phase",
-                        description: "Expanded operations and improved processing capabilities to meet international standards",
-                        icon: "📈",
-                        color: "from-green-500 to-teal-500", 
-                        achievements: ["Quality Certifications", "Process Upgrades", "Team Expansion"]
-                      },
-                      {
-                        year: "2009",
-                        title: "Balasore Marine Exports Pvt. Ltd.",
-                        description: "Established operations with focus on Asian markets including China, Vietnam, and UAE",
-                        icon: "🌏",
-                        color: "from-purple-500 to-pink-500",
-                        achievements: ["Asian Market Entry", "Export License", "International Standards"]
-                      },
-                      {
-                        year: "2012",
-                        title: "Alashore Marine Exports Pvt. Ltd.",
-                        description: "Expanded globally to USA, EU, Canada, Malaysia, Japan, and Mauritius with premium quality standards",
-                        icon: "🚀",
-                        color: "from-orange-500 to-red-500",
-                        achievements: ["Global Expansion", "Premium Quality", "Multiple Certifications"]
-                      },
-                      {
-                        year: "2015-2020",
-                        title: "Excellence Era",
-                        description: "Achieved industry recognition and expanded product portfolio with sustainable practices",
-                        icon: "🏆",
-                        color: "from-yellow-500 to-orange-500",
-                        achievements: ["Industry Awards", "Sustainable Practices", "Product Innovation"]
-                      },
-                      {
-                        year: "2021-Present",
-                        title: "Future Forward",
-                        description: "Leading with innovation, technology, and commitment to quality in the global seafood market",
-                        icon: "🌟",
-                        color: "from-indigo-500 to-purple-500",
-                        achievements: ["Technology Integration", "Market Leadership", "Innovation Hub"]
-                      }
-                    ].map((milestone, index) => (
-                      <motion.div
-                        key={milestone.year}
-                        initial={{ opacity: 0, y: 50, scale: 0.8 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ 
-                          duration: 0.8, 
-                          delay: index * 0.2,
-                          type: "spring",
-                          stiffness: 120
-                        }}
-                        viewport={{ once: true }}
-                        className="flex-shrink-0 w-80 relative group"
-                      >
-                        {/* Timeline connector */}
-                        {index < 5 && (
-                          <div className="absolute top-12 -right-4 w-8 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal rounded-full z-10"></div>
-                        )}
-                        
-                        {/* Timeline Card */}
-                        <motion.div
-                          whileHover={{ 
-                            scale: 1.05,
-                            y: -10
-                          }}
-                          className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-transparent group-hover:border-ocean-blue/30"
-                        >
-                          {/* Background gradient */}
-                          <div className={`absolute inset-0 bg-gradient-to-br ${milestone.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
+              {/* GSAP Horizontal Scroll Timeline */}
+              <div ref={timelineRef} className="relative overflow-hidden h-screen flex items-center">
+                <div className="flex w-max">
+                  {[
+                    {
+                      year: "1997",
+                      title: "Foundation Year",
+                      description: "Started our journey in the seafood industry with a vision to become a leading exporter",
+                      icon: "🏗️",
+                      color: "from-blue-500 to-cyan-500",
+                      achievements: ["Established Company", "First Processing Unit", "Local Market Entry"]
+                    },
+                    {
+                      year: "2000-2005",
+                      title: "Growth Phase",
+                      description: "Expanded operations and improved processing capabilities to meet international standards",
+                      icon: "📈",
+                      color: "from-green-500 to-teal-500", 
+                      achievements: ["Quality Certifications", "Process Upgrades", "Team Expansion"]
+                    },
+                    {
+                      year: "2009",
+                      title: "Balasore Marine Exports Pvt. Ltd.",
+                      description: "Established operations with focus on Asian markets including China, Vietnam, and UAE",
+                      icon: "🌏",
+                      color: "from-purple-500 to-pink-500",
+                      achievements: ["Asian Market Entry", "Export License", "International Standards"]
+                    },
+                    {
+                      year: "2012",
+                      title: "Alashore Marine Exports Pvt. Ltd.",
+                      description: "Expanded globally to USA, EU, Canada, Malaysia, Japan, and Mauritius with premium quality standards",
+                      icon: "🚀",
+                      color: "from-orange-500 to-red-500",
+                      achievements: ["Global Expansion", "Premium Quality", "Multiple Certifications"]
+                    },
+                    {
+                      year: "2015-2020",
+                      title: "Excellence Era",
+                      description: "Achieved industry recognition and expanded product portfolio with sustainable practices",
+                      icon: "🏆",
+                      color: "from-yellow-500 to-orange-500",
+                      achievements: ["Industry Awards", "Sustainable Practices", "Product Innovation"]
+                    },
+                    {
+                      year: "2021-Present",
+                      title: "Future Forward",
+                      description: "Leading with innovation, technology, and commitment to quality in the global seafood market",
+                      icon: "🌟",
+                      color: "from-indigo-500 to-purple-500",
+                      achievements: ["Technology Integration", "Market Leadership", "Innovation Hub"]
+                    }
+                  ].map((milestone, index) => (
+                    <div
+                      key={milestone.year}
+                      className="milestone-card flex-shrink-0 w-screen h-full flex items-center justify-center px-8"
+                    >
+                      <div className="max-w-4xl w-full grid md:grid-cols-2 gap-12 items-center">
+                        {/* Left Side - Milestone Details */}
+                        <div className="milestone-details space-y-6">
+                          <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg`}>
+                            {milestone.year}
+                          </div>
                           
-                          {/* Year badge */}
-                          <div className="relative p-6 pb-4">
-                            <motion.div
-                              whileHover={{ rotate: 360 }}
-                              transition={{ duration: 0.6 }}
-                              className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${milestone.color} rounded-2xl shadow-lg mb-4 text-2xl`}
-                            >
-                              {milestone.icon}
-                            </motion.div>
-                            
-                            <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-4 py-2 rounded-full text-sm font-bold mb-4`}>
-                              {milestone.year}
-                            </div>
-                            
-                            <h4 className="text-gray-900 text-xl font-bold mb-3 group-hover:text-ocean-blue transition-colors duration-300">
-                              {milestone.title}
+                          <h3 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 leading-tight">
+                            {milestone.title}
+                          </h3>
+                          
+                          <p className="text-xl text-gray-600 leading-relaxed">
+                            {milestone.description}
+                          </p>
+                          
+                          {/* Achievements Grid */}
+                          <div className="space-y-4">
+                            <h4 className="text-ocean-blue text-lg font-semibold uppercase tracking-wider">
+                              Key Achievements
                             </h4>
-                            
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                              {milestone.description}
-                            </p>
-                            
-                            {/* Achievements */}
-                            <div className="space-y-2">
-                              <p className="text-ocean-blue text-xs font-semibold uppercase tracking-wider">Key Achievements</p>
+                            <div className="grid gap-3">
                               {milestone.achievements.map((achievement, i) => (
-                                <motion.div
+                                <div
                                   key={achievement}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  whileInView={{ opacity: 1, x: 0 }}
-                                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                                  className="flex items-center text-gray-600 text-xs"
+                                  className="flex items-center space-x-3 bg-white/50 backdrop-blur-sm rounded-lg p-3 shadow-sm border border-gray-100"
                                 >
-                                  <div className={`w-2 h-2 bg-gradient-to-r ${milestone.color} rounded-full mr-2 flex-shrink-0`}></div>
-                                  <span>{achievement}</span>
-                                </motion.div>
+                                  <div className={`w-3 h-3 bg-gradient-to-r ${milestone.color} rounded-full flex-shrink-0`}></div>
+                                  <span className="text-gray-700 font-medium">{achievement}</span>
+                                </div>
                               ))}
                             </div>
                           </div>
-                          
-                          {/* Bottom accent */}
-                          <div className={`h-2 bg-gradient-to-r ${milestone.color}`}></div>
-                        </motion.div>
-                      </motion.div>
-                    ))}
-                  </div>
+                        </div>
+                        
+                        {/* Right Side - Visual Element */}
+                        <div className="flex items-center justify-center">
+                          <div className={`milestone-icon relative w-64 h-64 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl`}>
+                            <div className="text-8xl">{milestone.icon}</div>
+                            
+                            {/* Floating animation elements */}
+                            <div className="absolute inset-0 rounded-full">
+                              {[...Array(6)].map((_, i) => (
+                                <div
+                                  key={i}
+                                  className={`absolute w-4 h-4 bg-white/30 rounded-full animate-float`}
+                                  style={{
+                                    top: `${20 + Math.sin(i * 60 * Math.PI / 180) * 30}%`,
+                                    left: `${50 + Math.cos(i * 60 * Math.PI / 180) * 35}%`,
+                                    animationDelay: `${i * 0.2}s`
+                                  }}
+                                ></div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
                 
-                {/* Scroll indicator */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 2 }}
-                  className="flex justify-center mt-6"
-                >
-                  <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                    <span>Scroll to explore our journey</span>
-                    <motion.div
-                      animate={{ x: [0, 10, 0] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      →
-                    </motion.div>
+                {/* Scroll Progress Indicator */}
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                  <div className="flex items-center space-x-2 text-gray-600 text-sm bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                    <span>Scroll to explore timeline</span>
+                    <div className="w-2 h-2 bg-ocean-blue rounded-full animate-pulse"></div>
                   </div>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
 
