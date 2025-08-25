@@ -65,7 +65,7 @@ export default function Testimonials() {
   const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials;
 
   return (
-    <section className="py-0 relative min-h-[500px] bg-teal-500 overflow-hidden">
+    <section className="py-16 relative min-h-[600px] bg-white overflow-hidden">
       {/* Background Content */}
       <div className="grid lg:grid-cols-2 min-h-[500px] relative z-10">
         {/* Left Side - Content */}
@@ -76,11 +76,11 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="px-8 py-16 lg:px-16 lg:py-20 flex flex-col justify-center"
         >
-          <Quote size={64} className="text-white/30 mb-8" />
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-            Don't just take our word for it
+          <Quote size={64} className="text-gray-300 mb-8" />
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            Don't just take our <span className="text-teal-600">word</span> for it
           </h2>
-          <p className="text-white/90 text-lg leading-relaxed">
+          <p className="text-gray-600 text-lg leading-relaxed">
             Witness it first hand, directly from our lovely customers
           </p>
         </motion.div>
@@ -100,7 +100,7 @@ export default function Testimonials() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="absolute top-1/2 right-8 lg:right-16 transform -translate-y-1/2 z-20"
+          className="absolute top-1/2 left-1/2 lg:right-16 lg:left-auto transform -translate-y-1/2 lg:translate-x-0 -translate-x-1/2 z-20"
         >
             <Carousel
               opts={{
@@ -136,24 +136,26 @@ export default function Testimonials() {
                       }}
                       viewport={{ once: true }}
                       whileHover={{
-                        y: Math.random() * 20 - 10,
-                        x: Math.random() * 20 - 10,
-                        rotate: Math.random() * 6 - 3,
-                        transition: { duration: 0.6, type: "spring" }
+                        y: -15,
+                        scale: 1.05,
+                        rotateY: 5,
+                        rotateX: 5,
+                        boxShadow: "0 25px 60px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.2)",
+                        transition: { duration: 0.4, type: "spring", stiffness: 300, damping: 20 }
                       }}
-                      className="bg-white p-12 rounded-sm shadow-2xl drop-shadow-xl min-h-[320px] flex flex-col justify-between relative z-20 border border-gray-100"
+                      className="bg-gradient-to-br from-gray-50 to-gray-100 p-12 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] min-h-[320px] flex flex-col justify-between relative z-20 border border-gray-200/50 transform-gpu backdrop-blur-sm"
                     >
                       <motion.div
                         animate={{
-                          y: [0, Math.random() * 8 - 4, 0],
-                          x: [0, Math.random() * 6 - 3, 0],
-                          rotate: [0, Math.random() * 2 - 1, 0],
+                          y: [0, -8, 0],
+                          rotate: [0, 1, -1, 0],
+                          scale: [1, 1.02, 1],
                         }}
                         transition={{
-                          duration: 4 + Math.random() * 2,
+                          duration: 6,
                           repeat: Infinity,
                           ease: "easeInOut",
-                          delay: Math.random() * 2
+                          delay: testimonial.id * 0.5
                         }}
                         className="w-full h-full flex flex-col justify-between"
                       >
