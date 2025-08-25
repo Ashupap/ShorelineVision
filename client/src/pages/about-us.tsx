@@ -24,67 +24,67 @@ export default function AboutUs() {
     gsap.registerPlugin(ScrollTrigger);
     
     if (timelineRef.current) {
-      const timeline = timelineRef.current;
-      const milestones = timeline.querySelectorAll('.milestone-card');
+      const container = timelineRef.current;
+      const milestones = container.querySelectorAll('.milestone-marker');
+      const details = container.querySelectorAll('.milestone-detail');
+      const progressBar = container.querySelector('.progress-fill');
       
-      // Horizontal scroll animation
-      gsap.to(milestones, {
-        xPercent: -100 * (milestones.length - 1),
-        ease: "none",
-        scrollTrigger: {
-          trigger: timeline,
-          pin: true,
-          scrub: 1,
-          snap: 1 / (milestones.length - 1),
-          end: () => "+=" + timeline.offsetWidth
-        }
-      });
-
-      // Reveal milestone details progressively
+      // Create timeline for synchronized animations
       milestones.forEach((milestone, index) => {
-        const details = milestone.querySelector('.milestone-details');
-        const icon = milestone.querySelector('.milestone-icon');
-        
-        gsap.fromTo(details, 
-          { 
-            opacity: 0, 
-            y: 50,
-            scale: 0.8
+        ScrollTrigger.create({
+          trigger: container,
+          start: `top+=${index * (window.innerHeight / milestones.length)} center`,
+          end: `top+=${(index + 1) * (window.innerHeight / milestones.length)} center`,
+          onEnter: () => {
+            // Activate current milestone
+            milestones.forEach(m => m.classList.remove('active'));
+            milestone.classList.add('active');
+            
+            // Show corresponding details
+            details.forEach(d => d.classList.remove('active'));
+            details[index]?.classList.add('active');
+            
+            // Update progress bar
+            gsap.to(progressBar, {
+              width: `${((index + 1) / milestones.length) * 100}%`,
+              duration: 0.5,
+              ease: "power2.out"
+            });
+            
+            // Animate milestone marker
+            gsap.fromTo(milestone.querySelector('.milestone-icon'), 
+              { scale: 1, rotation: 0 },
+              { scale: 1.3, rotation: 360, duration: 0.6, ease: "back.out(1.7)" }
+            );
+            
+            // Animate details
+            gsap.fromTo(details[index],
+              { opacity: 0, y: 50, scale: 0.9 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out" }
+            );
           },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            ease: "back.out(1.7)",
-            scrollTrigger: {
-              trigger: milestone,
-              start: "left center",
-              end: "right center",
-              scrub: 1,
-            }
+          onEnterBack: () => {
+            // Same activation logic for reverse scroll
+            milestones.forEach(m => m.classList.remove('active'));
+            milestone.classList.add('active');
+            
+            details.forEach(d => d.classList.remove('active'));
+            details[index]?.classList.add('active');
+            
+            gsap.to(progressBar, {
+              width: `${((index + 1) / milestones.length) * 100}%`,
+              duration: 0.5,
+              ease: "power2.out"
+            });
           }
-        );
-
-        gsap.fromTo(icon,
-          { 
-            rotation: 0,
-            scale: 1
-          },
-          {
-            rotation: 360,
-            scale: 1.2,
-            duration: 1,
-            ease: "elastic.out(1, 0.3)",
-            scrollTrigger: {
-              trigger: milestone,
-              start: "left center",
-              end: "right center",
-              scrub: 1,
-            }
-          }
-        );
+        });
       });
+
+      // Initialize first milestone as active
+      if (milestones[0] && details[0]) {
+        milestones[0].classList.add('active');
+        details[0].classList.add('active');
+      }
     }
 
     return () => {
@@ -638,9 +638,43 @@ export default function AboutUs() {
                 </motion.div>
               </div>
 
-              {/* GSAP Horizontal Scroll Timeline */}
-              <div ref={timelineRef} className="relative overflow-hidden h-screen flex items-center">
-                <div className="flex w-max">
+              {/* Synchronized Timeline Section */}
+              <div ref={timelineRef} className="relative min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-16">
+                {/* Timeline Progress Bar */}
+                <div className="sticky top-8 z-20 mb-16">
+                  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Progress Bar Container */}
+                    <div className="relative">
+                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                        <div className="progress-fill h-full bg-gradient-to-r from-ocean-blue via-marine-teal to-coral-accent rounded-full w-0 transition-all duration-500"></div>
+                      </div>
+                      
+                      {/* Milestone Markers */}
+                      <div className="absolute -top-3 left-0 w-full flex justify-between">
+                        {[
+                          { year: "1997", color: "from-blue-500 to-cyan-500", icon: "🏗️" },
+                          { year: "2000", color: "from-green-500 to-teal-500", icon: "📈" },
+                          { year: "2009", color: "from-purple-500 to-pink-500", icon: "🌏" },
+                          { year: "2012", color: "from-orange-500 to-red-500", icon: "🚀" },
+                          { year: "2015", color: "from-yellow-500 to-orange-500", icon: "🏆" },
+                          { year: "2021", color: "from-indigo-500 to-purple-500", icon: "🌟" }
+                        ].map((milestone, index) => (
+                          <div key={milestone.year} className="milestone-marker flex flex-col items-center group cursor-pointer">
+                            <div className={`milestone-icon w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br ${milestone.color} rounded-full shadow-lg border-2 border-white flex items-center justify-center transition-all duration-300 transform group-hover:scale-110`}>
+                              <span className="text-xs sm:text-sm">{milestone.icon}</span>
+                            </div>
+                            <div className="mt-2 text-xs sm:text-sm font-semibold text-gray-600 group-hover:text-gray-900 transition-colors duration-300">
+                              {milestone.year}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Details Section */}
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
                   {[
                     {
                       year: "1997",
@@ -652,17 +686,17 @@ export default function AboutUs() {
                     },
                     {
                       year: "2000-2005",
-                      title: "Growth Phase",
+                      title: "Growth Phase", 
                       description: "Expanded operations and improved processing capabilities to meet international standards",
                       icon: "📈",
-                      color: "from-green-500 to-teal-500", 
+                      color: "from-green-500 to-teal-500",
                       achievements: ["Quality Certifications", "Process Upgrades", "Team Expansion"]
                     },
                     {
                       year: "2009",
                       title: "Balasore Marine Exports Pvt. Ltd.",
                       description: "Established operations with focus on Asian markets including China, Vietnam, and UAE",
-                      icon: "🌏",
+                      icon: "🌏", 
                       color: "from-purple-500 to-pink-500",
                       achievements: ["Asian Market Entry", "Export License", "International Standards"]
                     },
@@ -671,7 +705,7 @@ export default function AboutUs() {
                       title: "Alashore Marine Exports Pvt. Ltd.",
                       description: "Expanded globally to USA, EU, Canada, Malaysia, Japan, and Mauritius with premium quality standards",
                       icon: "🚀",
-                      color: "from-orange-500 to-red-500",
+                      color: "from-orange-500 to-red-500", 
                       achievements: ["Global Expansion", "Premium Quality", "Multiple Certifications"]
                     },
                     {
@@ -684,68 +718,70 @@ export default function AboutUs() {
                     },
                     {
                       year: "2021-Present",
-                      title: "Future Forward",
+                      title: "Future Forward", 
                       description: "Leading with innovation, technology, and commitment to quality in the global seafood market",
                       icon: "🌟",
                       color: "from-indigo-500 to-purple-500",
                       achievements: ["Technology Integration", "Market Leadership", "Innovation Hub"]
                     }
                   ].map((milestone, index) => (
-                    <div
+                    <div 
                       key={milestone.year}
-                      className="milestone-card flex-shrink-0 w-screen h-full flex items-center justify-center px-8"
+                      className="milestone-detail opacity-30 transition-all duration-700 ease-out"
                     >
-                      <div className="max-w-4xl w-full grid md:grid-cols-2 gap-12 items-center">
-                        {/* Left Side - Milestone Details */}
-                        <div className="milestone-details space-y-6">
-                          <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg`}>
+                      <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                        {/* Content Side */}
+                        <div className={`space-y-6 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                          <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-6 py-3 rounded-full text-sm sm:text-lg font-bold shadow-lg`}>
                             {milestone.year}
                           </div>
                           
-                          <h3 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 leading-tight">
+                          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-gray-900 leading-tight">
                             {milestone.title}
                           </h3>
                           
-                          <p className="text-xl text-gray-600 leading-relaxed">
+                          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
                             {milestone.description}
                           </p>
                           
-                          {/* Achievements Grid */}
+                          {/* Achievements */}
                           <div className="space-y-4">
-                            <h4 className="text-ocean-blue text-lg font-semibold uppercase tracking-wider">
+                            <h4 className="text-ocean-blue text-base sm:text-lg font-semibold uppercase tracking-wider">
                               Key Achievements
                             </h4>
                             <div className="grid gap-3">
                               {milestone.achievements.map((achievement, i) => (
-                                <div
+                                <div 
                                   key={achievement}
-                                  className="flex items-center space-x-3 bg-white/50 backdrop-blur-sm rounded-lg p-3 shadow-sm border border-gray-100"
+                                  className="flex items-center space-x-3 bg-white/70 backdrop-blur-sm rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
                                 >
                                   <div className={`w-3 h-3 bg-gradient-to-r ${milestone.color} rounded-full flex-shrink-0`}></div>
-                                  <span className="text-gray-700 font-medium">{achievement}</span>
+                                  <span className="text-gray-700 font-medium text-sm sm:text-base">{achievement}</span>
                                 </div>
                               ))}
                             </div>
                           </div>
                         </div>
                         
-                        {/* Right Side - Visual Element */}
-                        <div className="flex items-center justify-center">
-                          <div className={`milestone-icon relative w-64 h-64 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl`}>
-                            <div className="text-8xl">{milestone.icon}</div>
+                        {/* Visual Side */}
+                        <div className={`flex items-center justify-center ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
+                          <div className={`relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl group`}>
+                            <div className="text-6xl sm:text-7xl lg:text-8xl transition-transform duration-300 group-hover:scale-110">
+                              {milestone.icon}
+                            </div>
                             
-                            {/* Floating animation elements */}
+                            {/* Floating elements */}
                             <div className="absolute inset-0 rounded-full">
                               {[...Array(6)].map((_, i) => (
                                 <div
                                   key={i}
-                                  className={`absolute w-4 h-4 bg-white/30 rounded-full animate-float`}
+                                  className="absolute w-3 h-3 sm:w-4 sm:h-4 bg-white/30 rounded-full animate-float"
                                   style={{
                                     top: `${20 + Math.sin(i * 60 * Math.PI / 180) * 30}%`,
                                     left: `${50 + Math.cos(i * 60 * Math.PI / 180) * 35}%`,
                                     animationDelay: `${i * 0.2}s`
                                   }}
-                                ></div>
+                                />
                               ))}
                             </div>
                           </div>
@@ -755,10 +791,10 @@ export default function AboutUs() {
                   ))}
                 </div>
                 
-                {/* Scroll Progress Indicator */}
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                  <div className="flex items-center space-x-2 text-gray-600 text-sm bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                    <span>Scroll to explore timeline</span>
+                {/* Scroll Hint */}
+                <div className="text-center mt-16">
+                  <div className="inline-flex items-center space-x-2 text-gray-500 text-sm bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                    <span>Scroll to explore our journey</span>
                     <div className="w-2 h-2 bg-ocean-blue rounded-full animate-pulse"></div>
                   </div>
                 </div>
