@@ -195,7 +195,7 @@ export default function Header() {
               <img 
                 src={logoImage} 
                 alt="Alashore Marine Exports" 
-                className="h-12 w-auto object-contain"
+                className="h-12 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_20px_rgba(255,107,107,0.6)] transition-all duration-300"
               />
             </motion.div>
           </Link>
@@ -207,7 +207,7 @@ export default function Header() {
                 {item.href.startsWith("/#") ? (
                   <button
                     onClick={() => handleNavigation(item.href)}
-                    className="text-gray-700 hover:text-ocean-blue transition-colors duration-300"
+                    className={`${isScrolled ? 'text-gray-700' : 'text-white font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.4)]`}
                     data-testid={`button-nav-${item.name.toLowerCase()}`}
                   >
                     {item.name}
@@ -215,7 +215,7 @@ export default function Header() {
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-gray-700 hover:text-ocean-blue transition-colors duration-300"
+                    className={`${isScrolled ? 'text-gray-700' : 'text-white font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.4)]`}
                     data-testid={`link-nav-${item.name.toLowerCase()}`}
                   >
                     {item.name}
@@ -229,7 +229,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <Link
               href="/admin"
-              className="hidden md:flex items-center text-sm text-gray-600 hover:text-ocean-blue transition-colors"
+              className={`hidden md:flex items-center text-sm ${isScrolled ? 'text-gray-600' : 'text-white/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300`}
               data-testid="link-admin"
             >
               <Shield size={16} className="mr-1" />
@@ -243,7 +243,7 @@ export default function Header() {
               Enquiry
             </button>
             <button
-              className="md:hidden text-gray-700"
+              className={`md:hidden ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-colors duration-300`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               data-testid="button-mobile-menu"
             >
@@ -266,7 +266,7 @@ export default function Header() {
                   {item.href.startsWith("/#") ? (
                     <button
                       onClick={() => handleNavigation(item.href)}
-                      className="block text-gray-700 hover:text-ocean-blue transition-colors"
+                      className="block text-gray-700 hover:text-coral-accent transition-colors"
                       data-testid={`button-mobile-nav-${item.name.toLowerCase()}`}
                     >
                       {item.name}
@@ -274,7 +274,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block text-gray-700 hover:text-ocean-blue transition-colors"
+                      className="block text-gray-700 hover:text-coral-accent transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                       data-testid={`link-mobile-nav-${item.name.toLowerCase()}`}
                     >
@@ -285,7 +285,7 @@ export default function Header() {
               ))}
               <Link
                 href="/admin"
-                className="block text-gray-700 hover:text-ocean-blue transition-colors"
+                className="block text-gray-700 hover:text-coral-accent transition-colors"
                 onClick={() => setIsMenuOpen(false)}
                 data-testid="link-mobile-admin"
               >
