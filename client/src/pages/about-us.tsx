@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import InteractiveWorldMap from "@/components/interactive-world-map";
+import D3WorldMap from "@/components/d3-world-map";
 
 export default function AboutUs() {
   const [activeStep, setActiveStep] = useState(0);
@@ -269,7 +269,7 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <InteractiveWorldMap />
+              <D3WorldMap />
             </motion.div>
 
             {/* Call to Action */}
