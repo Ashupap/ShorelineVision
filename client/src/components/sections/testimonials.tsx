@@ -90,12 +90,23 @@ export default function Testimonials() {
             <motion.div
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
+              animate={{
+                y: [0, -8, 0],
+                rotate: [0, 1, -1, 0],
+                scale: [1, 1.02, 1],
+              }}
+              transition={{
+                opacity: { duration: 0.8, delay: 0.2 },
+                y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                scale: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+              }}
               whileHover={{
-                y: -8,
-                scale: 1.02,
-                boxShadow: "0 25px 50px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.1)",
+                y: -15,
+                scale: 1.05,
+                rotate: 2,
+                boxShadow: "0 35px 60px rgba(0,0,0,0.2), 0 15px 40px rgba(0,0,0,0.15)",
                 transition: { duration: 0.3, type: "spring", stiffness: 300, damping: 20 }
               }}
               className="bg-white p-8 lg:p-10 rounded-lg shadow-[0_15px_35px_rgba(0,0,0,0.1)] max-w-md w-full border border-gray-100 transform-gpu"
