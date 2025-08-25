@@ -103,14 +103,77 @@ export default function Testimonials() {
               {/* Display first testimonial */}
               {displayTestimonials[0] && (
                 <>
-                  {/* Testimonial Quote */}
-                  <blockquote className="text-gray-600 text-base lg:text-lg leading-relaxed mb-8 italic">
-                    "{displayTestimonials[0].content}"
-                  </blockquote>
+                  {/* Animated Stars Rating */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    viewport={{ once: true }}
+                    className="flex gap-1 mb-6"
+                  >
+                    {[...Array(5)].map((_, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                        transition={{ 
+                          duration: 0.5, 
+                          delay: 0.5 + index * 0.1,
+                          type: "spring",
+                          stiffness: 200
+                        }}
+                        viewport={{ once: true }}
+                        whileHover={{ 
+                          scale: 1.3, 
+                          rotate: 360,
+                          transition: { duration: 0.3 }
+                        }}
+                      >
+                        <Star 
+                          className="w-5 h-5 text-yellow-400 fill-yellow-400 drop-shadow-sm" 
+                        />
+                      </motion.div>
+                    ))}
+                  </motion.div>
 
-                  {/* Customer Info */}
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                  {/* Testimonial Quote with enhanced styling */}
+                  <motion.blockquote 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    viewport={{ once: true }}
+                    className="text-gray-600 text-base lg:text-lg leading-relaxed mb-8 italic relative"
+                  >
+                    <motion.span
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute -left-2 -top-2 text-4xl text-teal-200 font-serif"
+                    >
+                      "
+                    </motion.span>
+                    <span className="relative z-10">{displayTestimonials[0].content}</span>
+                    <motion.span
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                      className="absolute -right-2 -bottom-2 text-4xl text-teal-200 font-serif"
+                    >
+                      "
+                    </motion.span>
+                  </motion.blockquote>
+
+                  {/* Customer Info with enhanced animations */}
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-4"
+                  >
+                    <motion.div 
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className="w-12 h-12 lg:w-14 lg:h-14 rounded-full overflow-hidden bg-gray-200 flex-shrink-0 ring-2 ring-teal-100 shadow-lg"
+                    >
                       {displayTestimonials[0].avatar ? (
                         <img 
                           src={displayTestimonials[0].avatar} 
@@ -118,19 +181,33 @@ export default function Testimonials() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-teal-100 flex items-center justify-center">
+                        <motion.div 
+                          whileHover={{ scale: 1.2 }}
+                          className="w-full h-full bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center"
+                        >
                           <User className="text-teal-600" size={20} />
-                        </div>
+                        </motion.div>
                       )}
-                    </div>
+                    </motion.div>
                     
                     <div>
-                      <h4 className="font-bold text-gray-900 text-lg mb-1">{displayTestimonials[0].name}</h4>
-                      <p className="text-gray-400 text-sm font-medium uppercase tracking-wide">
-                        {displayTestimonials[0].company || 'FOUNDER, SOME COMPANY'}
-                      </p>
+                      <motion.h4 
+                        whileHover={{ scale: 1.05 }}
+                        className="font-bold text-gray-900 text-lg mb-1 cursor-default"
+                      >
+                        {displayTestimonials[0].name}
+                      </motion.h4>
+                      <motion.p 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 1.2 }}
+                        viewport={{ once: true }}
+                        className="text-gray-400 text-sm font-medium uppercase tracking-wide"
+                      >
+                        {displayTestimonials[0].company || 'VALUED CUSTOMER'}
+                      </motion.p>
                     </div>
-                  </div>
+                  </motion.div>
                 </>
               )}
             </motion.div>
