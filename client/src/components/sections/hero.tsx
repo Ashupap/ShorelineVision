@@ -97,7 +97,7 @@ const Hero = memo(function Hero() {
         <div className="absolute inset-0 bg-black/35"></div>
       </motion.div>
 
-      {/* Enhanced Floating Elements & Sea Creatures */}
+      {/* Enhanced Floating Elements & Sea Creatures - Mobile Responsive */}
       <motion.div
         animate={{ 
           y: [0, -30, 0],
@@ -109,7 +109,7 @@ const Hero = memo(function Hero() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-20 right-20 w-32 h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm border border-white/20 z-5"
+        className="absolute top-20 right-4 sm:right-20 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm border border-white/20 z-5"
       />
       <motion.div
         animate={{ 
@@ -123,11 +123,11 @@ const Hero = memo(function Hero() {
           ease: "easeInOut",
           delay: 2
         }}
-        className="absolute bottom-32 left-16 w-24 h-24 bg-marine-teal/30 rounded-full backdrop-blur-sm border border-white/30 z-5"
+        className="absolute bottom-20 sm:bottom-32 left-4 sm:left-16 w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24 bg-marine-teal/30 rounded-full backdrop-blur-sm border border-white/30 z-5"
       />
       <motion.div
         animate={{ 
-          x: [0, 40, 0],
+          x: [0, 20, 0],
           y: [0, -20, 0],
           opacity: [0.3, 0.7, 0.3]
         }}
@@ -137,14 +137,14 @@ const Hero = memo(function Hero() {
           ease: "easeInOut",
           delay: 4
         }}
-        className="absolute top-1/2 left-10 w-16 h-16 bg-white/20 rounded-full backdrop-blur-sm z-5"
+        className="absolute top-1/2 left-2 sm:left-10 w-8 sm:w-12 lg:w-16 h-8 sm:h-12 lg:h-16 bg-white/20 rounded-full backdrop-blur-sm z-5"
       />
       
       {/* Additional Bubble Effects */}
       <motion.div
         animate={{ 
-          y: [0, -60, 0],
-          x: [0, 20, 0],
+          y: [0, -30, 0],
+          x: [0, 10, 0],
           scale: [0.8, 1.2, 0.8],
           opacity: [0.4, 0.8, 0.4]
         }}
@@ -154,12 +154,12 @@ const Hero = memo(function Hero() {
           ease: "easeInOut",
           delay: 1
         }}
-        className="absolute top-1/3 right-1/3 w-20 h-20 bg-marine-teal/25 rounded-full backdrop-blur-sm border border-white/25 z-5"
+        className="absolute top-1/3 right-1/4 sm:right-1/3 w-10 sm:w-16 lg:w-20 h-10 sm:h-16 lg:h-20 bg-marine-teal/25 rounded-full backdrop-blur-sm border border-white/25 z-5"
       />
       <motion.div
         animate={{ 
-          y: [0, -40, 0],
-          x: [0, -30, 0],
+          y: [0, -20, 0],
+          x: [0, -15, 0],
           scale: [1, 1.3, 1],
           opacity: [0.2, 0.6, 0.2]
         }}
@@ -169,12 +169,12 @@ const Hero = memo(function Hero() {
           ease: "easeInOut",
           delay: 3
         }}
-        className="absolute bottom-1/4 right-1/4 w-28 h-28 bg-coral-accent/15 rounded-full backdrop-blur-sm border border-white/15 z-5"
+        className="absolute bottom-1/3 sm:bottom-1/4 right-1/5 sm:right-1/4 w-14 sm:w-20 lg:w-28 h-14 sm:h-20 lg:h-28 bg-coral-accent/15 rounded-full backdrop-blur-sm border border-white/15 z-5"
       />
       <motion.div
         animate={{ 
-          y: [0, -25, 0],
-          x: [0, 15, 0],
+          y: [0, -15, 0],
+          x: [0, 8, 0],
           scale: [0.9, 1.1, 0.9],
           opacity: [0.3, 0.7, 0.3]
         }}
@@ -184,13 +184,13 @@ const Hero = memo(function Hero() {
           ease: "easeInOut",
           delay: 5
         }}
-        className="absolute top-3/4 left-1/3 w-14 h-14 bg-white/25 rounded-full backdrop-blur-sm z-5"
+        className="absolute top-2/3 sm:top-3/4 left-1/4 sm:left-1/3 w-8 sm:w-10 lg:w-14 h-8 sm:h-10 lg:h-14 bg-white/25 rounded-full backdrop-blur-sm z-5"
       />
       
-      {/* Swimming Sea Creatures */}
+      {/* Swimming Sea Creatures - Mobile Responsive */}
       <motion.div
         animate={{ 
-          x: [-100, 1400],
+          x: [-50, window.innerWidth + 50],
           y: [0, -20, 0, 20, 0],
           rotate: [0, 5, 0, -5, 0]
         }}
@@ -200,12 +200,12 @@ const Hero = memo(function Hero() {
           ease: "linear",
           delay: 0
         }}
-        className="absolute top-1/4 -left-20 w-8 h-4 bg-gradient-to-r from-marine-teal/60 to-coral-accent/60 rounded-full z-5"
+        className="absolute top-1/4 -left-20 w-6 sm:w-8 h-3 sm:h-4 bg-gradient-to-r from-marine-teal/60 to-coral-accent/60 rounded-full z-5"
         style={{ clipPath: 'polygon(0% 50%, 60% 0%, 100% 50%, 60% 100%)' }}
       />
       <motion.div
         animate={{ 
-          x: [1450, -150],
+          x: [window.innerWidth + 50, -100],
           y: [0, 15, 0, -15, 0],
           rotate: [180, 185, 180, 175, 180]
         }}
@@ -215,12 +215,12 @@ const Hero = memo(function Hero() {
           ease: "linear",
           delay: 8
         }}
-        className="absolute bottom-1/3 -right-20 w-6 h-3 bg-gradient-to-l from-white/50 to-marine-teal/50 rounded-full z-5"
+        className="absolute bottom-1/3 -right-20 w-4 sm:w-6 h-2 sm:h-3 bg-gradient-to-l from-white/50 to-marine-teal/50 rounded-full z-5"
         style={{ clipPath: 'polygon(0% 50%, 60% 0%, 100% 50%, 60% 100%)' }}
       />
       <motion.div
         animate={{ 
-          x: [-80, 1380],
+          x: [-40, window.innerWidth + 40],
           y: [0, -10, 0, 10, 0],
           rotate: [0, 3, 0, -3, 0]
         }}
@@ -230,14 +230,14 @@ const Hero = memo(function Hero() {
           ease: "linear",
           delay: 15
         }}
-        className="absolute top-2/3 -left-16 w-5 h-2 bg-gradient-to-r from-coral-accent/40 to-golden-orange/40 rounded-full z-5"
+        className="absolute top-2/3 -left-16 w-3 sm:w-5 h-1 sm:h-2 bg-gradient-to-r from-coral-accent/40 to-golden-orange/40 rounded-full z-5"
         style={{ clipPath: 'polygon(0% 50%, 70% 0%, 100% 50%, 70% 100%)' }}
       />
 
       {/* Enhanced Responsive Layout */}
       <motion.div 
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-0 items-center min-h-screen lg:min-h-screen"
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-0 items-center min-h-screen lg:min-h-screen max-w-full overflow-x-hidden"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div
@@ -365,7 +365,7 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
+          className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full max-w-full lg:-ml-8 lg:pl-0"
         >
           {/* Slider Container */}
           <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg aspect-square rounded-2xl overflow-visible flex items-center justify-center lg:justify-start">
