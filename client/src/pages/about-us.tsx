@@ -103,6 +103,99 @@ export default function AboutUs() {
         { opacity: 0, x: 100 },
         { opacity: 1, x: 0, duration: 1, delay: 0.5, ease: "back.out(1.7)" }
       );
+
+      // Add parallax animations to timeline icons
+      const timelineIcons = container.querySelectorAll('.timeline-icon');
+      const mainIcons = container.querySelectorAll('.timeline-main-icon');
+      
+      timelineIcons.forEach((icon, index) => {
+        // Parallax effect on scroll
+        gsap.to(icon, {
+          y: -30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: icon,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 2,
+          }
+        });
+
+        // Rotation animation on scroll
+        gsap.to(icon, {
+          rotation: 360,
+          ease: "none",
+          scrollTrigger: {
+            trigger: icon,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 3,
+          }
+        });
+
+        // Scale animation when in view
+        gsap.fromTo(icon, 
+          { scale: 0.8, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 1,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: icon,
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+
+        // Floating animation for main icon
+        if (mainIcons[index]) {
+          gsap.to(mainIcons[index], {
+            y: -10,
+            duration: 2 + (index * 0.2),
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut"
+          });
+        }
+
+        // Hover animations
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            scale: 1.1,
+            rotation: "+=45",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+          
+          if (mainIcons[index]) {
+            gsap.to(mainIcons[index], {
+              scale: 1.2,
+              rotation: "+=180", 
+              duration: 0.4,
+              ease: "back.out(1.7)"
+            });
+          }
+        });
+
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+          
+          if (mainIcons[index]) {
+            gsap.to(mainIcons[index], {
+              scale: 1,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+          }
+        });
+      });
     };
 
     // Delay initialization to ensure DOM is ready
@@ -739,9 +832,9 @@ export default function AboutUs() {
                       key={milestone.year}
                       className="timeline-card flex-shrink-0 w-screen h-full flex items-center justify-center px-8 sm:px-12 lg:px-16"
                     >
-                      <div className="max-w-5xl w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                      <div className="max-w-5xl w-full grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-16 items-center">
                         {/* Content Side */}
-                        <div className="space-y-3">
+                        <div className="space-y-2 sm:space-y-3 order-2 lg:order-1">
                           <div
                             className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg`}
                           >
@@ -780,11 +873,11 @@ export default function AboutUs() {
                         </div>
 
                         {/* Visual Side */}
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center order-1 lg:order-2 mb-4 lg:mb-0">
                           <div
-                            className={`relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl group`}
+                            className={`timeline-icon relative w-28 h-28 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-2xl group`}
                           >
-                            <div className="text-3xl sm:text-4xl lg:text-5xl transition-transform duration-300 group-hover:scale-110">
+                            <div className="timeline-main-icon text-2xl sm:text-3xl lg:text-5xl transition-transform duration-300 group-hover:scale-110">
                               {milestone.icon}
                             </div>
 
