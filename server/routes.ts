@@ -170,7 +170,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/blog', isAuthenticated, async (req: any, res) => {
     try {
       const postData = insertBlogPostSchema.parse(req.body);
-      const authorId = req.user.claims.sub;
+      
+      // Get author ID from either temp user or regular Replit auth
+      let authorId: string;
+      const tempUser = (req.session as any)?.tempUser;
+      if (tempUser) {
+        authorId = tempUser.id;
+      } else if (req.user && req.user.claims) {
+        authorId = req.user.claims.sub;
+      } else {
+        return res.status(401).json({ message: "Unable to determine user identity" });
+      }
       
       // Generate slug from title
       const slug = postData.title
