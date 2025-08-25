@@ -11,6 +11,60 @@ interface Destination {
   products: string[];
 }
 
+// Global Network Data merged from Our Global Network section
+const globalNetwork = {
+  regions: [
+    {
+      name: "USA",
+      cities: ["Houston", "New York", "New Jersey", "LA", "Miami", "Chicago", "Seattle"],
+      color: "blue",
+      size: "large"
+    },
+    {
+      name: "Canada", 
+      cities: ["Toronto", "Vancouver"],
+      color: "red",
+      size: "medium"
+    },
+    {
+      name: "Europe",
+      cities: ["Antwerp", "Amsterdam", "Rotterdam"], 
+      color: "green",
+      size: "large"
+    },
+    {
+      name: "Japan",
+      cities: ["Tokyo", "Osaka"],
+      color: "purple", 
+      size: "medium"
+    },
+    {
+      name: "China",
+      cities: ["Zhanjiang", "Xiamen"],
+      color: "orange",
+      size: "medium"
+    },
+    {
+      name: "Southeast Asia",
+      cities: ["Port Penang", "Catlai"],
+      color: "teal",
+      size: "medium"
+    },
+    {
+      name: "UAE",
+      cities: ["Sharjah"],
+      color: "yellow",
+      size: "small"
+    },
+    {
+      name: "Mauritius", 
+      cities: ["Port Louis"],
+      color: "pink",
+      size: "small"
+    }
+  ]
+};
+
 const destinations: Destination[] = [
   // USA
   { name: "Houston", country: "USA", x: 28, y: 48, region: "North America", products: ["Shrimp", "Fish"] },
@@ -370,118 +424,223 @@ export default function InteractiveWorldMap() {
             🏗️
           </motion.div>
 
-          {/* Enhanced Tooltip */}
+          {/* Advanced Network Tooltip */}
           <AnimatePresence>
             {hoveredDestination?.name === destination.name && (
               <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                animate={{ opacity: 1, y: -15, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.8 }}
+                initial={{ opacity: 0, y: 30, scale: 0.5, rotateX: -90 }}
+                animate={{ opacity: 1, y: -20, scale: 1, rotateX: 0 }}
+                exit={{ opacity: 0, y: 30, scale: 0.5, rotateX: -90 }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 300, 
+                  damping: 25,
+                  opacity: { duration: 0.2 }
+                }}
                 className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 z-40"
               >
-                <div className="bg-white border border-gray-200 shadow-2xl px-4 py-3 rounded-xl min-w-[220px] backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="text-sm font-bold text-gray-800">{destination.name}</div>
+                <motion.div 
+                  initial={{ backdropFilter: "blur(0px)" }}
+                  animate={{ backdropFilter: "blur(20px)" }}
+                  className="bg-gradient-to-br from-white/95 to-blue-50/95 border border-blue-200/50 shadow-2xl px-5 py-4 rounded-2xl min-w-[280px] backdrop-blur-xl"
+                  style={{
+                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2)"
+                  }}
+                >
+                  {/* Header with advanced animations */}
+                  <div className="flex items-center gap-3 mb-3">
                     <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      className="text-xs"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 180, 360]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center"
                     >
-                      🚢
+                      <span className="text-white text-sm">🌍</span>
                     </motion.div>
-                  </div>
-                  <div className="text-xs text-gray-600 mb-2">{destination.country} • {destination.region}</div>
-                  
-                  {/* Shipping Status */}
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-2">
-                    <div className="flex items-center gap-2 text-xs text-green-700">
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                        className="w-2 h-2 bg-green-500 rounded-full"
-                      />
-                      <span>Active Shipping Route</span>
-                    </div>
-                    <div className="text-xs text-green-600 mt-1">
-                      Transit Time: {8 + Math.floor(Math.random() * 4)} days
+                    <div>
+                      <div className="text-lg font-bold text-gray-800">{destination.name}</div>
+                      <div className="text-sm text-gray-600">{destination.country} • {destination.region}</div>
                     </div>
                   </div>
                   
-                  <div className="border-t border-gray-200 pt-2">
-                    <div className="text-xs text-gray-600 mb-1">Products:</div>
-                    <div className="flex flex-wrap gap-1">
+                  {/* Global Network Integration */}
+                  {(() => {
+                    const networkRegion = globalNetwork.regions.find(r => 
+                      r.cities.includes(destination.name) || 
+                      r.name === destination.country ||
+                      (r.name === "Southeast Asia" && ["Malaysia", "Vietnam"].includes(destination.country)) ||
+                      (r.name === "Europe" && ["Belgium", "Netherlands"].includes(destination.country))
+                    );
+                    
+                    if (networkRegion) {
+                      const colorClasses: Record<string, string> = {
+                        blue: "from-blue-500 to-blue-600",
+                        red: "from-red-500 to-red-600", 
+                        green: "from-green-500 to-green-600",
+                        purple: "from-purple-500 to-purple-600",
+                        orange: "from-orange-500 to-orange-600",
+                        teal: "from-teal-500 to-teal-600",
+                        yellow: "from-yellow-500 to-yellow-600",
+                        pink: "from-pink-500 to-pink-600"
+                      };
+                      
+                      return (
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 }}
+                          className="mb-3"
+                        >
+                          <div className={`bg-gradient-to-r ${colorClasses[networkRegion.color]} text-white px-3 py-2 rounded-lg text-sm font-semibold`}>
+                            <motion.div
+                              animate={{ scale: [1, 1.05, 1] }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                              className="flex items-center gap-2"
+                            >
+                              <span>🌐</span>
+                              <span>{networkRegion.name} Network Hub</span>
+                            </motion.div>
+                          </div>
+                          <div className="text-xs text-gray-600 mt-2">
+                            Network Coverage: {networkRegion.cities.length} cities
+                          </div>
+                        </motion.div>
+                      );
+                    }
+                    return null;
+                  })()}
+                  
+                  {/* Products with advanced animations */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="border-t border-gray-200/50 pt-3"
+                  >
+                    <div className="text-sm text-gray-700 mb-2 font-semibold">Export Products:</div>
+                    <div className="flex flex-wrap gap-2">
                       {destination.products.map((product, i) => (
-                        <span key={i} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full border border-blue-200">
+                        <motion.span
+                          key={i}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ 
+                            delay: 0.4 + (i * 0.1),
+                            type: "spring",
+                            stiffness: 500
+                          }}
+                          whileHover={{ 
+                            scale: 1.1,
+                            backgroundColor: "rgba(59, 130, 246, 0.1)"
+                          }}
+                          className="text-xs bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 px-3 py-1.5 rounded-full border border-blue-200/50 shadow-sm cursor-pointer"
+                        >
                           {product}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
-                  </div>
-                  {/* Arrow */}
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
-                </div>
+                  </motion.div>
+                  
+                  {/* Animated Arrow */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute top-full left-1/2 transform -translate-x-1/2"
+                  >
+                    <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white/95"></div>
+                  </motion.div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
         </motion.div>
       ))}
 
-      {/* Stats overlay */}
+      {/* Global Network Summary with Advanced Animations */}
       <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 4 }}
-        className="absolute top-4 right-4 z-30"
+        initial={{ opacity: 0, scale: 0.8, rotateY: -90 }}
+        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+        transition={{ 
+          duration: 1.2, 
+          delay: 4,
+          type: "spring",
+          stiffness: 100
+        }}
+        className="absolute top-6 right-6 z-30"
       >
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-gray-200 shadow-lg">
-          <div className="text-gray-800 text-sm font-bold mb-3 flex items-center gap-2">
+        <motion.div 
+          whileHover={{ scale: 1.05, rotateY: 5 }}
+          className="bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-xl rounded-2xl p-5 border border-blue-200/50 shadow-2xl min-w-[200px]"
+          style={{
+            boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3)"
+          }}
+        >
+          <motion.div
+            animate={{ 
+              background: [
+                "linear-gradient(45deg, #3b82f6, #8b5cf6)",
+                "linear-gradient(45deg, #8b5cf6, #06b6d4)", 
+                "linear-gradient(45deg, #06b6d4, #3b82f6)"
+              ]
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="text-transparent bg-clip-text text-lg font-bold mb-4 flex items-center gap-3"
+          >
             <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              animate={{ 
+                rotate: 360,
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ 
+                rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+                scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+              }}
+              className="text-2xl"
             >
-              🌍
+              🌐
             </motion.span>
             Global Network
+          </motion.div>
+          
+          {/* Network Stats with Staggered Animations */}
+          <div className="space-y-3">
+            {[
+              { label: "Network Regions", value: globalNetwork.regions.length, color: "blue", icon: "🌍" },
+              { label: "Total Cities", value: globalNetwork.regions.reduce((sum, r) => sum + r.cities.length, 0), color: "green", icon: "🏙️" },
+              { label: "Active Routes", value: destinations.length, color: "purple", icon: "🚢" }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 4.5 + (index * 0.2) }}
+                whileHover={{ x: 5, scale: 1.02 }}
+                className="flex items-center justify-between p-2 rounded-lg bg-white/50 hover:bg-white/70 transition-all duration-300"
+              >
+                <div className="flex items-center gap-2">
+                  <motion.span
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
+                    className="text-sm"
+                  >
+                    {stat.icon}
+                  </motion.span>
+                  <span className="text-sm text-gray-700">{stat.label}:</span>
+                </div>
+                <motion.span
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                  className={`font-bold text-${stat.color}-600 text-sm`}
+                >
+                  {stat.value}
+                </motion.span>
+              </motion.div>
+            ))}
           </div>
-          <div className="space-y-2 text-xs text-gray-600">
-            <div className="flex items-center justify-between">
-              <span>Destinations:</span>
-              <span className="font-semibold text-blue-600">{destinations.length}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Active Routes:</span>
-              <span className="font-semibold text-green-600">{activeShipping.length}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Countries:</span>
-              <span className="font-semibold text-purple-600">
-                {new Set(destinations.map(d => d.country)).size}
-              </span>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Live shipping indicator */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 4.5 }}
-        className="absolute top-4 left-4 z-30"
-      >
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 border border-gray-200 shadow-lg">
-          <div className="text-gray-800 text-xs font-bold mb-2 flex items-center gap-2">
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-2 h-2 bg-green-500 rounded-full"
-            />
-            Live Shipping
-          </div>
-          <div className="text-xs text-gray-600">
-            {activeShipping.length} vessels in transit
-          </div>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
