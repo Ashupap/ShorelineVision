@@ -237,7 +237,7 @@ const Hero = memo(function Hero() {
       {/* Enhanced Responsive Layout */}
       <motion.div 
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-16 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-0 items-center min-h-screen"
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-8 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-0 items-center min-h-screen"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div

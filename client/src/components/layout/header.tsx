@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Menu, X, Anchor, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
@@ -6,6 +6,17 @@ import { Menu, X, Anchor, Shield, Mail, Phone, Building2, Facebook, Instagram, T
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location] = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -44,8 +55,12 @@ export default function Header() {
       {/* Animated Information Bar */}
       <motion.div
         initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        animate={{ 
+          y: isScrolled ? -50 : 0, 
+          opacity: isScrolled ? 0 : 1,
+          height: isScrolled ? 0 : 'auto'
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
         className="relative overflow-hidden"
       >
         {/* Animated Background */}
@@ -69,7 +84,7 @@ export default function Header() {
         />
         
         <div className="container mx-auto px-4 relative">
-          <div className="flex items-center justify-between h-10 text-white text-sm">
+          <div className="flex items-center justify-between h-10 text-white text-sm font-bold">
             {/* Contact Information */}
             <motion.div 
               className="flex items-center space-x-6"
@@ -77,14 +92,22 @@ export default function Header() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <div className="flex items-center space-x-1">
+              <a 
+                href="mailto:alashoremarine@gmail.com"
+                className="flex items-center space-x-1 hover:text-yellow-200 transition-colors"
+                data-testid="link-email"
+              >
                 <Mail size={14} />
                 <span>alashoremarine@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-1">
+              </a>
+              <a 
+                href="tel:+917381050536"
+                className="flex items-center space-x-1 hover:text-yellow-200 transition-colors"
+                data-testid="link-phone"
+              >
                 <Phone size={14} />
                 <span>+91 7381050536</span>
-              </div>
+              </a>
               <div className="hidden lg:flex items-center space-x-1">
                 <Building2 size={14} />
                 <span>CIN: U05000OR2012PTC016366</span>
@@ -155,7 +178,9 @@ export default function Header() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="bg-white/95 backdrop-blur-md shadow-lg"
+        className={`backdrop-blur-md shadow-lg transition-all duration-300 ${
+          isScrolled ? 'bg-white/95' : 'bg-white/80'
+        }`}
       >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
