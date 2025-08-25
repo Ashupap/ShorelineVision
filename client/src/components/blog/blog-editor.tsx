@@ -23,6 +23,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState<string>("");
 
   const form = useForm<InsertBlogPostSchema>({
     resolver: zodResolver(insertBlogPostSchema),
@@ -88,6 +89,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
     },
     onSuccess: (data) => {
       form.setValue('featuredImage', data.url);
+      setSelectedFileName(""); // Clear the filename after successful upload
       toast({
         title: "Success",
         description: "Image uploaded successfully!",
@@ -109,12 +111,16 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Set the selected file name immediately
+      setSelectedFileName(file.name);
+      
       if (file.size > 10 * 1024 * 1024) { // 10MB limit
         toast({
           title: "File too large",
           description: "Please select an image under 10MB",
           variant: "destructive",
         });
+        setSelectedFileName("");
         return;
       }
       
@@ -124,6 +130,7 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
           description: "Please select an image file",
           variant: "destructive",
         });
+        setSelectedFileName("");
         return;
       }
 
@@ -210,28 +217,41 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                       <FormLabel>Featured Image</FormLabel>
                       <div className="space-y-4">
                         {/* Image Upload Button */}
-                        <div className="flex items-center space-x-4">
-                          <input
-                            type="file"
-                            id="image-upload"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                          />
-                          <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => document.getElementById('image-upload')?.click()}
-                            disabled={uploadImage.isPending}
-                            data-testid="button-upload-image"
-                          >
-                            <Upload size={16} className="mr-2" />
-                            {uploadImage.isPending ? "Uploading..." : "Upload Image"}
-                          </Button>
-                          {field.value && (
-                            <div className="flex items-center text-sm text-green-600">
-                              <ImageIcon size={16} className="mr-1" />
-                              Image uploaded
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-4">
+                            <input
+                              type="file"
+                              id="image-upload"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              className="hidden"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => document.getElementById('image-upload')?.click()}
+                              disabled={uploadImage.isPending}
+                              data-testid="button-upload-image"
+                            >
+                              <Upload size={16} className="mr-2" />
+                              {uploadImage.isPending ? "Uploading..." : "Upload Image"}
+                            </Button>
+                            {field.value && (
+                              <div className="flex items-center text-sm text-green-600">
+                                <ImageIcon size={16} className="mr-1" />
+                                Image uploaded
+                              </div>
+                            )}
+                          </div>
+                          
+                          {/* Selected File Name */}
+                          {selectedFileName && (
+                            <div className="text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-md border">
+                              <span className="font-medium">Selected: </span>
+                              {selectedFileName}
+                              {uploadImage.isPending && (
+                                <span className="ml-2 text-blue-600">• Uploading...</span>
+                              )}
                             </div>
                           )}
                         </div>

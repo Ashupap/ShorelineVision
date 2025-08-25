@@ -497,7 +497,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      const uploadedBy = req.user.claims.sub;
+      // Handle both temp user and regular auth user
+      let uploadedBy;
+      const tempUser = (req.session as any)?.tempUser;
+      if (tempUser) {
+        uploadedBy = tempUser.id;
+      } else if (req.user && req.user.claims) {
+        uploadedBy = req.user.claims.sub;
+      } else {
+        uploadedBy = 'anonymous';
+      }
+
       const fileUrl = `/uploads/media/${req.file.filename}`;
       
       const mediaData = {
@@ -522,7 +532,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/media', isAuthenticated, async (req: any, res) => {
     try {
       const mediaData = insertMediaFileSchema.parse(req.body);
-      const uploadedBy = req.user.claims.sub;
+      
+      // Handle both temp user and regular auth user
+      let uploadedBy;
+      const tempUser = (req.session as any)?.tempUser;
+      if (tempUser) {
+        uploadedBy = tempUser.id;
+      } else if (req.user && req.user.claims) {
+        uploadedBy = req.user.claims.sub;
+      } else {
+        uploadedBy = 'anonymous';
+      }
+      
       const mediaFile = await storage.createMediaFile({ ...mediaData, uploadedBy });
       res.status(201).json(mediaFile);
     } catch (error) {
