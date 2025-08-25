@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Menu, X, Anchor, Shield } from "lucide-react";
+import { Menu, X, Anchor, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,12 +40,123 @@ export default function Header() {
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg"
-    >
+    <div className="fixed top-0 left-0 right-0 z-50">
+      {/* Animated Information Bar */}
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="relative overflow-hidden"
+      >
+        {/* Animated Background */}
+        <motion.div
+          animate={{
+            background: [
+              "linear-gradient(90deg, #3B82F6, #14B8A6, #F59E0B, #EF4444, #8B5CF6)",
+              "linear-gradient(90deg, #14B8A6, #F59E0B, #EF4444, #8B5CF6, #3B82F6)",
+              "linear-gradient(90deg, #F59E0B, #EF4444, #8B5CF6, #3B82F6, #14B8A6)",
+              "linear-gradient(90deg, #EF4444, #8B5CF6, #3B82F6, #14B8A6, #F59E0B)",
+              "linear-gradient(90deg, #8B5CF6, #3B82F6, #14B8A6, #F59E0B, #EF4444)",
+              "linear-gradient(90deg, #3B82F6, #14B8A6, #F59E0B, #EF4444, #8B5CF6)",
+            ]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute inset-0"
+        />
+        
+        <div className="container mx-auto px-4 relative">
+          <div className="flex items-center justify-between h-10 text-white text-sm">
+            {/* Contact Information */}
+            <motion.div 
+              className="flex items-center space-x-6"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <div className="flex items-center space-x-1">
+                <Mail size={14} />
+                <span>alashoremarine@gmail.com</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Phone size={14} />
+                <span>+91 7381050536</span>
+              </div>
+              <div className="hidden lg:flex items-center space-x-1">
+                <Building2 size={14} />
+                <span>CIN: U05000OR2012PTC016366</span>
+              </div>
+            </motion.div>
+
+            {/* Social Media Links */}
+            <motion.div 
+              className="flex items-center space-x-3"
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <span className="hidden sm:inline">Follow Us:</span>
+              <div className="flex space-x-2">
+                <motion.a
+                  href="https://www.facebook.com/AlashoreMarine/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="hover:bg-white/20 p-1 rounded transition-colors"
+                  data-testid="link-facebook"
+                >
+                  <Facebook size={16} />
+                </motion.a>
+                <motion.a
+                  href="https://www.instagram.com/alashoremarine/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="hover:bg-white/20 p-1 rounded transition-colors"
+                  data-testid="link-instagram"
+                >
+                  <Instagram size={16} />
+                </motion.a>
+                <motion.a
+                  href="https://twitter.com/AlashoreL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="hover:bg-white/20 p-1 rounded transition-colors"
+                  data-testid="link-twitter"
+                >
+                  <Twitter size={16} />
+                </motion.a>
+                <motion.a
+                  href="https://www.linkedin.com/company/alashore-marine-private-limited/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="hover:bg-white/20 p-1 rounded transition-colors"
+                  data-testid="link-linkedin"
+                >
+                  <Linkedin size={16} />
+                </motion.a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Main Header */}
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="bg-white/95 backdrop-blur-md shadow-lg"
+      >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -159,6 +270,7 @@ export default function Header() {
           </motion.div>
         )}
       </div>
-    </motion.header>
+      </motion.header>
+    </div>
   );
 }

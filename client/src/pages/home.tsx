@@ -32,7 +32,7 @@ const Home = memo(function Home() {
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
       <Header />
-      <main>
+      <main className="pt-header">
         <Hero />
         <motion.section 
           style={{ y }}
