@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Star, Award, Globe, Users, Leaf, Target } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import AnimatedEarthMap from "@/components/animated-earth-map";
+import BlueWorldMap from "@/components/blue-world-map";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,7 @@ export default function AboutUs() {
         </section>
 
         {/* Main Content */}
-        <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <section className="py-20 bg-gradient-to-br from-light-marine to-white">
           <div className="container mx-auto px-4">
 
             {/* Who We Are Section */}
@@ -420,180 +420,172 @@ export default function AboutUs() {
               ))}
             </div>
 
-            {/* Journey Section - Winery Timeline Style */}
+            {/* Horizontal Journey Timeline */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-20 relative"
+              className="mb-20"
             >
-              {/* Background with vintage wine texture */}
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-red-900/10 to-purple-900/20 rounded-3xl"></div>
-              
-              <div className="relative z-10 text-center mb-16 py-12">
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1 }}
-                  className="inline-block"
-                >
-                  <h3 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6 drop-shadow-2xl">
-                    Our <span className="text-amber-400">Journey</span>
-                  </h3>
-                  <div className="w-32 h-2 bg-gradient-to-r from-amber-400 via-red-500 to-purple-600 mx-auto rounded-full mb-6"></div>
-                  <p className="text-white/90 text-xl max-w-3xl mx-auto drop-shadow-lg">
-                    A story of excellence, crafted through decades of dedication
-                  </p>
-                </motion.div>
+              <div className="text-center mb-12">
+                <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
+                  Journey of Alashore Marine Group
+                </h3>
+                <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+                  From 1997, in the past 24 years, we have come so far and the journey has been amazing
+                </p>
+                <div className="w-24 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full mt-6"></div>
               </div>
               
-              {/* Winery Timeline */}
-              <div className="relative max-w-6xl mx-auto">
-                {/* Wine Bottle Timeline Line */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 h-full">
-                  <div className="w-2 h-full bg-gradient-to-b from-amber-600 via-red-700 to-purple-800 rounded-full shadow-xl"></div>
-                  {/* Cork tops */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-200 rounded-full border-4 border-amber-600 shadow-lg"></div>
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-purple-200 rounded-full border-4 border-purple-600 shadow-lg"></div>
-                </div>
-                
-                <div className="space-y-20 py-16">
-                  {[
-                    {
-                      year: "2009",
-                      title: "Balasore Marine Exports",
-                      subtitle: "The Foundation Vintage",
-                      description: "Like a carefully selected grape harvest, we began our journey in the Asian markets with China, Vietnam, and UAE. This was our foundation year, where we established our commitment to quality.",
-                      destinations: ["China", "Vietnam", "UAE"],
-                      color: "from-amber-500 to-orange-600",
-                      side: "left",
-                      icon: "🍇"
-                    },
-                    {
-                      year: "2012",
-                      title: "Alashore Marine Exports",
-                      subtitle: "The Global Reserve",
-                      description: "Our finest vintage year - expanding our reach globally like a premium wine finding its way to the most prestigious tables worldwide. We conquered new territories with unwavering quality.",
-                      destinations: ["USA", "EU", "Canada", "Malaysia", "Japan", "Mauritius"],
-                      color: "from-red-500 to-purple-600",
-                      side: "right",
-                      icon: "🌍"
-                    }
-                  ].map((milestone, index) => (
-                    <motion.div
-                      key={milestone.year}
-                      initial={{ 
-                        opacity: 0, 
-                        x: milestone.side === 'left' ? -100 : 100,
-                        scale: 0.8
-                      }}
-                      whileInView={{ 
-                        opacity: 1, 
-                        x: 0,
-                        scale: 1
-                      }}
-                      transition={{ 
-                        duration: 1.2, 
-                        delay: index * 0.5,
-                        type: "spring",
-                        stiffness: 100
-                      }}
-                      viewport={{ once: true }}
-                      className={`flex items-center ${milestone.side === 'left' ? 'justify-start' : 'justify-end'}`}
-                    >
-                      {/* Wine Bottle Card */}
-                      <div className={`w-5/12 ${milestone.side === 'left' ? 'pr-12' : 'pl-12'}`}>
+              {/* Horizontal Scroll Timeline */}
+              <div className="relative">
+                <div className="overflow-x-auto pb-6">
+                  <div className="flex space-x-8 min-w-max px-8">
+                    {[
+                      {
+                        year: "1997",
+                        title: "Foundation Year",
+                        description: "Started our journey in the seafood industry with a vision to become a leading exporter",
+                        icon: "🏗️",
+                        color: "from-blue-500 to-cyan-500",
+                        achievements: ["Established Company", "First Processing Unit", "Local Market Entry"]
+                      },
+                      {
+                        year: "2000-2005",
+                        title: "Growth Phase",
+                        description: "Expanded operations and improved processing capabilities to meet international standards",
+                        icon: "📈",
+                        color: "from-green-500 to-teal-500", 
+                        achievements: ["Quality Certifications", "Process Upgrades", "Team Expansion"]
+                      },
+                      {
+                        year: "2009",
+                        title: "Balasore Marine Exports Pvt. Ltd.",
+                        description: "Established operations with focus on Asian markets including China, Vietnam, and UAE",
+                        icon: "🌏",
+                        color: "from-purple-500 to-pink-500",
+                        achievements: ["Asian Market Entry", "Export License", "International Standards"]
+                      },
+                      {
+                        year: "2012",
+                        title: "Alashore Marine Exports Pvt. Ltd.",
+                        description: "Expanded globally to USA, EU, Canada, Malaysia, Japan, and Mauritius with premium quality standards",
+                        icon: "🚀",
+                        color: "from-orange-500 to-red-500",
+                        achievements: ["Global Expansion", "Premium Quality", "Multiple Certifications"]
+                      },
+                      {
+                        year: "2015-2020",
+                        title: "Excellence Era",
+                        description: "Achieved industry recognition and expanded product portfolio with sustainable practices",
+                        icon: "🏆",
+                        color: "from-yellow-500 to-orange-500",
+                        achievements: ["Industry Awards", "Sustainable Practices", "Product Innovation"]
+                      },
+                      {
+                        year: "2021-Present",
+                        title: "Future Forward",
+                        description: "Leading with innovation, technology, and commitment to quality in the global seafood market",
+                        icon: "🌟",
+                        color: "from-indigo-500 to-purple-500",
+                        achievements: ["Technology Integration", "Market Leadership", "Innovation Hub"]
+                      }
+                    ].map((milestone, index) => (
+                      <motion.div
+                        key={milestone.year}
+                        initial={{ opacity: 0, y: 50, scale: 0.8 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ 
+                          duration: 0.8, 
+                          delay: index * 0.2,
+                          type: "spring",
+                          stiffness: 120
+                        }}
+                        viewport={{ once: true }}
+                        className="flex-shrink-0 w-80 relative group"
+                      >
+                        {/* Timeline connector */}
+                        {index < 5 && (
+                          <div className="absolute top-12 -right-4 w-8 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal rounded-full z-10"></div>
+                        )}
+                        
+                        {/* Timeline Card */}
                         <motion.div
                           whileHover={{ 
                             scale: 1.05,
-                            rotateY: milestone.side === 'left' ? 5 : -5
+                            y: -10
                           }}
-                          className="group relative bg-gradient-to-br from-black/80 to-gray-900/90 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl border border-amber-500/30"
+                          className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 border-transparent group-hover:border-ocean-blue/30"
                         >
-                          {/* Wine Label Background */}
-                          <div className={`absolute inset-0 bg-gradient-to-br ${milestone.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div>
+                          {/* Background gradient */}
+                          <div className={`absolute inset-0 bg-gradient-to-br ${milestone.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
                           
-                          {/* Decorative Wine Elements */}
-                          <div className="absolute top-4 right-4 text-4xl opacity-20 group-hover:opacity-40 transition-opacity duration-500">
-                            {milestone.icon}
-                          </div>
-                          
-                          <div className="relative p-8">
-                            {/* Year Badge - Wine Vintage Style */}
-                            <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-6 py-2 rounded-full font-bold text-lg mb-4 shadow-lg`}>
+                          {/* Year badge */}
+                          <div className="relative p-6 pb-4">
+                            <motion.div
+                              whileHover={{ rotate: 360 }}
+                              transition={{ duration: 0.6 }}
+                              className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${milestone.color} rounded-2xl shadow-lg mb-4 text-2xl`}
+                            >
+                              {milestone.icon}
+                            </motion.div>
+                            
+                            <div className={`inline-block bg-gradient-to-r ${milestone.color} text-white px-4 py-2 rounded-full text-sm font-bold mb-4`}>
                               {milestone.year}
                             </div>
                             
-                            {/* Wine Label Content */}
-                            <div className="text-center mb-6">
-                              <h4 className="text-white text-2xl font-bold mb-2 group-hover:text-amber-200 transition-colors duration-300">
-                                {milestone.title}
-                              </h4>
-                              <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider">
-                                {milestone.subtitle}
-                              </p>
-                              <div className="w-16 h-0.5 bg-gradient-to-r from-amber-400 to-red-500 mx-auto mt-3"></div>
-                            </div>
+                            <h4 className="text-gray-900 text-xl font-bold mb-3 group-hover:text-ocean-blue transition-colors duration-300">
+                              {milestone.title}
+                            </h4>
                             
-                            <p className="text-white/90 leading-relaxed mb-6 text-center italic">
+                            <p className="text-gray-600 text-sm leading-relaxed mb-4">
                               {milestone.description}
                             </p>
                             
-                            {/* Destinations - Wine Tasting Notes Style */}
-                            <div className="text-center">
-                              <p className="text-amber-300 text-sm font-semibold mb-2">Market Destinations</p>
-                              <div className="flex flex-wrap justify-center gap-2">
-                                {milestone.destinations.map((destination, i) => (
-                                  <motion.span
-                                    key={destination}
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ duration: 0.3, delay: i * 0.1 }}
-                                    className="bg-amber-900/50 text-amber-200 px-3 py-1 rounded-full text-xs border border-amber-500/30 hover:bg-amber-800/70 transition-colors duration-300"
-                                  >
-                                    {destination}
-                                  </motion.span>
-                                ))}
-                              </div>
+                            {/* Achievements */}
+                            <div className="space-y-2">
+                              <p className="text-ocean-blue text-xs font-semibold uppercase tracking-wider">Key Achievements</p>
+                              {milestone.achievements.map((achievement, i) => (
+                                <motion.div
+                                  key={achievement}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  whileInView={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                                  className="flex items-center text-gray-600 text-xs"
+                                >
+                                  <div className={`w-2 h-2 bg-gradient-to-r ${milestone.color} rounded-full mr-2 flex-shrink-0`}></div>
+                                  <span>{achievement}</span>
+                                </motion.div>
+                              ))}
                             </div>
                           </div>
                           
-                          {/* Wine Cork */}
-                          <div className={`absolute ${milestone.side === 'left' ? '-right-2' : '-left-2'} top-1/2 transform -translate-y-1/2 w-4 h-12 bg-gradient-to-b from-amber-200 to-amber-600 rounded-full border-2 border-amber-700 shadow-lg`}></div>
+                          {/* Bottom accent */}
+                          <div className={`h-2 bg-gradient-to-r ${milestone.color}`}></div>
                         </motion.div>
-                      </div>
-                      
-                      {/* Central Wine Glass */}
-                      <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
-                        whileInView={{ scale: 1, rotate: 0 }}
-                        transition={{ duration: 0.8, delay: index * 0.5 + 0.3 }}
-                        className="relative z-20"
-                      >
-                        <div className={`w-16 h-16 bg-gradient-to-br ${milestone.color} rounded-full border-4 border-white shadow-2xl flex items-center justify-center`}>
-                          <span className="text-white text-2xl font-bold">{milestone.icon}</span>
-                        </div>
-                        {/* Wine Pour Effect */}
-                        <motion.div
-                          animate={{
-                            scaleY: [0, 1, 0.8, 1],
-                            opacity: [0, 0.6, 0.3, 0.6]
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 2
-                          }}
-                          className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-1 h-8 bg-gradient-to-b ${milestone.color} rounded-full opacity-30`}
-                        />
                       </motion.div>
-                      
-                      <div className="w-5/12"></div>
-                    </motion.div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+                
+                {/* Scroll indicator */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 2 }}
+                  className="flex justify-center mt-6"
+                >
+                  <div className="flex items-center space-x-2 text-gray-500 text-sm">
+                    <span>Scroll to explore our journey</span>
+                    <motion.div
+                      animate={{ x: [0, 10, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      →
+                    </motion.div>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
 
@@ -605,10 +597,10 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h3 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
+              <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
                 Our Global Presence
               </h3>
-              <p className="text-white/90 text-lg max-w-3xl mx-auto mb-12">
+              <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
                 Connecting oceans worldwide - Discover how our premium seafood reaches tables across continents through our extensive global network
               </p>
             </motion.div>
@@ -621,70 +613,222 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <AnimatedEarthMap />
+              <BlueWorldMap />
             </motion.div>
 
-            {/* Global Presence - Original Style Cards */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-              {[
-                { 
-                  region: "USA", 
-                  cities: ["Houston", "New York", "New Jersey", "LA", "Miami", "Chicago", "Seattle"],
-                  flag: "🇺🇸",
-                  color: "from-blue-500 to-red-500"
-                },
-                { 
-                  region: "Canada", 
-                  cities: ["Toronto", "Vancouver"],
-                  flag: "🇨🇦",
-                  color: "from-red-500 to-white"
-                },
-                { 
-                  region: "Europe", 
-                  cities: ["Antwerp (BEL)", "Amsterdam (NEH)", "Rotterdam (NEH)"],
-                  flag: "🇪🇺",
-                  color: "from-blue-600 to-yellow-400"
-                },
-                { 
-                  region: "Asia", 
-                  cities: ["Tokyo", "Osaka", "Zhanjiang", "Xiamen", "Port Penang"],
-                  flag: "🌏",
-                  color: "from-green-500 to-yellow-500"
-                }
-              ].map((location, index) => (
-                <motion.div
-                  key={location.region}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  viewport={{ once: true }}
-                  className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${location.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                  <div className="relative p-6">
-                    <div className="text-center mb-4">
-                      <span className="text-4xl mb-2 block">{location.flag}</span>
-                      <h4 className="text-ocean-blue text-2xl font-bold mb-1">{location.region}</h4>
-                      <div className="w-8 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full"></div>
-                    </div>
-                    <div className="space-y-2">
-                      {location.cities.map((city, cityIndex) => (
+            {/* Alternative Animation Designs - Floating Destination Bubbles */}
+            <div className="relative mb-16 min-h-[400px] overflow-hidden">
+              {/* Background pattern */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl"></div>
+              
+              {/* Floating destination elements */}
+              <div className="relative p-8">
+                <div className="text-center mb-8">
+                  <h4 className="text-2xl font-bold text-gray-900 mb-2">Our Global Network</h4>
+                  <p className="text-gray-600">Serving premium seafood to destinations worldwide</p>
+                </div>
+                
+                {/* Floating bubbles container */}
+                <div className="relative h-80">
+                  {[
+                    // North America cluster
+                    { region: "USA", cities: ["Houston", "New York", "New Jersey", "LA", "Miami", "Chicago", "Seattle"], x: 20, y: 20, size: "large", color: "blue" },
+                    { region: "Canada", cities: ["Toronto", "Vancouver"], x: 15, y: 10, size: "medium", color: "red" },
+                    
+                    // Europe cluster  
+                    { region: "Europe", cities: ["Antwerp", "Amsterdam", "Rotterdam"], x: 50, y: 15, size: "large", color: "green" },
+                    
+                    // Asia cluster
+                    { region: "Japan", cities: ["Tokyo", "Osaka"], x: 80, y: 25, size: "medium", color: "purple" },
+                    { region: "China", cities: ["Zhanjiang", "Xiamen"], x: 75, y: 40, size: "medium", color: "orange" },
+                    { region: "Southeast Asia", cities: ["Port Penang", "Catlai"], x: 70, y: 60, size: "medium", color: "teal" },
+                    
+                    // Middle East & Others
+                    { region: "UAE", cities: ["Sharjah"], x: 60, y: 50, size: "small", color: "yellow" },
+                    { region: "Mauritius", cities: ["Port Louis"], x: 65, y: 75, size: "small", color: "pink" }
+                  ].map((destination, index) => {
+                    const sizeClasses: Record<string, string> = {
+                      small: "w-20 h-20 text-xs",
+                      medium: "w-32 h-32 text-sm", 
+                      large: "w-40 h-40 text-base"
+                    };
+                    
+                    const colorClasses: Record<string, string> = {
+                      blue: "from-blue-400 to-blue-600 border-blue-300",
+                      red: "from-red-400 to-red-600 border-red-300",
+                      green: "from-green-400 to-green-600 border-green-300",
+                      purple: "from-purple-400 to-purple-600 border-purple-300", 
+                      orange: "from-orange-400 to-orange-600 border-orange-300",
+                      teal: "from-teal-400 to-teal-600 border-teal-300",
+                      yellow: "from-yellow-400 to-yellow-600 border-yellow-300",
+                      pink: "from-pink-400 to-pink-600 border-pink-300"
+                    };
+                    
+                    return (
+                      <motion.div
+                        key={destination.region}
+                        initial={{ 
+                          opacity: 0, 
+                          scale: 0,
+                          x: Math.random() * 100 - 50,
+                          y: Math.random() * 100 - 50
+                        }}
+                        animate={{ 
+                          opacity: 1, 
+                          scale: 1,
+                          x: 0,
+                          y: 0
+                        }}
+                        transition={{ 
+                          duration: 1.5, 
+                          delay: index * 0.2,
+                          type: "spring",
+                          stiffness: 100
+                        }}
+                        style={{
+                          position: 'absolute',
+                          left: `${destination.x}%`,
+                          top: `${destination.y}%`,
+                          transform: 'translate(-50%, -50%)'
+                        }}
+                        className="group cursor-pointer"
+                      >
+                        {/* Floating bubble with continuous motion */}
                         <motion.div
-                          key={city}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.4, delay: index * 0.15 + cityIndex * 0.1 }}
-                          viewport={{ once: true }}
-                          className="flex items-center text-gray-600 hover:text-ocean-blue transition-colors duration-200"
+                          animate={{
+                            y: [0, -20, 0],
+                            rotate: [0, 5, -5, 0],
+                            scale: [1, 1.05, 1]
+                          }}
+                          transition={{
+                            duration: 4 + index * 0.5,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          className={`${sizeClasses[destination.size]} bg-gradient-to-br ${colorClasses[destination.color]} rounded-full border-4 backdrop-blur-sm shadow-2xl flex flex-col items-center justify-center relative overflow-hidden group-hover:scale-110 transition-all duration-300`}
                         >
-                          <div className="w-2 h-2 bg-coral-accent rounded-full mr-3 flex-shrink-0"></div>
-                          <span className="text-sm font-medium">{city}</span>
+                          {/* Shimmer effect */}
+                          <motion.div
+                            animate={{
+                              x: [-100, 100],
+                              opacity: [0, 1, 0]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              repeatDelay: 3
+                            }}
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                          />
+                          
+                          {/* Content */}
+                          <div className="text-white text-center z-10">
+                            <div className="font-bold mb-1 text-shadow">{destination.region}</div>
+                            <div className={`${destination.size === 'small' ? 'text-xs' : 'text-xs'} opacity-90`}>
+                              {destination.cities.length} {destination.cities.length === 1 ? 'city' : 'cities'}
+                            </div>
+                          </div>
+                          
+                          {/* Pulse rings */}
+                          <motion.div
+                            animate={{
+                              scale: [1, 2.5, 1],
+                              opacity: [0.8, 0, 0.8]
+                            }}
+                            transition={{
+                              duration: 3,
+                              repeat: Infinity,
+                              delay: index * 0.5
+                            }}
+                            className={`absolute inset-0 rounded-full border-2 ${colorClasses[destination.color].split(' ')[2]}`}
+                          />
                         </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                        
+                        {/* Tooltip on hover */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          whileHover={{ opacity: 1, y: -5 }}
+                          className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-xl p-3 min-w-[200px] z-20 border"
+                        >
+                          <div className="text-gray-900 font-semibold text-sm mb-2">{destination.region}</div>
+                          <div className="space-y-1">
+                            {destination.cities.map((city, cityIndex) => (
+                              <motion.div
+                                key={city}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: cityIndex * 0.05 }}
+                                className="flex items-center text-gray-600 text-xs"
+                              >
+                                <div className={`w-1.5 h-1.5 bg-gradient-to-r ${colorClasses[destination.color]} rounded-full mr-2`}></div>
+                                {city}
+                              </motion.div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })}
+                  
+                  {/* Connecting lines animation */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
+                    {/* Animated connection paths */}
+                    <motion.path
+                      d="M20 20 Q40 10 50 15"
+                      stroke="#60a5fa"
+                      strokeWidth="0.5"
+                      fill="none"
+                      strokeDasharray="2,3"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.6 }}
+                      transition={{ duration: 2, delay: 2 }}
+                    />
+                    <motion.path
+                      d="M50 15 Q65 20 80 25"
+                      stroke="#34d399"
+                      strokeWidth="0.5"
+                      fill="none"
+                      strokeDasharray="2,3"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.6 }}
+                      transition={{ duration: 2, delay: 2.5 }}
+                    />
+                    <motion.path
+                      d="M75 40 Q70 50 65 75"
+                      stroke="#f59e0b"
+                      strokeWidth="0.5"
+                      fill="none"
+                      strokeDasharray="2,3"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.6 }}
+                      transition={{ duration: 2, delay: 3 }}
+                    />
+                  </svg>
+                  
+                  {/* Floating particles */}
+                  {[...Array(12)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        y: [100, -20],
+                        x: [Math.random() * 20 - 10, Math.random() * 40 - 20]
+                      }}
+                      transition={{
+                        duration: Math.random() * 8 + 5,
+                        repeat: Infinity,
+                        delay: Math.random() * 5
+                      }}
+                      className="absolute w-1 h-1 bg-blue-400 rounded-full"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        bottom: '0%'
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Call to Action */}
