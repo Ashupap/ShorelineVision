@@ -179,8 +179,8 @@ export default function Header() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className={`backdrop-blur-md shadow-lg transition-all duration-300 ${
-          isScrolled ? 'bg-white/95' : 'bg-white/80'
+        className={`transition-all duration-300 ${
+          isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}
       >
       <div className="container mx-auto px-4">
