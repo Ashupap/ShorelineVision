@@ -7,6 +7,10 @@ import sustainabilityBg from "@assets/generated_images/Sustainable_aquaculture_o
 import processingFacilityImg from "@assets/generated_images/Seafood_processing_facility_interior_25ca1780.png";
 import aquacultureFarmImg from "@assets/generated_images/Sustainable_aquaculture_fish_farm_ab1886b9.png";
 import transportFleetImg from "@assets/generated_images/Refrigerated_seafood_transport_fleet_da6483c0.png";
+import plantFacilityImg from "@assets/generated_images/Industrial_processing_plant_facility_e8f45426.png";
+import compressionSystemImg from "@assets/generated_images/Industrial_compression_systems_facility_06113571.png";
+import qualityLabImg from "@assets/generated_images/Quality_control_laboratory_testing_92093505.png";
+import productionCapacityImg from "@assets/generated_images/High_capacity_production_facility_b87ef9ff.png";
 
 export default function Sustainability() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +30,7 @@ export default function Sustainability() {
       title: "Plant Facilities",
       description: "Our processing plant spans 2 acres with state-of-the-art facilities designed for optimal productivity and sustainability.",
       stats: "2 Acre Plant Area",
+      backgroundImage: plantFacilityImg,
       details: [
         "2 acres processing plant area",
         "Separate boarding facilities",
@@ -38,6 +43,7 @@ export default function Sustainability() {
       title: "Compression Systems", 
       description: "Advanced Kirloskar compressor systems ensuring optimal performance and energy efficiency across our operations.",
       stats: "6 Compressor Units",
+      backgroundImage: compressionSystemImg,
       details: [
         "3x KC 7/2 - 9 Piston, 150HP Motor",
         "2x KC 4/2 - 6 Piston, 100HP Motor", 
@@ -52,6 +58,7 @@ export default function Sustainability() {
       icon: FlaskConical,
       title: "Quality Control Laboratory",
       description: "In-House EIA APPROVED Quality Certification Laboratory equipped with state-of-art modern machinery and highly trained technical staff.",
+      backgroundImage: qualityLabImg,
       details: [
         "EIA approved certification",
         "Experienced certified chemists and technologists",
@@ -65,6 +72,7 @@ export default function Sustainability() {
       icon: Thermometer,
       title: "Production Capacity",
       description: "Advanced IQF systems and cold storage facilities ensuring optimal preservation and processing capabilities.",
+      backgroundImage: productionCapacityImg,
       details: [
         "CFTECH IQF: 12 MT/18 Hrs",
         "Marel IQF: 8MT/18 Hrs", 
@@ -252,9 +260,17 @@ export default function Sustainability() {
                     scale: 1.02,
                     transition: { duration: 0.3 }
                   }}
-                  className="group bg-gradient-to-br from-white to-light-marine/20 p-10 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500"
+                  className="group relative bg-gradient-to-br from-white to-light-marine/20 p-10 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${feature.backgroundImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
                 >
-                  <div className="flex items-center mb-8">
+                  {/* Background overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-light-marine/85 to-white/90" />
+                  
+                  <div className="relative z-10 flex items-center mb-8">
                     <motion.div 
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.8 }}
@@ -263,18 +279,18 @@ export default function Sustainability() {
                       <feature.icon className="text-white" size={36} />
                     </motion.div>
                     <div>
-                      <h3 className="text-3xl font-heading font-semibold text-gray-900 mb-2">
+                      <h3 className="text-3xl font-heading font-semibold text-gray-900 mb-2 drop-shadow-sm">
                         {feature.title}
                       </h3>
-                      <span className="text-marine-teal font-semibold text-lg">
+                      <span className="text-marine-teal font-semibold text-lg drop-shadow-sm">
                         {feature.stats}
                       </span>
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+                  <p className="relative z-10 text-gray-800 mb-8 text-lg leading-relaxed drop-shadow-sm">
                     {feature.description}
                   </p>
-                  <div className="space-y-4">
+                  <div className="relative z-10 space-y-4">
                     {feature.details.map((detail, detailIndex) => (
                       <motion.div
                         key={detailIndex}
@@ -282,24 +298,13 @@ export default function Sustainability() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: detailIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center text-gray-700 group-hover:text-gray-800 transition-colors"
+                        className="flex items-center text-gray-800 bg-white/80 backdrop-blur-sm p-3 rounded-lg border border-white/50"
                       >
                         <div className="w-3 h-3 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full mr-4 shadow-sm"></div>
                         <span className="text-lg">{detail}</span>
                       </motion.div>
                     ))}
                   </div>
-                  
-                  {/* Image placeholder */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="mt-8 h-48 bg-gradient-to-r from-gray-200 to-gray-300 rounded-xl flex items-center justify-center"
-                  >
-                    <span className="text-gray-500 font-medium">Infrastructure Image Placeholder</span>
-                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -352,7 +357,7 @@ export default function Sustainability() {
                   viewport={{ once: true }}
                   className="relative bg-white/10 backdrop-blur-md p-10 rounded-2xl border border-white/20 shadow-2xl overflow-hidden"
                   style={{
-                    backgroundImage: `url(${processingFacilityImg})`,
+                    backgroundImage: `url(${detail.backgroundImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                   }}
