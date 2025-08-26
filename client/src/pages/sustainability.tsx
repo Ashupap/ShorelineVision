@@ -303,7 +303,7 @@ export default function Sustainability() {
                         <div className="w-3 h-3 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full mr-4 shadow-sm"></div>
                         <span className="text-lg drop-shadow">{detail}</span>
                       </motion.div>
-                    ))
+                    ))}
                   </div>
                 </motion.div>
               ))}
