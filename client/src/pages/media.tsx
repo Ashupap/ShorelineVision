@@ -122,9 +122,9 @@ export default function Media() {
     : galleryImages.filter(img => img.category === selectedCategory);
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background relative">
       <Header />
-      <main className="pt-16">
+      <main>
         {/* Enhanced Hero Section */}
         <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
           <motion.div 

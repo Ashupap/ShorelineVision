@@ -34,9 +34,9 @@ export default function Blog() {
 
   if (slug && post) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background relative">
         <Header />
-        <main className="pt-16">
+        <main>
           <article className="container mx-auto px-4 py-24 max-w-5xl">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -115,9 +115,9 @@ export default function Blog() {
   }
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background relative">
       <Header />
-      <main className="pt-16">
+      <main>
         {/* Enhanced Hero Section */}
         <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
           <motion.div 

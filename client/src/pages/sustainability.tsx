@@ -128,9 +128,9 @@ export default function Sustainability() {
   ];
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background">
+    <div ref={containerRef} className="min-h-screen bg-background relative">
       <Header />
-      <main className="pt-16">
+      <main>
         {/* Hero Section with Parallax */}
         <section className="relative py-32 bg-gradient-to-br from-marine-teal to-ocean-blue text-white overflow-hidden">
           <motion.div 
