@@ -8,6 +8,7 @@ import fssaiLogo from "@assets/pngegg_1756202338499.png";
 import bapLogo from "@assets/BAP-Logo-2_1756201576811.png";
 import haccpLogo from "@assets/steptodown.com594892_1756202338499.png";
 import fdaLogo from "@assets/unnamed_1756201576811.png";
+import productsBg from "@assets/generated_images/Products_page_hero_background_00e06eb6.png";
 
 export default function Products() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,7 +92,14 @@ export default function Products() {
       <Header />
       <main>
         {/* Enhanced Hero Section */}
-        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${productsBg})` }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"

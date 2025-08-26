@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspaper, Image as ImageIcon } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
 
 export default function Media() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -126,7 +127,14 @@ export default function Media() {
       <Header />
       <main>
         {/* Enhanced Hero Section */}
-        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${mediaBg})` }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"

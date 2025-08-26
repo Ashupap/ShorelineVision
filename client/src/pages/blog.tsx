@@ -7,6 +7,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import BlogPostCard from "@/components/blog/blog-post-card";
 import { formatDistanceToNow } from "date-fns";
+import blogBg from "@assets/generated_images/Blog_page_hero_background_995e7f81.png";
 
 export default function Blog() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,7 +120,14 @@ export default function Blog() {
       <Header />
       <main>
         {/* Enhanced Hero Section */}
-        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${blogBg})` }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
