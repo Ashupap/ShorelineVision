@@ -312,78 +312,212 @@ export default function Products() {
         </section>
 
         {/* Quality Assurance Section */}
-        <section className="py-20 bg-gradient-to-br from-light-marine to-white">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-gradient-to-br from-light-marine to-white relative overflow-hidden">
+          {/* Background Animation Elements */}
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.05, 0.15, 0.05]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-10 right-10 w-80 h-80 bg-ocean-blue/10 rounded-full backdrop-blur-sm"
+          />
+          <motion.div
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              opacity: [0.03, 0.08, 0.03]
+            }}
+            transition={{ 
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute bottom-20 left-20 w-60 h-60 bg-marine-teal/10 rounded-full backdrop-blur-sm"
+          />
+
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="text-center mb-16"
             >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-ocean-blue/20 mb-8"
+              >
+                <Award className="text-ocean-blue mr-2" size={20} />
+                <span className="text-ocean-blue font-medium">Internationally Certified</span>
+              </motion.div>
               <h2 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
                 Quality Assurance
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Every product meets international quality standards with rigorous testing and certification.
+                Every product meets international quality standards with rigorous testing and certification from world-renowned authorities.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {/* FSSAI Certification */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white p-8 rounded-xl shadow-lg text-center"
+                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
               >
-                <div className="w-16 h-16 bg-ocean-blue rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-white text-2xl font-bold">HACCP</span>
-                </div>
-                <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">
-                  HACCP Certified
+                <motion.div 
+                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <img 
+                    src="@assets/FSSAI_1756201576810.png" 
+                    alt="FSSAI Certification" 
+                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
+                  />
+                </motion.div>
+                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
+                  FSSAI Certified
                 </h3>
-                <p className="text-gray-600">
-                  Hazard Analysis Critical Control Points system ensures food safety at every stage of production.
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Food Safety and Standards Authority of India certification ensuring highest food safety standards.
                 </p>
               </motion.div>
 
+              {/* BAP Certification */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white p-8 rounded-xl shadow-lg text-center"
+                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
               >
-                <div className="w-16 h-16 bg-marine-teal rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-white text-2xl font-bold">EU</span>
-                </div>
-                <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">
-                  EU Standards
+                <motion.div 
+                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <img 
+                    src="@assets/BAP-Logo-2_1756201576811.png" 
+                    alt="BAP Best Aquaculture Practices Certification" 
+                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
+                  />
+                </motion.div>
+                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
+                  BAP Certified
                 </h3>
-                <p className="text-gray-600">
-                  All products meet European Union quality and safety standards for international export.
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Best Aquaculture Practices certification for sustainable and responsible seafood production.
                 </p>
               </motion.div>
 
+              {/* HACCP Certification */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="bg-white p-8 rounded-xl shadow-lg text-center"
+                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
               >
-                <div className="w-16 h-16 bg-coral-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-white text-2xl font-bold">BRC</span>
-                </div>
-                <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">
-                  BRC Certified
+                <motion.div 
+                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <img 
+                    src="@assets/steptodown.com594892_1756201576811.jpg" 
+                    alt="HACCP Food Safety Certification" 
+                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
+                  />
+                </motion.div>
+                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
+                  HACCP Certified
                 </h3>
-                <p className="text-gray-600">
-                  British Retail Consortium certification guarantees the highest food safety and quality standards.
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Hazard Analysis Critical Control Points system ensuring food safety at every production stage.
+                </p>
+              </motion.div>
+
+              {/* FDA Approval */}
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
+              >
+                <motion.div 
+                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <img 
+                    src="@assets/unnamed_1756201576811.png" 
+                    alt="FDA Approved" 
+                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
+                  />
+                </motion.div>
+                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
+                  FDA Approved
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  US Food and Drug Administration approval for safe export to American markets.
                 </p>
               </motion.div>
             </div>
+
+            {/* Trust Statement */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="text-center mt-16"
+            >
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="bg-gradient-to-r from-ocean-blue/10 to-marine-teal/10 backdrop-blur-md rounded-2xl p-8 border border-white/30 max-w-4xl mx-auto"
+              >
+                <div className="flex items-center justify-center mb-4">
+                  <Shield className="text-ocean-blue mr-2" size={24} />
+                  <h3 className="text-2xl font-heading font-bold text-gray-900">
+                    Zero Quality Rejections
+                  </h3>
+                </div>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Our comprehensive quality control system and multiple certifications ensure that every shipment meets the highest international standards. We maintain a perfect track record with zero quality rejections from our global partners.
+                </p>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
