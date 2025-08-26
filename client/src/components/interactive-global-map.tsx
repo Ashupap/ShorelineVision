@@ -58,13 +58,13 @@ const shippingDestinations: Location[] = [
 // India (origin point)
 const originPoint = { name: "Balashore", country: "Odisha, India", lat: 21.4934, lng: 87.0264, flag: "🇮🇳" };
 
-// Regional color scheme
+// Regional color scheme - vibrant colors for dark theme
 const regionColors: { [key: string]: string } = {
-  "North America": "#3B82F6", // Blue
-  "Europe": "#10B981", // Green
-  "Asia": "#F59E0B", // Orange
-  "Middle East": "#8B5CF6", // Purple
-  "Africa": "#EF4444", // Red
+  "North America": "#60A5FA", // Light Blue
+  "Europe": "#34D399", // Emerald
+  "Asia": "#FBBF24", // Amber
+  "Middle East": "#A78BFA", // Light Purple
+  "Africa": "#FB7185", // Rose
 };
 
 export default function InteractiveGlobalMap() {
@@ -94,8 +94,8 @@ export default function InteractiveGlobalMap() {
           minZoom: 1.2,
         });
 
-    // Add dark theme tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // Add dark theme tile layer with color
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '',
       subdomains: 'abcd',
       maxZoom: 8,
@@ -126,15 +126,16 @@ export default function InteractiveGlobalMap() {
       className: 'origin-marker',
       html: `
         <div class="relative flex items-center justify-center">
-          <div class="absolute w-12 h-12 bg-red-500 rounded-full animate-pulse opacity-30"></div>
-          <div class="absolute w-8 h-8 bg-red-500 rounded-full animate-ping opacity-50"></div>
-          <div class="relative w-6 h-6 bg-red-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-xs">
+          <div class="absolute w-16 h-16 rounded-full animate-pulse opacity-40" style="background: radial-gradient(circle, #FF6B6B, #FF6B6B20); box-shadow: 0 0 30px #FF6B6B60;"></div>
+          <div class="absolute w-10 h-10 rounded-full animate-ping opacity-60" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53);"></div>
+          <div class="relative w-8 h-8 rounded-full border-3 border-white shadow-2xl flex items-center justify-center text-sm font-bold" 
+               style="background: linear-gradient(135deg, #FF6B6B, #FF8E53); box-shadow: 0 0 20px #FF6B6B80;">
             ${originPoint.flag}
           </div>
         </div>
       `,
-      iconSize: [48, 48],
-      iconAnchor: [24, 24],
+      iconSize: [64, 64],
+      iconAnchor: [32, 32],
     });
 
     const originMarker = L.marker([originPoint.lat, originPoint.lng], { icon: originIcon })
@@ -167,15 +168,16 @@ export default function InteractiveGlobalMap() {
           className: 'destination-marker',
           html: `
             <div class="relative flex items-center justify-center">
-              <div class="absolute w-8 h-8 rounded-full opacity-20 animate-pulse" style="background-color: ${regionColor}"></div>
-              <div class="relative w-5 h-5 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-xs font-bold text-white" 
-                   style="background-color: ${regionColor}">
+              <div class="absolute w-10 h-10 rounded-full opacity-30 animate-pulse" style="background: radial-gradient(circle, ${regionColor}80, ${regionColor}20); box-shadow: 0 0 20px ${regionColor}40;"></div>
+              <div class="absolute w-6 h-6 rounded-full opacity-40 animate-ping" style="background-color: ${regionColor}"></div>
+              <div class="relative w-6 h-6 rounded-full border-2 border-white shadow-xl flex items-center justify-center text-xs font-bold text-white" 
+                   style="background: linear-gradient(135deg, ${regionColor}, ${regionColor}CC); box-shadow: 0 0 15px ${regionColor}60;">
                 ${location.flag}
               </div>
             </div>
           `,
-          iconSize: [32, 32],
-          iconAnchor: [16, 16],
+          iconSize: [40, 40],
+          iconAnchor: [20, 20],
         });
 
         const marker = L.marker([location.lat, location.lng], { icon: markerIcon })
@@ -204,15 +206,16 @@ export default function InteractiveGlobalMap() {
             </div>
           `);
 
-        // Add shipping route line from origin to destination
+        // Add shipping route line from origin to destination with gradient effect
         const routeLine = L.polyline([
           [originPoint.lat, originPoint.lng],
           [location.lat, location.lng]
         ], {
           color: regionColor,
-          weight: 2,
-          opacity: 0.6,
-          dashArray: '5, 10',
+          weight: 3,
+          opacity: 0.8,
+          dashArray: '8, 12',
+          className: 'shipping-route',
         }).addTo(map);
 
         // Animate the route line
@@ -228,19 +231,21 @@ export default function InteractiveGlobalMap() {
           animate();
         };
 
-        // Add hover effects
+        // Add hover effects with enhanced glow
         marker.on('mouseover', function() {
           routeLine.setStyle({
-            weight: 4,
-            opacity: 0.8,
+            weight: 5,
+            opacity: 1.0,
+            color: regionColor,
           });
           animateRoute();
         });
 
         marker.on('mouseout', function() {
           routeLine.setStyle({
-            weight: 2,
-            opacity: 0.6,
+            weight: 3,
+            opacity: 0.8,
+            color: regionColor,
           });
         });
 

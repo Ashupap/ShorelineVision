@@ -132,6 +132,36 @@
   animation: mapLoad 0.8s ease-out;
 }
 
+/* Enhanced shipping route animations */
+.shipping-route {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* Glowing effect for route lines */
+@keyframes routeGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 12px currentColor);
+  }
+  50% { 
+    filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 20px currentColor);
+  }
+}
+
+.shipping-route:hover {
+  animation: routeGlow 2s ease-in-out infinite;
+}
+
+/* Enhanced marker glow effects */
+.origin-marker,
+.destination-marker {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.origin-marker:hover,
+.destination-marker:hover {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px currentColor);
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(210 25% 7.8431%);
