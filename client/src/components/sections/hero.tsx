@@ -65,7 +65,7 @@ const Hero = memo(function Hero() {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Video with Parallax */}
       <motion.div 
         style={{ scale: scaleEffect, opacity: parallaxOpacity }}
@@ -190,7 +190,7 @@ const Hero = memo(function Hero() {
       {/* Swimming Sea Creatures - Mobile Responsive */}
       <motion.div
         animate={{ 
-          x: [-50, window.innerWidth + 50],
+          x: [-50, 1920 + 50],
           y: [0, -20, 0, 20, 0],
           rotate: [0, 5, 0, -5, 0]
         }}
@@ -205,7 +205,7 @@ const Hero = memo(function Hero() {
       />
       <motion.div
         animate={{ 
-          x: [window.innerWidth + 50, -100],
+          x: [1920 + 50, -100],
           y: [0, 15, 0, -15, 0],
           rotate: [180, 185, 180, 175, 180]
         }}
@@ -220,7 +220,7 @@ const Hero = memo(function Hero() {
       />
       <motion.div
         animate={{ 
-          x: [-40, window.innerWidth + 40],
+          x: [-40, 1920 + 40],
           y: [0, -10, 0, 10, 0],
           rotate: [0, 3, 0, -3, 0]
         }}
@@ -237,7 +237,7 @@ const Hero = memo(function Hero() {
       {/* Enhanced Responsive Layout */}
       <motion.div 
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-0 items-center min-h-screen lg:min-h-screen max-w-full overflow-x-hidden"
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-0 items-center h-full max-w-full"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div

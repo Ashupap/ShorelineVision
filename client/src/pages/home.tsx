@@ -30,7 +30,7 @@ const Home = memo(function Home() {
   const y = useSpring(parallaxY, springConfig);
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background relative">
+    <div ref={containerRef} className="min-h-screen bg-background relative overflow-x-hidden">
       <Header />
       <main>
         <Hero />
