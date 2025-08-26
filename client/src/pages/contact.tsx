@@ -121,11 +121,11 @@ export default function Contact() {
         <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-deep-navy to-marine-teal text-white overflow-hidden">
           {/* Background Image */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
             style={{ backgroundImage: `url(${contactBg})` }}
           />
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-deep-navy/85 to-marine-teal/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/95 via-deep-navy/90 to-marine-teal/95" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"

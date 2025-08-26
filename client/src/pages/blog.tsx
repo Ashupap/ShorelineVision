@@ -123,11 +123,11 @@ export default function Blog() {
         <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
           {/* Background Image */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
             style={{ backgroundImage: `url(${blogBg})` }}
           />
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/95 via-marine-teal/90 to-deep-navy/95" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"

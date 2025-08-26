@@ -136,11 +136,11 @@ export default function Sustainability() {
         <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-marine-teal to-ocean-blue text-white overflow-hidden">
           {/* Background Image */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
             style={{ backgroundImage: `url(${sustainabilityBg})` }}
           />
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/90 to-ocean-blue/85" />
+          <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/95 to-ocean-blue/90" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
