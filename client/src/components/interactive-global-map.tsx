@@ -278,13 +278,6 @@ export default function InteractiveGlobalMap() {
 
   return (
     <div className="w-full bg-white rounded-3xl shadow-2xl overflow-hidden" data-testid="interactive-global-map">
-      {/* Map Header */}
-      <div className="bg-gradient-to-r from-ocean-blue to-marine-teal text-white p-6">
-        <h3 className="text-2xl font-bold mb-2">Interactive Global Shipping Network</h3>
-        <p className="text-blue-100">
-          Explore our worldwide destinations and shipping routes in real-time
-        </p>
-      </div>
 
       {/* Map Container */}
       <div className="relative">
@@ -334,22 +327,46 @@ export default function InteractiveGlobalMap() {
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="absolute bottom-4 right-4 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4">
-          <div className="grid grid-cols-2 gap-4 text-center">
+        {/* Global Network Details */}
+        <div className="absolute bottom-4 right-4 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-sm">
+          <h4 className="font-bold text-white mb-2 text-sm">Our Global Network</h4>
+          <p className="text-xs text-gray-400 mb-3">Serving premium seafood to destinations worldwide</p>
+          
+          {/* Quick Stats */}
+          <div className="grid grid-cols-3 gap-2 mb-4 text-center">
             <div>
-              <div className="text-2xl font-bold text-ocean-blue">{shippingDestinations.length}</div>
-              <div className="text-xs text-gray-400">Destinations</div>
+              <div className="text-lg font-bold text-ocean-blue">{shippingDestinations.length}</div>
+              <div className="text-xs text-gray-400">Cities</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-marine-teal">{regionStats.length}</div>
+              <div className="text-lg font-bold text-marine-teal">{regionStats.length}</div>
               <div className="text-xs text-gray-400">Regions</div>
             </div>
-            <div className="col-span-2">
-              <div className="text-2xl font-bold text-coral-accent">
+            <div>
+              <div className="text-lg font-bold text-coral-accent">
                 {new Set(shippingDestinations.map(d => d.country)).size}
               </div>
-              <div className="text-xs text-gray-400">Countries Served</div>
+              <div className="text-xs text-gray-400">Countries</div>
+            </div>
+          </div>
+
+          {/* Regional Details */}
+          <div className="space-y-2 text-xs text-gray-300">
+            <div>
+              <span className="font-semibold text-blue-300">🇺🇸 North America:</span>
+              <p className="mt-1 text-gray-400">USA (Houston, New York, New Jersey, LA, Miami, Chicago, Seattle), Canada (Toronto, Vancouver)</p>
+            </div>
+            <div>
+              <span className="font-semibold text-emerald-300">🇪🇺 Europe:</span>
+              <p className="mt-1 text-gray-400">Netherlands (Antwerp, Amsterdam, Rotterdam)</p>
+            </div>
+            <div>
+              <span className="font-semibold text-amber-300">🌏 Asia:</span>
+              <p className="mt-1 text-gray-400">Japan (Tokyo, Osaka), China (Zhanjiang, Xiamen), Malaysia (Port Penang), Vietnam (Catlai)</p>
+            </div>
+            <div>
+              <span className="font-semibold text-purple-300">🌍 Middle East & Africa:</span>
+              <p className="mt-1 text-gray-400">UAE (Sharjah), Mauritius (Port Louis)</p>
             </div>
           </div>
         </div>
