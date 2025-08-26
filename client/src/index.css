@@ -162,6 +162,95 @@
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px currentColor);
 }
 
+/* Leadership Team Horizontal Scroll Animation */
+.leadership-scroll-container {
+  overflow-x: hidden;
+  position: relative;
+}
+
+.leadership-track {
+  animation: leadership-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.leadership-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes leadership-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Leadership Card Enhanced Animations */
+.leadership-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.leadership-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  z-index: 10;
+}
+
+.leadership-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  border-radius: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.leadership-card:hover::before {
+  opacity: 1;
+}
+
+/* Smooth card entrance animation */
+@keyframes cardFloatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.leadership-card.animate-in {
+  animation: cardFloatIn 0.6s ease-out forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .leadership-track {
+    gap: 1rem;
+  }
+  
+  .leadership-card {
+    width: 16rem;
+    height: 20rem;
+  }
+  
+  @keyframes leadership-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-60%);
+    }
+  }
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(210 25% 7.8431%);

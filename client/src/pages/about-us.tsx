@@ -28,6 +28,54 @@ export default function AboutUs() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Initialize Leadership Team Auto-Scroll Animation
+    const initLeadershipScroll = () => {
+      const leadershipTrack = document.querySelector('.leadership-track');
+      const leadershipCards = document.querySelectorAll('.leadership-card');
+      
+      if (leadershipTrack && leadershipCards.length > 0) {
+        // Create infinite horizontal scroll animation
+        const totalWidth = leadershipCards.length * (288 + 32); // card width + gap
+        
+        // Set up the seamless loop animation
+        gsap.set(leadershipTrack, { x: 0 });
+        
+        const tl = gsap.timeline({ repeat: -1, ease: "none" });
+        tl.to(leadershipTrack, {
+          x: -totalWidth / 2, // Move by half the total width (due to duplication)
+          duration: 30, // 30 seconds for full loop
+          ease: "none"
+        });
+        
+        // Add hover pause functionality
+        const leadershipContainer = document.querySelector('.leadership-scroll-container');
+        if (leadershipContainer) {
+          leadershipContainer.addEventListener('mouseenter', () => tl.pause());
+          leadershipContainer.addEventListener('mouseleave', () => tl.play());
+        }
+        
+        // Card entrance animations
+        leadershipCards.forEach((card, index) => {
+          gsap.fromTo(card,
+            { opacity: 0, y: 50, scale: 0.9 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.6,
+              delay: index * 0.1,
+              ease: "back.out(1.7)",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
+        });
+      }
+    };
+
     const initTimeline = () => {
       if (!timelineRef.current) return;
 
@@ -212,11 +260,14 @@ export default function AboutUs() {
       });
     };
 
-    // Delay initialization to ensure DOM is ready
-    const timeoutId = setTimeout(initTimeline, 100);
+    // Initialize animations after DOM is ready
+    const timer = setTimeout(() => {
+      initLeadershipScroll();
+      initTimeline();
+    }, 100);
 
     return () => {
-      clearTimeout(timeoutId);
+      clearTimeout(timer);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -496,189 +547,143 @@ export default function AboutUs() {
               </motion.div>
             </div>
 
-            {/* Leadership Team Section */}
+            {/* Modern Leadership Team Section */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="text-center mb-12"
             >
               <h3 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4">
                 Meet Our Leadership Team
               </h3>
               <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-                Get to know the visionary leaders driving our success. Meet the
-                dedicated individuals guiding our company towards new heights in
-                the seafood export industry
+                Visionary leaders driving our success in the global seafood industry
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-              {[
-                {
-                  name: "Gyana Ranjan Dash",
-                  position: "Managing Director",
-                  avatar:
-                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-                  description:
-                    "Visionary leader driving innovation in seafood export industry",
-                  experience: "15+ Years",
-                },
-                {
-                  name: "Madhusudan Dash",
-                  position: "Director",
-                  avatar:
-                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-                  description:
-                    "Expert in international trade and business development",
-                  experience: "12+ Years",
-                },
-                {
-                  name: "Bishnupriya Dash",
-                  position: "Shareholder",
-                  avatar:
-                    "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-                  description:
-                    "Strategic investor committed to sustainable growth",
-                  experience: "10+ Years",
-                },
-                {
-                  name: "Monalina Panda",
-                  position: "Director",
-                  avatar:
-                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-                  description:
-                    "Operations specialist ensuring quality excellence",
-                  experience: "14+ Years",
-                },
-                {
-                  name: "Rashmikanta Panda",
-                  position: "Director",
-                  avatar:
-                    "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-                  description: "Technology and innovation leader",
-                  experience: "11+ Years",
-                },
-                {
-                  name: "Debasish Dash",
-                  position: "Director",
-                  avatar:
-                    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-                  description: "Financial and strategic planning expert",
-                  experience: "13+ Years",
-                },
-              ].map((leader, index) => (
-                <motion.div
-                  key={leader.name}
-                  initial={{ opacity: 0, y: 60, rotateY: 45 }}
-                  whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: index * 0.15,
-                    type: "spring",
-                    stiffness: 100,
-                  }}
-                  viewport={{ once: true }}
-                  className="group bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 perspective-1000"
-                >
-                  <div className="relative overflow-hidden">
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/5 to-marine-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                    {/* Image Container */}
-                    <div className="relative overflow-hidden">
-                      <motion.img
-                        src={leader.avatar}
-                        alt={leader.name}
-                        className="w-full h-72 object-cover transition-transform duration-700"
-                        whileHover={{ scale: 1.1 }}
-                      />
-
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-
-                      {/* Experience Badge */}
-                      <motion.div
-                        initial={{ scale: 0, rotate: -45 }}
-                        whileInView={{ scale: 1, rotate: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
-                        className="absolute top-4 right-4 bg-coral-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg"
-                      >
-                        {leader.experience}
-                      </motion.div>
-
-                      {/* Floating Elements */}
-                      <motion.div
-                        animate={{
-                          y: [0, -10, 0],
-                          rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: index * 0.5,
-                        }}
-                        className="absolute bottom-4 left-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="p-6 relative">
-                    {/* Name and Position */}
-                    <div className="text-center mb-4">
-                      <motion.h4
-                        className="text-xl font-bold text-gray-900 mb-2 group-hover:text-ocean-blue transition-colors duration-300"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {leader.name}
-                      </motion.h4>
-                      <p className="text-sm text-coral-accent font-semibold uppercase tracking-wide mb-3 group-hover:text-marine-teal transition-colors duration-300">
-                        {leader.position}
-                      </p>
-
-                      {/* Animated Divider */}
-                      <motion.div
-                        className="w-12 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full group-hover:w-24 transition-all duration-500"
-                        whileHover={{
-                          background:
-                            "linear-gradient(90deg, #F59E0B, #EF4444, #8B5CF6)",
-                          scale: 1.1,
-                        }}
-                      />
-                    </div>
-
-                    {/* Description */}
-                    <motion.p
-                      initial={{ opacity: 0, height: 0 }}
-                      whileInView={{ opacity: 1, height: "auto" }}
-                      transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
-                      className="text-sm text-gray-600 text-center leading-relaxed group-hover:text-gray-700 transition-colors duration-300"
-                    >
-                      {leader.description}
-                    </motion.p>
-
-                    {/* Social/Contact Icons (Placeholder) */}
+            {/* Horizontal Scrolling Leadership Cards */}
+            <div className="relative mb-20 overflow-hidden">
+              {/* Background Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-ocean-blue/5 via-transparent to-marine-teal/5 pointer-events-none"></div>
+              
+              {/* Scrolling Container */}
+              <div className="leadership-scroll-container relative py-8">
+                <div className="leadership-track flex gap-8 w-max animate-none">
+                  {[
+                    {
+                      name: "Gyana Ranjan Dash",
+                      position: "Managing Director",
+                      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    {
+                      name: "Madhusudan Dash",
+                      position: "Director",
+                      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    {
+                      name: "Bishnupriya Dash",
+                      position: "Shareholder",
+                      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    {
+                      name: "Monalina Panda",
+                      position: "Director",
+                      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    {
+                      name: "Rashmikanta Panda",
+                      position: "Director",
+                      avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    {
+                      name: "Debasish Dash",
+                      position: "Director",
+                      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    // Duplicate for seamless loop
+                    {
+                      name: "Gyana Ranjan Dash",
+                      position: "Managing Director",
+                      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                    {
+                      name: "Madhusudan Dash",
+                      position: "Director",
+                      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                    },
+                  ].map((leader, index) => (
                     <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
-                      className="flex justify-center space-x-3 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      key={`${leader.name}-${index}`}
+                      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: index * 0.1,
+                        type: "spring",
+                        stiffness: 100
+                      }}
+                      viewport={{ once: true }}
+                      className="leadership-card group relative flex-shrink-0 w-72 h-96"
+                      data-testid={`leadership-card-${index}`}
                     >
-                      <div className="w-8 h-8 bg-ocean-blue/10 rounded-full flex items-center justify-center hover:bg-ocean-blue hover:text-white transition-all duration-300 cursor-pointer">
-                        <span className="text-xs">✉</span>
+                      {/* Main Card */}
+                      <div className="relative w-full h-full bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:rotate-2 hover:shadow-2xl">
+                        {/* Background Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-ocean-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        {/* Photo Container */}
+                        <div className="relative h-64 overflow-hidden">
+                          <img
+                            src={leader.avatar}
+                            alt={leader.name}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          
+                          {/* Photo Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent group-hover:from-ocean-blue/40 transition-all duration-500"></div>
+                          
+                          {/* Floating Decoration */}
+                          <div className="absolute top-4 right-4 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                            <div className="w-6 h-6 bg-gradient-to-r from-ocean-blue to-marine-teal rounded-full animate-pulse"></div>
+                          </div>
+                        </div>
+                        
+                        {/* Content Section */}
+                        <div className="relative p-6 text-center">
+                          <motion.h4 
+                            className="text-xl font-bold text-gray-900 mb-2 group-hover:text-ocean-blue transition-colors duration-300"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            {leader.name}
+                          </motion.h4>
+                          
+                          <p className="text-coral-accent font-semibold text-sm uppercase tracking-wide group-hover:text-marine-teal transition-colors duration-300">
+                            {leader.position}
+                          </p>
+                          
+                          {/* Animated Underline */}
+                          <div className="w-16 h-1 bg-gradient-to-r from-ocean-blue to-marine-teal mx-auto rounded-full mt-4 transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+                        </div>
+                        
+                        {/* Hover Effects */}
+                        <div className="absolute inset-0 border-2 border-ocean-blue/0 group-hover:border-ocean-blue/20 rounded-3xl transition-all duration-500"></div>
+                        
+                        {/* Corner Accent */}
+                        <div className="absolute bottom-0 right-0 w-0 h-0 border-b-[30px] border-r-[30px] border-b-marine-teal/20 border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       </div>
-                      <div className="w-8 h-8 bg-marine-teal/10 rounded-full flex items-center justify-center hover:bg-marine-teal hover:text-white transition-all duration-300 cursor-pointer">
-                        <span className="text-xs">in</span>
-                      </div>
+                      
+                      {/* Shadow Effect */}
+                      <div className="absolute inset-0 rounded-3xl shadow-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500 transform translate-y-2 -z-10 bg-ocean-blue/10"></div>
                     </motion.div>
-                  </div>
-
-                  {/* Decorative Corner */}
-                  <div className="absolute top-0 left-0 w-0 h-0 border-t-[20px] border-l-[20px] border-t-ocean-blue/20 border-l-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </motion.div>
-              ))}
+                  ))}
+                </div>
+              </div>
+              
+              {/* Gradient Fade Edges */}
+              <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
             </div>
 
             {/* Horizontal Journey Timeline */}
