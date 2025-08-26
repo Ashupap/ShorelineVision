@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Package, Star, Award, Sparkles, Filter } from "lucide-react";
+import { ArrowRight, Package, Star, Award, Sparkles, Filter, Shield } from "lucide-react";
 import { useRef, useState } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
