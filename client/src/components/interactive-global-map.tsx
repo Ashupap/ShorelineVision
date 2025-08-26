@@ -287,8 +287,8 @@ export default function InteractiveGlobalMap() {
           data-testid="leaflet-map-container"
         />
         
-        {/* Map Legend */}
-        <div className="absolute top-4 left-4 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-xs">
+        {/* Map Legend - Repositioned for better visibility */}
+        <div className="absolute top-6 left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-xs z-20">
           <h4 className="font-bold text-white mb-3 text-sm">Regional Distribution</h4>
           <div className="space-y-2">
             {regionStats.map(([region, stats]) => (
@@ -327,57 +327,58 @@ export default function InteractiveGlobalMap() {
           </div>
         </div>
 
-        {/* Global Network Details */}
-        <div className="absolute bottom-4 right-4 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-sm">
-          <h4 className="font-bold text-white mb-2 text-sm">Our Global Network</h4>
-          <p className="text-xs text-gray-400 mb-3">Serving premium seafood to destinations worldwide</p>
+        {/* Global Network Details - Compact Right Panel */}
+        <div className="absolute top-20 right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-3 max-w-56 z-20">
+          <h4 className="font-bold text-white mb-2 text-xs">Global Network</h4>
           
-          {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-2 mb-4 text-center">
+          {/* Quick Stats Row */}
+          <div className="flex justify-between text-center mb-3 text-xs">
             <div>
-              <div className="text-lg font-bold text-ocean-blue">{shippingDestinations.length}</div>
+              <div className="text-sm font-bold text-ocean-blue">{shippingDestinations.length}</div>
               <div className="text-xs text-gray-400">Cities</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-marine-teal">{regionStats.length}</div>
+              <div className="text-sm font-bold text-marine-teal">{regionStats.length}</div>
               <div className="text-xs text-gray-400">Regions</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-coral-accent">
+              <div className="text-sm font-bold text-coral-accent">
                 {new Set(shippingDestinations.map(d => d.country)).size}
               </div>
               <div className="text-xs text-gray-400">Countries</div>
             </div>
           </div>
 
-          {/* Regional Details */}
-          <div className="space-y-2 text-xs text-gray-300">
-            <div>
-              <span className="font-semibold text-blue-300">🇺🇸 North America:</span>
-              <p className="mt-1 text-gray-400">USA (Houston, New York, New Jersey, LA, Miami, Chicago, Seattle), Canada (Toronto, Vancouver)</p>
+          {/* Regional Summary - Ultra Compact */}
+          <div className="space-y-1 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-blue-300">🇺🇸 N.America</span>
+              <span className="text-gray-400">9</span>
             </div>
-            <div>
-              <span className="font-semibold text-emerald-300">🇪🇺 Europe:</span>
-              <p className="mt-1 text-gray-400">Netherlands (Antwerp, Amsterdam, Rotterdam)</p>
+            <div className="flex items-center justify-between">
+              <span className="text-emerald-300">🇪🇺 Europe</span>
+              <span className="text-gray-400">3</span>
             </div>
-            <div>
-              <span className="font-semibold text-amber-300">🌏 Asia:</span>
-              <p className="mt-1 text-gray-400">Japan (Tokyo, Osaka), China (Zhanjiang, Xiamen), Malaysia (Port Penang), Vietnam (Catlai)</p>
+            <div className="flex items-center justify-between">
+              <span className="text-amber-300">🌏 Asia</span>
+              <span className="text-gray-400">6</span>
             </div>
-            <div>
-              <span className="font-semibold text-purple-300">🌍 Middle East & Africa:</span>
-              <p className="mt-1 text-gray-400">UAE (Sharjah), Mauritius (Port Louis)</p>
+            <div className="flex items-center justify-between">
+              <span className="text-purple-300">🌍 Others</span>
+              <span className="text-gray-400">2</span>
             </div>
           </div>
         </div>
+
+        {/* Interactive Help - Bottom Center */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-600 px-4 py-2 z-20">
+          <p className="text-xs text-gray-300 text-center">
+            🖱️ Click markers • 🔍 Zoom controls • 🌍 Drag to explore
+          </p>
+        </div>
       </div>
 
-      {/* Interactive Features Info */}
-      <div className="bg-gray-50 p-4 text-center">
-        <p className="text-sm text-gray-600">
-          🖱️ Click markers for product details • 🔍 Use zoom controls • 🌍 Drag to explore
-        </p>
-      </div>
+
     </div>
   );
 }
