@@ -84,22 +84,22 @@ export default function InteractiveGlobalMap() {
         // Initialize map
         const newMap = L.map(mapRef.current, {
           center: [20, 60],
-          zoom: 1.5,
+          zoom: 1.2,
           zoomControl: false,
           scrollWheelZoom: false,
           doubleClickZoom: false,
           dragging: true,
           attributionControl: false,
-          maxZoom: 10,
-          minZoom: 1.5,
+          maxZoom: 8,
+          minZoom: 1.2,
         });
 
-    // Add custom tile layer with ocean theme
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    // Add dark theme tile layer
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '',
       subdomains: 'abcd',
-      maxZoom: 10,
-      minZoom: 2,
+      maxZoom: 8,
+      minZoom: 1.2,
     }).addTo(newMap);
 
     // Custom zoom controls
@@ -252,8 +252,8 @@ export default function InteractiveGlobalMap() {
     const group = new L.FeatureGroup([originMarker, ...markers]);
     setTimeout(() => {
       map.fitBounds(group.getBounds(), { 
-        padding: [50, 50],
-        maxZoom: 2.5 
+        padding: [80, 80],
+        maxZoom: 2.0 
       });
     }, animationDelay * shippingDestinations.length + 500);
 
@@ -285,13 +285,13 @@ export default function InteractiveGlobalMap() {
       <div className="relative">
         <div 
           ref={mapRef} 
-          className="h-[500px] w-full bg-blue-50"
+          className="h-[500px] w-full bg-gray-900"
           data-testid="leaflet-map-container"
         />
         
         {/* Map Legend */}
-        <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4 max-w-xs">
-          <h4 className="font-bold text-gray-900 mb-3 text-sm">Regional Distribution</h4>
+        <div className="absolute top-4 left-4 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-xs">
+          <h4 className="font-bold text-white mb-3 text-sm">Regional Distribution</h4>
           <div className="space-y-2">
             {regionStats.map(([region, stats]) => (
               <motion.div
@@ -299,7 +299,7 @@ export default function InteractiveGlobalMap() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${
-                  selectedRegion === region ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50'
+                  selectedRegion === region ? 'bg-blue-600/30 border border-blue-400' : 'hover:bg-gray-700/50'
                 }`}
                 onClick={() => setSelectedRegion(selectedRegion === region ? null : region)}
                 data-testid={`region-filter-${region.toLowerCase().replace(/\s+/g, '-')}`}
@@ -309,19 +309,19 @@ export default function InteractiveGlobalMap() {
                     className="w-3 h-3 rounded-full mr-2"
                     style={{ backgroundColor: regionColors[region] }}
                   />
-                  <span className="text-sm font-medium text-gray-700">{region}</span>
+                  <span className="text-sm font-medium text-gray-200">{region}</span>
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-gray-400">
                   {stats.count} cities
                 </div>
               </motion.div>
             ))}
           </div>
           
-          <div className="mt-4 pt-3 border-t border-gray-200">
-            <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="mt-4 pt-3 border-t border-gray-600">
+            <div className="flex items-center justify-between text-xs text-gray-400">
               <span>🏭 Origin</span>
-              <span className="flex items-center">
+              <span className="flex items-center text-gray-300">
                 <div className="w-2 h-2 bg-red-500 rounded-full mr-1" />
                 India
               </span>
@@ -330,21 +330,21 @@ export default function InteractiveGlobalMap() {
         </div>
 
         {/* Quick Stats */}
-        <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4">
+        <div className="absolute bottom-4 right-4 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4">
           <div className="grid grid-cols-2 gap-4 text-center">
             <div>
               <div className="text-2xl font-bold text-ocean-blue">{shippingDestinations.length}</div>
-              <div className="text-xs text-gray-500">Destinations</div>
+              <div className="text-xs text-gray-400">Destinations</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-marine-teal">{regionStats.length}</div>
-              <div className="text-xs text-gray-500">Regions</div>
+              <div className="text-xs text-gray-400">Regions</div>
             </div>
             <div className="col-span-2">
               <div className="text-2xl font-bold text-coral-accent">
                 {new Set(shippingDestinations.map(d => d.country)).size}
               </div>
-              <div className="text-xs text-gray-500">Countries Served</div>
+              <div className="text-xs text-gray-400">Countries Served</div>
             </div>
           </div>
         </div>
