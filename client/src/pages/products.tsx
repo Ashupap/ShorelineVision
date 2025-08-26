@@ -4,9 +4,9 @@ import { ArrowRight, Package, Star, Award, Sparkles, Filter, Shield } from "luci
 import { useRef, useState } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import fssaiLogo from "@assets/FSSAI_1756201576810.png";
+import fssaiLogo from "@assets/pngegg_1756202338499.png";
 import bapLogo from "@assets/BAP-Logo-2_1756201576811.png";
-import haccpLogo from "@assets/steptodown.com594892_1756201576811.jpg";
+import haccpLogo from "@assets/steptodown.com594892_1756202338499.png";
 import fdaLogo from "@assets/unnamed_1756201576811.png";
 
 export default function Products() {
@@ -370,132 +370,299 @@ export default function Products() {
             </motion.div>
 
             <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-              {/* FSSAI Certification */}
+              {/* FSSAI Certification - Golden Badge */}
               <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 40, scale: 0.8, rotateY: 180 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
                 whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                  y: -15, 
+                  scale: 1.08,
+                  rotateY: 5,
+                  boxShadow: "0 25px 50px rgba(255,215,0,0.4)"
                 }}
-                transition={{ duration: 0.6 }}
+                transition={{ 
+                  duration: 0.8,
+                  type: "spring",
+                  stiffness: 100
+                }}
                 viewport={{ once: true }}
-                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
+                className="relative overflow-hidden text-center group cursor-pointer"
               >
+                {/* Golden Background with Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 rounded-3xl shadow-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-t from-yellow-600/20 via-transparent to-yellow-200/30 rounded-3xl" />
+                
+                {/* Golden Border Ring */}
                 <motion.div 
-                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <img 
-                    src={fssaiLogo} 
-                    alt="FSSAI Certification" 
-                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
-                  />
-                </motion.div>
-                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
-                  FSSAI Certified
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Food Safety and Standards Authority of India certification ensuring highest food safety standards.
-                </p>
+                  className="absolute inset-0 rounded-3xl border-4 border-yellow-200/50"
+                  animate={{ 
+                    boxShadow: [
+                      "0 0 20px rgba(255,215,0,0.3)",
+                      "0 0 40px rgba(255,215,0,0.6)", 
+                      "0 0 20px rgba(255,215,0,0.3)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+                
+                {/* Sparkle Effects */}
+                <motion.div
+                  className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full"
+                  animate={{ 
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                />
+                <motion.div
+                  className="absolute top-8 left-6 w-1.5 h-1.5 bg-yellow-100 rounded-full"
+                  animate={{ 
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                />
+                
+                <div className="relative p-8 z-10">
+                  <motion.div 
+                    className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                    whileHover={{ 
+                      rotate: 360,
+                      scale: 1.1
+                    }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <div className="bg-white/95 rounded-full p-3 shadow-lg">
+                      <img 
+                        src={fssaiLogo} 
+                        alt="FSSAI Certification" 
+                        className="w-full h-full object-contain filter drop-shadow-md"
+                      />
+                    </div>
+                  </motion.div>
+                  <h3 className="text-xl font-heading font-bold text-yellow-900 mb-3 drop-shadow-sm">
+                    FSSAI Certified
+                  </h3>
+                  <p className="text-yellow-800 text-sm leading-relaxed font-medium">
+                    Food Safety and Standards Authority of India certification ensuring highest food safety standards.
+                  </p>
+                </div>
               </motion.div>
 
-              {/* BAP Certification */}
+              {/* BAP Certification - Golden Badge */}
               <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 40, scale: 0.8, rotateY: 180 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
                 whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                  y: -15, 
+                  scale: 1.08,
+                  rotateY: 5,
+                  boxShadow: "0 25px 50px rgba(255,215,0,0.4)"
                 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 0.1,
+                  type: "spring",
+                  stiffness: 100
+                }}
                 viewport={{ once: true }}
-                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
+                className="relative overflow-hidden text-center group cursor-pointer"
               >
+                {/* Golden Background with Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 rounded-3xl shadow-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-t from-yellow-600/20 via-transparent to-yellow-200/30 rounded-3xl" />
+                
+                {/* Golden Border Ring */}
                 <motion.div 
-                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <img 
-                    src={bapLogo} 
-                    alt="BAP Best Aquaculture Practices Certification" 
-                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
-                  />
-                </motion.div>
-                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
-                  BAP Certified
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Best Aquaculture Practices certification for sustainable and responsible seafood production.
-                </p>
+                  className="absolute inset-0 rounded-3xl border-4 border-yellow-200/50"
+                  animate={{ 
+                    boxShadow: [
+                      "0 0 20px rgba(255,215,0,0.3)",
+                      "0 0 40px rgba(255,215,0,0.6)", 
+                      "0 0 20px rgba(255,215,0,0.3)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                />
+                
+                {/* Sparkle Effects */}
+                <motion.div
+                  className="absolute top-6 right-8 w-2 h-2 bg-white rounded-full"
+                  animate={{ 
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+                />
+                
+                <div className="relative p-8 z-10">
+                  <motion.div 
+                    className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                    whileHover={{ 
+                      rotate: 360,
+                      scale: 1.1
+                    }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <div className="bg-white/95 rounded-full p-3 shadow-lg">
+                      <img 
+                        src={bapLogo} 
+                        alt="BAP Best Aquaculture Practices Certification" 
+                        className="w-full h-full object-contain filter drop-shadow-md"
+                      />
+                    </div>
+                  </motion.div>
+                  <h3 className="text-xl font-heading font-bold text-yellow-900 mb-3 drop-shadow-sm">
+                    BAP Certified
+                  </h3>
+                  <p className="text-yellow-800 text-sm leading-relaxed font-medium">
+                    Best Aquaculture Practices certification for sustainable and responsible seafood production.
+                  </p>
+                </div>
               </motion.div>
 
-              {/* HACCP Certification */}
+              {/* HACCP Certification - Golden Badge */}
               <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 40, scale: 0.8, rotateY: 180 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
                 whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                  y: -15, 
+                  scale: 1.08,
+                  rotateY: 5,
+                  boxShadow: "0 25px 50px rgba(255,215,0,0.4)"
                 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 0.2,
+                  type: "spring",
+                  stiffness: 100
+                }}
                 viewport={{ once: true }}
-                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
+                className="relative overflow-hidden text-center group cursor-pointer"
               >
+                {/* Golden Background with Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 rounded-3xl shadow-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-t from-yellow-600/20 via-transparent to-yellow-200/30 rounded-3xl" />
+                
+                {/* Golden Border Ring */}
                 <motion.div 
-                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <img 
-                    src={haccpLogo} 
-                    alt="HACCP Food Safety Certification" 
-                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
-                  />
-                </motion.div>
-                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
-                  HACCP Certified
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Hazard Analysis Critical Control Points system ensuring food safety at every production stage.
-                </p>
+                  className="absolute inset-0 rounded-3xl border-4 border-yellow-200/50"
+                  animate={{ 
+                    boxShadow: [
+                      "0 0 20px rgba(255,215,0,0.3)",
+                      "0 0 40px rgba(255,215,0,0.6)", 
+                      "0 0 20px rgba(255,215,0,0.3)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                />
+                
+                {/* Sparkle Effects */}
+                <motion.div
+                  className="absolute top-4 left-4 w-1.5 h-1.5 bg-yellow-100 rounded-full"
+                  animate={{ 
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 2 }}
+                />
+                
+                <div className="relative p-8 z-10">
+                  <motion.div 
+                    className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                    whileHover={{ 
+                      rotate: 360,
+                      scale: 1.1
+                    }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <div className="bg-white/95 rounded-full p-3 shadow-lg">
+                      <img 
+                        src={haccpLogo} 
+                        alt="HACCP Food Safety Certification" 
+                        className="w-full h-full object-contain filter drop-shadow-md"
+                      />
+                    </div>
+                  </motion.div>
+                  <h3 className="text-xl font-heading font-bold text-yellow-900 mb-3 drop-shadow-sm">
+                    HACCP Certified
+                  </h3>
+                  <p className="text-yellow-800 text-sm leading-relaxed font-medium">
+                    Hazard Analysis Critical Control Points system ensuring food safety at every production stage.
+                  </p>
+                </div>
               </motion.div>
 
-              {/* FDA Approval */}
+              {/* FDA Approval - Golden Badge */}
               <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 40, scale: 0.8, rotateY: 180 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
                 whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                  y: -15, 
+                  scale: 1.08,
+                  rotateY: 5,
+                  boxShadow: "0 25px 50px rgba(255,215,0,0.4)"
                 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 0.3,
+                  type: "spring",
+                  stiffness: 100
+                }}
                 viewport={{ once: true }}
-                className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/50 text-center group cursor-pointer"
+                className="relative overflow-hidden text-center group cursor-pointer"
               >
+                {/* Golden Background with Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 rounded-3xl shadow-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-t from-yellow-600/20 via-transparent to-yellow-200/30 rounded-3xl" />
+                
+                {/* Golden Border Ring */}
                 <motion.div 
-                  className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <img 
-                    src={fdaLogo} 
-                    alt="FDA Approved" 
-                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
-                  />
-                </motion.div>
-                <h3 className="text-lg font-heading font-semibold text-gray-900 mb-3">
-                  FDA Approved
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  US Food and Drug Administration approval for safe export to American markets.
-                </p>
+                  className="absolute inset-0 rounded-3xl border-4 border-yellow-200/50"
+                  animate={{ 
+                    boxShadow: [
+                      "0 0 20px rgba(255,215,0,0.3)",
+                      "0 0 40px rgba(255,215,0,0.6)", 
+                      "0 0 20px rgba(255,215,0,0.3)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                />
+                
+                {/* Sparkle Effects */}
+                <motion.div
+                  className="absolute top-6 left-8 w-2 h-2 bg-white rounded-full"
+                  animate={{ 
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.8 }}
+                />
+                
+                <div className="relative p-8 z-10">
+                  <motion.div 
+                    className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                    whileHover={{ 
+                      rotate: 360,
+                      scale: 1.1
+                    }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    <div className="bg-white/95 rounded-full p-3 shadow-lg">
+                      <img 
+                        src={fdaLogo} 
+                        alt="FDA Approved" 
+                        className="w-full h-full object-contain filter drop-shadow-md"
+                      />
+                    </div>
+                  </motion.div>
+                  <h3 className="text-xl font-heading font-bold text-yellow-900 mb-3 drop-shadow-sm">
+                    FDA Approved
+                  </h3>
+                  <p className="text-yellow-800 text-sm leading-relaxed font-medium">
+                    US Food and Drug Administration approval for safe export to American markets.
+                  </p>
+                </div>
               </motion.div>
             </div>
 
