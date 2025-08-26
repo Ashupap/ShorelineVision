@@ -268,7 +268,7 @@ export default function Sustainability() {
                   }}
                 >
                   {/* Background overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-light-marine/85 to-white/90" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/75 via-ocean-blue/70 to-marine-teal/75" />
                   
                   <div className="relative z-10 flex items-center mb-8">
                     <motion.div 
@@ -279,15 +279,15 @@ export default function Sustainability() {
                       <feature.icon className="text-white" size={36} />
                     </motion.div>
                     <div>
-                      <h3 className="text-3xl font-heading font-semibold text-gray-900 mb-2 drop-shadow-sm">
+                      <h3 className="text-3xl font-heading font-semibold text-white mb-2 drop-shadow-lg">
                         {feature.title}
                       </h3>
-                      <span className="text-marine-teal font-semibold text-lg drop-shadow-sm">
+                      <span className="text-coral-accent font-semibold text-lg drop-shadow-lg">
                         {feature.stats}
                       </span>
                     </div>
                   </div>
-                  <p className="relative z-10 text-gray-800 mb-8 text-lg leading-relaxed drop-shadow-sm">
+                  <p className="relative z-10 text-gray-200 mb-8 text-lg leading-relaxed drop-shadow-lg">
                     {feature.description}
                   </p>
                   <div className="relative z-10 space-y-4">
@@ -298,12 +298,12 @@ export default function Sustainability() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: detailIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center text-gray-800 bg-white/80 backdrop-blur-sm p-3 rounded-lg border border-white/50"
+                        className="flex items-center text-white bg-white/20 backdrop-blur-md p-3 rounded-lg border border-white/30"
                       >
                         <div className="w-3 h-3 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full mr-4 shadow-sm"></div>
-                        <span className="text-lg">{detail}</span>
+                        <span className="text-lg drop-shadow">{detail}</span>
                       </motion.div>
-                    ))}
+                    ))
                   </div>
                 </motion.div>
               ))}
