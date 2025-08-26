@@ -7,6 +7,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import BlueWorldMap from "@/components/blue-world-map";
 import InteractiveGlobalMap from "@/components/interactive-global-map";
+import processingFacilityBg from "@assets/generated_images/Seafood_processing_facility_background_fd3ca7c1.png";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -278,7 +279,14 @@ export default function AboutUs() {
 
       <main>
         {/* Enhanced Hero Section with Parallax */}
-        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-marine-teal to-deep-navy text-white overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${processingFacilityBg})` }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-marine-teal/85 to-deep-navy/90" />
           <motion.div
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"

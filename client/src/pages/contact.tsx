@@ -24,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import contactBg from "@assets/generated_images/Professional_office_contact_background_95a1aff4.png";
 
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,7 +118,14 @@ export default function Contact() {
       <Header />
       <main>
         {/* Enhanced Hero Section */}
-        <section className="relative py-32 bg-gradient-to-br from-ocean-blue via-deep-navy to-marine-teal text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-ocean-blue via-deep-navy to-marine-teal text-white overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${contactBg})` }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/90 via-deep-navy/85 to-marine-teal/90" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"

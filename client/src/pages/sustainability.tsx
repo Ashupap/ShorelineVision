@@ -3,6 +3,7 @@ import { Leaf, Droplets, Recycle, Shield, Factory, Truck, Users, Zap, Thermomete
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useRef } from "react";
+import sustainabilityBg from "@assets/generated_images/Sustainable_aquaculture_ocean_background_50127a79.png";
 
 export default function Sustainability() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -132,7 +133,14 @@ export default function Sustainability() {
       <Header />
       <main>
         {/* Hero Section with Parallax */}
-        <section className="relative py-32 bg-gradient-to-br from-marine-teal to-ocean-blue text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-marine-teal to-ocean-blue text-white overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${sustainabilityBg})` }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/90 to-ocean-blue/85" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
