@@ -133,14 +133,17 @@ export default function Sustainability() {
       <Header />
       <main>
         {/* Hero Section with Parallax */}
-        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-marine-teal to-ocean-blue text-white overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
           {/* Background Image */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-            style={{ backgroundImage: `url(${sustainabilityBg})` }}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ 
+              backgroundImage: `url(${sustainabilityBg})`,
+              filter: 'brightness(0.3) contrast(1.1)'
+            }}
           />
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/95 to-ocean-blue/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/80 to-ocean-blue/75" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"
