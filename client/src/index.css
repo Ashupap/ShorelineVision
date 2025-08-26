@@ -48,6 +48,76 @@
   animation: shimmer 2s infinite linear;
 }
 
+/* Leaflet Map Custom Styles */
+.leaflet-container {
+  font-family: 'Inter', sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom marker animations */
+.origin-marker,
+.destination-marker {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.origin-marker:hover,
+.destination-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Pulsing animation for origin marker */
+@keyframes pulse-origin {
+  0% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
+
+.origin-marker .absolute:first-child {
+  animation: pulse-origin 2s infinite;
+}
+
+/* Map control customization */
+.leaflet-control-zoom a {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #1e40af;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background: rgba(30, 64, 175, 0.1);
+  transform: scale(1.05);
+}
+
+/* Loading animation for map */
+@keyframes mapLoad {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.leaflet-container {
+  animation: mapLoad 0.8s ease-out;
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(210 25% 7.8431%);
