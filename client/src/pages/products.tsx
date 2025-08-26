@@ -4,6 +4,10 @@ import { ArrowRight, Package, Star, Award, Sparkles, Filter, Shield } from "luci
 import { useRef, useState } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import fssaiLogo from "@assets/FSSAI_1756201576810.png";
+import bapLogo from "@assets/BAP-Logo-2_1756201576811.png";
+import haccpLogo from "@assets/steptodown.com594892_1756201576811.jpg";
+import fdaLogo from "@assets/unnamed_1756201576811.png";
 
 export default function Products() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -385,7 +389,7 @@ export default function Products() {
                   transition={{ duration: 0.8 }}
                 >
                   <img 
-                    src="@assets/FSSAI_1756201576810.png" 
+                    src={fssaiLogo} 
                     alt="FSSAI Certification" 
                     className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
                   />
@@ -417,7 +421,7 @@ export default function Products() {
                   transition={{ duration: 0.8 }}
                 >
                   <img 
-                    src="@assets/BAP-Logo-2_1756201576811.png" 
+                    src={bapLogo} 
                     alt="BAP Best Aquaculture Practices Certification" 
                     className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
                   />
@@ -449,7 +453,7 @@ export default function Products() {
                   transition={{ duration: 0.8 }}
                 >
                   <img 
-                    src="@assets/steptodown.com594892_1756201576811.jpg" 
+                    src={haccpLogo} 
                     alt="HACCP Food Safety Certification" 
                     className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
                   />
@@ -481,7 +485,7 @@ export default function Products() {
                   transition={{ duration: 0.8 }}
                 >
                   <img 
-                    src="@assets/unnamed_1756201576811.png" 
+                    src={fdaLogo} 
                     alt="FDA Approved" 
                     className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-lg transition-all duration-300"
                   />
