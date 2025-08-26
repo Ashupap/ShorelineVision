@@ -56,7 +56,7 @@ const shippingDestinations: Location[] = [
 ];
 
 // India (origin point)
-const originPoint = { name: "Bhubaneswar", country: "India", lat: 20.2961, lng: 85.8245, flag: "🇮🇳" };
+const originPoint = { name: "Balashore", country: "Odisha, India", lat: 21.4934, lng: 87.0264, flag: "🇮🇳" };
 
 // Regional color scheme
 const regionColors: { [key: string]: string } = {
@@ -76,16 +76,23 @@ export default function InteractiveGlobalMap() {
   useEffect(() => {
     if (!mapRef.current || map) return;
 
-    // Initialize map
-    const newMap = L.map(mapRef.current, {
-      center: [20, 60],
-      zoom: 2,
-      zoomControl: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      dragging: true,
-      attributionControl: false,
-    });
+    // Delay initialization to ensure DOM is ready
+    const timer = setTimeout(() => {
+      if (!mapRef.current) return;
+
+      try {
+        // Initialize map
+        const newMap = L.map(mapRef.current, {
+          center: [20, 60],
+          zoom: 1.5,
+          zoomControl: false,
+          scrollWheelZoom: false,
+          doubleClickZoom: false,
+          dragging: true,
+          attributionControl: false,
+          maxZoom: 10,
+          minZoom: 1.5,
+        });
 
     // Add custom tile layer with ocean theme
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
@@ -100,12 +107,14 @@ export default function InteractiveGlobalMap() {
       position: 'topright'
     }).addTo(newMap);
 
-    setMap(newMap);
+        setMap(newMap);
+      } catch (error) {
+        console.error('Error initializing map:', error);
+      }
+    }, 100);
 
     return () => {
-      if (newMap) {
-        newMap.remove();
-      }
+      clearTimeout(timer);
     };
   }, []);
 
@@ -140,8 +149,8 @@ export default function InteractiveGlobalMap() {
             </div>
           </div>
           <div class="border-t pt-2">
-            <p class="text-sm font-semibold text-blue-600">🏭 Origin Point</p>
-            <p class="text-xs text-gray-500">Premium seafood processing facility</p>
+            <p class="text-sm font-semibold text-blue-600">🏭 Processing Plant</p>
+            <p class="text-xs text-gray-500">Alashore Marine Exports Facility</p>
           </div>
         </div>
       `);
@@ -239,10 +248,13 @@ export default function InteractiveGlobalMap() {
       }, index * animationDelay);
     });
 
-    // Fit map to show all markers
+    // Fit map to show all markers with generous padding
     const group = new L.FeatureGroup([originMarker, ...markers]);
     setTimeout(() => {
-      map.fitBounds(group.getBounds(), { padding: [20, 20] });
+      map.fitBounds(group.getBounds(), { 
+        padding: [50, 50],
+        maxZoom: 2.5 
+      });
     }, animationDelay * shippingDestinations.length + 500);
 
   }, [map]);
