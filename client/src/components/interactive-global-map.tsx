@@ -279,16 +279,16 @@ export default function InteractiveGlobalMap() {
   return (
     <div className="w-full bg-white rounded-3xl shadow-2xl overflow-hidden" data-testid="interactive-global-map">
 
-      {/* Map Container */}
-      <div className="relative">
+      {/* Map Container with Overlays */}
+      <div className="relative h-[500px] w-full">
         <div 
           ref={mapRef} 
-          className="h-[500px] w-full bg-gray-900"
+          className="absolute inset-0 w-full h-full bg-gray-900 z-10"
           data-testid="leaflet-map-container"
         />
         
-        {/* Map Legend - Repositioned for better visibility */}
-        <div className="absolute top-6 left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-xs z-20">
+        {/* Map Legend - Positioned over map */}
+        <div className="absolute top-6 left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-xs z-30">
           <h4 className="font-bold text-white mb-3 text-sm">Regional Distribution</h4>
           <div className="space-y-2">
             {regionStats.map(([region, stats]) => (
@@ -328,7 +328,7 @@ export default function InteractiveGlobalMap() {
         </div>
 
         {/* Global Network Details - Compact Right Panel */}
-        <div className="absolute top-20 right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-3 max-w-56 z-20">
+        <div className="absolute top-20 right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-3 max-w-56 z-30">
           <h4 className="font-bold text-white mb-2 text-xs">Global Network</h4>
           
           {/* Quick Stats Row */}
@@ -371,7 +371,7 @@ export default function InteractiveGlobalMap() {
         </div>
 
         {/* Interactive Help - Bottom Center */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-600 px-4 py-2 z-20">
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-600 px-4 py-2 z-30">
           <p className="text-xs text-gray-300 text-center">
             🖱️ Click markers • 🔍 Zoom controls • 🌍 Drag to explore
           </p>
