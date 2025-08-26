@@ -4,6 +4,9 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useRef } from "react";
 import sustainabilityBg from "@assets/generated_images/Sustainable_aquaculture_ocean_background_50127a79.png";
+import processingFacilityImg from "@assets/generated_images/Seafood_processing_facility_interior_25ca1780.png";
+import aquacultureFarmImg from "@assets/generated_images/Sustainable_aquaculture_fish_farm_ab1886b9.png";
+import transportFleetImg from "@assets/generated_images/Refrigerated_seafood_transport_fleet_da6483c0.png";
 
 export default function Sustainability() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -376,15 +379,19 @@ export default function Sustainability() {
                     ))}
                   </div>
                   
-                  {/* Image placeholder */}
+                  {/* Processing Facility Image */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                     viewport={{ once: true }}
-                    className="mt-8 h-48 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm"
+                    className="mt-8 h-48 rounded-xl overflow-hidden shadow-lg"
                   >
-                    <span className="text-white/70 font-medium">Processing Plant Image Placeholder</span>
+                    <img 
+                      src={processingFacilityImg} 
+                      alt="Modern seafood processing facility"
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
                 </motion.div>
               ))}
@@ -448,15 +455,19 @@ export default function Sustainability() {
                     ))}
                   </div>
                   
-                  {/* Image placeholder */}
+                  {/* Aquaculture Facility Image */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                     viewport={{ once: true }}
-                    className="mt-10 h-64 bg-gradient-to-r from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center"
+                    className="mt-10 h-64 rounded-2xl overflow-hidden shadow-xl"
                   >
-                    <span className="text-gray-500 font-medium text-lg">Aquaculture Facilities Image Placeholder</span>
+                    <img 
+                      src={aquacultureFarmImg} 
+                      alt="Sustainable aquaculture fish farm"
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
                 </motion.div>
               ))}
@@ -534,15 +545,19 @@ export default function Sustainability() {
                     ))}
                   </div>
                   
-                  {/* Image placeholder */}
+                  {/* Transportation Fleet Image */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                     viewport={{ once: true }}
-                    className="mt-10 h-64 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/20"
+                    className="mt-10 h-64 rounded-2xl overflow-hidden shadow-xl border border-white/20"
                   >
-                    <span className="text-white/70 font-medium text-lg">Transportation Fleet Image Placeholder</span>
+                    <img 
+                      src={transportFleetImg} 
+                      alt="Refrigerated seafood transport fleet"
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
                 </motion.div>
               ))}
