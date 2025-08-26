@@ -350,20 +350,28 @@ export default function Sustainability() {
                     ease: "easeOut"
                   }}
                   viewport={{ once: true }}
-                  className="bg-white/10 backdrop-blur-md p-10 rounded-2xl border border-white/20 shadow-2xl"
+                  className="relative bg-white/10 backdrop-blur-md p-10 rounded-2xl border border-white/20 shadow-2xl overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${processingFacilityImg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
                 >
-                  <div className="flex items-center mb-8">
-                    <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mr-6">
+                  {/* Background overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-ocean-blue/75 to-marine-teal/80" />
+                  
+                  <div className="relative z-10 flex items-center mb-8">
+                    <div className="w-20 h-20 bg-white/30 backdrop-blur-sm rounded-2xl flex items-center justify-center mr-6 border border-white/20">
                       <detail.icon className="text-white" size={36} />
                     </div>
-                    <h3 className="text-3xl font-heading font-semibold">
+                    <h3 className="text-3xl font-heading font-semibold text-white drop-shadow-lg">
                       {detail.title}
                     </h3>
                   </div>
-                  <p className="text-light-marine mb-8 text-lg leading-relaxed">
+                  <p className="relative z-10 text-gray-200 mb-8 text-lg leading-relaxed drop-shadow-lg">
                     {detail.description}
                   </p>
-                  <div className="grid gap-4">
+                  <div className="relative z-10 grid gap-4">
                     {detail.details.map((item, itemIndex) => (
                       <motion.div
                         key={itemIndex}
@@ -371,28 +379,13 @@ export default function Sustainability() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: itemIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center text-white/90"
+                        className="flex items-center text-white bg-white/20 backdrop-blur-md p-3 rounded-lg border border-white/20"
                       >
                         <div className="w-2 h-2 bg-coral-accent rounded-full mr-4"></div>
-                        <span className="text-lg">{item}</span>
+                        <span className="text-lg drop-shadow">{item}</span>
                       </motion.div>
                     ))}
                   </div>
-                  
-                  {/* Processing Facility Image */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="mt-8 h-48 rounded-xl overflow-hidden shadow-lg"
-                  >
-                    <img 
-                      src={processingFacilityImg} 
-                      alt="Modern seafood processing facility"
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -426,20 +419,28 @@ export default function Sustainability() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-white to-light-marine/20 p-12 rounded-3xl shadow-2xl"
+                  className="relative bg-gradient-to-br from-white to-light-marine/20 p-12 rounded-3xl shadow-2xl overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${aquacultureFarmImg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
                 >
-                  <div className="flex items-center mb-10">
+                  {/* Background overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-light-marine/85 to-white/90" />
+                  
+                  <div className="relative z-10 flex items-center mb-10">
                     <div className="w-24 h-24 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-3xl flex items-center justify-center mr-8 shadow-lg">
                       <practice.icon className="text-white" size={44} />
                     </div>
-                    <h3 className="text-4xl font-heading font-semibold text-gray-900">
+                    <h3 className="text-4xl font-heading font-semibold text-gray-900 drop-shadow-sm">
                       {practice.title}
                     </h3>
                   </div>
-                  <p className="text-gray-600 mb-10 text-xl leading-relaxed">
+                  <p className="relative z-10 text-gray-800 mb-10 text-xl leading-relaxed drop-shadow-sm">
                     {practice.description}
                   </p>
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="relative z-10 grid md:grid-cols-2 gap-6">
                     {practice.details.map((detail, detailIndex) => (
                       <motion.div
                         key={detailIndex}
@@ -447,28 +448,13 @@ export default function Sustainability() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: detailIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center text-gray-700 bg-white/60 p-4 rounded-xl"
+                        className="flex items-center text-gray-800 bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/50"
                       >
                         <div className="w-4 h-4 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full mr-4 shadow-sm"></div>
                         <span className="text-lg">{detail}</span>
                       </motion.div>
                     ))}
                   </div>
-                  
-                  {/* Aquaculture Facility Image */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="mt-10 h-64 rounded-2xl overflow-hidden shadow-xl"
-                  >
-                    <img 
-                      src={aquacultureFarmImg} 
-                      alt="Sustainable aquaculture fish farm"
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -513,23 +499,31 @@ export default function Sustainability() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 1, delay: 0.2 }}
                   viewport={{ once: true }}
-                  className="bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl"
+                  className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${transportFleetImg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
                 >
-                  <div className="flex items-center mb-10">
-                    <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mr-8">
+                  {/* Background overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-ocean-blue/75 to-marine-teal/80" />
+                  
+                  <div className="relative z-10 flex items-center mb-10">
+                    <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
                       <fleet.icon className="text-white" size={44} />
                     </div>
                     <div>
-                      <h3 className="text-4xl font-heading font-semibold mb-2">
+                      <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
                         {fleet.title}
                       </h3>
-                      <span className="text-coral-accent text-lg font-medium">For Local Transportation</span>
+                      <span className="text-coral-accent text-lg font-medium drop-shadow-lg">For Local Transportation</span>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-10 text-xl leading-relaxed">
+                  <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
                     {fleet.description}
                   </p>
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="relative z-10 grid md:grid-cols-2 gap-6">
                     {fleet.details.map((detail, detailIndex) => (
                       <motion.div
                         key={detailIndex}
@@ -537,28 +531,13 @@ export default function Sustainability() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: detailIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center text-white/90 bg-white/5 p-4 rounded-xl border border-white/10"
+                        className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
                       >
                         <Car className="text-coral-accent mr-4" size={20} />
-                        <span className="text-lg">{detail}</span>
+                        <span className="text-lg drop-shadow">{detail}</span>
                       </motion.div>
                     ))}
                   </div>
-                  
-                  {/* Transportation Fleet Image */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="mt-10 h-64 rounded-2xl overflow-hidden shadow-xl border border-white/20"
-                  >
-                    <img 
-                      src={transportFleetImg} 
-                      alt="Refrigerated seafood transport fleet"
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
                 </motion.div>
               ))}
             </div>
