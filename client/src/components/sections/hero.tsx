@@ -1,7 +1,7 @@
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef, memo, useMemo } from "react";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
 import pomfretImage from "@assets/Pomfret_1755943114147.png";
@@ -408,14 +408,19 @@ const Hero = memo(function Hero() {
                   }}
                   className="w-full h-full flex items-center justify-center p-4"
                 >
-                  <OptimizedImage
+                  <PerformanceImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
                     className={`max-w-full max-h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzFmMjkzNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NzM4NSIgZm9udC1zaXplPSIxNCI+TG9hZGluZy4uLjwvdGV4dD48L3N2Zz4="
-                    priority
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 512px"
+                    priority={true}
+                    style={{
+                      imageRendering: 'crisp-edges',
+                      transform: 'translateZ(0)',
+                      backfaceVisibility: 'hidden'
+                    }}
                   />
                 </motion.div>
               </motion.div>
