@@ -3,9 +3,9 @@ import { ChevronDown, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef, memo, useMemo } from "react";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
-import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
-import pomfretImage from "@assets/Pomfret_1755943114147.png";
-import sheerFishImage from "@assets/Sheer Fish_1755943118147.png";
+import shrimpImage from "@assets/generated_images/Premium_vannamei_shrimp_7309c33c.png";
+import pomfretImage from "@assets/generated_images/Fresh_pomfret_fish_2d9ae908.png";
+import sheerFishImage from "@assets/generated_images/Fresh_sheer_fish_527da6a7.png";
 
 const Hero = memo(function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,15 +24,15 @@ const Hero = memo(function Hero() {
   const [currentImage, setCurrentImage] = useState(0);
   const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
 
-  // Seafood images in the exact order specified
+  // Optimized seafood images with transparent backgrounds for faster loading
   const seafoodImages = [
     {
       src: shrimpImage,
-      alt: "Premium Vannamei Shrimp",
+      alt: "Premium Vannamei Shrimp - Fresh export quality",
       title: "Vannamei Shrimp",
     },
-    { src: pomfretImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
-    { src: sheerFishImage, alt: "Premium Sheer Fish", title: "Sheer Fish" },
+    { src: pomfretImage, alt: "Fresh Pomfret Fish - Premium quality", title: "Pomfret Fish" },
+    { src: sheerFishImage, alt: "Premium Sheer Fish - Export grade", title: "Sheer Fish" },
   ];
 
   useEffect(() => {

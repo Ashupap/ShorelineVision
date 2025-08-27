@@ -11,6 +11,7 @@ interface PerformanceImageProps {
   onLoad?: () => void;
   onError?: () => void;
   loading?: "lazy" | "eager";
+  style?: React.CSSProperties;
 }
 
 export const PerformanceImage = memo(function PerformanceImage({
@@ -19,10 +20,11 @@ export const PerformanceImage = memo(function PerformanceImage({
   className = "",
   sizes = "100vw",
   priority = false,
-  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzlmYTJhNyIgZm9udC1zaXplPSIxNCI+TG9hZGluZy4uLjwvdGV4dD48L3N2Zz4=",
+  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxZjI5Mzc7c3RvcC1vcGFjaXR5OjEiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMTQ0ZTRhO3N0b3Atb3BhY2l0eToxIiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2dyYWQpIi8+PC9zdmc+",
   onLoad,
   onError,
   loading = "lazy",
+  style,
 }: PerformanceImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -60,15 +62,12 @@ export const PerformanceImage = memo(function PerformanceImage({
   };
 
   return (
-    <div ref={imgRef} className={`relative overflow-hidden ${className}`}>
-      {/* Placeholder */}
+    <div ref={imgRef} className={`relative overflow-hidden ${className}`} style={style}>
+      {/* Seamless loading background */}
       {!isLoaded && !hasError && (
-        <img
-          src={placeholder}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover filter blur-sm"
-          style={{ opacity: isLoaded ? 0 : 1 }}
-        />
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-800/20 via-slate-700/30 to-slate-900/20 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        </div>
       )}
       
       {/* Actual image */}
@@ -80,7 +79,10 @@ export const PerformanceImage = memo(function PerformanceImage({
           className="w-full h-full object-cover"
           style={{ 
             willChange: isLoaded ? 'auto' : 'opacity',
-            transform: 'translateZ(0)' // Force hardware acceleration
+            transform: 'translateZ(0)',
+            imageRendering: 'crisp-edges',
+            backfaceVisibility: 'hidden',
+            ...style
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoaded ? 1 : 0 }}
