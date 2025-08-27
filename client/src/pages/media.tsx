@@ -183,20 +183,6 @@ export default function Media() {
       category: "Team",
       width: 1200,
       height: 800
-    },
-    {
-      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
-      alt: "Company recognition and awards",
-      category: "Recognition",
-      width: 1200,
-      height: 800
-    },
-    {
-      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-26.png", 
-      alt: "Excellence in seafood industry",
-      category: "Recognition",
-      width: 1200,
-      height: 800
     }
   ];
 
@@ -227,7 +213,7 @@ export default function Media() {
     }
   ];
 
-  const categories = ["All", "Facility", "Processing", "Operations", "Team", "Recognition"];
+  const categories = ["All", "Facility", "Processing", "Operations", "Team"];
   const filteredImages = selectedCategory === "All" 
     ? galleryImages 
     : galleryImages.filter(img => img.category === selectedCategory);
@@ -767,27 +753,7 @@ export default function Media() {
                     alt={filteredImages[1]?.alt}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  
-                  {/* Featured Text Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                    <motion.h3
-                      initial={{ y: 20, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.4 }}
-                      className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
-                    >
-                      Our Excellence
-                    </motion.h3>
-                    <motion.p
-                      initial={{ y: 20, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.5 }}
-                      className="text-lg text-gray-200 max-w-md"
-                    >
-                      Committed to quality, innovation, and sustainable seafood practices that set industry standards.
-                    </motion.p>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </motion.div>
 
                 <motion.div
