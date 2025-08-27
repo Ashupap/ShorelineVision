@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { motion, AnimatePresence } from "framer-motion";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import mapImage from "@assets/daae0035-cb27-4e73-bc2e-dd558b71a9d3_1756123214469.png";
 
 interface Destination {
@@ -357,10 +358,12 @@ export default function D3WorldMap() {
     <div className="relative w-full h-[600px] rounded-3xl overflow-hidden shadow-2xl">
       {/* HD Network World Map Background */}
       <div className="absolute inset-0">
-        <img 
-          src={mapImage} 
-          alt="Global Network Map" 
+        <PerformanceImage
+          src={mapImage}
+          alt="Global Network Map"
           className="w-full h-full object-cover"
+          priority={false}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
       </div>

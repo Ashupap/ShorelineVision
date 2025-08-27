@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Menu, X, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import logoImage from "@assets/Asset 3_1756100807050.png";
 
 export default function Header() {
@@ -196,10 +197,8 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer"
               data-testid="link-logo"
             >
-              <motion.img 
-                src={logoImage} 
-                alt="Alashore Marine Exports" 
-                className={`h-14 w-auto object-contain transition-all duration-500 ${
+              <motion.div
+                className={`h-14 w-auto transition-all duration-500 ${
                   isScrolled 
                     ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:drop-shadow-[0_4px_20px_rgba(59,130,246,0.4)]' 
                     : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.9)] hover:drop-shadow-[0_0_25px_rgba(255,107,107,0.8)]'
@@ -214,7 +213,15 @@ export default function Header() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-              />
+              >
+                <PerformanceImage
+                  src={logoImage}
+                  alt="Alashore Marine Exports"
+                  className="h-14 w-auto object-contain"
+                  priority={true}
+                  loading="eager"
+                />
+              </motion.div>
             </motion.div>
           </Link>
 

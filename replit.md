@@ -2,6 +2,21 @@
 
 This is a full-stack web application for Alashore Marine Exports Pvt. Ltd., a seafood exporting company. The application features a modern, responsive website showcasing the company's seafood products, with an admin panel for content management. It's built as a React frontend with an Express.js backend, using PostgreSQL for data storage.
 
+# Recent Changes
+
+**August 27, 2025**
+- Successfully migrated project from Replit Agent with PostgreSQL database setup and schema deployment
+- Enhanced company logo with improved visibility, brightness/contrast filters, and smooth animations
+- **Completed comprehensive image optimization strategy across entire website**:
+  - Replaced all img tags with PerformanceImage components for lazy loading and better performance
+  - Optimized all Unsplash URLs with proper compression parameters (q=85, format optimization)
+  - Implemented responsive image sizing with appropriate srcset for different screen sizes
+  - Added priority loading for above-the-fold images (hero sections, first 3 product cards)
+  - Created specialized CriticalImage component for immediate loading of critical assets
+  - Developed comprehensive imageOptimization utilities and custom hooks
+  - Optimized certification logos, leadership photos, award images, and blog post featured images
+  - Enhanced Core Web Vitals through proper image loading strategies
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

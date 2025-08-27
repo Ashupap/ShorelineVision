@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Package, Star, Award, Sparkles, Filter, Shield } from "lucide-react";
 import { useRef, useState } from "react";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import fssaiLogo from "@assets/pngegg_1756202338499.png";
@@ -284,13 +285,19 @@ export default function Products() {
                     className="group bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl border border-gray-100/50 backdrop-blur-md"
                   >
                     <div className="relative overflow-hidden">
-                      <motion.img
+                      <motion.div
                         whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.3 }}
-                        src={product.featuredImage}
-                        alt={product.name}
-                        className="w-full h-64 object-cover"
-                      />
+                        className="w-full h-64 overflow-hidden"
+                      >
+                        <PerformanceImage
+                          src={product.featuredImage.includes('unsplash') ? `${product.featuredImage}&q=85&w=800&h=600` : product.featuredImage}
+                          alt={product.name}
+                          className="w-full h-64 object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          priority={index < 3}
+                        />
+                      </motion.div>
                       <div className="absolute top-4 right-4 bg-ocean-blue text-white px-3 py-1 rounded-full text-sm">
                         {product.category}
                       </div>
@@ -444,10 +451,12 @@ export default function Products() {
                     transition={{ duration: 0.8, type: "spring" }}
                   >
                     <div className="bg-white/95 rounded-full p-3 shadow-lg">
-                      <img 
-                        src={fssaiLogo} 
-                        alt="FSSAI Certification" 
+                      <PerformanceImage
+                        src={fssaiLogo}
+                        alt="FSSAI Certification"
                         className="w-full h-full object-contain filter drop-shadow-md"
+                        sizes="96px"
+                        priority={false}
                       />
                     </div>
                   </motion.div>
@@ -516,10 +525,12 @@ export default function Products() {
                     transition={{ duration: 0.8, type: "spring" }}
                   >
                     <div className="bg-white/95 rounded-full p-3 shadow-lg">
-                      <img 
-                        src={bapLogo} 
-                        alt="BAP Best Aquaculture Practices Certification" 
+                      <PerformanceImage
+                        src={bapLogo}
+                        alt="BAP Best Aquaculture Practices Certification"
                         className="w-full h-full object-contain filter drop-shadow-md"
+                        sizes="96px"
+                        priority={false}
                       />
                     </div>
                   </motion.div>
@@ -588,10 +599,12 @@ export default function Products() {
                     transition={{ duration: 0.8, type: "spring" }}
                   >
                     <div className="bg-white/95 rounded-full p-3 shadow-lg">
-                      <img 
-                        src={haccpLogo} 
-                        alt="HACCP Food Safety Certification" 
+                      <PerformanceImage
+                        src={haccpLogo}
+                        alt="HACCP Food Safety Certification"
                         className="w-full h-full object-contain filter drop-shadow-md"
+                        sizes="96px"
+                        priority={false}
                       />
                     </div>
                   </motion.div>
@@ -660,10 +673,12 @@ export default function Products() {
                     transition={{ duration: 0.8, type: "spring" }}
                   >
                     <div className="bg-white/95 rounded-full p-3 shadow-lg">
-                      <img 
-                        src={fdaLogo} 
-                        alt="FDA Approved" 
+                      <PerformanceImage
+                        src={fdaLogo}
+                        alt="FDA Approved"
                         className="w-full h-full object-contain filter drop-shadow-md"
+                        sizes="96px"
+                        priority={false}
                       />
                     </div>
                   </motion.div>

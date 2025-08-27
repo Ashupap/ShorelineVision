@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useLocation } from "wouter";
+import { PerformanceImage } from "@/components/ui/performance-image";
 
 export default function About() {
   const [, navigate] = useLocation();
@@ -53,10 +54,12 @@ export default function About() {
               transition={{ duration: 0.3 }}
               className="rounded-xl overflow-hidden shadow-2xl"
             >
-              <img
-                src="https://images.unsplash.com/photo-1565615833231-e8c91a38a012?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+              <PerformanceImage
+                src="https://images.unsplash.com/photo-1565615833231-e8c91a38a012?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80"
                 alt="Modern seafood processing facility"
-                className="w-full h-auto"
+                className="w-full h-auto object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={false}
               />
             </motion.div>
             

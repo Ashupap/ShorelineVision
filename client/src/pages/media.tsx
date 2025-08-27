@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspaper, Image as ImageIcon, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
@@ -402,11 +403,13 @@ export default function Media() {
                             
                             {/* Certificate Image */}
                             <div className="relative p-2 h-full flex items-center justify-center">
-                              <img
+                              <PerformanceImage
                                 src={award.image}
                                 alt="Award Certificate"
                                 className="w-full h-auto max-h-full object-contain rounded-lg"
                                 style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' }}
+                                sizes="(max-width: 768px) 280px, 320px"
+                                priority={index === currentSlide}
                                 data-testid={`award-image-${index}`}
                               />
                             </div>
@@ -463,10 +466,12 @@ export default function Media() {
                       <DialogContent className="max-w-4xl w-full h-auto max-h-[90vh] p-0 bg-transparent border-none">
                         <DialogTitle className="sr-only">Award Certificate - Enlarged View</DialogTitle>
                         <div className="relative bg-slate-900/95 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20">
-                          <img
+                          <PerformanceImage
                             src={award.image}
                             alt="Award Certificate - Enlarged View"
                             className="w-full h-auto object-contain"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 60vw"
+                            priority={true}
                             data-testid={`award-enlarged-${index}`}
                           />
                         </div>

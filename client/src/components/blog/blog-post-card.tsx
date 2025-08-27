@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { formatDistanceToNow } from "date-fns";
 import { ArrowRight } from "lucide-react";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import type { BlogPost } from "@shared/schema";
 
 interface BlogPostCardProps {
@@ -16,13 +17,19 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
     >
       {post.featuredImage && (
         <div className="relative overflow-hidden">
-          <motion.img
+          <motion.div
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}
-            src={post.featuredImage}
-            alt={post.title}
-            className="w-full h-48 object-cover"
-          />
+            className="w-full h-48 overflow-hidden"
+          >
+            <PerformanceImage
+              src={post.featuredImage.includes('unsplash') ? `${post.featuredImage}&q=85&w=800&h=400` : post.featuredImage}
+              alt={post.title}
+              className="w-full h-48 object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              priority={false}
+            />
+          </motion.div>
           <div className="absolute top-4 right-4 bg-ocean-blue text-white px-2 py-1 rounded text-xs">
             {post.category}
           </div>

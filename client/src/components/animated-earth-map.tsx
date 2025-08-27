@@ -67,7 +67,7 @@ export default function AnimatedEarthMap() {
           transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0 bg-cover bg-center rounded-3xl"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1614728894747-a83421bba4b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1614728894747-a83421bba4b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=85')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}

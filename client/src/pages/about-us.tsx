@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import { Star, Award, Globe, Users, Leaf, Target } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PerformanceImage } from "@/components/ui/performance-image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import BlueWorldMap from "@/components/blue-world-map";
@@ -646,10 +647,12 @@ export default function AboutUs() {
                         
                         {/* Photo Container */}
                         <div className="relative h-64 overflow-hidden">
-                          <img
-                            src={leader.avatar}
+                          <PerformanceImage
+                            src={leader.avatar.includes('unsplash') ? `${leader.avatar}&q=85&w=800&h=600` : leader.avatar}
                             alt={leader.name}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            sizes="(max-width: 768px) 200px, 288px"
+                            priority={index < 2}
                           />
                           
                           {/* Photo Overlay */}
