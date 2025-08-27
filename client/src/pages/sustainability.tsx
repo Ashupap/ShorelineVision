@@ -989,7 +989,18 @@ export default function Sustainability() {
         </section>
 
         {/* Company Values */}
-        <section className="py-24 bg-gradient-to-br from-gray-900 to-gray-800 text-white relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden text-white">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ 
+              backgroundImage: `url(${sustainabilityBg})`,
+              filter: 'brightness(0.3) contrast(1.1)'
+            }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-800/85 to-gray-900/90" />
+          
           {/* Background Animation Elements */}
           <motion.div
             animate={{ 
@@ -1029,15 +1040,8 @@ export default function Sustainability() {
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
                 className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
-                style={{
-                  backgroundImage: `url(${sustainabilityBg})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
                 data-testid="value-people"
               >
-                {/* Background overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-ocean-blue/75 to-marine-teal/80" />
                 
                 <div className="relative z-10 flex items-center mb-10">
                   <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
@@ -1084,15 +1088,8 @@ export default function Sustainability() {
                 transition={{ duration: 1, delay: 0.4 }}
                 viewport={{ once: true }}
                 className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
-                style={{
-                  backgroundImage: `url(${sustainabilityBg})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
                 data-testid="value-products"
               >
-                {/* Background overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-marine-teal/75 to-ocean-blue/80" />
                 
                 <div className="relative z-10 flex items-center mb-10">
                   <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
@@ -1139,15 +1136,8 @@ export default function Sustainability() {
                 transition={{ duration: 1, delay: 0.6 }}
                 viewport={{ once: true }}
                 className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
-                style={{
-                  backgroundImage: `url(${sustainabilityBg})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
                 data-testid="value-farmers"
               >
-                {/* Background overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-coral-accent/75 to-golden-orange/80" />
                 
                 <div className="relative z-10 flex items-center mb-10">
                   <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
