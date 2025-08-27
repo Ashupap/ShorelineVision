@@ -25,18 +25,6 @@ export default function Media() {
 
   const recognitionAwards = [
     {
-      title: "Excellence in Seafood Export",
-      description: "Recognized for outstanding quality and sustainable practices in the seafood export industry",
-      image: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
-      year: "2024"
-    },
-    {
-      title: "Industry Leadership Award", 
-      description: "Acknowledged for leading innovation in marine product processing and export",
-      image: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-26.png",
-      year: "2024"
-    },
-    {
       title: "Quality Certification",
       description: "Certified for maintaining highest quality standards in seafood processing",
       image: "https://alashoremarine.com/wp-content/uploads/2024/03/3.jpg",
