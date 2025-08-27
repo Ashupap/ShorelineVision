@@ -989,41 +989,19 @@ export default function Sustainability() {
         </section>
 
         {/* Company Values */}
-        <section className="py-24 relative overflow-hidden">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ 
-              backgroundImage: `url(${sustainabilityBg})`,
-              filter: 'brightness(0.4) contrast(1.1)'
-            }}
-          />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-light-marine/60 to-white/80" />
+        <section className="py-24 bg-gradient-to-br from-gray-900 to-gray-800 text-white relative overflow-hidden">
           {/* Background Animation Elements */}
           <motion.div
             animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.05, 0.15, 0.05]
+              x: [0, 100, 0],
+              opacity: [0.2, 0.5, 0.2]
             }}
             transition={{ 
-              duration: 20,
+              duration: 10,
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="absolute top-10 right-10 w-80 h-80 bg-ocean-blue/10 rounded-full backdrop-blur-sm"
-          />
-          <motion.div
-            animate={{ 
-              scale: [1.2, 1, 1.2],
-              opacity: [0.03, 0.08, 0.03]
-            }}
-            transition={{ 
-              duration: 25,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute bottom-20 left-20 w-60 h-60 bg-marine-teal/10 rounded-full backdrop-blur-sm"
+            className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full backdrop-blur-sm"
           />
           
           <div className="container mx-auto px-4 relative z-10">
@@ -1034,139 +1012,178 @@ export default function Sustainability() {
               viewport={{ once: true }}
               className="text-center mb-20"
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-ocean-blue/20 mb-8"
-              >
-                <Users className="text-ocean-blue mr-2" size={20} />
-                <span className="text-ocean-blue font-medium">Core Values</span>
-              </motion.div>
-              <h2 className="text-4xl md:text-6xl font-heading font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6">
                 Our Core Values
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 At Alashore Marine - we care about our People, our Products & the Farmers. 
                 These are the core values we demonstrate in our actions.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto space-y-8">
               {/* People Value Card */}
               <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-                transition={{ 
-                  duration: 0.8,
-                  type: "spring",
-                  stiffness: 100
-                }}
+                initial={{ opacity: 0, x: -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-ocean-blue/10 p-8 rounded-3xl shadow-2xl border border-white/50 text-center group relative overflow-hidden"
+                className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                style={{
+                  backgroundImage: `url(${sustainabilityBg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
                 data-testid="value-people"
               >
-                {/* Background Pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/5 to-marine-teal/5 rounded-3xl" />
+                {/* Background overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-ocean-blue/75 to-marine-teal/80" />
                 
-                <div className="relative z-10">
-                  <motion.div 
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-24 h-24 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300"
+                <div className="relative z-10 flex items-center mb-10">
+                  <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
+                    <Users className="text-white" size={44} />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
+                      Our People
+                    </h3>
+                    <span className="text-coral-accent text-lg font-medium drop-shadow-lg">Team Excellence</span>
+                  </div>
+                </div>
+                <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
+                  We believe our team is our greatest asset. We invest in their growth, well-being, and professional development to create a thriving workplace culture.
+                </p>
+                <div className="relative z-10 grid md:grid-cols-2 gap-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
                   >
-                    <Users className="text-white" size={40} />
+                    <Users className="text-coral-accent mr-4" size={20} />
+                    <span className="text-lg drop-shadow">Professional Development</span>
                   </motion.div>
-                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
-                    Our People
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    We believe our team is our greatest asset. We invest in their growth, well-being, and professional development to create a thriving workplace culture.
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
+                  >
+                    <Users className="text-coral-accent mr-4" size={20} />
+                    <span className="text-lg drop-shadow">Workplace Culture</span>
+                  </motion.div>
                 </div>
               </motion.div>
 
               {/* Products Value Card */}
               <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-                transition={{ 
-                  duration: 0.8,
-                  delay: 0.1,
-                  type: "spring",
-                  stiffness: 100
-                }}
+                initial={{ opacity: 0, x: -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-marine-teal/10 p-8 rounded-3xl shadow-2xl border border-white/50 text-center group relative overflow-hidden"
+                className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                style={{
+                  backgroundImage: `url(${sustainabilityBg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
                 data-testid="value-products"
               >
-                {/* Background Pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/5 to-ocean-blue/5 rounded-3xl" />
+                {/* Background overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-marine-teal/75 to-ocean-blue/80" />
                 
-                <div className="relative z-10">
-                  <motion.div 
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-24 h-24 bg-gradient-to-br from-marine-teal to-coral-accent rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300"
+                <div className="relative z-10 flex items-center mb-10">
+                  <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
+                    <Package className="text-white" size={44} />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
+                      Our Products
+                    </h3>
+                    <span className="text-coral-accent text-lg font-medium drop-shadow-lg">Quality Excellence</span>
+                  </div>
+                </div>
+                <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
+                  Quality is our cornerstone. Every product meets the highest international standards through rigorous testing and quality control processes.
+                </p>
+                <div className="relative z-10 grid md:grid-cols-2 gap-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
                   >
-                    <Package className="text-white" size={40} />
+                    <Package className="text-coral-accent mr-4" size={20} />
+                    <span className="text-lg drop-shadow">International Standards</span>
                   </motion.div>
-                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
-                    Our Products
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Quality is our cornerstone. Every product meets the highest international standards through rigorous testing and quality control processes.
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
+                  >
+                    <Package className="text-coral-accent mr-4" size={20} />
+                    <span className="text-lg drop-shadow">Quality Control</span>
+                  </motion.div>
                 </div>
               </motion.div>
 
               {/* Farmers Value Card */}
               <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ 
-                  y: -10, 
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-                transition={{ 
-                  duration: 0.8,
-                  delay: 0.2,
-                  type: "spring",
-                  stiffness: 100
-                }}
+                initial={{ opacity: 0, x: -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-coral-accent/10 p-8 rounded-3xl shadow-2xl border border-white/50 text-center group relative overflow-hidden"
+                className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                style={{
+                  backgroundImage: `url(${sustainabilityBg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
                 data-testid="value-farmers"
               >
-                {/* Background Pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-coral-accent/5 to-golden-orange/5 rounded-3xl" />
+                {/* Background overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-coral-accent/75 to-golden-orange/80" />
                 
-                <div className="relative z-10">
-                  <motion.div 
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-24 h-24 bg-gradient-to-br from-coral-accent to-golden-orange rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300"
+                <div className="relative z-10 flex items-center mb-10">
+                  <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
+                    <Droplets className="text-white" size={44} />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
+                      Our Farmers
+                    </h3>
+                    <span className="text-coral-accent text-lg font-medium drop-shadow-lg">Partnership Excellence</span>
+                  </div>
+                </div>
+                <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
+                  We support sustainable farming practices and farmer development through partnerships, training, and fair business relationships.
+                </p>
+                <div className="relative z-10 grid md:grid-cols-2 gap-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
                   >
-                    <Droplets className="text-white" size={40} />
+                    <Droplets className="text-coral-accent mr-4" size={20} />
+                    <span className="text-lg drop-shadow">Sustainable Practices</span>
                   </motion.div>
-                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
-                    Our Farmers
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    We support sustainable farming practices and farmer development through partnerships, training, and fair business relationships.
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
+                  >
+                    <Droplets className="text-coral-accent mr-4" size={20} />
+                    <span className="text-lg drop-shadow">Fair Partnerships</span>
+                  </motion.div>
                 </div>
               </motion.div>
             </div>
