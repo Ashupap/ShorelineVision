@@ -6,11 +6,15 @@ import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { gsap } from "gsap";
+import PhotoAlbum from "react-photo-album";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 export default function Media() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -154,39 +158,46 @@ export default function Media() {
 
   const galleryImages = [
     {
-      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
-      alt: "Company recognition and awards",
-      category: "Recognition"
-    },
-    {
-      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-26.png", 
-      alt: "Excellence in seafood industry",
-      category: "Recognition"
-    },
-    {
       src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.03.31-PM.jpg",
       alt: "Modern seafood processing facility",
-      category: "Facility"
+      category: "Facility",
+      width: 1200,
+      height: 800
     },
     {
       src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.06.23-PM-1.jpg",
       alt: "Quality control and packaging operations",
-      category: "Processing"
-    },
-    {
-      src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.24-PM.jpg",
-      alt: "Fresh seafood products and quality standards",
-      category: "Products"
+      category: "Processing",
+      width: 1200,
+      height: 900
     },
     {
       src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.23-PM.jpg",
       alt: "Export operations and logistics",
-      category: "Operations"
+      category: "Operations",
+      width: 1200,
+      height: 800
     },
     {
       src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.24-PM-1.jpg",
       alt: "Team collaboration and workplace culture",
-      category: "Team"
+      category: "Team",
+      width: 1200,
+      height: 800
+    },
+    {
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
+      alt: "Company recognition and awards",
+      category: "Recognition",
+      width: 1200,
+      height: 800
+    },
+    {
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-26.png", 
+      alt: "Excellence in seafood industry",
+      category: "Recognition",
+      width: 1200,
+      height: 800
     }
   ];
 
@@ -217,7 +228,7 @@ export default function Media() {
     }
   ];
 
-  const categories = ["All", "Recognition", "Facility", "Processing", "Products", "Operations", "Team"];
+  const categories = ["All", "Facility", "Processing", "Operations", "Team", "Recognition"];
   const filteredImages = selectedCategory === "All" 
     ? galleryImages 
     : galleryImages.filter(img => img.category === selectedCategory);
@@ -697,46 +708,88 @@ export default function Media() {
               </motion.div>
             </motion.div>
             
-            <motion.div 
-              layout
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            {/* Modern Masonry Gallery */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="max-w-7xl mx-auto"
             >
-              {filteredImages.map((image, index) => (
-                <motion.div
-                  key={`${image.category}-${index}`}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ 
-                    y: -10,
-                    scale: 1.02
-                  }}
-                  className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
-                >
-                  <motion.img
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.4 }}
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-64 object-cover"
-                  />
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-start p-6"
+              <PhotoAlbum
+                layout="masonry"
+                photos={filteredImages}
+                spacing={20}
+                columns={(containerWidth: number) => {
+                  if (containerWidth < 768) return 1;
+                  if (containerWidth < 1024) return 2;
+                  return 3;
+                }}
+                onClick={({ index }: { index: number }) => setLightboxIndex(index)}
+                renderPhoto={({ photo, imageProps }: { photo: any; imageProps: any }) => (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    whileHover={{ 
+                      y: -10,
+                      scale: 1.02
+                    }}
+                    className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
                   >
-                    <div>
-                      <p className="text-white font-semibold text-lg mb-1">{image.alt}</p>
-                      <span className="bg-coral-accent text-white px-3 py-1 rounded-full text-xs font-medium">
-                        {image.category}
-                      </span>
-                    </div>
+                    <motion.img
+                      {...imageProps}
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.4 }}
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                    />
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-start p-6"
+                    >
+                      <div>
+                        <p className="text-white font-semibold text-lg mb-1">{photo.alt}</p>
+                        <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                          {(photo as any).category}
+                        </span>
+                      </div>
+                    </motion.div>
+                    
+                    {/* Glass Morphism Hover Effect */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileHover={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute top-4 right-4 bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30"
+                    >
+                      <ImageIcon size={20} className="text-white" />
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              ))}
+                )}
+              />
+              
+              {/* Lightbox */}
+              <Lightbox
+                open={lightboxIndex >= 0}
+                index={lightboxIndex}
+                close={() => setLightboxIndex(-1)}
+                slides={filteredImages.map(image => ({
+                  src: image.src,
+                  alt: image.alt,
+                  width: image.width,
+                  height: image.height
+                }))}
+                styles={{
+                  container: {
+                    backgroundColor: "rgba(0, 0, 0, 0.9)",
+                    backdropFilter: "blur(10px)"
+                  }
+                }}
+              />
             </motion.div>
           </div>
         </section>
