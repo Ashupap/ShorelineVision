@@ -4,6 +4,8 @@ import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspape
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function Media() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,6 +56,12 @@ export default function Media() {
       title: "Business Excellence Certificate",
       description: "Certified for excellence in business operations and sustainable practices",
       image: "https://alashoremarine.com/wp-content/uploads/2024/03/4.jpg",
+      year: "2024"
+    },
+    {
+      title: "Industry Innovation Award",
+      description: "Recognized for innovative approaches in seafood processing and export excellence",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/5.jpg",
       year: "2024"
     }
   ];
@@ -280,60 +288,86 @@ export default function Media() {
               />
             </motion.div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {recognitionAwards.map((award, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
-                  viewport={{ once: true }}
-                  whileHover={{ 
-                    y: -15, 
-                    scale: 1.02,
-                    boxShadow: "0 25px 60px rgba(0, 0, 0, 0.15)"
-                  }}
-                  className="group bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl border border-gray-100/50 backdrop-blur-md"
-                >
-                  <div className="relative overflow-hidden">
-                    <motion.img
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.4 }}
-                      src={award.image}
-                      alt={award.title}
-                      className="w-full h-64 object-cover"
-                    />
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end justify-start p-6"
-                    >
-                      <span className="bg-coral-accent text-white px-4 py-2 rounded-full text-sm font-bold">
-                        {award.year}
-                      </span>
-                    </motion.div>
-                  </div>
-                  <div className="p-8">
-                    <motion.h3 
-                      className="text-xl font-heading font-bold text-gray-900 mb-4 group-hover:text-coral-accent transition-colors duration-300"
-                    >
-                      {award.title}
-                    </motion.h3>
-                    <p className="text-gray-600 leading-relaxed mb-4">
-                      {award.description}
-                    </p>
-                    <motion.div 
-                      whileHover={{ x: 5 }}
-                      className="flex items-center text-coral-accent font-semibold"
-                    >
-                      <Trophy size={16} className="mr-2" />
-                      <span className="text-sm">Excellence Award</span>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="max-w-7xl mx-auto"
+            >
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                plugins={[
+                  Autoplay({
+                    delay: 4000,
+                    stopOnInteraction: false,
+                    stopOnMouseEnter: true,
+                  }),
+                ]}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-4">
+                  {recognitionAwards.map((award, index) => (
+                    <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                      <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                        whileHover={{ 
+                          y: -15, 
+                          scale: 1.02,
+                          boxShadow: "0 25px 60px rgba(0, 0, 0, 0.15)"
+                        }}
+                        className="group bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl border border-gray-100/50 backdrop-blur-md h-full"
+                      >
+                        <div className="relative overflow-hidden">
+                          <motion.img
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.4 }}
+                            src={award.image}
+                            alt={award.title}
+                            className="w-full h-64 object-cover"
+                            data-testid={`award-image-${index}`}
+                          />
+                          <motion.div 
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end justify-start p-6"
+                          >
+                            <span className="bg-coral-accent text-white px-4 py-2 rounded-full text-sm font-bold">
+                              {award.year}
+                            </span>
+                          </motion.div>
+                        </div>
+                        <div className="p-8">
+                          <motion.h3 
+                            className="text-xl font-heading font-bold text-gray-900 mb-4 group-hover:text-coral-accent transition-colors duration-300"
+                            data-testid={`award-title-${index}`}
+                          >
+                            {award.title}
+                          </motion.h3>
+                          <p className="text-gray-600 leading-relaxed mb-4" data-testid={`award-description-${index}`}>
+                            {award.description}
+                          </p>
+                          <motion.div 
+                            whileHover={{ x: 5 }}
+                            className="flex items-center text-coral-accent font-semibold"
+                          >
+                            <Trophy size={16} className="mr-2" />
+                            <span className="text-sm">Excellence Award</span>
+                          </motion.div>
+                        </div>
+                      </motion.div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </motion.div>
           </div>
         </motion.section>
 
