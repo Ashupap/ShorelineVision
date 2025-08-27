@@ -193,72 +193,13 @@ export default function Header() {
               transition={{ duration: 0.8, delay: 0.2 }}
               whileHover={{ scale: 1.1, rotate: 2 }}
               whileTap={{ scale: 0.95 }}
-              className="relative flex items-center space-x-2 cursor-pointer overflow-hidden"
+              className="flex items-center space-x-2 cursor-pointer"
               data-testid="link-logo"
             >
-              {/* Animated Bubbles Background */}
-              <div className="absolute inset-0 pointer-events-none">
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className={`absolute rounded-full ${
-                      isScrolled 
-                        ? 'bg-gradient-to-r from-blue-200/20 to-cyan-200/20' 
-                        : 'bg-gradient-to-r from-white/15 to-blue-200/25'
-                    }`}
-                    style={{
-                      width: `${8 + i * 3}px`,
-                      height: `${8 + i * 3}px`,
-                      left: `${10 + i * 15}%`,
-                      top: `${20 + (i % 3) * 20}%`,
-                    }}
-                    animate={{
-                      y: [-10, -30, -10],
-                      x: [-5, 5, -5],
-                      scale: [0.8, 1.2, 0.8],
-                      opacity: [0.3, 0.8, 0.3],
-                    }}
-                    transition={{
-                      duration: 3 + i * 0.5,
-                      repeat: Infinity,
-                      delay: i * 0.3,
-                      ease: "easeInOut"
-                    }}
-                  />
-                ))}
-                
-                {/* Additional floating particles */}
-                {[...Array(6)].map((_, i) => (
-                  <motion.div
-                    key={`particle-${i}`}
-                    className={`absolute w-1 h-1 rounded-full ${
-                      isScrolled 
-                        ? 'bg-blue-400/40' 
-                        : 'bg-white/60'
-                    }`}
-                    style={{
-                      left: `${5 + i * 20}%`,
-                      top: `${15 + (i % 4) * 15}%`,
-                    }}
-                    animate={{
-                      y: [-15, -40, -15],
-                      x: [-8, 8, -8],
-                      opacity: [0, 1, 0],
-                    }}
-                    transition={{
-                      duration: 4 + i * 0.3,
-                      repeat: Infinity,
-                      delay: i * 0.4,
-                      ease: "easeInOut"
-                    }}
-                  />
-                ))}
-              </div>
-
               <motion.img 
                 src={logoImage} 
                 alt="Alashore Marine Exports" 
-                className={`relative z-10 h-14 w-auto object-contain transition-all duration-500 ${
+                className={`h-14 w-auto object-contain transition-all duration-500 ${
                   isScrolled 
                     ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:drop-shadow-[0_4px_20px_rgba(59,130,246,0.4)]' 
                     : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.9)] hover:drop-shadow-[0_0_25px_rgba(255,107,107,0.8)]'
