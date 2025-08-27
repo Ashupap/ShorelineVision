@@ -11,6 +11,14 @@ import plantFacilityImg from "@assets/generated_images/Industrial_processing_pla
 import compressionSystemImg from "@assets/generated_images/Industrial_compression_systems_facility_06113571.png";
 import qualityLabImg from "@assets/generated_images/Quality_control_laboratory_testing_92093505.png";
 import productionCapacityImg from "@assets/generated_images/High_capacity_production_facility_b87ef9ff.png";
+// Customer Logo Imports
+import azureLogo from "@assets/AZURE_1755944927383.png";
+import costarLogo from "@assets/Costar_1755944927383.png";
+import geishaLogo from "@assets/GEISHA_1755944927383.png";
+import genseaLogo from "@assets/GENSEA_1755944927383.png";
+import goldenBayLogo from "@assets/Golden-bay_1755944927383.png";
+import seastarLogo from "@assets/Seastar_1755944927383.png";
+import selectLogo from "@assets/SELECT_1755944927384.png";
 
 export default function Sustainability() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -688,7 +696,7 @@ export default function Sustainability() {
               </motion.div>
             </div>
 
-            {/* Brand Logos Placeholder */}
+            {/* Brand Logos */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -700,19 +708,34 @@ export default function Sustainability() {
                 Trusted by leading global seafood brands
               </p>
               <div className="grid grid-cols-3 md:grid-cols-7 gap-8 items-center">
-                {['SEASTAR', 'COSTAR', 'GEISHA', 'SELECT', 'GOLDEN BAY', 'AZURE', 'GENSEA'].map((brand, index) => (
+                {[
+                  { name: "SEASTAR", img: seastarLogo },
+                  { name: "COSTAR", img: costarLogo },
+                  { name: "GEISHA", img: geishaLogo },
+                  { name: "SELECT", img: selectLogo },
+                  { name: "GOLDEN BAY", img: goldenBayLogo },
+                  { name: "AZURE", img: azureLogo },
+                  { name: "GENSEA", img: genseaLogo }
+                ].map((brand, index) => (
                   <motion.div
-                    key={brand}
+                    key={brand.name}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 text-center"
+                    whileHover={{
+                      scale: 1.1,
+                      y: -5,
+                      transition: { type: "spring", stiffness: 300, damping: 20 }
+                    }}
+                    className="bg-white/95 backdrop-blur-sm p-4 rounded-xl border border-white/30 flex items-center justify-center h-20 hover:shadow-2xl transition-all duration-300"
+                    data-testid={`logo-${brand.name.toLowerCase().replace(' ', '-')}`}
                   >
-                    <span className="text-white/80 text-sm font-medium">{brand}</span>
-                    <div className="mt-2 h-8 bg-white/20 rounded flex items-center justify-center">
-                      <span className="text-white/60 text-xs">Logo</span>
-                    </div>
+                    <img
+                      src={brand.img}
+                      alt={brand.name}
+                      className="max-w-full max-h-full object-contain filter brightness-90 hover:brightness-100 transition-all duration-300"
+                    />
                   </motion.div>
                 ))}
               </div>
