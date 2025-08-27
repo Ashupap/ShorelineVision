@@ -440,17 +440,17 @@ export default function Sustainability() {
                   }}
                 >
                   {/* Background overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-light-marine/85 to-white/90" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-ocean-blue/75 to-marine-teal/80" />
                   
                   <div className="relative z-10 flex items-center mb-10">
                     <div className="w-24 h-24 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-3xl flex items-center justify-center mr-8 shadow-lg">
                       <practice.icon className="text-white" size={44} />
                     </div>
-                    <h3 className="text-4xl font-heading font-semibold text-gray-900 drop-shadow-sm">
+                    <h3 className="text-4xl font-heading font-semibold text-white drop-shadow-lg">
                       {practice.title}
                     </h3>
                   </div>
-                  <p className="relative z-10 text-gray-800 mb-10 text-xl leading-relaxed drop-shadow-sm">
+                  <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
                     {practice.description}
                   </p>
                   <div className="relative z-10 grid md:grid-cols-2 gap-6">
@@ -461,7 +461,7 @@ export default function Sustainability() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: detailIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center text-gray-800 bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/50"
+                        className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30"
                       >
                         <div className="w-4 h-4 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full mr-4 shadow-sm"></div>
                         <span className="text-lg">{detail}</span>
