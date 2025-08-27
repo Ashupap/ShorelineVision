@@ -995,11 +995,11 @@ export default function Sustainability() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ 
               backgroundImage: `url(${sustainabilityBg})`,
-              filter: 'brightness(0.15) contrast(1.2)'
+              filter: 'brightness(0.4) contrast(1.1)'
             }}
           />
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-light-marine/80 to-white/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-light-marine/60 to-white/80" />
           {/* Background Animation Elements */}
           <motion.div
             animate={{ 
