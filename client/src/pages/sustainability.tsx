@@ -989,7 +989,17 @@ export default function Sustainability() {
         </section>
 
         {/* Company Values */}
-        <section className="py-24 bg-gradient-to-br from-white via-light-marine/10 to-white relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ 
+              backgroundImage: `url(${sustainabilityBg})`,
+              filter: 'brightness(0.15) contrast(1.2)'
+            }}
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-light-marine/80 to-white/90" />
           {/* Background Animation Elements */}
           <motion.div
             animate={{ 
