@@ -576,37 +576,83 @@ export default function Sustainability() {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
               {certifications.map((cert, index) => (
                 <motion.div
                   key={cert.name}
-                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  initial={{ opacity: 0, y: 40, scale: 0.8, rotateY: 180 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
+                  whileHover={{ 
+                    y: -15, 
+                    scale: 1.08,
+                    rotateY: 5,
+                    boxShadow: "0 25px 50px rgba(255,215,0,0.4)"
+                  }}
                   transition={{ 
-                    duration: 0.8, 
+                    duration: 0.8,
                     delay: index * 0.1,
-                    ease: "easeOut"
+                    type: "spring",
+                    stiffness: 100
                   }}
                   viewport={{ once: true }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                  className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-center border border-gray-100"
+                  className="relative overflow-hidden text-center group cursor-pointer"
+                  data-testid={`accreditation-${cert.name.toLowerCase().replace(/\s+/g, '-')}`}
                 >
+                  {/* Golden Background with Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 rounded-3xl shadow-2xl" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-yellow-600/20 via-transparent to-yellow-200/30 rounded-3xl" />
+                  
+                  {/* Golden Border Ring */}
                   <motion.div 
-                    whileHover={{ rotate: 10 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-20 h-20 bg-gradient-to-br from-marine-teal to-ocean-blue rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
-                  >
-                    <cert.icon className="text-white" size={32} />
-                  </motion.div>
-                  <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">
-                    {cert.name}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {cert.description}
-                  </p>
+                    className="absolute inset-0 rounded-3xl border-4 border-yellow-200/50"
+                    animate={{ 
+                      boxShadow: [
+                        "0 0 20px rgba(255,215,0,0.3)",
+                        "0 0 40px rgba(255,215,0,0.6)", 
+                        "0 0 20px rgba(255,215,0,0.3)"
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
+                  />
+                  
+                  {/* Sparkle Effects */}
+                  <motion.div
+                    className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full"
+                    animate={{ 
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 + 0.5 }}
+                  />
+                  <motion.div
+                    className="absolute top-8 left-6 w-1.5 h-1.5 bg-yellow-100 rounded-full"
+                    animate={{ 
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 + 1 }}
+                  />
+                  
+                  <div className="relative p-8 z-10">
+                    <motion.div 
+                      className="w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+                      whileHover={{ 
+                        rotate: 360,
+                        scale: 1.1
+                      }}
+                      transition={{ duration: 0.8, type: "spring" }}
+                    >
+                      <div className="bg-white/95 rounded-full p-3 shadow-lg">
+                        <cert.icon className="text-yellow-600 w-full h-full" size={36} />
+                      </div>
+                    </motion.div>
+                    <h3 className="text-xl font-heading font-bold text-yellow-900 mb-3 drop-shadow-sm">
+                      {cert.name}
+                    </h3>
+                    <p className="text-yellow-800 text-sm leading-relaxed font-medium">
+                      {cert.description}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
