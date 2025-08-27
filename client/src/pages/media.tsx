@@ -6,7 +6,6 @@ import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { gsap } from "gsap";
-import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
@@ -708,69 +707,175 @@ export default function Media() {
               </motion.div>
             </motion.div>
             
-            {/* Modern Masonry Gallery */}
+            {/* Modern Grid Gallery */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
-              className="max-w-7xl mx-auto"
+              className="max-w-7xl mx-auto relative"
             >
-              <PhotoAlbum
-                layout="masonry"
-                photos={filteredImages}
-                spacing={20}
-                columns={(containerWidth: number) => {
-                  if (containerWidth < 768) return 1;
-                  if (containerWidth < 1024) return 2;
-                  return 3;
-                }}
-                onClick={({ index }: { index: number }) => setLightboxIndex(index)}
-                renderPhoto={({ photo, imageProps }: { photo: any; imageProps: any }) => (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    whileHover={{ 
-                      y: -10,
-                      scale: 1.02
-                    }}
-                    className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                  >
-                    <motion.img
-                      {...imageProps}
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.4 }}
-                      className="w-full h-auto object-cover"
-                      loading="lazy"
-                    />
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-start p-6"
+              {/* Navigation Arrows */}
+              <motion.button
+                whileHover={{ scale: 1.1, x: -5 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
+              >
+                <ChevronLeft size={24} />
+              </motion.button>
+              
+              <motion.button
+                whileHover={{ scale: 1.1, x: 5 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
+              >
+                <ChevronRight size={24} />
+              </motion.button>
+
+              {/* Custom Grid Layout */}
+              <div className="grid grid-cols-12 grid-rows-6 gap-4 h-[800px] md:h-[600px]">
+                {/* Top Row - Small Images */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05, z: 10 }}
+                  onClick={() => setLightboxIndex(0)}
+                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[0]?.src}
+                    alt={filteredImages[0]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+
+                {/* Featured Center Image */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => setLightboxIndex(1)}
+                  className="col-span-6 row-span-4 group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[1]?.src}
+                    alt={filteredImages[1]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  
+                  {/* Featured Text Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                    <motion.h3
+                      initial={{ y: 20, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.4 }}
+                      className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
                     >
-                      <div>
-                        <p className="text-white font-semibold text-lg mb-1">{photo.alt}</p>
-                        <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-medium">
-                          {(photo as any).category}
-                        </span>
-                      </div>
-                    </motion.div>
-                    
-                    {/* Glass Morphism Hover Effect */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileHover={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute top-4 right-4 bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30"
+                      Our Excellence
+                    </motion.h3>
+                    <motion.p
+                      initial={{ y: 20, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.5 }}
+                      className="text-lg text-gray-200 max-w-md"
                     >
-                      <ImageIcon size={20} className="text-white" />
-                    </motion.div>
-                  </motion.div>
-                )}
-              />
+                      Committed to quality, innovation, and sustainable seafood practices that set industry standards.
+                    </motion.p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setLightboxIndex(2)}
+                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[2]?.src}
+                    alt={filteredImages[2]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+
+                {/* Bottom Row */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setLightboxIndex(3)}
+                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[3]?.src}
+                    alt={filteredImages[3]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setLightboxIndex(4)}
+                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[4]?.src}
+                    alt={filteredImages[4]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setLightboxIndex(5)}
+                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[5]?.src}
+                    alt={filteredImages[5]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setLightboxIndex(0)}
+                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  <img
+                    src={filteredImages[0]?.src}
+                    alt={filteredImages[0]?.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+              </div>
               
               {/* Lightbox */}
               <Lightbox
