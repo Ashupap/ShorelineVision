@@ -13,8 +13,18 @@ import {
   Instagram, 
   Twitter, 
   Linkedin,
-  Send
+  Send,
+  MessageSquare,
+  Globe,
+  Truck,
+  ShoppingCart,
+  HelpCircle,
+  FileText,
+  User,
+  Target
 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { insertInquirySchema, type InsertInquirySchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -48,6 +58,7 @@ export default function Contact() {
       email: "",
       phone: "",
       company: "",
+      topic: "",
       message: "",
     },
   });
@@ -81,36 +92,81 @@ export default function Contact() {
       icon: MapPin,
       title: "Head Office",
       content: "Plot No- D1/18(P), D1/19, D1/20 & D1/37, D1/38, D1/39(P)\nSomnathpur Industrial Estate, Balasore, Odisha, India, Pin- 755019",
+      color: "from-red-500 to-pink-500",
+      bgColor: "bg-gradient-to-br from-red-50 to-pink-50"
     },
     {
       icon: Mail,
       title: "Email",
       content: "alashoremarine@gmail.com",
       href: "mailto:alashoremarine@gmail.com",
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50"
     },
     {
       icon: Phone,
       title: "Phone",
       content: "+91 7381050536",
       href: "tel:+917381050536",
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-gradient-to-br from-green-50 to-emerald-50"
     },
     {
       icon: Building,
       title: "Company Registration",
       content: "CIN: U05000OR2012PTC016366",
+      color: "from-purple-500 to-violet-500",
+      bgColor: "bg-gradient-to-br from-purple-50 to-violet-50"
     },
     {
       icon: Clock,
       title: "Business Hours",
       content: "Monday - Saturday: 9:00 AM - 6:00 PM\nSunday: Closed",
+      color: "from-orange-500 to-amber-500",
+      bgColor: "bg-gradient-to-br from-orange-50 to-amber-50"
     },
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/AlashoreMarine/", name: "Facebook" },
-    { icon: Instagram, href: "https://www.instagram.com/alashoremarine/", name: "Instagram" },
-    { icon: Twitter, href: "https://twitter.com/AlashoreL", name: "Twitter" },
-    { icon: Linkedin, href: "https://www.linkedin.com/company/alashore-marine-private-limited/", name: "LinkedIn" },
+    { 
+      icon: Facebook, 
+      href: "https://www.facebook.com/AlashoreMarine/", 
+      name: "Facebook",
+      color: "from-blue-600 to-blue-700",
+      hoverColor: "hover:from-blue-700 hover:to-blue-800"
+    },
+    { 
+      icon: Instagram, 
+      href: "https://www.instagram.com/alashoremarine/", 
+      name: "Instagram",
+      color: "from-pink-500 to-rose-500",
+      hoverColor: "hover:from-pink-600 hover:to-rose-600"
+    },
+    { 
+      icon: Twitter, 
+      href: "https://twitter.com/AlashoreL", 
+      name: "Twitter",
+      color: "from-sky-400 to-blue-500",
+      hoverColor: "hover:from-sky-500 hover:to-blue-600"
+    },
+    { 
+      icon: Linkedin, 
+      href: "https://www.linkedin.com/company/alashore-marine-private-limited/", 
+      name: "LinkedIn",
+      color: "from-blue-600 to-indigo-600",
+      hoverColor: "hover:from-blue-700 hover:to-indigo-700"
+    },
+  ];
+
+  const inquiryTopics = [
+    { value: "general", label: "General Inquiry", icon: MessageSquare },
+    { value: "product", label: "Product Information", icon: ShoppingCart },
+    { value: "export", label: "Export Requirements", icon: Globe },
+    { value: "logistics", label: "Logistics & Shipping", icon: Truck },
+    { value: "partnership", label: "Partnership Opportunities", icon: Target },
+    { value: "support", label: "Customer Support", icon: HelpCircle },
+    { value: "documentation", label: "Documentation", icon: FileText },
+    { value: "other", label: "Other", icon: User },
   ];
 
   return (
@@ -221,24 +277,51 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-light-marine to-white p-8 rounded-xl shadow-lg text-center"
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -10,
+                    rotateX: 5,
+                    rotateY: 5
+                  }}
+                  className={`${info.bgColor} p-8 rounded-xl shadow-lg hover:shadow-2xl text-center transition-all duration-300 border border-white/50 backdrop-blur-sm`}
                 >
-                  <div className="w-16 h-16 bg-ocean-blue rounded-full flex items-center justify-center mx-auto mb-6">
-                    <info.icon className="text-white" size={24} />
-                  </div>
-                  <h3 className="text-xl font-heading font-semibold text-gray-900 mb-4">
+                  <motion.div 
+                    className={`w-20 h-20 bg-gradient-to-r ${info.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: 360,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                    }}
+                    transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
+                  >
+                    <motion.div
+                      animate={{ 
+                        y: [0, -5, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: index * 0.3
+                      }}
+                    >
+                      <info.icon className="text-white drop-shadow-md" size={28} />
+                    </motion.div>
+                  </motion.div>
+                  <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">
                     {info.title}
                   </h3>
                   {info.href ? (
-                    <a
+                    <motion.a
                       href={info.href}
-                      className="text-gray-600 hover:text-ocean-blue transition-colors whitespace-pre-line"
+                      whileHover={{ scale: 1.02 }}
+                      className={`text-gray-700 hover:bg-gradient-to-r hover:${info.color} hover:bg-clip-text hover:text-transparent font-medium transition-all duration-300 whitespace-pre-line`}
                       data-testid={`link-contact-${info.title.toLowerCase().replace(" ", "-")}`}
                     >
                       {info.content}
-                    </a>
+                    </motion.a>
                   ) : (
-                    <p className="text-gray-600 whitespace-pre-line">{info.content}</p>
+                    <p className="text-gray-700 font-medium whitespace-pre-line">{info.content}</p>
                   )}
                 </motion.div>
               ))}
@@ -357,6 +440,34 @@ export default function Contact() {
 
                     <FormField
                       control={form.control}
+                      name="topic"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Inquiry Topic</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger data-testid="select-topic">
+                                <SelectValue placeholder="Select inquiry topic" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {inquiryTopics.map((topic) => (
+                                <SelectItem key={topic.value} value={topic.value}>
+                                  <div className="flex items-center gap-2">
+                                    <topic.icon size={16} />
+                                    {topic.label}
+                                  </div>
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="message"
                       render={({ field }) => (
                         <FormItem>
@@ -400,57 +511,188 @@ export default function Contact() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <div className="bg-white p-8 rounded-xl shadow-lg mb-8">
-                  <h3 className="text-2xl font-heading font-semibent text-gray-900 mb-6">
+                <div className="bg-white p-8 rounded-xl shadow-lg mb-8 border border-gray-100">
+                  <motion.h3 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="text-2xl font-heading font-semibold text-gray-900 mb-6 flex items-center gap-3"
+                  >
+                    <motion.div
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 10, -10, 0]
+                      }}
+                      transition={{ 
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center"
+                    >
+                      <MapPin size={18} className="text-white" />
+                    </motion.div>
                     Find Our Location
-                  </h3>
-                  <div className="w-full h-64 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
-                    <div className="text-center text-gray-500">
-                      <MapPin size={48} className="mx-auto mb-2" />
-                      <p>Interactive Map</p>
-                      <p className="text-sm">Somnathpur Industrial Estate</p>
-                      <p className="text-sm">Balasore, Odisha, India</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 text-sm">
-                    Located in the heart of Odisha's industrial area, our facility is easily accessible 
-                    and strategically positioned for efficient distribution across India and international markets.
-                  </p>
+                  </motion.h3>
+                  
+                  {/* Google Maps Embed */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                    className="w-full h-80 rounded-xl overflow-hidden shadow-lg mb-6 border border-gray-200"
+                  >
+                    <iframe
+                      src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.8!2d86.8554968171595!3d21.4971830167957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDI5JzUwLjEiTiA4NsKwNTEnMTkuOCJF!5e0!3m2!1sen!2sin!4v1642000000000!5m2!1sen!2sin`}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Alashore Marine Location"
+                    ></iframe>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-100"
+                  >
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      📍 <strong>Strategic Location:</strong> Located in the heart of Odisha's industrial area, our facility is easily accessible 
+                      and strategically positioned for efficient distribution across India and international markets.
+                    </p>
+                  </motion.div>
                 </div>
 
-                {/* Social Media */}
-                <div className="bg-white p-8 rounded-xl shadow-lg">
-                  <h3 className="text-2xl font-heading font-semibold text-gray-900 mb-6">
+                {/* Enhanced Social Media Section */}
+                <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+                  <motion.h3 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="text-2xl font-heading font-semibold text-gray-900 mb-6 flex items-center gap-3"
+                  >
+                    <motion.div
+                      animate={{ 
+                        rotate: [0, 360],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ 
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center"
+                    >
+                      <Globe size={18} className="text-white" />
+                    </motion.div>
                     Follow Us
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    Stay updated with our latest news, product announcements, and industry insights.
-                  </p>
-                  <div className="flex space-x-4">
-                    {socialLinks.map((social) => (
+                  </motion.h3>
+                  
+                  <motion.p 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-gray-600 mb-8 leading-relaxed"
+                  >
+                    🚀 Stay updated with our latest news, product announcements, and industry insights. Join our community!
+                  </motion.p>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {socialLinks.map((social, index) => (
                       <motion.a
                         key={social.name}
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1 }}
+                        initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          y: -8,
+                          rotateY: 10,
+                          boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                        }}
                         whileTap={{ scale: 0.95 }}
-                        className="w-12 h-12 bg-ocean-blue rounded-lg flex items-center justify-center text-white hover:bg-deep-navy transition-colors"
+                        className={`group relative bg-gradient-to-r ${social.color} ${social.hoverColor} p-4 rounded-xl flex flex-col items-center justify-center text-white transition-all duration-300 shadow-lg`}
                         data-testid={`link-social-${social.name.toLowerCase()}`}
                       >
-                        <social.icon size={20} />
+                        <motion.div
+                          animate={{ 
+                            rotate: [0, 5, -5, 0],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{ 
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: index * 0.5
+                          }}
+                          className="mb-3"
+                        >
+                          <social.icon size={24} className="drop-shadow-sm" />
+                        </motion.div>
+                        
+                        <span className="text-sm font-semibold opacity-90 group-hover:opacity-100 transition-opacity">
+                          {social.name}
+                        </span>
+                        
+                        {/* Animated Background Effect */}
+                        <motion.div
+                          className="absolute inset-0 bg-white/10 rounded-xl"
+                          initial={{ scale: 0, opacity: 0 }}
+                          whileHover={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
                       </motion.a>
                     ))}
                   </div>
+                  
+                  {/* Social Stats */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="mt-8 grid grid-cols-3 gap-4 text-center"
+                  >
+                    <div className="bg-white/50 rounded-lg p-3 border border-gray-200">
+                      <div className="font-bold text-lg text-blue-600">5K+</div>
+                      <div className="text-xs text-gray-600">Followers</div>
+                    </div>
+                    <div className="bg-white/50 rounded-lg p-3 border border-gray-200">
+                      <div className="font-bold text-lg text-green-600">200+</div>
+                      <div className="text-xs text-gray-600">Posts</div>
+                    </div>
+                    <div className="bg-white/50 rounded-lg p-3 border border-gray-200">
+                      <div className="font-bold text-lg text-purple-600">15+</div>
+                      <div className="text-xs text-gray-600">Countries</div>
+                    </div>
+                  </motion.div>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="py-20 bg-gradient-to-br from-light-marine to-white">
-          <div className="container mx-auto px-4">
+        {/* Enhanced FAQ Section */}
+        <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+          {/* Background Elements */}
+          <motion.div
+            animate={{ 
+              x: [0, 100, 0],
+              y: [0, -50, 0],
+              rotate: [0, 180, 360]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-xl"
+          />
+          
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -458,79 +700,226 @@ export default function Contact() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-flex items-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-md px-6 py-3 rounded-full border border-blue-200/50 mb-8"
+              >
+                <HelpCircle className="text-blue-600 mr-2" size={20} />
+                <span className="text-blue-800 font-medium">FAQ</span>
+              </motion.div>
+              
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-4xl md:text-6xl font-heading font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6"
+              >
                 Frequently Asked Questions
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Quick answers to common questions about our products and services.
-              </p>
+              </motion.h2>
+              
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-xl text-gray-600 max-w-3xl mx-auto"
+              >
+                Got questions? We've got answers! Find quick solutions to the most common inquiries about our premium seafood products and services.
+              </motion.p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="bg-white p-6 rounded-xl shadow-lg"
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  What are your minimum order quantities?
-                </h3>
-                <p className="text-gray-600">
-                  Our minimum order quantity varies by product but typically starts at 1 metric ton. 
-                  Contact our sales team for specific product MOQs.
-                </p>
-              </motion.div>
+            {/* Interactive FAQ Accordion */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto"
+            >
+              <Accordion type="single" collapsible className="space-y-4">
+                <AccordionItem value="item-1" className="bg-white/70 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg"
+                      >
+                        <ShoppingCart size={18} className="text-white" />
+                      </motion.div>
+                      <span className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        What are your minimum order quantities?
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="pl-14 space-y-2">
+                      <p className="text-gray-600 leading-relaxed">
+                        Our minimum order quantity varies by product but typically starts at <strong>1 metric ton</strong>. 
+                        This ensures cost-effective shipping and maintains our quality standards.
+                      </p>
+                      <p className="text-sm text-blue-600 font-medium">
+                        💡 Tip: Contact our sales team for specific product MOQs and volume discounts.
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white p-6 rounded-xl shadow-lg"
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Do you provide samples?
-                </h3>
-                <p className="text-gray-600">
-                  Yes, we provide samples for quality verification. Sample costs and shipping 
-                  charges apply, which can be adjusted against your first order.
-                </p>
-              </motion.div>
+                <AccordionItem value="item-2" className="bg-white/70 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg"
+                      >
+                        <Target size={18} className="text-white" />
+                      </motion.div>
+                      <span className="text-lg font-semibold text-gray-900 group-hover:text-green-600 transition-colors">
+                        Do you provide samples?
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="pl-14 space-y-2">
+                      <p className="text-gray-600 leading-relaxed">
+                        <strong>Yes!</strong> We provide samples for quality verification. Sample costs and shipping 
+                        charges apply, which can be adjusted against your first order.
+                      </p>
+                      <p className="text-sm text-green-600 font-medium">
+                        ✅ Quality guaranteed: All samples undergo the same rigorous testing as our export products.
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white p-6 rounded-xl shadow-lg"
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  What certifications do you have?
-                </h3>
-                <p className="text-gray-600">
-                  We hold HACCP, BRC, EU approval, and other international certifications. 
-                  Our EIA-approved laboratory ensures consistent quality standards.
-                </p>
-              </motion.div>
+                <AccordionItem value="item-3" className="bg-white/70 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="w-10 h-10 bg-gradient-to-r from-purple-500 to-violet-500 rounded-full flex items-center justify-center shadow-lg"
+                      >
+                        <FileText size={18} className="text-white" />
+                      </motion.div>
+                      <span className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                        What certifications do you have?
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="pl-14 space-y-2">
+                      <p className="text-gray-600 leading-relaxed">
+                        We hold <strong>HACCP, BRC, EU approval</strong>, and other international certifications. 
+                        Our EIA-approved laboratory ensures consistent quality standards.
+                      </p>
+                      <p className="text-sm text-purple-600 font-medium">
+                        🏆 Certified excellence: Meeting global food safety and quality requirements.
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
 
+                <AccordionItem value="item-4" className="bg-white/70 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg"
+                      >
+                        <Truck size={18} className="text-white" />
+                      </motion.div>
+                      <span className="text-lg font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
+                        What are your delivery timelines?
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="pl-14 space-y-2">
+                      <p className="text-gray-600 leading-relaxed">
+                        Delivery timelines depend on order quantity and destination. Typically, 
+                        we can fulfill orders within <strong>2-4 weeks</strong> from confirmation.
+                      </p>
+                      <p className="text-sm text-orange-600 font-medium">
+                        🚚 Fast & Reliable: Express shipping options available for urgent orders.
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-5" className="bg-white/70 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="w-10 h-10 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg"
+                      >
+                        <Globe size={18} className="text-white" />
+                      </motion.div>
+                      <span className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                        Which countries do you export to?
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="pl-14 space-y-2">
+                      <p className="text-gray-600 leading-relaxed">
+                        We export to <strong>15+ countries</strong> across Asia, Europe, and the Americas. 
+                        Our strategic location in Odisha enables efficient global distribution.
+                      </p>
+                      <p className="text-sm text-indigo-600 font-medium">
+                        🌍 Global Reach: Serving customers worldwide with premium seafood quality.
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+              
+              {/* Help Section */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
                 viewport={{ once: true }}
-                className="bg-white p-6 rounded-xl shadow-lg"
+                className="mt-12 text-center"
               >
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  What are your delivery timelines?
-                </h3>
-                <p className="text-gray-600">
-                  Delivery timelines depend on order quantity and destination. Typically, 
-                  we can fulfill orders within 2-4 weeks from confirmation.
-                </p>
+                <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-2xl p-8 border border-blue-200/50">
+                  <motion.div
+                    animate={{ 
+                      y: [0, -5, 0],
+                      scale: [1, 1.05, 1]
+                    }}
+                    transition={{ 
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
+                  >
+                    <HelpCircle size={28} className="text-white" />
+                  </motion.div>
+                  
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Still have questions?
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Our team is here to help! Get in touch for personalized assistance.
+                  </p>
+                  
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <a
+                      href="mailto:alashoremarine@gmail.com"
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      <Mail size={18} />
+                      Contact Support
+                    </a>
+                  </motion.div>
+                </div>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
