@@ -188,14 +188,32 @@ export default function Header() {
           {/* Logo */}
           <Link href="/">
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              whileHover={{ scale: 1.1, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
               className="flex items-center space-x-2 cursor-pointer"
               data-testid="link-logo"
             >
-              <img 
+              <motion.img 
                 src={logoImage} 
                 alt="Alashore Marine Exports" 
-                className="h-12 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_20px_rgba(255,107,107,0.6)] transition-all duration-300"
+                className={`h-14 w-auto object-contain transition-all duration-500 ${
+                  isScrolled 
+                    ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:drop-shadow-[0_4px_20px_rgba(59,130,246,0.4)]' 
+                    : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.9)] hover:drop-shadow-[0_0_25px_rgba(255,107,107,0.8)]'
+                }`}
+                animate={{
+                  filter: isScrolled 
+                    ? ["brightness(1.1) contrast(1.25)", "brightness(1.15) contrast(1.3)", "brightness(1.1) contrast(1.25)"]
+                    : ["brightness(1.25) contrast(1.5) saturate(1.1)", "brightness(1.3) contrast(1.55) saturate(1.15)", "brightness(1.25) contrast(1.5) saturate(1.1)"]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
               />
             </motion.div>
           </Link>
