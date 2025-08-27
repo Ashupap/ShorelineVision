@@ -63,10 +63,10 @@ export const PerformanceImage = memo(function PerformanceImage({
 
   return (
     <div ref={imgRef} className={`relative overflow-hidden ${className}`} style={style}>
-      {/* Seamless loading background */}
+      {/* Invisible seamless loading background */}
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-800/20 via-slate-700/30 to-slate-900/20 animate-pulse">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-transparent via-slate-600/5 to-transparent animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/5 to-transparent animate-shimmer" />
         </div>
       )}
       

@@ -3,9 +3,9 @@ import { ChevronDown, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef, memo, useMemo } from "react";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
-import shrimpImage from "@assets/generated_images/Premium_vannamei_shrimp_7309c33c.png";
-import pomfretImage from "@assets/generated_images/Fresh_pomfret_fish_2d9ae908.png";
-import sheerFishImage from "@assets/generated_images/Fresh_sheer_fish_527da6a7.png";
+import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
+import pomfretImage from "@assets/Pomfret_1755943114147.png";
+import sheerFishImage from "@assets/Sheer Fish_1755943118147.png";
 
 const Hero = memo(function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,15 +24,15 @@ const Hero = memo(function Hero() {
   const [currentImage, setCurrentImage] = useState(0);
   const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
 
-  // Optimized seafood images with transparent backgrounds for faster loading
+  // Seafood images in the exact order specified
   const seafoodImages = [
     {
       src: shrimpImage,
-      alt: "Premium Vannamei Shrimp - Fresh export quality",
+      alt: "Premium Vannamei Shrimp",
       title: "Vannamei Shrimp",
     },
-    { src: pomfretImage, alt: "Fresh Pomfret Fish - Premium quality", title: "Pomfret Fish" },
-    { src: sheerFishImage, alt: "Premium Sheer Fish - Export grade", title: "Sheer Fish" },
+    { src: pomfretImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
+    { src: sheerFishImage, alt: "Premium Sheer Fish", title: "Sheer Fish" },
   ];
 
   useEffect(() => {
@@ -416,6 +416,7 @@ const Hero = memo(function Hero() {
                     }`}
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 512px"
                     priority={true}
+                    placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYzJhM2E7c3RvcC1vcGFjaXR5OjAuMSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxNDRlNGE7c3RvcC1vcGFjaXR5OjAuMSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNncmFkKSIvPjwvc3ZnPg=="
                     style={{
                       imageRendering: 'crisp-edges',
                       transform: 'translateZ(0)',
