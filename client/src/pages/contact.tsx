@@ -175,45 +175,28 @@ export default function Contact() {
       <main>
         {/* Enhanced Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ 
-              backgroundImage: `url(${contactBg})`,
-              filter: 'brightness(0.3) contrast(1.1)'
-            }}
-          />
+          {/* Optimized Background Image with Lazy Loading */}
+          <div className="absolute inset-0">
+            <img 
+              src={contactBg}
+              alt="Professional office background"
+              className="w-full h-full object-cover"
+              style={{ 
+                filter: 'brightness(0.3) contrast(1.1)',
+                willChange: 'transform'
+              }}
+              loading="eager"
+              decoding="async"
+            />
+          </div>
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/80 via-deep-navy/70 to-marine-teal/85" />
           <motion.div 
             style={{ y, opacity: parallaxOpacity }}
             className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"
           />
-          <motion.div
-            animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.4, 1]
-            }}
-            transition={{ 
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute top-10 right-10 w-56 h-56 bg-white/10 rounded-full backdrop-blur-sm"
-          />
-          <motion.div
-            animate={{ 
-              y: [0, -50, 0],
-              x: [0, 40, 0]
-            }}
-            transition={{ 
-              duration: 18,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 8
-            }}
-            className="absolute bottom-20 left-10 w-40 h-40 bg-coral-accent/20 rounded-full backdrop-blur-sm"
-          />
+          <div className="absolute top-10 right-10 w-56 h-56 bg-white/10 rounded-full backdrop-blur-sm" />
+          <div className="absolute bottom-20 left-10 w-40 h-40 bg-coral-accent/20 rounded-full backdrop-blur-sm" />
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 60 }}
@@ -288,25 +271,12 @@ export default function Contact() {
                   <motion.div 
                     className={`w-20 h-20 bg-gradient-to-r ${info.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}
                     whileHover={{ 
-                      scale: 1.1,
-                      rotate: 360,
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      scale: 1.05,
+                      boxShadow: "0 10px 20px rgba(0,0,0,0.15)"
                     }}
-                    transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <motion.div
-                      animate={{ 
-                        y: [0, -5, 0],
-                        scale: [1, 1.1, 1]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: index * 0.3
-                      }}
-                    >
-                      <info.icon className="text-white drop-shadow-md" size={28} />
-                    </motion.div>
+                    <info.icon className="text-white drop-shadow-md" size={28} />
                   </motion.div>
                   <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">
                     {info.title}
@@ -444,7 +414,7 @@ export default function Contact() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Inquiry Topic</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
                             <FormControl>
                               <SelectTrigger data-testid="select-topic">
                                 <SelectValue placeholder="Select inquiry topic" />
@@ -517,40 +487,39 @@ export default function Contact() {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="text-2xl font-heading font-semibold text-gray-900 mb-6 flex items-center gap-3"
                   >
-                    <motion.div
-                      animate={{ 
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 10, -10, 0]
-                      }}
-                      transition={{ 
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center"
-                    >
+                    <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
                       <MapPin size={18} className="text-white" />
-                    </motion.div>
+                    </div>
                     Find Our Location
                   </motion.h3>
                   
-                  {/* Google Maps Embed */}
+                  {/* Optimized Google Maps Embed */}
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6 }}
                     className="w-full h-80 rounded-xl overflow-hidden shadow-lg mb-6 border border-gray-200"
                   >
-                    <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d909.6626902940994!2d86.85474825389214!3d21.496863989902337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1c5ef91ba45023%3A0x6284f459d78b4645!2sAlashore%20Marine%20Exports%20Pvt.%20Limited.!5e1!3m2!1sen!2sin!4v1756293306299!5m2!1sen!2sin" 
-                      width="100%" 
-                      height="100%" 
-                      style={{ border: 0 }} 
-                      allowFullScreen 
-                      loading="lazy" 
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Alashore Marine Exports Pvt. Limited Location"
-                    ></iframe>
+                    <div className="relative w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
+                      <div className="text-center text-gray-500 mb-4">
+                        <MapPin size={48} className="mx-auto mb-2 text-blue-500" />
+                        <p className="font-medium">Loading Map...</p>
+                      </div>
+                      <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d909.6626902940994!2d86.85474825389214!3d21.496863989902337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1c5ef91ba45023%3A0x6284f459d78b4645!2sAlashore%20Marine%20Exports%20Pvt.%20Limited.!5e1!3m2!1sen!2sin!4v1756293306299!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="100%" 
+                        style={{ border: 0, position: 'absolute', top: 0, left: 0 }} 
+                        allowFullScreen 
+                        loading="lazy" 
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Alashore Marine Exports Pvt. Limited Location"
+                        onLoad={() => {
+                          const placeholder = document.querySelector('.text-center.text-gray-500');
+                          if (placeholder) placeholder.style.display = 'none';
+                        }}
+                      ></iframe>
+                    </div>
                   </motion.div>
                   
                   <motion.div
@@ -573,20 +542,9 @@ export default function Contact() {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="text-2xl font-heading font-semibold text-gray-900 mb-6 flex items-center gap-3"
                   >
-                    <motion.div
-                      animate={{ 
-                        rotate: [0, 360],
-                        scale: [1, 1.1, 1]
-                      }}
-                      transition={{ 
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center"
-                    >
+                    <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                       <Globe size={18} className="text-white" />
-                    </motion.div>
+                    </div>
                     Follow Us
                   </motion.h3>
                   
@@ -678,19 +636,7 @@ export default function Contact() {
         {/* Enhanced FAQ Section */}
         <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
           {/* Background Elements */}
-          <motion.div
-            animate={{ 
-              x: [0, 100, 0],
-              y: [0, -50, 0],
-              rotate: [0, 180, 360]
-            }}
-            transition={{ 
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-xl"
-          />
+          <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-xl opacity-50" />
           
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
@@ -883,20 +829,9 @@ export default function Contact() {
                 className="mt-12 text-center"
               >
                 <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-2xl p-8 border border-blue-200/50">
-                  <motion.div
-                    animate={{ 
-                      y: [0, -5, 0],
-                      scale: [1, 1.05, 1]
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
-                  >
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <HelpCircle size={28} className="text-white" />
-                  </motion.div>
+                  </div>
                   
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     Still have questions?
