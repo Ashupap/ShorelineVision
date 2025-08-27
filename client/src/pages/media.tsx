@@ -4,7 +4,7 @@ import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspape
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { gsap } from "gsap";
 
 export default function Media() {
@@ -305,7 +305,7 @@ export default function Media() {
         {/* Recognition Section */}
         <motion.section 
           style={{ y: useTransform(scrollYProgress, [0.1, 0.3], [50, 0]) }}
-          className="py-24 bg-gradient-to-br from-white via-light-marine/10 to-white relative overflow-hidden"
+          className="py-16 md:py-20 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden"
         >
           <motion.div
             animate={{ 
@@ -334,8 +334,8 @@ export default function Media() {
                 viewport={{ once: true }}
                 className="inline-flex items-center bg-white/70 backdrop-blur-md px-6 py-3 rounded-full border border-gray-200/50 mb-8"
               >
-                <Award className="text-coral-accent mr-2" size={20} />
-                <span className="text-gray-700 font-medium">Our Recognition</span>
+                <Award className="text-blue-400 mr-2" size={20} />
+                <span className="text-blue-100 font-medium">Our Recognition</span>
               </motion.div>
               <motion.h2
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -344,14 +344,14 @@ export default function Media() {
                 viewport={{ once: true }}
                 className="text-4xl md:text-6xl font-heading font-bold text-gray-900 mb-6"
               >
-                Awards & <span className="text-coral-accent">Achievements</span>
+                Awards & <span className="text-blue-400">Achievements</span>
               </motion.h2>
               <motion.div
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
                 viewport={{ once: true }}
-                className="w-24 h-1 bg-gradient-to-r from-coral-accent to-golden-orange mx-auto rounded-full"
+                className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full mt-4"
               />
             </motion.div>
             
@@ -361,7 +361,7 @@ export default function Media() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="relative max-w-6xl mx-auto h-[600px] overflow-hidden"
+              className="relative max-w-6xl mx-auto h-[500px] md:h-[600px] overflow-hidden"
             >
               {/* Slider Container with 3D Perspective */}
               <div 
@@ -373,14 +373,14 @@ export default function Media() {
                 }}
               >
                 {/* Glass Morphism Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-3xl border border-white/20" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 via-transparent to-blue-900/10 backdrop-blur-xl rounded-3xl border border-white/10" />
                 
                 {/* Awards Slides */}
                 {recognitionAwards.map((award, index) => (
                   <div
                     key={index}
                     ref={(el) => (slideRefs.current[index] = el)}
-                    className="absolute top-1/2 left-1/2 w-80 h-96 transform -translate-x-1/2 -translate-y-1/2"
+                    className="absolute top-1/2 left-1/2 w-72 h-80 md:w-80 md:h-96 transform -translate-x-1/2 -translate-y-1/2"
                     style={{ 
                       transformStyle: "preserve-3d",
                       zIndex: index === currentSlide ? 10 : 5 - Math.abs(index - currentSlide)
@@ -397,16 +397,17 @@ export default function Media() {
                           className="group relative w-full h-full cursor-pointer"
                         >
                           {/* Floating Card with Glass Effect */}
-                          <div className="relative w-full h-full bg-white/80 backdrop-blur-lg rounded-2xl border border-white/30 shadow-2xl overflow-hidden">
+                          <div className="relative w-full h-full bg-gradient-to-br from-slate-800/40 via-gray-800/30 to-slate-900/40 backdrop-blur-lg rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-coral-accent/5 via-transparent to-marine-teal/5" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10" />
                             
                             {/* Certificate Image */}
-                            <div className="relative p-6 h-full flex items-center justify-center">
+                            <div className="relative p-2 h-full flex items-center justify-center">
                               <img
                                 src={award.image}
                                 alt="Award Certificate"
-                                className="w-full h-auto max-h-full object-contain rounded-lg shadow-lg"
+                                className="w-full h-auto max-h-full object-contain rounded-lg"
+                                style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' }}
                                 data-testid={`award-image-${index}`}
                               />
                             </div>
@@ -422,9 +423,9 @@ export default function Media() {
                                 initial={{ scale: 0, rotate: 0 }}
                                 whileHover={{ scale: 1, rotate: 360 }}
                                 transition={{ duration: 0.5, ease: "backOut" }}
-                                className="bg-white/90 backdrop-blur-md p-4 rounded-full shadow-xl"
+                                className="bg-blue-500/20 backdrop-blur-md p-4 rounded-full shadow-xl border border-blue-400/30"
                               >
-                                <ImageIcon size={28} className="text-coral-accent" />
+                                <ImageIcon size={28} className="text-blue-400" />
                               </motion.div>
                             </motion.div>
 
@@ -439,7 +440,7 @@ export default function Media() {
                                 repeat: Infinity,
                                 ease: "easeInOut"
                               }}
-                              className="absolute top-4 right-4 w-3 h-3 bg-coral-accent/60 rounded-full blur-sm"
+                              className="absolute top-4 right-4 w-3 h-3 bg-blue-400/60 rounded-full blur-sm"
                             />
                             <motion.div
                               animate={{ 
@@ -452,7 +453,7 @@ export default function Media() {
                                 ease: "easeInOut",
                                 delay: 1
                               }}
-                              className="absolute bottom-6 left-6 w-2 h-2 bg-marine-teal/40 rounded-full blur-sm"
+                              className="absolute bottom-6 left-6 w-2 h-2 bg-purple-400/40 rounded-full blur-sm"
                             />
                           </div>
 
@@ -461,7 +462,8 @@ export default function Media() {
                         </motion.div>
                       </DialogTrigger>
                       <DialogContent className="max-w-4xl w-full h-auto max-h-[90vh] p-0 bg-transparent border-none">
-                        <div className="relative bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20">
+                        <DialogTitle className="sr-only">Award Certificate - Enlarged View</DialogTitle>
+                        <div className="relative bg-slate-900/95 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20">
                           <img
                             src={award.image}
                             alt="Award Certificate - Enlarged View"
@@ -479,7 +481,7 @@ export default function Media() {
                   onClick={prevSlide}
                   whileHover={{ scale: 1.1, x: -5 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full p-3 text-gray-700 hover:bg-white/30 transition-all duration-300"
+                  className="absolute left-4 md:left-8 top-1/2 transform -translate-y-1/2 z-20 bg-slate-800/40 backdrop-blur-md border border-white/20 rounded-full p-3 text-white hover:bg-slate-700/50 transition-all duration-300"
                   data-testid="prev-slide-button"
                 >
                   <ChevronLeft size={24} />
@@ -489,7 +491,7 @@ export default function Media() {
                   onClick={nextSlide}
                   whileHover={{ scale: 1.1, x: 5 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full p-3 text-gray-700 hover:bg-white/30 transition-all duration-300"
+                  className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-20 bg-slate-800/40 backdrop-blur-md border border-white/20 rounded-full p-3 text-white hover:bg-slate-700/50 transition-all duration-300"
                   data-testid="next-slide-button"
                 >
                   <ChevronRight size={24} />
@@ -505,7 +507,7 @@ export default function Media() {
                       whileTap={{ scale: 0.8 }}
                       className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
                         index === currentSlide
-                          ? "bg-coral-accent border-coral-accent shadow-lg shadow-coral-accent/30"
+                          ? "bg-blue-400 border-blue-400 shadow-lg shadow-blue-400/30"
                           : "bg-white/40 border-white/60 hover:bg-white/60"
                       }`}
                       data-testid={`slide-indicator-${index}`}
