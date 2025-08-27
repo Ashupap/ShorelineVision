@@ -293,74 +293,51 @@ export default function Media() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="max-w-7xl mx-auto"
+              className="max-w-6xl mx-auto"
             >
               <Carousel
                 opts={{
-                  align: "start",
+                  align: "center",
                   loop: true,
                 }}
                 plugins={[
                   Autoplay({
-                    delay: 4000,
+                    delay: 3500,
                     stopOnInteraction: false,
                     stopOnMouseEnter: true,
                   }),
                 ]}
                 className="w-full"
               >
-                <CarouselContent className="-ml-4">
+                <CarouselContent className="-ml-6">
                   {recognitionAwards.map((award, index) => (
-                    <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
                       <motion.div
-                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                         viewport={{ once: true }}
                         whileHover={{ 
-                          y: -15, 
-                          scale: 1.02,
-                          boxShadow: "0 25px 60px rgba(0, 0, 0, 0.15)"
+                          scale: 1.05,
+                          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
                         }}
-                        className="group bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-500 hover:shadow-2xl border border-gray-100/50 backdrop-blur-md h-full"
+                        className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:shadow-xl"
                       >
-                        <div className="relative overflow-hidden">
+                        <div className="aspect-[4/3] relative overflow-hidden">
                           <motion.img
                             whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.4 }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
                             src={award.image}
-                            alt={award.title}
-                            className="w-full h-64 object-cover"
+                            alt="Award Certificate"
+                            className="w-full h-full object-cover"
                             data-testid={`award-image-${index}`}
                           />
                           <motion.div 
                             initial={{ opacity: 0 }}
                             whileHover={{ opacity: 1 }}
                             transition={{ duration: 0.3 }}
-                            className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end justify-start p-6"
-                          >
-                            <span className="bg-coral-accent text-white px-4 py-2 rounded-full text-sm font-bold">
-                              {award.year}
-                            </span>
-                          </motion.div>
-                        </div>
-                        <div className="p-8">
-                          <motion.h3 
-                            className="text-xl font-heading font-bold text-gray-900 mb-4 group-hover:text-coral-accent transition-colors duration-300"
-                            data-testid={`award-title-${index}`}
-                          >
-                            {award.title}
-                          </motion.h3>
-                          <p className="text-gray-600 leading-relaxed mb-4" data-testid={`award-description-${index}`}>
-                            {award.description}
-                          </p>
-                          <motion.div 
-                            whileHover={{ x: 5 }}
-                            className="flex items-center text-coral-accent font-semibold"
-                          >
-                            <Trophy size={16} className="mr-2" />
-                            <span className="text-sm">Excellence Award</span>
-                          </motion.div>
+                            className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
+                          />
                         </div>
                       </motion.div>
                     </CarouselItem>
