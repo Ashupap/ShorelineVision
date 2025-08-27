@@ -23,20 +23,38 @@ export default function Media() {
     {
       title: "Excellence in Seafood Export",
       description: "Recognized for outstanding quality and sustainable practices in the seafood export industry",
-      image: "https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      year: "2023"
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
+      year: "2024"
     },
     {
       title: "Industry Leadership Award", 
       description: "Acknowledged for leading innovation in marine product processing and export",
-      image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      year: "2022"
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-26.png",
+      year: "2024"
     },
     {
       title: "Quality Certification",
       description: "Certified for maintaining highest quality standards in seafood processing",
-      image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      year: "2023"
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/3.jpg",
+      year: "2024"
+    },
+    {
+      title: "Professional Excellence Award",
+      description: "Recognition for maintaining professional standards and business excellence in seafood industry",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/2.jpg",
+      year: "2024"
+    },
+    {
+      title: "Outstanding Performance Recognition",
+      description: "Awarded for exceptional performance and contribution to the marine export sector",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/1.jpg",
+      year: "2024"
+    },
+    {
+      title: "Business Excellence Certificate",
+      description: "Certified for excellence in business operations and sustainable practices",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/4.jpg",
+      year: "2024"
     }
   ];
 
@@ -59,34 +77,39 @@ export default function Media() {
 
   const galleryImages = [
     {
-      src: "https://images.unsplash.com/photo-1565615833231-e8c91a38a012?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
+      alt: "Company recognition and awards",
+      category: "Recognition"
+    },
+    {
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-26.png", 
+      alt: "Excellence in seafood industry",
+      category: "Recognition"
+    },
+    {
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.03.31-PM.jpg",
       alt: "Modern seafood processing facility",
       category: "Facility"
     },
     {
-      src: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400", 
-      alt: "Quality control and packaging",
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.06.23-PM-1.jpg",
+      alt: "Quality control and packaging operations",
       category: "Processing"
     },
     {
-      src: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      alt: "Fresh seafood products",
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.24-PM.jpg",
+      alt: "Fresh seafood products and quality standards",
       category: "Products"
     },
     {
-      src: "https://images.unsplash.com/photo-1563379091-20937a7886d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      alt: "Export operations",
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.23-PM.jpg",
+      alt: "Export operations and logistics",
       category: "Operations"
     },
     {
-      src: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      alt: "Team collaboration",
+      src: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.24-PM-1.jpg",
+      alt: "Team collaboration and workplace culture",
       category: "Team"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1585032226651-4e875fb40b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      alt: "Sustainable practices",
-      category: "Sustainability"
     }
   ];
 
@@ -94,30 +117,30 @@ export default function Media() {
     {
       title: "Enhancing Road Safety in Balasore",
       description: "We've reinforced Balasore's road safety by contributing 4 CCTV cameras in collaboration with Balasore SP Sagarika Nath. These cameras aim to improve traffic monitoring and ensure safer roads for the community.",
-      image: "https://images.unsplash.com/photo-1493134799591-2c9eed26201a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.06.23-PM-1.jpg",
       impact: "4 CCTV Cameras Installed"
     },
     {
       title: "Promoting Mobility and Inclusivity for the Handicapped in Balasore", 
       description: "In collaboration with Balasore Collector, we've donated 2 e-tricycles to empower handicapped individuals in Balasore. This initiative reflects our dedication to inclusive community development.",
-      image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.24-PM-1.jpg",
       impact: "2 E-Tricycles Donated"
     },
     {
       title: "Supporting Community Development",
       description: "Contributed towards the growth of RSS, Balasore, supporting various community development initiatives.",
-      image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/Untitled-design-17.png",
       impact: "Community Growth"
     },
     {
       title: "Advancing Education",
       description: "Contributed 20 lakhs towards rural school development initiatives, enhancing educational opportunities for underprivileged communities.",
-      image: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+      image: "https://alashoremarine.com/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-02-at-6.12.23-PM.jpg",
       impact: "₹20 Lakhs Investment"
     }
   ];
 
-  const categories = ["All", "Facility", "Processing", "Products", "Operations", "Team", "Sustainability"];
+  const categories = ["All", "Recognition", "Facility", "Processing", "Products", "Operations", "Team"];
   const filteredImages = selectedCategory === "All" 
     ? galleryImages 
     : galleryImages.filter(img => img.category === selectedCategory);
