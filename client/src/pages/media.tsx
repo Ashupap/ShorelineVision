@@ -14,6 +14,7 @@ export default function Media() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -702,145 +703,68 @@ export default function Media() {
               className="max-w-7xl mx-auto relative"
             >
               {/* Navigation Arrows */}
-              <motion.button
-                whileHover={{ scale: 1.1, x: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
-              >
-                <ChevronLeft size={24} />
-              </motion.button>
+              {currentGalleryIndex > 0 && (
+                <motion.button
+                  whileHover={{ scale: 1.1, x: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setCurrentGalleryIndex(prev => Math.max(0, prev - 1))}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
+                >
+                  <ChevronLeft size={24} />
+                </motion.button>
+              )}
               
-              <motion.button
-                whileHover={{ scale: 1.1, x: 5 }}
-                whileTap={{ scale: 0.9 }}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
-              >
-                <ChevronRight size={24} />
-              </motion.button>
+              {currentGalleryIndex < Math.max(0, filteredImages.length - 4) && (
+                <motion.button
+                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setCurrentGalleryIndex(prev => Math.min(Math.max(0, filteredImages.length - 4), prev + 1))}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
+                >
+                  <ChevronRight size={24} />
+                </motion.button>
+              )}
 
-              {/* Custom Grid Layout */}
+              {/* Dynamic Grid Layout */}
               <div className="grid grid-cols-12 grid-rows-6 gap-4 h-[800px] md:h-[600px]">
-                {/* Top Row - Small Images */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05, z: 10 }}
-                  onClick={() => setLightboxIndex(0)}
-                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[0]?.src}
-                    alt={filteredImages[0]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-
-                {/* Featured Center Image */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => setLightboxIndex(1)}
-                  className="col-span-6 row-span-4 group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[1]?.src}
-                    alt={filteredImages[1]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setLightboxIndex(2)}
-                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[2]?.src}
-                    alt={filteredImages[2]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-
-                {/* Bottom Row */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setLightboxIndex(3)}
-                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[3]?.src}
-                    alt={filteredImages[3]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setLightboxIndex(4)}
-                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[4]?.src}
-                    alt={filteredImages[4]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setLightboxIndex(5)}
-                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[5]?.src}
-                    alt={filteredImages[5]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.7 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setLightboxIndex(0)}
-                  className="col-span-3 row-span-2 group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                >
-                  <img
-                    src={filteredImages[0]?.src}
-                    alt={filteredImages[0]?.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </motion.div>
+                {filteredImages.slice(currentGalleryIndex, currentGalleryIndex + 4).map((image, index) => {
+                  const actualIndex = currentGalleryIndex + index;
+                  const isCenter = index === 1;
+                  
+                  return (
+                    <motion.div
+                      key={`${image.src}-${actualIndex}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: isCenter ? 1.02 : 1.05 }}
+                      onClick={() => setLightboxIndex(actualIndex)}
+                      className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer ${
+                        isCenter 
+                          ? "col-span-6 row-span-4 col-start-4 row-start-2" 
+                          : index === 0 
+                            ? "col-span-3 row-span-2 col-start-1 row-start-1" 
+                            : index === 2 
+                              ? "col-span-3 row-span-2 col-start-10 row-start-1" 
+                              : "col-span-3 row-span-2 col-start-1 row-start-4"
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Category Badge */}
+                      <div className="absolute top-4 left-4 bg-black/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/30">
+                        <span className="text-white text-xs font-medium">{image.category}</span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
               
               {/* Lightbox */}
