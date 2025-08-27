@@ -138,13 +138,15 @@ export default function Media() {
       title: "बालासोर के सेंट्रल स्कूल चौक प्रोजेक्टर सहयोग के तहत लगा CCTV कैमरा",
       description: "Alashore Marine contributes to road safety by installing CCTV cameras in Balasore",
       videoId: "fqzQSb31Gqw",
+      videoUrl: "https://www.youtube.com/watch?v=fqzQSb31Gqw",
       source: "Tarjuman News Time",
       date: "2024"
     },
     {
       title: "ପ୍ରୋଜେକ୍ଟ ସହଯୋଗ ମାଧ୍ୟମରେ ସେଂଟ୍ରାଲ ସ୍କୁଲ ଛକରେ ଲାଗିଲା ସିସିଟିଭି କ୍ୟାମେରା",
       description: "Community safety initiative through CCTV installation project in Balasore",
-      videoId: "XsLWbTICN1U", 
+      videoId: "XsLWbTICN1U",
+      videoUrl: "https://www.youtube.com/watch?v=XsLWbTICN1U",
       source: "The Ajikali",
       date: "2024"
     }
@@ -332,7 +334,7 @@ export default function Media() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center bg-white/70 backdrop-blur-md px-6 py-3 rounded-full border border-gray-200/50 mb-8"
+                className="inline-flex items-center bg-gradient-to-r from-blue-500/30 to-purple-500/30 backdrop-blur-md px-6 py-3 rounded-full border border-blue-400/50 mb-4 shadow-lg shadow-blue-500/20"
               >
                 <Award className="text-blue-400 mr-2" size={20} />
                 <span className="text-blue-100 font-medium">Our Recognition</span>
@@ -342,7 +344,7 @@ export default function Media() {
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="text-4xl md:text-6xl font-heading font-bold text-gray-900 mb-6"
+                className="text-4xl md:text-6xl font-heading font-bold bg-gradient-to-r from-white via-blue-100 to-gray-300 bg-clip-text text-transparent mb-4"
               >
                 Awards & <span className="text-blue-400">Achievements</span>
               </motion.h2>
@@ -585,22 +587,28 @@ export default function Media() {
                   }}
                   className="bg-white rounded-3xl shadow-xl overflow-hidden group"
                 >
-                  <div className="relative aspect-video bg-gray-900 flex items-center justify-center">
+                  <div className="relative aspect-video bg-gray-900 overflow-hidden">
+                    {/* YouTube Thumbnail */}
+                    <img
+                      src={`https://img.youtube.com/vi/${news.videoId}/maxresdefault.jpg`}
+                      alt={news.title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Play Button Overlay */}
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
-                      className="w-20 h-20 bg-coral-accent rounded-full flex items-center justify-center cursor-pointer group-hover:bg-golden-orange transition-colors duration-300"
+                      className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-300 cursor-pointer"
+                      onClick={() => window.open(news.videoUrl, '_blank')}
                     >
-                      <Play size={32} className="text-white ml-2" />
+                      <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
+                        <Play size={32} className="text-white ml-2" fill="white" />
+                      </div>
                     </motion.div>
-                    <motion.div
-                      className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
+                    {/* Source Badge */}
+                    <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full">
                       <span className="text-white text-sm font-medium">{news.source}</span>
-                    </motion.div>
+                    </div>
                   </div>
                   <div className="p-8">
                     <h3 className="text-xl font-heading font-bold text-gray-900 mb-4 group-hover:text-coral-accent transition-colors duration-300">
@@ -609,13 +617,14 @@ export default function Media() {
                     <p className="text-gray-600 leading-relaxed mb-6">
                       {news.description}
                     </p>
-                    <motion.div 
+                    <motion.button
                       whileHover={{ x: 5 }}
-                      className="flex items-center text-coral-accent font-semibold"
+                      onClick={() => window.open(news.videoUrl, '_blank')}
+                      className="flex items-center text-red-600 font-semibold hover:text-red-700 transition-colors duration-300"
                     >
                       <ExternalLink size={16} className="mr-2" />
-                      <span className="text-sm">Watch Video</span>
-                    </motion.div>
+                      <span className="text-sm">Watch on YouTube</span>
+                    </motion.button>
                   </div>
                 </motion.div>
               ))}
@@ -624,19 +633,12 @@ export default function Media() {
         </section>
 
         {/* Gallery Section */}
-        <section className="py-24 bg-white relative overflow-hidden">
-          <motion.div
-            animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ 
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute bottom-20 right-20 w-48 h-48 bg-marine-teal/10 rounded-full backdrop-blur-sm"
-          />
+        <section className="py-24 bg-gradient-to-br from-gray-900 via-slate-800 to-black relative overflow-hidden">
+          {/* Modern Gradient Overlays */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.1),transparent_40%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(168,85,247,0.08),transparent_40%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_90%,rgba(34,197,94,0.06),transparent_40%)]" />
+          
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -650,19 +652,19 @@ export default function Media() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center bg-light-marine/20 backdrop-blur-md px-6 py-3 rounded-full border border-gray-200/50 mb-8"
+                className="inline-flex items-center bg-gradient-to-r from-purple-500/30 to-pink-500/30 backdrop-blur-md px-6 py-3 rounded-full border border-purple-400/50 mb-4 shadow-lg shadow-purple-500/20"
               >
-                <ImageIcon className="text-coral-accent mr-2" size={20} />
-                <span className="text-gray-700 font-medium">Our Gallery</span>
+                <ImageIcon className="text-purple-400 mr-2" size={20} />
+                <span className="text-purple-100 font-medium">Our Gallery</span>
               </motion.div>
               <motion.h2
                 initial={{ scale: 0.9, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="text-4xl md:text-6xl font-heading font-bold text-gray-900 mb-6"
+                className="text-4xl md:text-6xl font-heading font-bold bg-gradient-to-r from-white via-purple-100 to-gray-300 bg-clip-text text-transparent mb-4"
               >
-                Visual <span className="text-coral-accent">Journey</span>
+                Visual <span className="text-purple-400">Journey</span>
               </motion.h2>
               
               {/* Category Filter */}
@@ -685,8 +687,8 @@ export default function Media() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-md border ${
                       selectedCategory === category
-                        ? "bg-gradient-to-r from-coral-accent to-golden-orange text-white border-transparent shadow-lg"
-                        : "bg-white/70 text-gray-700 border-gray-200 hover:bg-white/90 hover:border-coral-accent"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white border-transparent shadow-lg"
+                        : "bg-white/20 text-white border-white/30 hover:bg-white/30 hover:border-purple-400"
                     }`}
                   >
                     {category}
