@@ -1,17 +1,19 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useState } from "react";
-import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspaper, Image as ImageIcon, X } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspaper, Image as ImageIcon, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import Autoplay from "embla-carousel-autoplay";
+import { gsap } from "gsap";
 
 export default function Media() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -22,6 +24,81 @@ export default function Media() {
   const parallaxOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
   const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
   const y = useSpring(parallaxY, springConfig);
+
+  // Modern GSAP Slider Logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % recognitionAwards.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (!sliderRef.current) return;
+
+    // GSAP 3D Slider Animation
+    const slides = slideRefs.current;
+    const totalSlides = recognitionAwards.length;
+    
+    slides.forEach((slide, index) => {
+      if (!slide) return;
+      
+      const isActive = index === currentSlide;
+      const isPrev = index === (currentSlide - 1 + totalSlides) % totalSlides;
+      const isNext = index === (currentSlide + 1) % totalSlides;
+      
+      if (isActive) {
+        gsap.to(slide, {
+          duration: 0.8,
+          x: 0,
+          z: 0,
+          scale: 1,
+          opacity: 1,
+          rotationY: 0,
+          ease: "power3.out"
+        });
+      } else if (isPrev) {
+        gsap.to(slide, {
+          duration: 0.8,
+          x: -300,
+          z: -200,
+          scale: 0.8,
+          opacity: 0.6,
+          rotationY: 45,
+          ease: "power3.out"
+        });
+      } else if (isNext) {
+        gsap.to(slide, {
+          duration: 0.8,
+          x: 300,
+          z: -200,
+          scale: 0.8,
+          opacity: 0.6,
+          rotationY: -45,
+          ease: "power3.out"
+        });
+      } else {
+        gsap.to(slide, {
+          duration: 0.8,
+          x: 0,
+          z: -400,
+          scale: 0.6,
+          opacity: 0,
+          rotationY: 0,
+          ease: "power3.out"
+        });
+      }
+    });
+  }, [currentSlide]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % recognitionAwards.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + recognitionAwards.length) % recognitionAwards.length);
+  };
 
   const recognitionAwards = [
     {
@@ -278,85 +355,164 @@ export default function Media() {
               />
             </motion.div>
             
+            {/* Modern 3D GSAP Slider */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="max-w-6xl mx-auto"
+              className="relative max-w-6xl mx-auto h-[600px] overflow-hidden"
             >
-              <Carousel
-                opts={{
-                  align: "center",
-                  loop: true,
+              {/* Slider Container with 3D Perspective */}
+              <div 
+                ref={sliderRef}
+                className="relative w-full h-full"
+                style={{ 
+                  perspective: "1200px",
+                  perspectiveOrigin: "center center"
                 }}
-                plugins={[
-                  Autoplay({
-                    delay: 3500,
-                    stopOnInteraction: false,
-                    stopOnMouseEnter: true,
-                  }),
-                ]}
-                className="w-full"
               >
-                <CarouselContent className="-ml-6">
-                  {recognitionAwards.map((award, index) => (
-                    <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                            viewport={{ once: true }}
-                            whileHover={{ 
-                              scale: 1.05,
-                              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
-                            }}
-                            className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:shadow-xl cursor-pointer"
-                          >
-                            <div className="relative p-4">
-                              <motion.img
-                                whileHover={{ scale: 1.05 }}
-                                transition={{ duration: 0.6, ease: "easeOut" }}
+                {/* Glass Morphism Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-3xl border border-white/20" />
+                
+                {/* Awards Slides */}
+                {recognitionAwards.map((award, index) => (
+                  <div
+                    key={index}
+                    ref={(el) => (slideRefs.current[index] = el)}
+                    className="absolute top-1/2 left-1/2 w-80 h-96 transform -translate-x-1/2 -translate-y-1/2"
+                    style={{ 
+                      transformStyle: "preserve-3d",
+                      zIndex: index === currentSlide ? 10 : 5 - Math.abs(index - currentSlide)
+                    }}
+                  >
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.05,
+                            rotateX: 5,
+                            rotateY: 5
+                          }}
+                          className="group relative w-full h-full cursor-pointer"
+                        >
+                          {/* Floating Card with Glass Effect */}
+                          <div className="relative w-full h-full bg-white/80 backdrop-blur-lg rounded-2xl border border-white/30 shadow-2xl overflow-hidden">
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-coral-accent/5 via-transparent to-marine-teal/5" />
+                            
+                            {/* Certificate Image */}
+                            <div className="relative p-6 h-full flex items-center justify-center">
+                              <img
                                 src={award.image}
                                 alt="Award Certificate"
-                                className="w-full h-auto object-contain rounded-lg"
+                                className="w-full h-auto max-h-full object-contain rounded-lg shadow-lg"
                                 data-testid={`award-image-${index}`}
                               />
-                              <motion.div 
-                                initial={{ opacity: 0 }}
-                                whileHover={{ opacity: 1 }}
-                                transition={{ duration: 0.3 }}
-                                className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-2xl flex items-center justify-center"
-                              >
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  whileHover={{ scale: 1 }}
-                                  transition={{ duration: 0.2 }}
-                                  className="bg-white/90 backdrop-blur-md p-3 rounded-full"
-                                >
-                                  <ImageIcon size={24} className="text-coral-accent" />
-                                </motion.div>
-                              </motion.div>
                             </div>
-                          </motion.div>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-4xl w-full h-auto max-h-[90vh] p-0 bg-transparent border-none">
-                          <div className="relative bg-white rounded-2xl overflow-hidden">
-                            <img
-                              src={award.image}
-                              alt="Award Certificate - Enlarged View"
-                              className="w-full h-auto object-contain"
-                              data-testid={`award-enlarged-${index}`}
+
+                            {/* Interactive Hover Overlay */}
+                            <motion.div 
+                              initial={{ opacity: 0 }}
+                              whileHover={{ opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                              className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-center justify-center"
+                            >
+                              <motion.div
+                                initial={{ scale: 0, rotate: 0 }}
+                                whileHover={{ scale: 1, rotate: 360 }}
+                                transition={{ duration: 0.5, ease: "backOut" }}
+                                className="bg-white/90 backdrop-blur-md p-4 rounded-full shadow-xl"
+                              >
+                                <ImageIcon size={28} className="text-coral-accent" />
+                              </motion.div>
+                            </motion.div>
+
+                            {/* Floating Elements */}
+                            <motion.div
+                              animate={{ 
+                                y: [0, -10, 0],
+                                rotate: [0, 5, 0]
+                              }}
+                              transition={{ 
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                              }}
+                              className="absolute top-4 right-4 w-3 h-3 bg-coral-accent/60 rounded-full blur-sm"
+                            />
+                            <motion.div
+                              animate={{ 
+                                y: [0, 15, 0],
+                                x: [0, 5, 0]
+                              }}
+                              transition={{ 
+                                duration: 4,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: 1
+                              }}
+                              className="absolute bottom-6 left-6 w-2 h-2 bg-marine-teal/40 rounded-full blur-sm"
                             />
                           </div>
-                        </DialogContent>
-                      </Dialog>
-                    </CarouselItem>
+
+                          {/* 3D Shadow */}
+                          <div className="absolute -bottom-8 left-1/2 w-64 h-16 bg-black/10 rounded-full blur-xl transform -translate-x-1/2 scale-75 group-hover:scale-90 transition-transform duration-500" />
+                        </motion.div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl w-full h-auto max-h-[90vh] p-0 bg-transparent border-none">
+                        <div className="relative bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20">
+                          <img
+                            src={award.image}
+                            alt="Award Certificate - Enlarged View"
+                            className="w-full h-auto object-contain"
+                            data-testid={`award-enlarged-${index}`}
+                          />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                ))}
+
+                {/* Modern Navigation Controls */}
+                <motion.button
+                  onClick={prevSlide}
+                  whileHover={{ scale: 1.1, x: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full p-3 text-gray-700 hover:bg-white/30 transition-all duration-300"
+                  data-testid="prev-slide-button"
+                >
+                  <ChevronLeft size={24} />
+                </motion.button>
+                
+                <motion.button
+                  onClick={nextSlide}
+                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full p-3 text-gray-700 hover:bg-white/30 transition-all duration-300"
+                  data-testid="next-slide-button"
+                >
+                  <ChevronRight size={24} />
+                </motion.button>
+
+                {/* Modern Dot Indicators */}
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+                  {recognitionAwards.map((_, index) => (
+                    <motion.button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.8 }}
+                      className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
+                        index === currentSlide
+                          ? "bg-coral-accent border-coral-accent shadow-lg shadow-coral-accent/30"
+                          : "bg-white/40 border-white/60 hover:bg-white/60"
+                      }`}
+                      data-testid={`slide-indicator-${index}`}
+                    />
                   ))}
-                </CarouselContent>
-              </Carousel>
+                </div>
+              </div>
             </motion.div>
           </div>
         </motion.section>
