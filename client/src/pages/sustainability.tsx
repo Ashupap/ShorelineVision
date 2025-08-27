@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Leaf, Droplets, Recycle, Shield, Factory, Truck, Users, Zap, Thermometer, FlaskConical, Award, Car } from "lucide-react";
+import { Leaf, Droplets, Recycle, Shield, Factory, Truck, Users, Zap, Thermometer, FlaskConical, Award, Car, Package } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useRef } from "react";
@@ -989,60 +989,175 @@ export default function Sustainability() {
         </section>
 
         {/* Company Values */}
-        <section className="py-24 bg-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-light-marine/5 to-transparent"></div>
+        <section className="py-24 bg-gradient-to-br from-white via-light-marine/10 to-white relative overflow-hidden">
+          {/* Background Animation Elements */}
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.05, 0.15, 0.05]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-10 right-10 w-80 h-80 bg-ocean-blue/10 rounded-full backdrop-blur-sm"
+          />
+          <motion.div
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              opacity: [0.03, 0.08, 0.03]
+            }}
+            transition={{ 
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute bottom-20 left-20 w-60 h-60 bg-marine-teal/10 rounded-full backdrop-blur-sm"
+          />
+          
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-20"
+            >
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-light-marine/10 p-16 rounded-3xl shadow-2xl border border-gray-100"
+                className="inline-flex items-center bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-ocean-blue/20 mb-8"
               >
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.3 }}
-                  viewport={{ once: true }}
-                  className="mb-8"
-                >
-                  <div className="w-24 h-24 bg-gradient-to-br from-marine-teal to-ocean-blue rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
-                    <Users className="text-white" size={48} />
-                  </div>
-                </motion.div>
+                <Users className="text-ocean-blue mr-2" size={20} />
+                <span className="text-ocean-blue font-medium">Core Values</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-6xl font-heading font-bold text-gray-900 mb-6">
+                Our Core Values
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                At Alashore Marine - we care about our People, our Products & the Farmers. 
+                These are the core values we demonstrate in our actions.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {/* People Value Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+                transition={{ 
+                  duration: 0.8,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-white to-ocean-blue/10 p-8 rounded-3xl shadow-2xl border border-white/50 text-center group relative overflow-hidden"
+                data-testid="value-people"
+              >
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-ocean-blue/5 to-marine-teal/5 rounded-3xl" />
                 
-                <motion.h2
-                  initial={{ y: 20, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                  viewport={{ once: true }}
-                  className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-8"
-                >
-                  Our Core Values
-                </motion.h2>
+                <div className="relative z-10">
+                  <motion.div 
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-24 h-24 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300"
+                  >
+                    <Users className="text-white" size={40} />
+                  </motion.div>
+                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                    Our People
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    We believe our team is our greatest asset. We invest in their growth, well-being, and professional development to create a thriving workplace culture.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Products Value Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 0.1,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-white to-marine-teal/10 p-8 rounded-3xl shadow-2xl border border-white/50 text-center group relative overflow-hidden"
+                data-testid="value-products"
+              >
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-marine-teal/5 to-ocean-blue/5 rounded-3xl" />
                 
-                <motion.p
-                  initial={{ y: 20, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                  viewport={{ once: true }}
-                  className="text-2xl md:text-3xl text-gray-700 leading-relaxed font-medium"
-                >
-                  At Alashore Marine - we care about our People, our Products & the Farmers. 
-                  These are the core values we demonstrate in our actions.
-                </motion.p>
+                <div className="relative z-10">
+                  <motion.div 
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-24 h-24 bg-gradient-to-br from-marine-teal to-coral-accent rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300"
+                  >
+                    <Package className="text-white" size={40} />
+                  </motion.div>
+                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                    Our Products
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Quality is our cornerstone. Every product meets the highest international standards through rigorous testing and quality control processes.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Farmers Value Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 0.2,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-white to-coral-accent/10 p-8 rounded-3xl shadow-2xl border border-white/50 text-center group relative overflow-hidden"
+                data-testid="value-farmers"
+              >
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-coral-accent/5 to-golden-orange/5 rounded-3xl" />
                 
-                {/* Values Image Placeholder */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, delay: 0.9 }}
-                  viewport={{ once: true }}
-                  className="mt-12 h-64 bg-gradient-to-r from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center"
-                >
-                  <span className="text-gray-500 font-medium text-lg">Company Values Image Placeholder</span>
-                </motion.div>
+                <div className="relative z-10">
+                  <motion.div 
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-24 h-24 bg-gradient-to-br from-coral-accent to-golden-orange rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-2xl transition-all duration-300"
+                  >
+                    <Droplets className="text-white" size={40} />
+                  </motion.div>
+                  <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                    Our Farmers
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    We support sustainable farming practices and farmer development through partnerships, training, and fair business relationships.
+                  </p>
+                </div>
               </motion.div>
             </div>
           </div>
