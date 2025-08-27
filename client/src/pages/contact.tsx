@@ -541,15 +541,15 @@ export default function Contact() {
                     transition={{ duration: 0.6 }}
                     className="w-full h-80 rounded-xl overflow-hidden shadow-lg mb-6 border border-gray-200"
                   >
-                    <iframe
-                      src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.8!2d86.8547483!3d21.496864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDI5JzQ4LjciTiA4NsKwNTEnMTcuMSJF!5e0!3m2!1sen!2sin!4v1642000000000!5m2!1sen!2sin`}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d909.6626902940994!2d86.85474825389214!3d21.496863989902337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1c5ef91ba45023%3A0x6284f459d78b4645!2sAlashore%20Marine%20Exports%20Pvt.%20Limited.!5e1!3m2!1sen!2sin!4v1756293306299!5m2!1sen!2sin" 
+                      width="100%" 
+                      height="100%" 
+                      style={{ border: 0 }} 
+                      allowFullScreen 
+                      loading="lazy" 
                       referrerPolicy="no-referrer-when-downgrade"
-                      title="Alashore Marine Location"
+                      title="Alashore Marine Exports Pvt. Limited Location"
                     ></iframe>
                   </motion.div>
                   
