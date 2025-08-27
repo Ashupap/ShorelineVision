@@ -1,15 +1,17 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
-import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspaper, Image as ImageIcon } from "lucide-react";
+import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspaper, Image as ImageIcon, X } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Autoplay from "embla-carousel-autoplay";
 
 export default function Media() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -312,34 +314,57 @@ export default function Media() {
                 <CarouselContent className="-ml-6">
                   {recognitionAwards.map((award, index) => (
                     <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                        viewport={{ once: true }}
-                        whileHover={{ 
-                          scale: 1.05,
-                          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
-                        }}
-                        className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:shadow-xl"
-                      >
-                        <div className="aspect-[4/3] relative overflow-hidden">
-                          <motion.img
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.6, ease: "easeOut" }}
-                            src={award.image}
-                            alt="Award Certificate"
-                            className="w-full h-full object-cover"
-                            data-testid={`award-image-${index}`}
-                          />
-                          <motion.div 
-                            initial={{ opacity: 0 }}
-                            whileHover={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
-                          />
-                        </div>
-                      </motion.div>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                            viewport={{ once: true }}
+                            whileHover={{ 
+                              scale: 1.05,
+                              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)"
+                            }}
+                            className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:shadow-xl cursor-pointer"
+                          >
+                            <div className="relative p-4">
+                              <motion.img
+                                whileHover={{ scale: 1.05 }}
+                                transition={{ duration: 0.6, ease: "easeOut" }}
+                                src={award.image}
+                                alt="Award Certificate"
+                                className="w-full h-auto object-contain rounded-lg"
+                                data-testid={`award-image-${index}`}
+                              />
+                              <motion.div 
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 1 }}
+                                transition={{ duration: 0.3 }}
+                                className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-2xl flex items-center justify-center"
+                              >
+                                <motion.div
+                                  initial={{ scale: 0 }}
+                                  whileHover={{ scale: 1 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="bg-white/90 backdrop-blur-md p-3 rounded-full"
+                                >
+                                  <ImageIcon size={24} className="text-coral-accent" />
+                                </motion.div>
+                              </motion.div>
+                            </div>
+                          </motion.div>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-4xl w-full h-auto max-h-[90vh] p-0 bg-transparent border-none">
+                          <div className="relative bg-white rounded-2xl overflow-hidden">
+                            <img
+                              src={award.image}
+                              alt="Award Certificate - Enlarged View"
+                              className="w-full h-auto object-contain"
+                              data-testid={`award-enlarged-${index}`}
+                            />
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
