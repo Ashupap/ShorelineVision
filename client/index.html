@@ -37,7 +37,7 @@
     <meta name="theme-color" content="#1e40af" />
     
     <style>
-      /* Critical CSS for above-the-fold content */
+      /* Enhanced Critical CSS for optimal performance */
       :root {
         --ocean-blue: #1e40af;
         --marine-teal: #0f766e;
@@ -58,9 +58,34 @@
         -moz-osx-font-smoothing: grayscale;
         background-color: #ffffff;
         overflow-x: hidden;
+        line-height: 1.5;
       }
       
-      /* Loading state optimization */
+      /* Critical above-the-fold styles */
+      .hero-section {
+        height: 100vh;
+        background: linear-gradient(135deg, var(--ocean-blue), var(--marine-teal));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+      }
+      
+      .hero-title {
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+      
+      .hero-subtitle {
+        font-size: clamp(1rem, 3vw, 1.5rem);
+        opacity: 0.9;
+        margin-bottom: 2rem;
+      }
+      
+      /* Enhanced loading state */
       #root:empty {
         display: flex;
         align-items: center;
@@ -84,20 +109,18 @@
         100% { transform: rotate(360deg); }
       }
       
-      /* Optimize font rendering */
-      .font-heading {
-        font-family: 'Playfair Display', serif;
-      }
-      
       /* Performance optimizations */
-      img {
+      img, picture {
         max-width: 100%;
         height: auto;
+        image-rendering: crisp-edges;
+        image-rendering: -webkit-optimize-contrast;
       }
       
       video {
         width: 100%;
         height: auto;
+        object-fit: cover;
       }
       
       /* Reduce layout shift */
@@ -105,6 +128,40 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 1rem;
+      }
+      
+      /* Font optimizations */
+      .font-heading {
+        font-family: 'Playfair Display', serif;
+        font-display: swap;
+      }
+      
+      /* Critical button styles */
+      .btn-primary {
+        background: linear-gradient(135deg, var(--coral-accent), var(--golden-orange));
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+      
+      /* Intersection observer fade-in animation */
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      
+      .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
   </head>
