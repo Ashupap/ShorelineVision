@@ -16,6 +16,7 @@ export default function Products() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -319,6 +320,17 @@ export default function Products() {
                           </p>
                         </div>
                       )}
+                      <motion.button
+                        whileHover={{ x: 5 }}
+                        onClick={() => {
+                          setSelectedProduct(product.name);
+                          setIsContactModalOpen(true);
+                        }}
+                        className="text-ocean-blue font-semibold hover:text-deep-navy transition-colors flex items-center"
+                        data-testid={`button-inquire-${product.id}`}
+                      >
+                        Inquire Now <ArrowRight size={16} className="ml-1" />
+                      </motion.button>
                     </div>
                   </motion.div>
                 ))}
@@ -744,7 +756,8 @@ export default function Products() {
 
       <ContactFormModal 
         isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
+        onClose={() => setIsContactModalOpen(false)}
+        productName={selectedProduct}
       />
     </div>
   );
