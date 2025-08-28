@@ -319,14 +319,6 @@ export default function Products() {
                           </p>
                         </div>
                       )}
-                      <motion.button
-                        whileHover={{ x: 5 }}
-                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="text-ocean-blue font-semibold hover:text-deep-navy transition-colors flex items-center"
-                        data-testid={`button-inquire-${product.id}`}
-                      >
-                        Inquire Now <ArrowRight size={16} className="ml-1" />
-                      </motion.button>
                     </div>
                   </motion.div>
                 ))}
