@@ -114,7 +114,7 @@ export default function Products() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="group relative h-96 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                      className="group relative h-96 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
                       whileHover={{ y: -8 }}
                       data-testid={`card-product-${product.id}`}
                     >
@@ -160,20 +160,21 @@ export default function Products() {
                           </div>
 
                           {/* Action Button */}
-                          <motion.button
-                            whileHover={{ x: 5 }}
+                          <button
                             onClick={(e) => {
+                              e.preventDefault();
                               e.stopPropagation();
                               console.log('Button clicked for product:', product.name);
                               setSelectedProduct(product.name);
                               setIsContactModalOpen(true);
                             }}
-                            className="relative z-20 inline-flex items-center gap-2 text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 border border-white/30 hover:border-white/50 pointer-events-auto"
+                            className="relative z-30 inline-flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-lg"
                             data-testid={`button-product-${product.id}`}
+                            type="button"
                           >
-                            <span className="font-medium">Inquire Now</span>
-                            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-                          </motion.button>
+                            Inquire Now
+                            <ArrowRight size={16} />
+                          </button>
                         </div>
                       </div>
 
