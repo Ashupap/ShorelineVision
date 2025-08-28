@@ -321,38 +321,32 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer relative"
               data-testid="link-logo"
             >
-              {/* Pearl Grey Foam/Vapor Effect - Directly Behind Logo */}
+              {/* Pearl Grey Foam/Vapor Effect - Permanent Background */}
               <motion.div
                 className="absolute inset-0 rounded-lg"
                 animate={{
-                  background: [
-                    "radial-gradient(ellipse 150px 40px at center, rgba(240,240,240,0.8) 0%, rgba(220,220,220,0.6) 30%, rgba(200,200,200,0.4) 60%, transparent 100%)",
-                    "radial-gradient(ellipse 160px 45px at center, rgba(235,235,235,0.9) 0%, rgba(215,215,215,0.7) 30%, rgba(195,195,195,0.5) 60%, transparent 100%)",
-                    "radial-gradient(ellipse 155px 42px at center, rgba(245,245,245,0.85) 0%, rgba(225,225,225,0.65) 30%, rgba(205,205,205,0.45) 60%, transparent 100%)",
-                    "radial-gradient(ellipse 145px 38px at center, rgba(238,238,238,0.75) 0%, rgba(218,218,218,0.55) 30%, rgba(198,198,198,0.35) 60%, transparent 100%)",
-                  ],
-                  scale: [1, 1.05, 0.98, 1.02, 1],
-                  opacity: [0.4, 0.6, 0.5, 0.7, 0.4]
+                  scale: [1, 1.03, 0.99, 1.01, 1]
                 }}
                 transition={{
-                  duration: 6,
+                  duration: 8,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
                 style={{
-                  filter: 'blur(10px)',
+                  background: "radial-gradient(ellipse 160px 45px at center, rgba(240,240,240,0.7) 0%, rgba(220,220,220,0.5) 30%, rgba(200,200,200,0.3) 60%, transparent 100%)",
+                  filter: 'blur(12px)',
+                  opacity: 0.6,
                   zIndex: -1
                 }}
               />
 
-              {/* Logo Area Bubbles */}
+              {/* Permanent Floating Bubbles */}
               <motion.div
-                className="absolute w-1.5 h-1.5 bg-white/60 rounded-full"
+                className="absolute w-1.5 h-1.5 bg-white/40 rounded-full"
                 animate={{
                   x: [0, 4, -2, 5, 0],
                   y: [0, -3, 2, -4, 0],
-                  opacity: [0, 0.8, 0.4, 0.9, 0],
-                  scale: [0.3, 1, 0.7, 1.1, 0.3]
+                  scale: [0.8, 1.1, 0.9, 1.2, 0.8]
                 }}
                 transition={{
                   duration: 4,
@@ -364,16 +358,16 @@ export default function Header() {
                   left: '20%',
                   top: '30%',
                   filter: 'blur(0.5px)',
+                  opacity: 0.6,
                   zIndex: -1
                 }}
               />
               <motion.div
-                className="absolute w-1 h-1 bg-white/50 rounded-full"
+                className="absolute w-1 h-1 bg-white/35 rounded-full"
                 animate={{
                   x: [0, -3, 2, -4, 0],
                   y: [0, 2, -3, 1, 0],
-                  opacity: [0, 0.6, 0.9, 0.3, 0],
-                  scale: [0.2, 0.9, 1, 0.5, 0.2]
+                  scale: [0.7, 1, 0.8, 0.9, 0.7]
                 }}
                 transition={{
                   duration: 5,
@@ -384,16 +378,16 @@ export default function Header() {
                 style={{
                   right: '25%',
                   top: '20%',
+                  opacity: 0.5,
                   zIndex: -1
                 }}
               />
               <motion.div
-                className="absolute w-2 h-2 bg-white/40 rounded-full"
+                className="absolute w-2 h-2 bg-white/30 rounded-full"
                 animate={{
                   x: [0, 5, -2, 6, 0],
                   y: [0, 3, -1, 4, 0],
-                  opacity: [0, 0.5, 0.8, 0.2, 0],
-                  scale: [0.1, 1.1, 0.8, 1.2, 0.1]
+                  scale: [0.6, 1.2, 0.9, 1.3, 0.6]
                 }}
                 transition={{
                   duration: 6,
@@ -405,16 +399,16 @@ export default function Header() {
                   right: '15%',
                   bottom: '15%',
                   filter: 'blur(1px)',
+                  opacity: 0.4,
                   zIndex: -1
                 }}
               />
               <motion.div
-                className="absolute w-0.5 h-0.5 bg-white/70 rounded-full"
+                className="absolute w-0.5 h-0.5 bg-white/50 rounded-full"
                 animate={{
                   x: [0, -1, 3, -2, 0],
                   y: [0, -4, 1, -5, 0],
-                  opacity: [0, 0.9, 0.3, 1, 0],
-                  scale: [0.1, 0.8, 1.2, 0.6, 0.1]
+                  scale: [0.5, 0.9, 1.1, 0.7, 0.5]
                 }}
                 transition={{
                   duration: 3.5,
@@ -425,16 +419,16 @@ export default function Header() {
                 style={{
                   left: '70%',
                   bottom: '25%',
+                  opacity: 0.7,
                   zIndex: -1
                 }}
               />
               <motion.div
-                className="absolute w-1.2 h-1.2 bg-white/45 rounded-full"
+                className="absolute w-1.2 h-1.2 bg-white/32 rounded-full"
                 animate={{
                   x: [0, -3, 1, -4, 0],
                   y: [0, 2, -2, 2, 0],
-                  opacity: [0, 0.7, 0.4, 0.8, 0],
-                  scale: [0.2, 1, 0.9, 1.1, 0.2]
+                  scale: [0.7, 1.1, 0.9, 1.2, 0.7]
                 }}
                 transition={{
                   duration: 7,
@@ -446,6 +440,7 @@ export default function Header() {
                   left: '10%',
                   bottom: '30%',
                   filter: 'blur(0.8px)',
+                  opacity: 0.5,
                   zIndex: -1
                 }}
               />
