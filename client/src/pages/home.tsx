@@ -72,14 +72,6 @@ const Home = memo(function Home() {
                 From premium restaurants to major retail chains, our customers rely on our 
                 commitment to quality, consistency, and reliability in every shipment.
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-ocean-blue text-white px-8 py-3 rounded-lg hover:bg-deep-navy transition-colors duration-300"
-                data-testid="button-view-customers"
-              >
-                View Our Partners
-              </motion.button>
             </motion.div>
             
             <motion.div

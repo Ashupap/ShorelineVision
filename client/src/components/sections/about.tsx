@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { PerformanceImage } from "@/components/ui/performance-image";
 
 export default function About() {
@@ -30,15 +30,16 @@ export default function About() {
               we prioritize your satisfaction, ensuring a seamless experience for restaurants, retail partners, 
               and individuals seeking the best in seafood.
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/about-us')}
-              className="bg-ocean-blue text-white px-8 py-3 rounded-lg hover:bg-deep-navy transition-colors duration-300"
-              data-testid="button-about-learn-more"
-            >
-              Learn More
-            </motion.button>
+            <Link href="/about-us">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-ocean-blue text-white px-8 py-3 rounded-lg hover:bg-deep-navy transition-colors duration-300"
+                data-testid="button-about-learn-more"
+              >
+                Learn More
+              </motion.button>
+            </Link>
           </motion.div>
           
           <motion.div

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Clock, Package } from "lucide-react";
+import { Link } from "wouter";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import type { Product } from "@shared/schema";
@@ -184,14 +185,16 @@ export default function Products() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-ocean-blue text-white px-8 py-4 rounded-xl hover:bg-deep-navy transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl"
-            data-testid="button-view-all-products"
-          >
-            Explore Full Catalog
-          </motion.button>
+          <Link href="/products">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-ocean-blue text-white px-8 py-4 rounded-xl hover:bg-deep-navy transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl"
+              data-testid="button-view-all-products"
+            >
+              Explore Full Catalog
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>
