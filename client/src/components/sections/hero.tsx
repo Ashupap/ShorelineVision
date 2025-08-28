@@ -1,6 +1,7 @@
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef, memo, useMemo } from "react";
+import { Link } from "wouter";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
@@ -57,12 +58,6 @@ const Hero = memo(function Hero() {
     }
   };
 
-  const scrollToContact = () => {
-    const element = document.querySelector("#contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -313,24 +308,25 @@ const Hero = memo(function Hero() {
             transition={{ duration: 1, delay: 1.5 }}
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start"
           >
-            <motion.button
-              whileHover={{ 
-                scale: 1.08,
-                boxShadow: "0 25px 50px rgba(255, 107, 107, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToContact}
-              className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-6 sm:px-8 lg:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group w-full sm:w-auto"
-              data-testid="button-hero-get-in-touch"
-            >
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.6 }}
-              />
-              <span className="relative z-10">GET IN TOUCH</span>
-            </motion.button>
+            <Link href="/contact#contact-form">
+              <motion.button
+                whileHover={{ 
+                  scale: 1.08,
+                  boxShadow: "0 25px 50px rgba(255, 107, 107, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-6 sm:px-8 lg:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group w-full sm:w-auto"
+                data-testid="button-hero-get-in-touch"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-white/20"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
+                <span className="relative z-10">GET IN TOUCH</span>
+              </motion.button>
+            </Link>
             <motion.button
               whileHover={{ 
                 scale: 1.08,
