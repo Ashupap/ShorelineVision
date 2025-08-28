@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -30,10 +30,35 @@ export default function ContactFormModal({ isOpen, onClose, productName }: Conta
       email: "",
       phone: "",
       company: "",
-      topic: productName ? "product" : "",
-      message: productName ? `I would like to inquire about ${productName}. ` : "",
+      topic: "",
+      message: "",
     },
   });
+
+  // Reset form values when modal opens with a product
+  useEffect(() => {
+    if (isOpen && productName) {
+      form.reset({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        company: "",
+        topic: "product",
+        message: `I would like to inquire about ${productName}. `,
+      });
+    } else if (isOpen && !productName) {
+      form.reset({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        company: "",
+        topic: "",
+        message: "",
+      });
+    }
+  }, [isOpen, productName, form]);
 
   const createInquiry = useMutation({
     mutationFn: async (data: InsertInquirySchema) => {
@@ -221,7 +246,7 @@ export default function ContactFormModal({ isOpen, onClose, productName }: Conta
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Inquiry Topic</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value || ""} defaultValue={productName ? "product" : ""}>
+                          <Select onValueChange={field.onChange} value={field.value || ""}>
                             <FormControl>
                               <SelectTrigger data-testid="select-modal-topic">
                                 <SelectValue placeholder="Select inquiry topic" />
