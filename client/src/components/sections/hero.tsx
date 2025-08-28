@@ -327,32 +327,29 @@ const Hero = memo(function Hero() {
                 <span className="relative z-10">GET IN TOUCH</span>
               </motion.button>
             </Link>
-            <motion.button
-              whileHover={{ 
-                scale: 1.08,
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                borderColor: "rgba(255, 107, 107, 1)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() =>
-                document
-                  .getElementById("products")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="relative border-2 border-white/70 text-white backdrop-blur-md px-6 sm:px-8 lg:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 hover:text-coral-accent group overflow-hidden w-full sm:w-auto"
-              data-testid="button-hero-view-products"
-            >
-              <motion.div
-                className="absolute inset-0 bg-white"
-                initial={{ scale: 0 }}
-                whileHover={{ scale: 1 }}
-                transition={{ duration: 0.4 }}
-                style={{ originX: 0.5, originY: 0.5 }}
-              />
-              <span className="relative z-10 group-hover:text-ocean-blue transition-colors duration-300">
-                View Products
-              </span>
-            </motion.button>
+            <Link href="/products#products">
+              <motion.button
+                whileHover={{ 
+                  scale: 1.08,
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  borderColor: "rgba(255, 107, 107, 1)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="relative border-2 border-white/70 text-white backdrop-blur-md px-6 sm:px-8 lg:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 hover:text-coral-accent group overflow-hidden w-full sm:w-auto"
+                data-testid="button-hero-view-products"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-white"
+                  initial={{ scale: 0 }}
+                  whileHover={{ scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  style={{ originX: 0.5, originY: 0.5 }}
+                />
+                <span className="relative z-10 group-hover:text-ocean-blue transition-colors duration-300">
+                  View Products
+                </span>
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
 
