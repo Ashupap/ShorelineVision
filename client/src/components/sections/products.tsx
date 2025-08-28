@@ -1,17 +1,12 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Clock, Package } from "lucide-react";
 import { Link } from "wouter";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import ContactFormModal from "@/components/contact-form-modal";
 import type { Product } from "@shared/schema";
 
 export default function Products() {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<string>("");
-  
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products?published=true"],
   });
@@ -161,22 +156,6 @@ export default function Products() {
                         </div>
                       </div>
 
-                      {/* Action Button - Outside overlay structure */}
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          console.log('Button clicked for product:', product.name);
-                          setSelectedProduct(product.name);
-                          setIsContactModalOpen(true);
-                        }}
-                        className="absolute bottom-4 left-6 z-50 inline-flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-lg"
-                        data-testid={`button-product-${product.id}`}
-                        type="button"
-                      >
-                        Inquire Now
-                        <ArrowRight size={16} />
-                      </button>
 
                       {/* Hover Effect Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -209,13 +188,6 @@ export default function Products() {
           </Link>
         </motion.div>
       </div>
-
-      {/* Contact Modal */}
-      <ContactFormModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)}
-        productName={selectedProduct}
-      />
     </section>
   );
 }
