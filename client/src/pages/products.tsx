@@ -742,7 +742,10 @@ export default function Products() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                  setSelectedProduct("");
+                  setIsContactModalOpen(true);
+                }}
                 className="bg-coral-accent hover:bg-golden-orange text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all duration-300"
                 data-testid="button-contact-sales"
               >
