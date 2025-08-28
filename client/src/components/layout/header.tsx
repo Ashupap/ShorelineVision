@@ -192,90 +192,51 @@ export default function Header() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              whileHover={{ scale: 1.1, rotate: 2 }}
+              whileHover={{ scale: 1.05, rotate: 1 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center space-x-2 cursor-pointer relative"
               data-testid="link-logo"
             >
-              {/* Smart Backdrop - Auto-contrasting background */}
+              {/* Rainbow Glow Effect */}
               <motion.div
-                className={`absolute inset-0 rounded-xl transition-all duration-500 ${
-                  isScrolled 
-                    ? 'bg-white/15 backdrop-blur-sm border border-white/20' 
-                    : 'bg-black/20 backdrop-blur-md border border-white/30'
-                }`}
+                className="absolute inset-0 rounded-lg"
                 animate={{
-                  boxShadow: isScrolled 
-                    ? [
-                        "0 0 20px rgba(255,255,255,0.15), inset 0 0 20px rgba(255,255,255,0.1)",
-                        "0 0 30px rgba(255,255,255,0.25), inset 0 0 30px rgba(255,255,255,0.15)",
-                        "0 0 20px rgba(255,255,255,0.15), inset 0 0 20px rgba(255,255,255,0.1)"
-                      ]
-                    : [
-                        "0 0 25px rgba(0,0,0,0.3), inset 0 0 15px rgba(255,255,255,0.1)",
-                        "0 0 35px rgba(0,0,0,0.4), inset 0 0 25px rgba(255,255,255,0.15)",
-                        "0 0 25px rgba(0,0,0,0.3), inset 0 0 15px rgba(255,255,255,0.1)"
-                      ]
+                  background: [
+                    "conic-gradient(from 0deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
+                    "conic-gradient(from 60deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
+                    "conic-gradient(from 120deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
+                    "conic-gradient(from 180deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
+                    "conic-gradient(from 240deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
+                    "conic-gradient(from 300deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
+                    "conic-gradient(from 360deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)"
+                  ]
                 }}
                 transition={{
-                  duration: 3,
+                  duration: 6,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "linear"
                 }}
                 style={{
-                  transform: 'translate(-8px, -6px)',
-                  width: 'calc(100% + 16px)',
+                  transform: 'translate(-6px, -6px)',
+                  width: 'calc(100% + 12px)',
                   height: 'calc(100% + 12px)',
-                }}
-              />
-              
-              {/* Halo/Glow Effect - Outer glow for separation */}
-              <motion.div
-                className="absolute inset-0 rounded-xl"
-                animate={{
-                  boxShadow: isScrolled 
-                    ? [
-                        "0 0 40px rgba(59,130,246,0.3), 0 0 80px rgba(59,130,246,0.1)",
-                        "0 0 60px rgba(59,130,246,0.4), 0 0 100px rgba(59,130,246,0.15)",
-                        "0 0 40px rgba(59,130,246,0.3), 0 0 80px rgba(59,130,246,0.1)"
-                      ]
-                    : [
-                        "0 0 50px rgba(255,107,107,0.4), 0 0 100px rgba(255,107,107,0.2), 0 0 150px rgba(255,255,255,0.1)",
-                        "0 0 70px rgba(255,107,107,0.5), 0 0 120px rgba(255,107,107,0.25), 0 0 180px rgba(255,255,255,0.15)",
-                        "0 0 50px rgba(255,107,107,0.4), 0 0 100px rgba(255,107,107,0.2), 0 0 150px rgba(255,255,255,0.1)"
-                      ]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5
-                }}
-                style={{
-                  transform: 'translate(-12px, -8px)',
-                  width: 'calc(100% + 24px)',
-                  height: 'calc(100% + 16px)',
+                  filter: 'blur(8px)',
+                  opacity: 0.6,
                   zIndex: -1
                 }}
               />
 
-              {/* Logo Container with Enhanced Multi-layer Shadows */}
+              {/* Logo Container */}
               <motion.div
-                className={`relative z-10 h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto px-2 py-1 transition-all duration-500 ${
+                className={`relative z-10 h-10 sm:h-12 lg:h-14 w-auto transition-all duration-500 ${
                   isScrolled 
-                    ? 'filter brightness-110 contrast-125' 
-                    : 'filter brightness-125 contrast-150 saturate-110'
+                    ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]' 
+                    : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                 }`}
                 animate={{
                   filter: isScrolled 
                     ? ["brightness(1.1) contrast(1.25)", "brightness(1.15) contrast(1.3)", "brightness(1.1) contrast(1.25)"]
                     : ["brightness(1.25) contrast(1.5) saturate(1.1)", "brightness(1.3) contrast(1.55) saturate(1.15)", "brightness(1.25) contrast(1.5) saturate(1.1)"]
-                }}
-                style={{
-                  // Enhanced Multi-layer Drop Shadow
-                  filter: isScrolled 
-                    ? `brightness(1.1) contrast(1.25) drop-shadow(0 2px 4px rgba(0,0,0,0.3)) drop-shadow(0 4px 8px rgba(0,0,0,0.2)) drop-shadow(0 0 12px rgba(59,130,246,0.4)) drop-shadow(0 1px 2px rgba(255,255,255,0.5))`
-                    : `brightness(1.25) contrast(1.5) saturate(1.1) drop-shadow(0 0 8px rgba(255,255,255,0.8)) drop-shadow(0 0 16px rgba(255,107,107,0.6)) drop-shadow(0 4px 8px rgba(0,0,0,0.4)) drop-shadow(0 2px 4px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(255,255,255,0.3))`
                 }}
                 transition={{
                   duration: 3,
@@ -286,45 +247,11 @@ export default function Header() {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto object-contain"
+                  className="h-10 sm:h-12 lg:h-14 w-auto object-contain"
                   priority={true}
                   loading="eager"
-                  style={{
-                    transform: 'translateZ(0)',
-                    backfaceVisibility: 'hidden',
-                    imageRendering: 'crisp-edges'
-                  }}
                 />
               </motion.div>
-              
-              {/* Additional Subtle Inner Glow */}
-              <motion.div
-                className="absolute inset-0 rounded-lg opacity-30"
-                animate={{
-                  background: isScrolled 
-                    ? [
-                        "radial-gradient(circle at center, rgba(59,130,246,0.2) 0%, transparent 70%)",
-                        "radial-gradient(circle at center, rgba(59,130,246,0.3) 0%, transparent 70%)",
-                        "radial-gradient(circle at center, rgba(59,130,246,0.2) 0%, transparent 70%)"
-                      ]
-                    : [
-                        "radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 60%)",
-                        "radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 60%)",
-                        "radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 60%)"
-                      ]
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1
-                }}
-                style={{
-                  transform: 'translate(-4px, -2px)',
-                  width: 'calc(100% + 8px)',
-                  height: 'calc(100% + 4px)',
-                }}
-              />
             </motion.div>
           </Link>
 
