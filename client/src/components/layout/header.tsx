@@ -197,31 +197,136 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer relative"
               data-testid="link-logo"
             >
-              {/* Rainbow Glow Effect */}
+              {/* Rainbow Glow Effect - Circular with Particles */}
               <motion.div
-                className="absolute inset-0 rounded-lg"
+                className="absolute rounded-full"
                 animate={{
                   background: [
-                    "conic-gradient(from 0deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
-                    "conic-gradient(from 60deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
-                    "conic-gradient(from 120deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
-                    "conic-gradient(from 180deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
-                    "conic-gradient(from 240deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
-                    "conic-gradient(from 300deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)",
-                    "conic-gradient(from 360deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)"
+                    "radial-gradient(circle, #ff6b6b 0%, #4ecdc4 12.5%, #45b7d1 25%, #96ceb4 37.5%, #feca57 50%, #ff9ff3 62.5%, #54a0ff 75%, #5f27cd 87.5%, #ff6b6b 100%)",
+                    "radial-gradient(circle, #4ecdc4 0%, #45b7d1 12.5%, #96ceb4 25%, #feca57 37.5%, #ff9ff3 50%, #54a0ff 62.5%, #5f27cd 75%, #ff6b6b 87.5%, #4ecdc4 100%)",
+                    "radial-gradient(circle, #45b7d1 0%, #96ceb4 12.5%, #feca57 25%, #ff9ff3 37.5%, #54a0ff 50%, #5f27cd 62.5%, #ff6b6b 75%, #4ecdc4 87.5%, #45b7d1 100%)",
+                    "radial-gradient(circle, #96ceb4 0%, #feca57 12.5%, #ff9ff3 25%, #54a0ff 37.5%, #5f27cd 50%, #ff6b6b 62.5%, #4ecdc4 75%, #45b7d1 87.5%, #96ceb4 100%)",
                   ]
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '120px',
+                  height: '120px',
+                  filter: 'blur(12px)',
+                  opacity: 0.4,
+                  zIndex: -1
+                }}
+              />
+
+              {/* Animated Particles */}
+              <motion.div
+                className="absolute w-2 h-2 bg-gradient-to-r from-coral-accent to-golden-orange rounded-full"
+                animate={{
+                  x: [0, 15, -10, 20, 0],
+                  y: [0, -15, 10, -20, 0],
+                  opacity: [0, 0.8, 0.5, 0.9, 0],
+                  scale: [0.5, 1, 0.8, 1.2, 0.5]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0
+                }}
+                style={{
+                  left: '20%',
+                  top: '30%',
+                  filter: 'blur(1px)',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-1.5 h-1.5 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full"
+                animate={{
+                  x: [0, -20, 15, -25, 0],
+                  y: [0, 10, -20, 15, 0],
+                  opacity: [0, 0.6, 0.9, 0.4, 0],
+                  scale: [0.3, 0.8, 1.1, 0.6, 0.3]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1.5
+                }}
+                style={{
+                  right: '25%',
+                  top: '20%',
+                  filter: 'blur(0.5px)',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
+                animate={{
+                  x: [0, 25, -15, 30, 0],
+                  y: [0, 20, -10, 25, 0],
+                  opacity: [0, 0.5, 0.8, 0.3, 0],
+                  scale: [0.2, 1.3, 0.7, 1.5, 0.2]
                 }}
                 transition={{
                   duration: 6,
                   repeat: Infinity,
-                  ease: "linear"
+                  ease: "easeInOut",
+                  delay: 3
                 }}
                 style={{
-                  transform: 'translate(-6px, -6px)',
-                  width: 'calc(100% + 12px)',
-                  height: 'calc(100% + 12px)',
-                  filter: 'blur(8px)',
-                  opacity: 0.6,
+                  left: '70%',
+                  bottom: '10%',
+                  filter: 'blur(2px)',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-1 h-1 bg-white rounded-full"
+                animate={{
+                  x: [0, -10, 25, -15, 0],
+                  y: [0, -25, 5, -30, 0],
+                  opacity: [0, 0.9, 0.4, 1, 0],
+                  scale: [0.1, 0.6, 1, 0.8, 0.1]
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 2
+                }}
+                style={{
+                  right: '15%',
+                  bottom: '25%',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-2.5 h-2.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                animate={{
+                  x: [0, -30, 10, -35, 0],
+                  y: [0, 15, -25, 20, 0],
+                  opacity: [0, 0.7, 0.5, 0.8, 0],
+                  scale: [0.4, 1.1, 0.9, 1.4, 0.4]
+                }}
+                transition={{
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 4
+                }}
+                style={{
+                  left: '10%',
+                  bottom: '30%',
+                  filter: 'blur(1.5px)',
                   zIndex: -1
                 }}
               />
