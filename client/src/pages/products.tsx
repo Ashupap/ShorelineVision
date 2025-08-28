@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ContactFormModal from "@/components/contact-form-modal";
 import fssaiLogo from "@assets/pngegg_1756202338499.png";
 import bapLogo from "@assets/BAP-Logo-2_1756201576811.png";
 import haccpLogo from "@assets/steptodown.com594892_1756202338499.png";
@@ -14,6 +15,7 @@ import productsBg from "@assets/generated_images/Products_page_hero_background_0
 export default function Products() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -90,7 +92,7 @@ export default function Products() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
       <main>
         {/* Enhanced Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
@@ -747,6 +749,11 @@ export default function Products() {
         </section>
       </main>
       <Footer />
+
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

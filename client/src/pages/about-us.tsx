@@ -1,11 +1,12 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Star, Award, Globe, Users, Leaf, Target } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ContactFormModal from "@/components/contact-form-modal";
 import BlueWorldMap from "@/components/blue-world-map";
 import InteractiveGlobalMap from "@/components/interactive-global-map";
 import processingFacilityBg from "@assets/generated_images/Seafood_processing_facility_background_fd3ca7c1.png";
@@ -13,6 +14,7 @@ import processingFacilityBg from "@assets/generated_images/Seafood_processing_fa
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -276,7 +278,7 @@ export default function AboutUs() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
 
       <main>
         {/* Enhanced Hero Section with Parallax */}
@@ -1003,11 +1005,7 @@ export default function AboutUs() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() =>
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                onClick={() => setIsContactModalOpen(true)}
                 className="bg-white text-ocean-blue px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
                 data-testid="button-about-get-in-touch"
               >
@@ -1019,6 +1017,11 @@ export default function AboutUs() {
       </main>
 
       <Footer />
+
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

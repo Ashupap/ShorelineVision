@@ -4,6 +4,7 @@ import { Award, Camera, Heart, Users, Play, ExternalLink, Star, Trophy, Newspape
 import { PerformanceImage } from "@/components/ui/performance-image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ContactFormModal from "@/components/contact-form-modal";
 import mediaBg from "@assets/generated_images/Media_page_hero_background_85689f5f.png";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { gsap } from "gsap";
@@ -12,6 +13,7 @@ import "yet-another-react-lightbox/styles.css";
 
 export default function Media() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
@@ -222,7 +224,7 @@ export default function Media() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
       <main>
         {/* Enhanced Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
@@ -971,7 +973,7 @@ export default function Media() {
                   boxShadow: "0 25px 50px rgba(255, 107, 107, 0.4)"
                 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => setIsContactModalOpen(true)}
                 className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group"
                 data-testid="button-get-in-touch"
               >
@@ -988,6 +990,11 @@ export default function Media() {
         </motion.section>
       </main>
       <Footer />
+
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

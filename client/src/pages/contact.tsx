@@ -38,6 +38,7 @@ import contactBg from "@assets/generated_images/Professional_office_contact_back
 
 export default function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -183,7 +184,7 @@ export default function Contact() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
       <main>
         {/* Enhanced Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
@@ -914,6 +915,11 @@ export default function Contact() {
         </section>
       </main>
       <Footer />
+
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

@@ -1,16 +1,18 @@
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BookOpen, Calendar, User, Eye } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ContactFormModal from "@/components/contact-form-modal";
 import BlogPostCard from "@/components/blog/blog-post-card";
 import { formatDistanceToNow } from "date-fns";
 import blogBg from "@assets/generated_images/Blog_page_hero_background_995e7f81.png";
 
 export default function Blog() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -36,7 +38,7 @@ export default function Blog() {
   if (slug && post) {
     return (
       <div className="min-h-screen bg-background relative">
-        <Header />
+        <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
         <main>
           <article className="container mx-auto px-4 py-24 max-w-5xl">
             <motion.div
@@ -111,13 +113,18 @@ export default function Blog() {
           </article>
         </main>
         <Footer />
+        
+        <ContactFormModal 
+          isOpen={isContactModalOpen} 
+          onClose={() => setIsContactModalOpen(false)} 
+        />
       </div>
     );
   }
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
       <main>
         {/* Enhanced Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
@@ -281,6 +288,11 @@ export default function Blog() {
         </section>
       </main>
       <Footer />
+
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

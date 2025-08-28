@@ -2,7 +2,8 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Leaf, Droplets, Recycle, Shield, Factory, Truck, Users, Zap, Thermometer, FlaskConical, Award, Car, Package } from "lucide-react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { useRef } from "react";
+import ContactFormModal from "@/components/contact-form-modal";
+import { useRef, useState } from "react";
 import sustainabilityBg from "@assets/generated_images/Sustainable_aquaculture_ocean_background_50127a79.png";
 import processingFacilityImg from "@assets/generated_images/Seafood_processing_facility_interior_25ca1780.png";
 import aquacultureFarmImg from "@assets/generated_images/Sustainable_aquaculture_fish_farm_ab1886b9.png";
@@ -27,6 +28,7 @@ import fdaLogo from "@assets/unnamed_1756201576811.png";
 
 export default function Sustainability() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -132,7 +134,7 @@ export default function Sustainability() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
       <main>
         {/* Hero Section with Parallax */}
         <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
@@ -1254,6 +1256,11 @@ export default function Sustainability() {
         </section>
       </main>
       <Footer />
+
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }
