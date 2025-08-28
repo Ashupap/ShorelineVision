@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -169,6 +169,18 @@ export default function Contact() {
     { value: "other", label: "Other", icon: User },
   ];
 
+  // Handle automatic scrolling to form when hash is present
+  useEffect(() => {
+    if (window.location.hash === '#contact-form') {
+      setTimeout(() => {
+        const element = document.getElementById('contact-form');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500); // Delay to ensure page is fully rendered
+    }
+  }, []);
+
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">
       <Header />
@@ -301,6 +313,7 @@ export default function Contact() {
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               <motion.div
+                id="contact-form"
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}

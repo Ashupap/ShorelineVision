@@ -390,7 +390,7 @@ const Home = memo(function Home() {
                 Explore our exquisite selection of freshly caught seafood, sourced from the world's finest waters. 
                 Order now to experience the taste of quality and sustainability!
               </motion.p>
-              <Link href="/contact">
+              <Link href="/contact#contact-form">
                 <motion.button
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
