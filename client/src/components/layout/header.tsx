@@ -5,7 +5,11 @@ import { Menu, X, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, 
 import { PerformanceImage } from "@/components/ui/performance-image";
 import logoImage from "@assets/Asset 3_1756100807050.png";
 
-export default function Header() {
+interface HeaderProps {
+  onEnquiryClick?: () => void;
+}
+
+export default function Header({ onEnquiryClick }: HeaderProps = {}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -510,7 +514,7 @@ export default function Header() {
               Admin
             </Link>
             <motion.button
-              onClick={() => scrollToSection("/#contact")}
+              onClick={onEnquiryClick ? onEnquiryClick : () => scrollToSection("/#contact")}
               className="relative bg-ocean-blue text-white px-3 py-1.5 sm:px-6 sm:py-2 text-sm rounded-lg hover:bg-deep-navy transition-all duration-300 overflow-hidden"
               data-testid="button-enquiry"
               whileHover={{ scale: 1.05 }}

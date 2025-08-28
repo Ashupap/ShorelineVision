@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, memo } from "react";
-import { Link } from "wouter";
+import { useRef, memo, useState } from "react";
+import ContactFormModal from "@/components/contact-form-modal";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import Hero from "@/components/sections/hero";
@@ -20,6 +20,7 @@ import selectLogo from "@assets/SELECT_1755944927384.png";
 
 const Home = memo(function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -31,7 +32,7 @@ const Home = memo(function Home() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative overflow-x-hidden">
-      <Header />
+      <Header onEnquiryClick={() => setIsContactModalOpen(true)} />
       <main>
         <Hero />
         <motion.section 
@@ -400,6 +401,7 @@ const Home = memo(function Home() {
                   boxShadow: "0 25px 50px rgba(255, 107, 107, 0.4)"
                 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setIsContactModalOpen(true)}
                 className="relative bg-gradient-to-r from-coral-accent to-golden-orange hover:from-golden-orange hover:to-coral-accent text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all duration-500 shadow-2xl overflow-hidden group"
                 data-testid="button-get-in-touch"
               >
@@ -418,6 +420,12 @@ const Home = memo(function Home() {
         <Testimonials />
       </main>
       <Footer />
+      
+      {/* Contact Form Modal */}
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 });
