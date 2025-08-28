@@ -517,44 +517,136 @@ export default function Contact() {
                   >
                     <div className="relative w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
                       <motion.div 
-                        className="text-center text-gray-500 mb-4"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+                        className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-blue/5 to-marine-teal/5 backdrop-blur-sm"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
                       >
+                        {/* Ocean Wave Background */}
                         <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                          className="inline-block"
-                        >
-                          <MapPin size={48} className="mx-auto mb-2 text-blue-500" />
-                        </motion.div>
-                        <motion.p 
-                          className="font-medium bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                        >
-                          Loading Map...
-                        </motion.p>
-                        <motion.div 
-                          className="mt-3 flex justify-center space-x-1"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.5 }}
-                        >
-                          {[0, 1, 2].map((i) => (
+                          className="absolute inset-0 opacity-10"
+                          animate={{ 
+                            backgroundPosition: ["0% 0%", "100% 100%"],
+                          }}
+                          transition={{ 
+                            duration: 8, 
+                            repeat: Infinity, 
+                            ease: "linear" 
+                          }}
+                          style={{
+                            backgroundImage: "radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(14, 165, 233, 0.3) 0%, transparent 50%)"
+                          }}
+                        />
+                        
+                        <div className="relative z-10 text-center">
+                          {/* Floating Map Pin with Ocean Ring */}
+                          <div className="relative mb-6">
+                            {/* Outer ripple rings */}
+                            <motion.div
+                              className="absolute inset-0 w-24 h-24 mx-auto border-2 border-ocean-blue/30 rounded-full"
+                              animate={{ scale: [1, 1.8], opacity: [0.7, 0] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                            />
+                            <motion.div
+                              className="absolute inset-0 w-24 h-24 mx-auto border-2 border-marine-teal/40 rounded-full"
+                              animate={{ scale: [1, 1.8], opacity: [0.8, 0] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: 0.5, ease: "easeOut" }}
+                            />
+                            
+                            {/* Central pin with floating effect */}
+                            <motion.div
+                              className="relative w-24 h-24 mx-auto bg-gradient-to-br from-ocean-blue to-deep-navy rounded-full flex items-center justify-center shadow-2xl"
+                              animate={{ 
+                                y: [-4, 4, -4],
+                                rotate: [0, 5, -5, 0],
+                                scale: [1, 1.05, 1]
+                              }}
+                              transition={{ 
+                                duration: 3, 
+                                repeat: Infinity, 
+                                ease: "easeInOut" 
+                              }}
+                            >
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                              >
+                                <MapPin size={36} className="text-white drop-shadow-lg" />
+                              </motion.div>
+                              
+                              {/* Glowing inner shadow */}
+                              <div className="absolute inset-2 bg-gradient-to-tr from-white/20 to-transparent rounded-full" />
+                            </motion.div>
+                          </div>
+                          
+                          {/* Animated text with marine gradient */}
+                          <motion.h3 
+                            className="text-2xl font-heading font-bold mb-4 bg-gradient-to-r from-ocean-blue via-marine-teal to-deep-navy bg-clip-text text-transparent"
+                            animate={{ 
+                              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                            }}
+                            transition={{ 
+                              duration: 3, 
+                              repeat: Infinity, 
+                              ease: "easeInOut" 
+                            }}
+                            style={{ backgroundSize: "200% 200%" }}
+                          >
+                            Charting Your Course
+                          </motion.h3>
+                          
+                          <motion.p 
+                            className="text-gray-600 mb-6 font-medium"
+                            animate={{ opacity: [0.6, 1, 0.6] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            Navigating to our location...
+                          </motion.p>
+                          
+                          {/* Ocean wave loading bars */}
+                          <div className="flex justify-center space-x-2">
+                            {[0, 1, 2, 3, 4].map((i) => (
+                              <motion.div
+                                key={i}
+                                className="w-1 bg-gradient-to-t from-ocean-blue to-marine-teal rounded-full"
+                                animate={{ 
+                                  height: [8, 24, 8],
+                                  opacity: [0.3, 1, 0.3]
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  delay: i * 0.15,
+                                  ease: "easeInOut"
+                                }}
+                              />
+                            ))}
+                          </div>
+                          
+                          {/* Floating particles */}
+                          {[...Array(6)].map((_, i) => (
                             <motion.div
                               key={i}
-                              className="w-2 h-2 bg-blue-500 rounded-full"
-                              animate={{ y: [-8, 0, -8] }}
+                              className="absolute w-2 h-2 bg-coral-accent/40 rounded-full"
+                              style={{
+                                left: `${20 + i * 10}%`,
+                                top: `${30 + (i % 2) * 20}%`
+                              }}
+                              animate={{
+                                y: [-20, 20, -20],
+                                x: [-10, 10, -10],
+                                opacity: [0, 0.6, 0],
+                                scale: [0.5, 1, 0.5]
+                              }}
                               transition={{
-                                duration: 0.6,
+                                duration: 4 + i * 0.5,
                                 repeat: Infinity,
-                                delay: i * 0.2
+                                delay: i * 0.8,
+                                ease: "easeInOut"
                               }}
                             />
                           ))}
-                        </motion.div>
+                        </div>
                       </motion.div>
                       <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d909.6626902940994!2d86.85474825389214!3d21.496863989902337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1c5ef91ba45023%3A0x6284f459d78b4645!2sAlashore%20Marine%20Exports%20Pvt.%20Limited.!5e1!3m2!1sen!2sin!4v1756293306299!5m2!1sen!2sin" 
