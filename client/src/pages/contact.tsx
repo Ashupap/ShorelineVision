@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ContactFormModal from "@/components/contact-form-modal";
 import contactBg from "@assets/generated_images/Professional_office_contact_background_95a1aff4.png";
 
 export default function Contact() {
@@ -515,10 +516,46 @@ export default function Contact() {
                     className="w-full h-80 rounded-xl overflow-hidden shadow-lg mb-6 border border-gray-200"
                   >
                     <div className="relative w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
-                      <div className="text-center text-gray-500 mb-4">
-                        <MapPin size={48} className="mx-auto mb-2 text-blue-500" />
-                        <p className="font-medium">Loading Map...</p>
-                      </div>
+                      <motion.div 
+                        className="text-center text-gray-500 mb-4"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+                      >
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                          className="inline-block"
+                        >
+                          <MapPin size={48} className="mx-auto mb-2 text-blue-500" />
+                        </motion.div>
+                        <motion.p 
+                          className="font-medium bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          Loading Map...
+                        </motion.p>
+                        <motion.div 
+                          className="mt-3 flex justify-center space-x-1"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.5 }}
+                        >
+                          {[0, 1, 2].map((i) => (
+                            <motion.div
+                              key={i}
+                              className="w-2 h-2 bg-blue-500 rounded-full"
+                              animate={{ y: [-8, 0, -8] }}
+                              transition={{
+                                duration: 0.6,
+                                repeat: Infinity,
+                                delay: i * 0.2
+                              }}
+                            />
+                          ))}
+                        </motion.div>
+                      </motion.div>
                       <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d909.6626902940994!2d86.85474825389214!3d21.496863989902337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1c5ef91ba45023%3A0x6284f459d78b4645!2sAlashore%20Marine%20Exports%20Pvt.%20Limited.!5e1!3m2!1sen!2sin!4v1756293306299!5m2!1sen!2sin" 
                         width="100%" 
@@ -529,7 +566,7 @@ export default function Contact() {
                         referrerPolicy="no-referrer-when-downgrade"
                         title="Alashore Marine Exports Pvt. Limited Location"
                         onLoad={() => {
-                          const placeholder = document.querySelector('.text-center.text-gray-500');
+                          const placeholder = document.querySelector('.text-center.text-gray-500') as HTMLElement;
                           if (placeholder) placeholder.style.display = 'none';
                         }}
                       ></iframe>
