@@ -184,7 +184,130 @@ export default function Header() {
           isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}
       >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
+        {/* Sea Creatures Swimming Across Entire Navbar */}
+        {/* Swimming Shrimp */}
+        <motion.div
+          className="absolute text-lg pointer-events-none"
+          animate={{
+            x: [-60, window.innerWidth + 60],
+            y: [0, -3, 2, -1, 0],
+            rotate: [0, 2, -1, 1, 0]
+          }}
+          transition={{
+            x: { duration: 15, repeat: Infinity, ease: "linear" },
+            y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+          }}
+          style={{
+            left: '-60px',
+            top: '20%',
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.4))',
+            opacity: 0.6
+          }}
+        >
+          🦐
+        </motion.div>
+
+        {/* Swimming Fish */}
+        <motion.div
+          className="absolute text-base pointer-events-none"
+          animate={{
+            x: [window.innerWidth + 60, -60],
+            y: [0, 4, -2, 3, 0],
+            rotate: [180, 182, 178, 181, 180],
+            scale: [1, 1.1, 0.9, 1.05, 1]
+          }}
+          transition={{
+            x: { duration: 18, repeat: Infinity, ease: "linear" },
+            y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+            scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+          }}
+          style={{
+            right: '-60px',
+            top: '60%',
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.4))',
+            opacity: 0.6
+          }}
+        >
+          🐟
+        </motion.div>
+
+        {/* Swimming Crab */}
+        <motion.div
+          className="absolute text-sm pointer-events-none"
+          animate={{
+            x: [-50, window.innerWidth + 50, -50],
+            y: [0, -2, 1, -3, 0],
+            rotate: [0, -5, 5, -3, 0]
+          }}
+          transition={{
+            x: { duration: 22, repeat: Infinity, ease: "easeInOut" },
+            y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+          }}
+          style={{
+            left: '-50px',
+            bottom: '20%',
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.4))',
+            opacity: 0.5
+          }}
+        >
+          🦀
+        </motion.div>
+
+        {/* Small Tropical Fish */}
+        <motion.div
+          className="absolute text-xs pointer-events-none"
+          animate={{
+            x: [-40, window.innerWidth + 40],
+            y: [0, -5, 3, -2, 0],
+            rotate: [0, 3, -2, 1, 0]
+          }}
+          transition={{
+            x: { duration: 12, repeat: Infinity, ease: "linear", delay: 5 },
+            y: { duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 5 },
+            rotate: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 5 }
+          }}
+          style={{
+            left: '-40px',
+            top: '70%',
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 3px rgba(255,255,255,0.4))',
+            opacity: 0.7
+          }}
+        >
+          🐠
+        </motion.div>
+
+        {/* Seahorse */}
+        <motion.div
+          className="absolute text-sm pointer-events-none"
+          animate={{
+            x: [window.innerWidth + 50, -50],
+            y: [0, -4, 2, -3, 0],
+            rotate: [180, 185, 175, 182, 180]
+          }}
+          transition={{
+            x: { duration: 20, repeat: Infinity, ease: "linear", delay: 8 },
+            y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 8 },
+            rotate: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 8 }
+          }}
+          style={{
+            right: '-50px',
+            top: '40%',
+            zIndex: 1,
+            filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.4))',
+            opacity: 0.5
+          }}
+        >
+          🐙
+        </motion.div>
+
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <Link href="/">
@@ -197,19 +320,21 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer relative"
               data-testid="link-logo"
             >
-              {/* Horizontal Rainbow Glow - Bright Colors */}
+              {/* Pearl Grey Foam/Vapor Effect */}
               <motion.div
                 className="absolute rounded-xl"
                 animate={{
                   background: [
-                    "linear-gradient(90deg, #FF1744 0%, #FF9100 14%, #FFEB3B 28%, #76FF03 42%, #00E5FF 56%, #3D5AFE 70%, #E91E63 84%, #FF1744 100%)",
-                    "linear-gradient(90deg, #FF9100 0%, #FFEB3B 14%, #76FF03 28%, #00E5FF 42%, #3D5AFE 56%, #E91E63 70%, #FF1744 84%, #FF9100 100%)",
-                    "linear-gradient(90deg, #FFEB3B 0%, #76FF03 14%, #00E5FF 28%, #3D5AFE 42%, #E91E63 56%, #FF1744 70%, #FF9100 84%, #FFEB3B 100%)",
-                    "linear-gradient(90deg, #76FF03 0%, #00E5FF 14%, #3D5AFE 28%, #E91E63 42%, #FF1744 56%, #FF9100 70%, #FFEB3B 84%, #76FF03 100%)",
-                  ]
+                    "radial-gradient(ellipse 180px 60px at center, rgba(240,240,240,0.8) 0%, rgba(220,220,220,0.6) 30%, rgba(200,200,200,0.4) 60%, transparent 100%)",
+                    "radial-gradient(ellipse 190px 65px at center, rgba(235,235,235,0.9) 0%, rgba(215,215,215,0.7) 30%, rgba(195,195,195,0.5) 60%, transparent 100%)",
+                    "radial-gradient(ellipse 185px 62px at center, rgba(245,245,245,0.85) 0%, rgba(225,225,225,0.65) 30%, rgba(205,205,205,0.45) 60%, transparent 100%)",
+                    "radial-gradient(ellipse 175px 58px at center, rgba(238,238,238,0.75) 0%, rgba(218,218,218,0.55) 30%, rgba(198,198,198,0.35) 60%, transparent 100%)",
+                  ],
+                  scale: [1, 1.05, 0.98, 1.02, 1],
+                  opacity: [0.3, 0.5, 0.4, 0.6, 0.3]
                 }}
                 transition={{
-                  duration: 6,
+                  duration: 8,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
@@ -219,129 +344,10 @@ export default function Header() {
                   transform: 'translate(-50%, -50%)',
                   width: '180px',
                   height: '60px',
-                  filter: 'blur(15px)',
-                  opacity: 0.5,
+                  filter: 'blur(12px)',
                   zIndex: -1
                 }}
               />
-
-              {/* Swimming Sea Creatures */}
-              {/* Swimming Shrimp */}
-              <motion.div
-                className="absolute text-lg"
-                animate={{
-                  x: [-40, 200],
-                  y: [0, -3, 2, -1, 0],
-                  rotate: [0, 2, -1, 1, 0]
-                }}
-                transition={{
-                  x: { duration: 8, repeat: Infinity, ease: "linear" },
-                  y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-                }}
-                style={{
-                  left: '-30px',
-                  top: '20%',
-                  zIndex: -1,
-                  filter: 'drop-shadow(0 0 4px rgba(255,107,107,0.6))'
-                }}
-              >
-                🦐
-              </motion.div>
-
-              {/* Swimming Fish */}
-              <motion.div
-                className="absolute text-base"
-                animate={{
-                  x: [250, -50],
-                  y: [0, 4, -2, 3, 0],
-                  rotate: [180, 182, 178, 181, 180],
-                  scale: [1, 1.1, 0.9, 1.05, 1]
-                }}
-                transition={{
-                  x: { duration: 10, repeat: Infinity, ease: "linear" },
-                  y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                  scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-                }}
-                style={{
-                  right: '-40px',
-                  top: '60%',
-                  zIndex: -1,
-                  filter: 'drop-shadow(0 0 4px rgba(0,229,255,0.6))'
-                }}
-              >
-                🐟
-              </motion.div>
-
-              {/* Swimming Crab */}
-              <motion.div
-                className="absolute text-sm"
-                animate={{
-                  x: [-30, 180, -30],
-                  y: [0, -2, 1, -3, 0],
-                  rotate: [0, -5, 5, -3, 0]
-                }}
-                transition={{
-                  x: { duration: 12, repeat: Infinity, ease: "easeInOut" },
-                  y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
-                }}
-                style={{
-                  left: '-25px',
-                  bottom: '10%',
-                  zIndex: -1,
-                  filter: 'drop-shadow(0 0 4px rgba(255,235,59,0.6))'
-                }}
-              >
-                🦀
-              </motion.div>
-
-              {/* Small Tropical Fish */}
-              <motion.div
-                className="absolute text-xs"
-                animate={{
-                  x: [-20, 160],
-                  y: [0, -5, 3, -2, 0],
-                  rotate: [0, 3, -2, 1, 0]
-                }}
-                transition={{
-                  x: { duration: 6, repeat: Infinity, ease: "linear", delay: 2 },
-                  y: { duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2 },
-                  rotate: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 }
-                }}
-                style={{
-                  left: '-15px',
-                  top: '70%',
-                  zIndex: -1,
-                  filter: 'drop-shadow(0 0 3px rgba(118,255,3,0.6))'
-                }}
-              >
-                🐠
-              </motion.div>
-
-              {/* Seahorse */}
-              <motion.div
-                className="absolute text-sm"
-                animate={{
-                  x: [200, -40],
-                  y: [0, -4, 2, -3, 0],
-                  rotate: [180, 185, 175, 182, 180]
-                }}
-                transition={{
-                  x: { duration: 14, repeat: Infinity, ease: "linear", delay: 4 },
-                  y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 4 },
-                  rotate: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 4 }
-                }}
-                style={{
-                  right: '-35px',
-                  top: '40%',
-                  zIndex: -1,
-                  filter: 'drop-shadow(0 0 4px rgba(61,90,254,0.6))'
-                }}
-              >
-                🐙
-              </motion.div>
 
               {/* Logo Container */}
               <motion.div
@@ -407,13 +413,31 @@ export default function Header() {
               <Shield size={16} className="mr-1" />
               Admin
             </Link>
-            <button
+            <motion.button
               onClick={() => scrollToSection("/#contact")}
-              className="bg-ocean-blue text-white px-3 py-1.5 sm:px-6 sm:py-2 text-sm rounded-lg hover:bg-deep-navy transition-colors duration-300"
+              className="relative bg-ocean-blue text-white px-3 py-1.5 sm:px-6 sm:py-2 text-sm rounded-lg hover:bg-deep-navy transition-all duration-300 overflow-hidden"
               data-testid="button-enquiry"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Enquiry
-            </button>
+              {/* Glowing Effect */}
+              <motion.div
+                className="absolute inset-0 rounded-lg"
+                animate={{
+                  boxShadow: [
+                    "0 0 10px rgba(59,130,246,0.3), 0 0 20px rgba(59,130,246,0.2), inset 0 0 10px rgba(255,255,255,0.1)",
+                    "0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.3), inset 0 0 15px rgba(255,255,255,0.2)",
+                    "0 0 10px rgba(59,130,246,0.3), 0 0 20px rgba(59,130,246,0.2), inset 0 0 10px rgba(255,255,255,0.1)"
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <span className="relative z-10">Enquiry</span>
+            </motion.button>
             <button
               className={`lg:hidden ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-colors duration-300`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
