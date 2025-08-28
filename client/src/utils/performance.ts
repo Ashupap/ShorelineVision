@@ -53,7 +53,35 @@ export function throttleScroll(callback: () => void, delay: number = 16) {
   };
 }
 
-// Web vitals monitoring
+// Critical resource preloader
+export function preloadCriticalResources() {
+  if (typeof window !== 'undefined') {
+    // Preload hero video
+    const videoLink = document.createElement('link');
+    videoLink.rel = 'preload';
+    videoLink.as = 'video';
+    videoLink.href = '/attached_assets/Alashore-Marine-Factory_1755929476699.mp4';
+    document.head.appendChild(videoLink);
+    
+    // Preload critical images
+    const criticalImages = [
+      '/attached_assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png',
+      '/attached_assets/Pomfret_1755943114147.png',
+      '/attached_assets/Sheer Fish_1755943118147.png'
+    ];
+    
+    criticalImages.forEach(src => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = src;
+      document.head.appendChild(link);
+    });
+  }
+}
+
+// Optimized web vitals monitoring with reduced logging
+let clsTimeout: NodeJS.Timeout;
 export function measureWebVitals() {
   if (typeof window !== 'undefined' && 'performance' in window) {
     // Measure First Contentful Paint
@@ -70,7 +98,7 @@ export function measureWebVitals() {
     
     observer.observe({ entryTypes: ['paint', 'largest-contentful-paint'] });
     
-    // Measure Cumulative Layout Shift
+    // Debounced CLS measurement to reduce console spam
     let cumulativeLayoutShiftScore = 0;
     const clsObserver = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
@@ -78,7 +106,14 @@ export function measureWebVitals() {
           cumulativeLayoutShiftScore += (entry as any).value;
         }
       }
-      console.log('CLS:', cumulativeLayoutShiftScore);
+      
+      // Debounce CLS logging to reduce spam
+      clearTimeout(clsTimeout);
+      clsTimeout = setTimeout(() => {
+        if (cumulativeLayoutShiftScore > 0.1) {
+          console.warn('High CLS detected:', cumulativeLayoutShiftScore);
+        }
+      }, 1000);
     });
     
     clsObserver.observe({ entryTypes: ['layout-shift'] });

@@ -12,6 +12,9 @@ interface PerformanceImageProps {
   onError?: () => void;
   loading?: "lazy" | "eager";
   style?: React.CSSProperties;
+  width?: number;
+  height?: number;
+  aspectRatio?: string;
 }
 
 export const PerformanceImage = memo(function PerformanceImage({
@@ -25,6 +28,9 @@ export const PerformanceImage = memo(function PerformanceImage({
   onError,
   loading = "lazy",
   style,
+  width,
+  height,
+  aspectRatio,
 }: PerformanceImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -61,12 +67,24 @@ export const PerformanceImage = memo(function PerformanceImage({
     onError?.();
   };
 
+  // Calculate container styles to prevent layout shifts
+  const containerStyle = {
+    ...style,
+    aspectRatio: aspectRatio || (width && height ? `${width}/${height}` : undefined),
+    width: width || style?.width,
+    height: height || style?.height,
+  };
+
   return (
-    <div ref={imgRef} className={`relative overflow-hidden ${className}`} style={style}>
+    <div 
+      ref={imgRef} 
+      className={`relative overflow-hidden ${className}`} 
+      style={containerStyle}
+    >
       {/* Invisible seamless loading background */}
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-transparent via-slate-600/5 to-transparent animate-pulse">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/5 to-transparent animate-shimmer" />
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-transparent via-slate-600/5 to-transparent">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/5 to-transparent" />
         </div>
       )}
       
@@ -76,17 +94,18 @@ export const PerformanceImage = memo(function PerformanceImage({
           src={src}
           alt={alt}
           sizes={sizes}
+          width={width}
+          height={height}
           className="w-full h-full object-cover"
           style={{ 
             willChange: isLoaded ? 'auto' : 'opacity',
             transform: 'translateZ(0)',
             imageRendering: 'crisp-edges',
             backfaceVisibility: 'hidden',
-            ...style
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoaded ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
           onLoad={handleLoad}
           onError={handleError}
           loading={priority ? "eager" : loading}

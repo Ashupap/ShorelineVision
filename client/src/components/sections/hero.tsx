@@ -60,7 +60,11 @@ const Hero = memo(function Hero() {
 
 
   return (
-    <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section 
+      ref={containerRef} 
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+      style={{ minHeight: '100vh' }} // Prevent layout shift
+    >
       {/* Background Video with Parallax */}
       <motion.div 
         style={{ scale: scaleEffect, opacity: parallaxOpacity }}
@@ -71,9 +75,14 @@ const Hero = memo(function Hero() {
           muted 
           loop 
           playsInline
-          preload="metadata"
+          preload="auto"
+          width="1920"
+          height="1080"
           className="w-full h-full object-cover"
-          style={{ willChange: 'transform' }}
+          style={{ 
+            willChange: 'transform',
+            aspectRatio: '16/9'
+          }}
         >
           <source src={factoryVideo} type="video/mp4" />
         </video>
@@ -92,95 +101,15 @@ const Hero = memo(function Hero() {
         <div className="absolute inset-0 bg-black/35"></div>
       </motion.div>
 
-      {/* Enhanced Floating Elements & Sea Creatures - Mobile Responsive */}
-      <motion.div
-        animate={{ 
-          y: [0, -30, 0],
-          rotate: [0, 10, 0],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{ 
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute top-20 right-4 sm:right-20 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm border border-white/20 z-5"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, 20, 0],
-          rotate: [0, -10, 0],
-          scale: [1, 0.9, 1]
-        }}
-        transition={{ 
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-        className="absolute bottom-20 sm:bottom-32 left-4 sm:left-16 w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24 bg-marine-teal/30 rounded-full backdrop-blur-sm border border-white/30 z-5"
-      />
-      <motion.div
-        animate={{ 
-          x: [0, 20, 0],
-          y: [0, -20, 0],
-          opacity: [0.3, 0.7, 0.3]
-        }}
-        transition={{ 
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 4
-        }}
-        className="absolute top-1/2 left-2 sm:left-10 w-8 sm:w-12 lg:w-16 h-8 sm:h-12 lg:h-16 bg-white/20 rounded-full backdrop-blur-sm z-5"
-      />
+      {/* Simplified floating elements to reduce layout shifts */}
+      <div className="absolute top-20 right-4 sm:right-20 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm border border-white/20 z-5 opacity-60" />
+      <div className="absolute bottom-20 sm:bottom-32 left-4 sm:left-16 w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24 bg-marine-teal/30 rounded-full backdrop-blur-sm border border-white/30 z-5 opacity-60" />
+      <div className="absolute top-1/2 left-2 sm:left-10 w-8 sm:w-12 lg:w-16 h-8 sm:h-12 lg:h-16 bg-white/20 rounded-full backdrop-blur-sm z-5 opacity-40" />
       
-      {/* Additional Bubble Effects */}
-      <motion.div
-        animate={{ 
-          y: [0, -30, 0],
-          x: [0, 10, 0],
-          scale: [0.8, 1.2, 0.8],
-          opacity: [0.4, 0.8, 0.4]
-        }}
-        transition={{ 
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-        className="absolute top-1/3 right-1/4 sm:right-1/3 w-10 sm:w-16 lg:w-20 h-10 sm:h-16 lg:h-20 bg-marine-teal/25 rounded-full backdrop-blur-sm border border-white/25 z-5"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, -20, 0],
-          x: [0, -15, 0],
-          scale: [1, 1.3, 1],
-          opacity: [0.2, 0.6, 0.2]
-        }}
-        transition={{ 
-          duration: 9,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 3
-        }}
-        className="absolute bottom-1/3 sm:bottom-1/4 right-1/5 sm:right-1/4 w-14 sm:w-20 lg:w-28 h-14 sm:h-20 lg:h-28 bg-coral-accent/15 rounded-full backdrop-blur-sm border border-white/15 z-5"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, -15, 0],
-          x: [0, 8, 0],
-          scale: [0.9, 1.1, 0.9],
-          opacity: [0.3, 0.7, 0.3]
-        }}
-        transition={{ 
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 5
-        }}
-        className="absolute top-2/3 sm:top-3/4 left-1/4 sm:left-1/3 w-8 sm:w-10 lg:w-14 h-8 sm:h-10 lg:h-14 bg-white/25 rounded-full backdrop-blur-sm z-5"
-      />
+      {/* Static bubble effects to prevent layout shifts */}
+      <div className="absolute top-1/3 right-1/4 sm:right-1/3 w-10 sm:w-16 lg:w-20 h-10 sm:h-16 lg:h-20 bg-marine-teal/25 rounded-full backdrop-blur-sm border border-white/25 z-5 opacity-40" />
+      <div className="absolute bottom-1/3 sm:bottom-1/4 right-1/5 sm:right-1/4 w-14 sm:w-20 lg:w-28 h-14 sm:h-20 lg:h-28 bg-coral-accent/15 rounded-full backdrop-blur-sm border border-white/15 z-5 opacity-30" />
+      <div className="absolute top-2/3 sm:top-3/4 left-1/4 sm:left-1/3 w-8 sm:w-10 lg:w-14 h-8 sm:h-10 lg:h-14 bg-white/25 rounded-full backdrop-blur-sm z-5 opacity-35" />
       
       {/* Swimming Sea Creatures - Mobile Responsive */}
       <motion.div
