@@ -197,19 +197,19 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer relative"
               data-testid="link-logo"
             >
-              {/* Rainbow Glow Effect - Circular with Particles */}
+              {/* Horizontal Rainbow Glow - Bright Colors */}
               <motion.div
-                className="absolute rounded-full"
+                className="absolute rounded-xl"
                 animate={{
                   background: [
-                    "radial-gradient(circle, #ff6b6b 0%, #4ecdc4 12.5%, #45b7d1 25%, #96ceb4 37.5%, #feca57 50%, #ff9ff3 62.5%, #54a0ff 75%, #5f27cd 87.5%, #ff6b6b 100%)",
-                    "radial-gradient(circle, #4ecdc4 0%, #45b7d1 12.5%, #96ceb4 25%, #feca57 37.5%, #ff9ff3 50%, #54a0ff 62.5%, #5f27cd 75%, #ff6b6b 87.5%, #4ecdc4 100%)",
-                    "radial-gradient(circle, #45b7d1 0%, #96ceb4 12.5%, #feca57 25%, #ff9ff3 37.5%, #54a0ff 50%, #5f27cd 62.5%, #ff6b6b 75%, #4ecdc4 87.5%, #45b7d1 100%)",
-                    "radial-gradient(circle, #96ceb4 0%, #feca57 12.5%, #ff9ff3 25%, #54a0ff 37.5%, #5f27cd 50%, #ff6b6b 62.5%, #4ecdc4 75%, #45b7d1 87.5%, #96ceb4 100%)",
+                    "linear-gradient(90deg, #FF1744 0%, #FF9100 14%, #FFEB3B 28%, #76FF03 42%, #00E5FF 56%, #3D5AFE 70%, #E91E63 84%, #FF1744 100%)",
+                    "linear-gradient(90deg, #FF9100 0%, #FFEB3B 14%, #76FF03 28%, #00E5FF 42%, #3D5AFE 56%, #E91E63 70%, #FF1744 84%, #FF9100 100%)",
+                    "linear-gradient(90deg, #FFEB3B 0%, #76FF03 14%, #00E5FF 28%, #3D5AFE 42%, #E91E63 56%, #FF1744 70%, #FF9100 84%, #FFEB3B 100%)",
+                    "linear-gradient(90deg, #76FF03 0%, #00E5FF 14%, #3D5AFE 28%, #E91E63 42%, #FF1744 56%, #FF9100 70%, #FFEB3B 84%, #76FF03 100%)",
                   ]
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 6,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
@@ -217,119 +217,131 @@ export default function Header() {
                   left: '50%',
                   top: '50%',
                   transform: 'translate(-50%, -50%)',
-                  width: '120px',
-                  height: '120px',
-                  filter: 'blur(12px)',
-                  opacity: 0.4,
+                  width: '180px',
+                  height: '60px',
+                  filter: 'blur(15px)',
+                  opacity: 0.5,
                   zIndex: -1
                 }}
               />
 
-              {/* Animated Particles */}
+              {/* Swimming Sea Creatures */}
+              {/* Swimming Shrimp */}
               <motion.div
-                className="absolute w-2 h-2 bg-gradient-to-r from-coral-accent to-golden-orange rounded-full"
+                className="absolute text-lg"
                 animate={{
-                  x: [0, 15, -10, 20, 0],
-                  y: [0, -15, 10, -20, 0],
-                  opacity: [0, 0.8, 0.5, 0.9, 0],
-                  scale: [0.5, 1, 0.8, 1.2, 0.5]
+                  x: [-40, 200],
+                  y: [0, -3, 2, -1, 0],
+                  rotate: [0, 2, -1, 1, 0]
                 }}
                 transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0
+                  x: { duration: 8, repeat: Infinity, ease: "linear" },
+                  y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+                  rotate: { duration: 3, repeat: Infinity, ease: "easeInOut" }
                 }}
                 style={{
-                  left: '20%',
-                  top: '30%',
-                  filter: 'blur(1px)',
-                  zIndex: -1
-                }}
-              />
-              <motion.div
-                className="absolute w-1.5 h-1.5 bg-gradient-to-r from-marine-teal to-ocean-blue rounded-full"
-                animate={{
-                  x: [0, -20, 15, -25, 0],
-                  y: [0, 10, -20, 15, 0],
-                  opacity: [0, 0.6, 0.9, 0.4, 0],
-                  scale: [0.3, 0.8, 1.1, 0.6, 0.3]
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.5
-                }}
-                style={{
-                  right: '25%',
+                  left: '-30px',
                   top: '20%',
-                  filter: 'blur(0.5px)',
-                  zIndex: -1
+                  zIndex: -1,
+                  filter: 'drop-shadow(0 0 4px rgba(255,107,107,0.6))'
                 }}
-              />
+              >
+                🦐
+              </motion.div>
+
+              {/* Swimming Fish */}
               <motion.div
-                className="absolute w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
+                className="absolute text-base"
                 animate={{
-                  x: [0, 25, -15, 30, 0],
-                  y: [0, 20, -10, 25, 0],
-                  opacity: [0, 0.5, 0.8, 0.3, 0],
-                  scale: [0.2, 1.3, 0.7, 1.5, 0.2]
+                  x: [250, -50],
+                  y: [0, 4, -2, 3, 0],
+                  rotate: [180, 182, 178, 181, 180],
+                  scale: [1, 1.1, 0.9, 1.05, 1]
                 }}
                 transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 3
+                  x: { duration: 10, repeat: Infinity, ease: "linear" },
+                  y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                  scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
                 }}
                 style={{
-                  left: '70%',
+                  right: '-40px',
+                  top: '60%',
+                  zIndex: -1,
+                  filter: 'drop-shadow(0 0 4px rgba(0,229,255,0.6))'
+                }}
+              >
+                🐟
+              </motion.div>
+
+              {/* Swimming Crab */}
+              <motion.div
+                className="absolute text-sm"
+                animate={{
+                  x: [-30, 180, -30],
+                  y: [0, -2, 1, -3, 0],
+                  rotate: [0, -5, 5, -3, 0]
+                }}
+                transition={{
+                  x: { duration: 12, repeat: Infinity, ease: "easeInOut" },
+                  y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+                  rotate: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                }}
+                style={{
+                  left: '-25px',
                   bottom: '10%',
-                  filter: 'blur(2px)',
-                  zIndex: -1
+                  zIndex: -1,
+                  filter: 'drop-shadow(0 0 4px rgba(255,235,59,0.6))'
                 }}
-              />
+              >
+                🦀
+              </motion.div>
+
+              {/* Small Tropical Fish */}
               <motion.div
-                className="absolute w-1 h-1 bg-white rounded-full"
+                className="absolute text-xs"
                 animate={{
-                  x: [0, -10, 25, -15, 0],
-                  y: [0, -25, 5, -30, 0],
-                  opacity: [0, 0.9, 0.4, 1, 0],
-                  scale: [0.1, 0.6, 1, 0.8, 0.1]
+                  x: [-20, 160],
+                  y: [0, -5, 3, -2, 0],
+                  rotate: [0, 3, -2, 1, 0]
                 }}
                 transition={{
-                  duration: 3.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 2
+                  x: { duration: 6, repeat: Infinity, ease: "linear", delay: 2 },
+                  y: { duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2 },
+                  rotate: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 }
                 }}
                 style={{
-                  right: '15%',
-                  bottom: '25%',
-                  zIndex: -1
+                  left: '-15px',
+                  top: '70%',
+                  zIndex: -1,
+                  filter: 'drop-shadow(0 0 3px rgba(118,255,3,0.6))'
                 }}
-              />
+              >
+                🐠
+              </motion.div>
+
+              {/* Seahorse */}
               <motion.div
-                className="absolute w-2.5 h-2.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                className="absolute text-sm"
                 animate={{
-                  x: [0, -30, 10, -35, 0],
-                  y: [0, 15, -25, 20, 0],
-                  opacity: [0, 0.7, 0.5, 0.8, 0],
-                  scale: [0.4, 1.1, 0.9, 1.4, 0.4]
+                  x: [200, -40],
+                  y: [0, -4, 2, -3, 0],
+                  rotate: [180, 185, 175, 182, 180]
                 }}
                 transition={{
-                  duration: 7,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 4
+                  x: { duration: 14, repeat: Infinity, ease: "linear", delay: 4 },
+                  y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 4 },
+                  rotate: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 4 }
                 }}
                 style={{
-                  left: '10%',
-                  bottom: '30%',
-                  filter: 'blur(1.5px)',
-                  zIndex: -1
+                  right: '-35px',
+                  top: '40%',
+                  zIndex: -1,
+                  filter: 'drop-shadow(0 0 4px rgba(61,90,254,0.6))'
                 }}
-              />
+              >
+                🐙
+              </motion.div>
 
               {/* Logo Container */}
               <motion.div
