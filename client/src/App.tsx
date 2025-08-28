@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Suspense, lazy } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import BeautifulLoader from "@/components/ui/beautiful-loader";
 
 // Lazy load pages for better performance
 const Home = lazy(() => import("@/pages/home"));
@@ -18,21 +19,13 @@ const Admin = lazy(() => import("@/pages/admin"));
 const TempLogin = lazy(() => import("@/pages/temp-login"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
-// Loading component
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background">
-    <div className="flex items-center space-x-3">
-      <div className="w-8 h-8 border-4 border-ocean-blue border-t-transparent rounded-full animate-spin"></div>
-      <span className="text-ocean-blue font-medium">Loading...</span>
-    </div>
-  </div>
-);
+// Beautiful loading component
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
 
   return (
-    <Suspense fallback={<PageLoader />}>
+    <Suspense fallback={<BeautifulLoader />}>
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/about-us" component={AboutUs} />
