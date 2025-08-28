@@ -162,11 +162,13 @@ export default function Products() {
                           {/* Action Button */}
                           <motion.button
                             whileHover={{ x: 5 }}
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              console.log('Button clicked for product:', product.name);
                               setSelectedProduct(product.name);
                               setIsContactModalOpen(true);
                             }}
-                            className="inline-flex items-center gap-2 text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 border border-white/30 hover:border-white/50"
+                            className="relative z-20 inline-flex items-center gap-2 text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 border border-white/30 hover:border-white/50 pointer-events-auto"
                             data-testid={`button-product-${product.id}`}
                           >
                             <span className="font-medium">Inquire Now</span>
