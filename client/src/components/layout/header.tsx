@@ -308,140 +308,6 @@ export default function Header() {
           🐙
         </motion.div>
 
-        {/* Pearl Grey Foam/Vapor Effect - Positioned Behind Logo */}
-        <motion.div
-          className="absolute"
-          animate={{
-            background: [
-              "radial-gradient(ellipse 160px 45px at center, rgba(240,240,240,0.8) 0%, rgba(220,220,220,0.6) 30%, rgba(200,200,200,0.4) 60%, transparent 100%)",
-              "radial-gradient(ellipse 170px 50px at center, rgba(235,235,235,0.9) 0%, rgba(215,215,215,0.7) 30%, rgba(195,195,195,0.5) 60%, transparent 100%)",
-              "radial-gradient(ellipse 165px 47px at center, rgba(245,245,245,0.85) 0%, rgba(225,225,225,0.65) 30%, rgba(205,205,205,0.45) 60%, transparent 100%)",
-              "radial-gradient(ellipse 155px 43px at center, rgba(238,238,238,0.75) 0%, rgba(218,218,218,0.55) 30%, rgba(198,198,198,0.35) 60%, transparent 100%)",
-            ],
-            scale: [1, 1.05, 0.98, 1.02, 1],
-            opacity: [0.4, 0.6, 0.5, 0.7, 0.4]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          style={{
-            position: 'absolute',
-            left: '16px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: '160px',
-            height: '45px',
-            filter: 'blur(10px)',
-            zIndex: 1
-          }}
-        />
-
-        {/* Logo Area Bubbles */}
-        <motion.div
-          className="absolute w-1.5 h-1.5 bg-white/60 rounded-full"
-          animate={{
-            x: [0, 6, -3, 7, 0],
-            y: [0, -4, 2, -5, 0],
-            opacity: [0, 0.8, 0.4, 0.9, 0],
-            scale: [0.3, 1, 0.7, 1.1, 0.3]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0
-          }}
-          style={{
-            left: '30px',
-            top: '35%',
-            filter: 'blur(0.5px)',
-            zIndex: 1
-          }}
-        />
-        <motion.div
-          className="absolute w-1 h-1 bg-white/50 rounded-full"
-          animate={{
-            x: [0, -4, 3, -5, 0],
-            y: [0, 3, -4, 2, 0],
-            opacity: [0, 0.6, 0.9, 0.3, 0],
-            scale: [0.2, 0.9, 1, 0.5, 0.2]
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
-          }}
-          style={{
-            left: '140px',
-            top: '25%',
-            zIndex: 1
-          }}
-        />
-        <motion.div
-          className="absolute w-2 h-2 bg-white/40 rounded-full"
-          animate={{
-            x: [0, 8, -4, 9, 0],
-            y: [0, 5, -2, 6, 0],
-            opacity: [0, 0.5, 0.8, 0.2, 0],
-            scale: [0.1, 1.1, 0.8, 1.2, 0.1]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }}
-          style={{
-            left: '160px',
-            bottom: '20%',
-            filter: 'blur(1px)',
-            zIndex: 1
-          }}
-        />
-        <motion.div
-          className="absolute w-0.5 h-0.5 bg-white/70 rounded-full"
-          animate={{
-            x: [0, -2, 5, -3, 0],
-            y: [0, -6, 1, -7, 0],
-            opacity: [0, 0.9, 0.3, 1, 0],
-            scale: [0.1, 0.8, 1.2, 0.6, 0.1]
-          }}
-          transition={{
-            duration: 3.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-          style={{
-            left: '90px',
-            bottom: '30%',
-            zIndex: 1
-          }}
-        />
-        <motion.div
-          className="absolute w-1.2 h-1.2 bg-white/45 rounded-full"
-          animate={{
-            x: [0, -5, 2, -6, 0],
-            y: [0, 3, -4, 3, 0],
-            opacity: [0, 0.7, 0.4, 0.8, 0],
-            scale: [0.2, 1, 0.9, 1.1, 0.2]
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 4
-          }}
-          style={{
-            left: '60px',
-            bottom: '35%',
-            filter: 'blur(0.8px)',
-            zIndex: 1
-          }}
-        />
 
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
@@ -455,6 +321,134 @@ export default function Header() {
               className="flex items-center space-x-2 cursor-pointer relative"
               data-testid="link-logo"
             >
+              {/* Pearl Grey Foam/Vapor Effect - Directly Behind Logo */}
+              <motion.div
+                className="absolute inset-0 rounded-lg"
+                animate={{
+                  background: [
+                    "radial-gradient(ellipse 150px 40px at center, rgba(240,240,240,0.8) 0%, rgba(220,220,220,0.6) 30%, rgba(200,200,200,0.4) 60%, transparent 100%)",
+                    "radial-gradient(ellipse 160px 45px at center, rgba(235,235,235,0.9) 0%, rgba(215,215,215,0.7) 30%, rgba(195,195,195,0.5) 60%, transparent 100%)",
+                    "radial-gradient(ellipse 155px 42px at center, rgba(245,245,245,0.85) 0%, rgba(225,225,225,0.65) 30%, rgba(205,205,205,0.45) 60%, transparent 100%)",
+                    "radial-gradient(ellipse 145px 38px at center, rgba(238,238,238,0.75) 0%, rgba(218,218,218,0.55) 30%, rgba(198,198,198,0.35) 60%, transparent 100%)",
+                  ],
+                  scale: [1, 1.05, 0.98, 1.02, 1],
+                  opacity: [0.4, 0.6, 0.5, 0.7, 0.4]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  filter: 'blur(10px)',
+                  zIndex: -1
+                }}
+              />
+
+              {/* Logo Area Bubbles */}
+              <motion.div
+                className="absolute w-1.5 h-1.5 bg-white/60 rounded-full"
+                animate={{
+                  x: [0, 4, -2, 5, 0],
+                  y: [0, -3, 2, -4, 0],
+                  opacity: [0, 0.8, 0.4, 0.9, 0],
+                  scale: [0.3, 1, 0.7, 1.1, 0.3]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0
+                }}
+                style={{
+                  left: '20%',
+                  top: '30%',
+                  filter: 'blur(0.5px)',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-1 h-1 bg-white/50 rounded-full"
+                animate={{
+                  x: [0, -3, 2, -4, 0],
+                  y: [0, 2, -3, 1, 0],
+                  opacity: [0, 0.6, 0.9, 0.3, 0],
+                  scale: [0.2, 0.9, 1, 0.5, 0.2]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1.5
+                }}
+                style={{
+                  right: '25%',
+                  top: '20%',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-2 h-2 bg-white/40 rounded-full"
+                animate={{
+                  x: [0, 5, -2, 6, 0],
+                  y: [0, 3, -1, 4, 0],
+                  opacity: [0, 0.5, 0.8, 0.2, 0],
+                  scale: [0.1, 1.1, 0.8, 1.2, 0.1]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 3
+                }}
+                style={{
+                  right: '15%',
+                  bottom: '15%',
+                  filter: 'blur(1px)',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-0.5 h-0.5 bg-white/70 rounded-full"
+                animate={{
+                  x: [0, -1, 3, -2, 0],
+                  y: [0, -4, 1, -5, 0],
+                  opacity: [0, 0.9, 0.3, 1, 0],
+                  scale: [0.1, 0.8, 1.2, 0.6, 0.1]
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 2
+                }}
+                style={{
+                  left: '70%',
+                  bottom: '25%',
+                  zIndex: -1
+                }}
+              />
+              <motion.div
+                className="absolute w-1.2 h-1.2 bg-white/45 rounded-full"
+                animate={{
+                  x: [0, -3, 1, -4, 0],
+                  y: [0, 2, -2, 2, 0],
+                  opacity: [0, 0.7, 0.4, 0.8, 0],
+                  scale: [0.2, 1, 0.9, 1.1, 0.2]
+                }}
+                transition={{
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 4
+                }}
+                style={{
+                  left: '10%',
+                  bottom: '30%',
+                  filter: 'blur(0.8px)',
+                  zIndex: -1
+                }}
+              />
 
               {/* Logo Container */}
               <motion.div
