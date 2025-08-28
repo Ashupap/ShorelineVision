@@ -16,9 +16,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 interface ContactFormModalProps {
   isOpen: boolean;
   onClose: () => void;
+  productName?: string;
 }
 
-export default function ContactFormModal({ isOpen, onClose }: ContactFormModalProps) {
+export default function ContactFormModal({ isOpen, onClose, productName }: ContactFormModalProps) {
   const { toast } = useToast();
 
   const form = useForm<InsertInquirySchema>({
@@ -29,8 +30,8 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
       email: "",
       phone: "",
       company: "",
-      topic: "",
-      message: "",
+      topic: productName ? "product" : "",
+      message: productName ? `I would like to inquire about ${productName}. ` : "",
     },
   });
 
@@ -220,7 +221,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Inquiry Topic</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
+                          <Select onValueChange={field.onChange} value={field.value || ""} defaultValue={productName ? "product" : ""}>
                             <FormControl>
                               <SelectTrigger data-testid="select-modal-topic">
                                 <SelectValue placeholder="Select inquiry topic" />

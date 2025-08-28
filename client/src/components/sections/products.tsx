@@ -1,12 +1,17 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Clock, Package } from "lucide-react";
 import { Link } from "wouter";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import ContactFormModal from "@/components/contact-form-modal";
 import type { Product } from "@shared/schema";
 
 export default function Products() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
+  
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products?published=true"],
   });
@@ -157,10 +162,14 @@ export default function Products() {
                           {/* Action Button */}
                           <motion.button
                             whileHover={{ x: 5 }}
+                            onClick={() => {
+                              setSelectedProduct(product.name);
+                              setIsContactModalOpen(true);
+                            }}
                             className="inline-flex items-center gap-2 text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 border border-white/30 hover:border-white/50"
                             data-testid={`button-product-${product.id}`}
                           >
-                            <span className="font-medium">View Details</span>
+                            <span className="font-medium">Inquire Now</span>
                             <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
                           </motion.button>
                         </div>
@@ -197,6 +206,13 @@ export default function Products() {
           </Link>
         </motion.div>
       </div>
+
+      {/* Contact Modal */}
+      <ContactFormModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)}
+        productName={selectedProduct}
+      />
     </section>
   );
 }
