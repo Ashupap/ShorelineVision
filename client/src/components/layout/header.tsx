@@ -63,7 +63,7 @@ export default function Header() {
           height: isScrolled ? 0 : 'auto'
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="relative overflow-hidden hidden lg:block"
+        className="relative overflow-hidden hidden xl:block"
       >
         {/* Animated Background */}
         <motion.div
@@ -185,7 +185,7 @@ export default function Header() {
         }`}
       >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <Link href="/">
             <motion.div
@@ -198,7 +198,7 @@ export default function Header() {
               data-testid="link-logo"
             >
               <motion.div
-                className={`h-14 w-auto transition-all duration-500 ${
+                className={`h-10 sm:h-12 lg:h-14 w-auto transition-all duration-500 ${
                   isScrolled 
                     ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:drop-shadow-[0_4px_20px_rgba(59,130,246,0.4)]' 
                     : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.9)] hover:drop-shadow-[0_0_25px_rgba(255,107,107,0.8)]'
@@ -217,7 +217,7 @@ export default function Header() {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-14 w-auto object-contain"
+                  className="h-10 sm:h-12 lg:h-14 w-auto object-contain"
                   priority={true}
                   loading="eager"
                 />
@@ -226,7 +226,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-8">
             {navigation.map((item) => (
               <div key={item.name}>
                 {item.href.startsWith("/#") ? (
@@ -251,10 +251,10 @@ export default function Header() {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <Link
               href="/meadmin"
-              className={`hidden lg:flex items-center text-sm ${isScrolled ? 'text-gray-600' : 'text-white/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300`}
+              className={`hidden xl:flex items-center text-sm ${isScrolled ? 'text-gray-600' : 'text-white/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-all duration-300`}
               data-testid="link-admin"
             >
               <Shield size={16} className="mr-1" />
@@ -262,17 +262,17 @@ export default function Header() {
             </Link>
             <button
               onClick={() => scrollToSection("/#contact")}
-              className="bg-ocean-blue text-white px-6 py-2 rounded-lg hover:bg-deep-navy transition-colors duration-300"
+              className="bg-ocean-blue text-white px-3 py-1.5 sm:px-6 sm:py-2 text-sm rounded-lg hover:bg-deep-navy transition-colors duration-300"
               data-testid="button-enquiry"
             >
               Enquiry
             </button>
             <button
-              className={`md:hidden ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-colors duration-300`}
+              className={`lg:hidden ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'} hover:text-coral-accent transition-colors duration-300`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               data-testid="button-mobile-menu"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -283,7 +283,7 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t"
+            className="lg:hidden bg-white border-t"
           >
             <div className="container mx-auto px-4 py-4 space-y-4">
               {navigation.map((item) => (
