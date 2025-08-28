@@ -172,19 +172,34 @@ export default function Contact() {
   // Handle automatic scrolling to form when hash is present
   useEffect(() => {
     const handleHashScroll = () => {
+      console.log('Hash detected:', window.location.hash);
       if (window.location.hash === '#contact-form') {
         const element = document.getElementById('contact-form');
+        console.log('Form element found:', element);
         if (element) {
-          // Scroll with offset to account for header
-          const yOffset = -100;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
+          // Simple scroll to element
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       }
     };
 
-    // Handle initial load
-    setTimeout(handleHashScroll, 1000);
+    // Handle initial load with multiple attempts
+    const attemptScroll = (attempt = 1) => {
+      if (attempt <= 5) {
+        setTimeout(() => {
+          console.log(`Scroll attempt ${attempt}`);
+          handleHashScroll();
+          if (window.location.hash === '#contact-form' && !document.getElementById('contact-form')) {
+            attemptScroll(attempt + 1);
+          }
+        }, attempt * 500);
+      }
+    };
+
+    attemptScroll();
     
     // Handle hash changes
     window.addEventListener('hashchange', handleHashScroll);
