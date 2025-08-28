@@ -95,18 +95,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(userData)
-      .onConflictDoUpdate({
-        target: users.id,
-        set: {
-          ...userData,
-          updatedAt: new Date(),
-        },
-      })
-      .returning();
-    return user;
+    // MySQL doesn't have onConflictDoUpdate, so we'll first try to insert
+    // If that fails, we'll update
+    try {
+      await db.insert(users).values(userData);
+      const [user] = await db.select().from(users).where(eq(users.id, userData.id));
+      return user;
+    } catch (error) {
+      // If insert fails due to duplicate key, update instead
+      await db.update(users)
+        .set({ ...userData, updatedAt: new Date() })
+        .where(eq(users.id, userData.id));
+      const [user] = await db.select().from(users).where(eq(users.id, userData.id));
+      return user;
+    }
   }
 
   // Blog operations
@@ -129,19 +131,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createBlogPost(post: InsertBlogPost, authorId: string): Promise<BlogPost> {
-    const [created] = await db
+    const result = await db
       .insert(blogPosts)
-      .values({ ...post, authorId })
-      .returning();
+      .values({ ...post, authorId });
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(blogPosts).where(eq(blogPosts.id, insertId));
     return created;
   }
 
   async updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost> {
-    const [updated] = await db
+    await db
       .update(blogPosts)
       .set({ ...post, updatedAt: new Date() })
-      .where(eq(blogPosts.id, id))
-      .returning();
+      .where(eq(blogPosts.id, id));
+    
+    const [updated] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
     return updated;
   }
 
@@ -164,19 +169,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
-    const [created] = await db
+    const result = await db
       .insert(testimonials)
-      .values(testimonial)
-      .returning();
+      .values(testimonial);
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(testimonials).where(eq(testimonials.id, insertId));
     return created;
   }
 
   async updateTestimonial(id: number, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
-    const [updated] = await db
+    await db
       .update(testimonials)
       .set({ ...testimonial, updatedAt: new Date() })
-      .where(eq(testimonials.id, id))
-      .returning();
+      .where(eq(testimonials.id, id));
+    
+    const [updated] = await db.select().from(testimonials).where(eq(testimonials.id, id));
     return updated;
   }
 
@@ -199,19 +207,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createProduct(product: InsertProduct): Promise<Product> {
-    const [created] = await db
+    const result = await db
       .insert(products)
-      .values(product)
-      .returning();
+      .values(product);
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(products).where(eq(products.id, insertId));
     return created;
   }
 
   async updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product> {
-    const [updated] = await db
+    await db
       .update(products)
       .set({ ...product, updatedAt: new Date() })
-      .where(eq(products.id, id))
-      .returning();
+      .where(eq(products.id, id));
+    
+    const [updated] = await db.select().from(products).where(eq(products.id, id));
     return updated;
   }
 
@@ -230,19 +241,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createInquiry(inquiry: InsertInquiry): Promise<Inquiry> {
-    const [created] = await db
+    const result = await db
       .insert(inquiries)
-      .values(inquiry)
-      .returning();
+      .values(inquiry);
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(inquiries).where(eq(inquiries.id, insertId));
     return created;
   }
 
   async updateInquiry(id: number, inquiry: Partial<InsertInquiry>): Promise<Inquiry> {
-    const [updated] = await db
+    await db
       .update(inquiries)
       .set({ ...inquiry, updatedAt: new Date() })
-      .where(eq(inquiries.id, id))
-      .returning();
+      .where(eq(inquiries.id, id));
+    
+    const [updated] = await db.select().from(inquiries).where(eq(inquiries.id, id));
     return updated;
   }
 
@@ -265,19 +279,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createWebsiteContent(content: InsertWebsiteContent): Promise<WebsiteContent> {
-    const [created] = await db
+    const result = await db
       .insert(websiteContent)
-      .values(content)
-      .returning();
+      .values(content);
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(websiteContent).where(eq(websiteContent.id, insertId));
     return created;
   }
 
   async updateWebsiteContentBySection(section: string, content: Partial<InsertWebsiteContent>): Promise<WebsiteContent> {
-    const [updated] = await db
+    await db
       .update(websiteContent)
       .set({ ...content, updatedAt: new Date() })
-      .where(eq(websiteContent.section, section))
-      .returning();
+      .where(eq(websiteContent.section, section));
+    
+    const [updated] = await db.select().from(websiteContent).where(eq(websiteContent.section, section));
     return updated;
   }
 
@@ -300,19 +317,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createMediaFile(media: InsertMediaFile & { uploadedBy: string }): Promise<MediaFile> {
-    const [created] = await db
+    const result = await db
       .insert(mediaFiles)
-      .values(media)
-      .returning();
+      .values(media);
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(mediaFiles).where(eq(mediaFiles.id, insertId));
     return created;
   }
 
   async updateMediaFile(id: number, media: Partial<InsertMediaFile>): Promise<MediaFile> {
-    const [updated] = await db
+    await db
       .update(mediaFiles)
       .set(media)
-      .where(eq(mediaFiles.id, id))
-      .returning();
+      .where(eq(mediaFiles.id, id));
+    
+    const [updated] = await db.select().from(mediaFiles).where(eq(mediaFiles.id, id));
     return updated;
   }
 
@@ -335,19 +355,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createWebsiteSetting(setting: InsertWebsiteSetting): Promise<WebsiteSetting> {
-    const [created] = await db
+    const result = await db
       .insert(websiteSettings)
-      .values(setting)
-      .returning();
+      .values(setting);
+    
+    const insertId = result[0].insertId;
+    const [created] = await db.select().from(websiteSettings).where(eq(websiteSettings.id, insertId));
     return created;
   }
 
   async updateWebsiteSettingByKey(key: string, setting: Partial<InsertWebsiteSetting>): Promise<WebsiteSetting> {
-    const [updated] = await db
+    await db
       .update(websiteSettings)
       .set({ ...setting, updatedAt: new Date() })
-      .where(eq(websiteSettings.key, key))
-      .returning();
+      .where(eq(websiteSettings.key, key));
+    
+    const [updated] = await db.select().from(websiteSettings).where(eq(websiteSettings.key, key));
     return updated;
   }
 

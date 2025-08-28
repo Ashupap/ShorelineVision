@@ -5,7 +5,7 @@ import passport from "passport";
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
-import connectPg from "connect-pg-simple";
+import MySQLStore from "express-mysql-session";
 import { storage } from "./storage";
 
 if (!process.env.REPLIT_DOMAINS) {
@@ -24,13 +24,30 @@ const getOidcConfig = memoize(
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const pgStore = connectPg(session);
-  const sessionStore = new pgStore({
-    conString: process.env.DATABASE_URL || "postgresql://runner@localhost:5432/postgres",
-    createTableIfMissing: true,
-    ttl: sessionTtl,
-    tableName: "sessions",
+  const MySQLStoreClass = MySQLStore(session);
+  
+  // Parse DATABASE_URL to extract MySQL connection options
+  const databaseUrl = process.env.DATABASE_URL || "mysql://root:password@localhost:3306/alashore_marine";
+  const url = new URL(databaseUrl);
+  
+  const sessionStore = new MySQLStoreClass({
+    host: url.hostname,
+    port: parseInt(url.port) || 3306,
+    user: url.username,
+    password: url.password,
+    database: url.pathname.slice(1), // Remove leading slash
+    createDatabaseTable: true,
+    expiration: sessionTtl,
+    schema: {
+      tableName: 'sessions',
+      columnNames: {
+        session_id: 'sid',
+        expires: 'expire',
+        data: 'sess'
+      }
+    }
   });
+  
   return session({
     secret: process.env.SESSION_SECRET || "dev-session-secret-key-change-in-production",
     store: sessionStore,
