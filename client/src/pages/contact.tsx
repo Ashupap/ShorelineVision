@@ -171,14 +171,27 @@ export default function Contact() {
 
   // Handle automatic scrolling to form when hash is present
   useEffect(() => {
-    if (window.location.hash === '#contact-form') {
-      setTimeout(() => {
+    const handleHashScroll = () => {
+      if (window.location.hash === '#contact-form') {
         const element = document.getElementById('contact-form');
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          // Scroll with offset to account for header
+          const yOffset = -100;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
-      }, 500); // Delay to ensure page is fully rendered
-    }
+      }
+    };
+
+    // Handle initial load
+    setTimeout(handleHashScroll, 1000);
+    
+    // Handle hash changes
+    window.addEventListener('hashchange', handleHashScroll);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashScroll);
+    };
   }, []);
 
   return (
