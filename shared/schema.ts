@@ -2,19 +2,20 @@ import { sql } from 'drizzle-orm';
 import {
   index,
   json,
-  mysqlTable,
+  pgTable,
   timestamp,
   varchar,
   text,
   boolean,
-  int,
-} from "drizzle-orm/mysql-core";
+  serial,
+  integer,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session storage table.
 // (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
-export const sessions = mysqlTable(
+export const sessions = pgTable(
   "sessions",
   {
     sid: varchar("sid", { length: 128 }).primaryKey(),
@@ -28,19 +29,19 @@ export const sessions = mysqlTable(
 
 // User storage table.
 // (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
-export const users = mysqlTable("users", {
+export const users = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey(),
   email: varchar("email", { length: 255 }).unique(),
   firstName: varchar("first_name", { length: 255 }),
   lastName: varchar("last_name", { length: 255 }),
   profileImageUrl: varchar("profile_image_url", { length: 512 }),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Blog posts table
-export const blogPosts = mysqlTable("blog_posts", {
-  id: int("id").primaryKey().autoincrement(),
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   excerpt: text("excerpt"),
@@ -50,39 +51,39 @@ export const blogPosts = mysqlTable("blog_posts", {
   published: boolean("published").default(false),
   authorId: varchar("author_id", { length: 255 }).references(() => users.id),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Testimonials table
-export const testimonials = mysqlTable("testimonials", {
-  id: int("id").primaryKey().autoincrement(),
+export const testimonials = pgTable("testimonials", {
+  id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   company: varchar("company", { length: 255 }),
   content: text("content").notNull(),
-  rating: int("rating").default(5),
+  rating: integer("rating").default(5),
   avatar: varchar("avatar", { length: 512 }),
   published: boolean("published").default(true),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Products table
-export const products = mysqlTable("products", {
-  id: int("id").primaryKey().autoincrement(),
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description").notNull(),
   featuredImage: varchar("featured_image", { length: 512 }),
   category: varchar("category", { length: 100 }).notNull(),
   specifications: text("specifications"),
   published: boolean("published").default(true),
-  order: int("order").default(0),
+  order: integer("order").default(0),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Contact inquiries table
-export const inquiries = mysqlTable("inquiries", {
-  id: int("id").primaryKey().autoincrement(),
+export const inquiries = pgTable("inquiries", {
+  id: serial("id").primaryKey(),
   firstName: varchar("first_name", { length: 255 }).notNull(),
   lastName: varchar("last_name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
@@ -92,12 +93,12 @@ export const inquiries = mysqlTable("inquiries", {
   message: text("message").notNull(),
   status: varchar("status", { length: 50 }).default("new"),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Website content management table
-export const websiteContent = mysqlTable("website_content", {
-  id: int("id").primaryKey().autoincrement(),
+export const websiteContent = pgTable("website_content", {
+  id: serial("id").primaryKey(),
   section: varchar("section", { length: 100 }).notNull().unique(), // hero, about, contact, etc.
   title: varchar("title", { length: 500 }),
   subtitle: varchar("subtitle", { length: 500 }),
@@ -108,16 +109,16 @@ export const websiteContent = mysqlTable("website_content", {
   additionalData: json("additional_data"), // For flexible content storage
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Media files table for image management
-export const mediaFiles = mysqlTable("media_files", {
-  id: int("id").primaryKey().autoincrement(),
+export const mediaFiles = pgTable("media_files", {
+  id: serial("id").primaryKey(),
   filename: varchar("filename", { length: 255 }).notNull(),
   originalName: varchar("original_name", { length: 255 }).notNull(),
   mimeType: varchar("mime_type", { length: 100 }).notNull(),
-  size: int("size").notNull(),
+  size: integer("size").notNull(),
   url: varchar("url", { length: 512 }).notNull(),
   alt: varchar("alt", { length: 255 }),
   category: varchar("category", { length: 100 }).default("general"),
@@ -126,15 +127,15 @@ export const mediaFiles = mysqlTable("media_files", {
 });
 
 // Website settings table for global configurations
-export const websiteSettings = mysqlTable("website_settings", {
-  id: int("id").primaryKey().autoincrement(),
+export const websiteSettings = pgTable("website_settings", {
+  id: serial("id").primaryKey(),
   key: varchar("key", { length: 100 }).notNull().unique(),
   value: text("value"),
   type: varchar("type", { length: 50 }).default("text"), // text, number, boolean, json
   description: varchar("description", { length: 255 }),
   category: varchar("category", { length: 100 }).default("general"),
   createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Schema types
