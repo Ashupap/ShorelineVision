@@ -2,7 +2,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated } from "./simpleAuth";
 import { 
   insertBlogPostSchema, 
   insertTestimonialSchema, 
@@ -54,72 +54,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // Temp admin login for development/testing
-  app.post('/api/auth/temp-login', async (req, res) => {
-    try {
-      const { username, password } = req.body;
-      
-      // Simple temp credentials for testing
-      if (username === 'admin' && password === 'admin123') {
-        const tempUserData = {
-          id: 'temp-admin-123',
-          email: 'admin@alashoremarine.com',
-          firstName: 'Admin',
-          lastName: 'User'
-        };
-        
-        // Create the user in database if it doesn't exist
-        await storage.upsertUser(tempUserData);
-        
-        // Simulate user session
-        (req.session as any).tempUser = tempUserData;
-        
-        res.json(tempUserData);
-      } else {
-        res.status(401).json({ message: 'Invalid credentials' });
-      }
-    } catch (error) {
-      console.error("Error in temp login:", error);
-      res.status(500).json({ message: "Login failed" });
-    }
-  });
-
-  // Check temp user session
-  app.get('/api/auth/temp-user', async (req: any, res) => {
-    try {
-      if ((req.session as any).tempUser) {
-        res.json((req.session as any).tempUser);
-      } else {
-        res.status(401).json({ message: "Not authenticated" });
-      }
-    } catch (error) {
-      console.error("Error fetching temp user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
-
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      // Check for temp user first
-      const tempUser = (req.session as any)?.tempUser;
-      if (tempUser) {
-        return res.json(tempUser);
-      }
-
-      // Handle regular Replit auth user
-      if (req.user && req.user.claims) {
-        const userId = req.user.claims.sub;
-        const user = await storage.getUser(userId);
-        return res.json(user);
-      }
-
-      return res.status(401).json({ message: "Unauthorized" });
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
+  // Authentication is now handled in simpleAuth.ts
 
   // Blog routes
   app.get('/api/blog', async (req, res) => {
