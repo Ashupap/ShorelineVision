@@ -1,5 +1,5 @@
-import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 import * as schema from "@shared/schema";
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -12,5 +12,8 @@ if (!DATABASE_URL) {
 
 console.log('Database connection established');
 
-const sql = neon(DATABASE_URL);
+// Configure postgres client for local PostgreSQL
+const sql = postgres(DATABASE_URL, {
+  prepare: false
+});
 export const db = drizzle(sql, { schema });

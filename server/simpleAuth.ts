@@ -1,32 +1,20 @@
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
-import MySQLStore from "express-mysql-session";
+import connectPgSimple from "connect-pg-simple";
 import { storage } from "./storage";
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const MySQLStoreClass = MySQLStore(session);
+  const PgSession = connectPgSimple(session);
   
-  // Parse DATABASE_URL to extract MySQL connection options
-  const databaseUrl = process.env.DATABASE_URL || "mysql://root:password@localhost:3306/alashore_marine";
-  const url = new URL(databaseUrl);
+  // Use PostgreSQL connection
+  const databaseUrl = process.env.DATABASE_URL || "postgresql://alashore_user:Passw0rd_2025@localhost:5432/alashore_marine";
   
-  const sessionStore = new MySQLStoreClass({
-    host: url.hostname,
-    port: parseInt(url.port) || 3306,
-    user: url.username,
-    password: url.password,
-    database: url.pathname.slice(1), // Remove leading slash
-    createDatabaseTable: true,
-    expiration: sessionTtl,
-    schema: {
-      tableName: 'sessions',
-      columnNames: {
-        session_id: 'sid',
-        expires: 'expire',
-        data: 'sess'
-      }
-    }
+  const sessionStore = new PgSession({
+    conString: databaseUrl,
+    tableName: 'sessions',
+    createTableIfMissing: true,
+    ttl: sessionTtl / 1000 // convert to seconds
   });
   
   return session({
