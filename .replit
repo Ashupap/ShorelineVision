@@ -4,7 +4,7 @@ hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
 channel = "stable-25_05"
-packages = ["postgresql", "mysql80", "imagemagick"]
+packages = ["postgresql", "mysql80", "imagemagick", "unzip"]
 
 [deployment]
 deploymentTarget = "autoscale"
