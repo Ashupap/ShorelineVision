@@ -81,17 +81,18 @@ export default function InteractiveGlobalMap() {
       if (!mapRef.current) return;
 
       try {
-        // Initialize map
+        // Initialize map with mobile-responsive settings
+        const isMobile = window.innerWidth < 768;
         const newMap = L.map(mapRef.current, {
           center: [20, 60],
-          zoom: 1.2,
+          zoom: isMobile ? 1.0 : 1.2,
           zoomControl: false,
           scrollWheelZoom: false,
           doubleClickZoom: false,
           dragging: true,
           attributionControl: false,
           maxZoom: 8,
-          minZoom: 1.2,
+          minZoom: isMobile ? 0.8 : 1.2,
         });
 
     // Add dark theme tile layer with color
@@ -253,12 +254,13 @@ export default function InteractiveGlobalMap() {
       }, index * animationDelay);
     });
 
-    // Fit map to show all markers with generous padding
+    // Fit map to show all markers with responsive padding
     const group = new L.FeatureGroup([originMarker, ...markers]);
     setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
       map.fitBounds(group.getBounds(), { 
-        padding: [80, 80],
-        maxZoom: 2.0 
+        padding: isMobile ? [40, 40] : [80, 80],
+        maxZoom: isMobile ? 1.8 : 2.0 
       });
     }, animationDelay * shippingDestinations.length + 500);
 
@@ -280,7 +282,7 @@ export default function InteractiveGlobalMap() {
     <div className="w-full bg-white rounded-3xl shadow-2xl overflow-hidden" data-testid="interactive-global-map">
 
       {/* Map Container with Overlays */}
-      <div className="relative h-[500px] w-full">
+      <div className="relative h-[300px] sm:h-[400px] md:h-[500px] w-full">
         <div 
           ref={mapRef} 
           className="absolute inset-0 w-full h-full bg-gray-900 z-10"
@@ -288,8 +290,8 @@ export default function InteractiveGlobalMap() {
         />
         
         {/* Map Legend - Positioned over map */}
-        <div className="absolute top-6 left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-4 max-w-xs z-30">
-          <h4 className="font-bold text-white mb-3 text-sm">Regional Distribution</h4>
+        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 md:top-6 md:left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-2 sm:p-3 md:p-4 max-w-[200px] sm:max-w-xs z-30">
+          <h4 className="font-bold text-white mb-2 sm:mb-3 text-xs sm:text-sm">Regional Distribution</h4>
           <div className="space-y-2">
             {regionStats.map(([region, stats]) => (
               <motion.div
@@ -304,13 +306,13 @@ export default function InteractiveGlobalMap() {
               >
                 <div className="flex items-center">
                   <div 
-                    className="w-3 h-3 rounded-full mr-2"
+                    className="w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-1 sm:mr-2"
                     style={{ backgroundColor: regionColors[region] }}
                   />
-                  <span className="text-sm font-medium text-gray-200">{region}</span>
+                  <span className="text-xs sm:text-sm font-medium text-gray-200 truncate">{region}</span>
                 </div>
                 <div className="text-xs text-gray-400">
-                  {stats.count} cities
+                  {stats.count}
                 </div>
               </motion.div>
             ))}
@@ -328,21 +330,21 @@ export default function InteractiveGlobalMap() {
         </div>
 
         {/* Global Network Details - Compact Right Panel */}
-        <div className="absolute top-20 right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-3 max-w-56 z-30">
-          <h4 className="font-bold text-white mb-2 text-xs">Global Network</h4>
+        <div className="absolute top-16 sm:top-20 right-2 sm:right-4 md:right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-2 sm:p-3 max-w-[140px] sm:max-w-56 z-30">
+          <h4 className="font-bold text-white mb-1 sm:mb-2 text-xs">Network</h4>
           
           {/* Quick Stats Row */}
-          <div className="flex justify-between text-center mb-3 text-xs">
+          <div className="flex justify-between text-center mb-2 sm:mb-3 text-xs">
             <div>
-              <div className="text-sm font-bold text-ocean-blue">{shippingDestinations.length}</div>
+              <div className="text-xs sm:text-sm font-bold text-ocean-blue">{shippingDestinations.length}</div>
               <div className="text-xs text-gray-400">Cities</div>
             </div>
             <div>
-              <div className="text-sm font-bold text-marine-teal">{regionStats.length}</div>
+              <div className="text-xs sm:text-sm font-bold text-marine-teal">{regionStats.length}</div>
               <div className="text-xs text-gray-400">Regions</div>
             </div>
             <div>
-              <div className="text-sm font-bold text-coral-accent">
+              <div className="text-xs sm:text-sm font-bold text-coral-accent">
                 {new Set(shippingDestinations.map(d => d.country)).size}
               </div>
               <div className="text-xs text-gray-400">Countries</div>
@@ -350,30 +352,31 @@ export default function InteractiveGlobalMap() {
           </div>
 
           {/* Regional Summary - Ultra Compact */}
-          <div className="space-y-1 text-xs">
+          <div className="space-y-1 text-xs hidden sm:block">
             <div className="flex items-center justify-between">
-              <span className="text-blue-300">🇺🇸 N.America</span>
+              <span className="text-blue-300 truncate">🇺🇸 N.America</span>
               <span className="text-gray-400">9</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-emerald-300">🇪🇺 Europe</span>
+              <span className="text-emerald-300 truncate">🇪🇺 Europe</span>
               <span className="text-gray-400">3</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-amber-300">🌏 Asia</span>
+              <span className="text-amber-300 truncate">🌏 Asia</span>
               <span className="text-gray-400">6</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-purple-300">🌍 Others</span>
+              <span className="text-purple-300 truncate">🌍 Others</span>
               <span className="text-gray-400">2</span>
             </div>
           </div>
         </div>
 
         {/* Interactive Help - Bottom Center */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-600 px-4 py-2 z-30">
+        <div className="absolute bottom-2 sm:bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-600 px-2 sm:px-3 md:px-4 py-1 sm:py-2 z-30">
           <p className="text-xs text-gray-300 text-center">
-            🖱️ Click markers • 🔍 Zoom controls • 🌍 Drag to explore
+            <span className="hidden sm:inline">🖱️ Click markers • 🔍 Zoom controls • 🌍 Drag to explore</span>
+            <span className="sm:hidden">Tap markers • Zoom • Drag</span>
           </p>
         </div>
       </div>
