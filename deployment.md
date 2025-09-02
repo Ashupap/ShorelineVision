@@ -83,6 +83,9 @@ cd /var/www/alashore-marine/ShorelineVision
 # Install Node.js dependencies
 npm install
 
+# Install required PostgreSQL packages
+npm install connect-pg-simple
+
 # Build the application
 npm run build
 ```
@@ -260,7 +263,16 @@ Change it to:
 import { setupAuth, isAuthenticated } from "./simpleauth";
 ```
 
-### 5.3 Rebuild Application
+### 5.3 Install Required PostgreSQL Session Package
+```bash
+# Install the PostgreSQL session store package
+npm install connect-pg-simple
+
+# Also ensure PostgreSQL driver is installed
+npm install pg @types/pg
+```
+
+### 5.4 Rebuild Application
 ```bash
 npm run build
 ```
