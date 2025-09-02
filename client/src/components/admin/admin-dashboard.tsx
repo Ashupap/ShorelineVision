@@ -9,6 +9,7 @@ import BlogEditor from "@/components/blog/blog-editor";
 import ContentEditor from "./content-editor";
 import MediaManager from "./media-manager";
 import BlogManager from "./blog-manager";
+import TestimonialsManager from "./testimonials-manager";
 import { 
   BarChart3, 
   FileText, 
@@ -387,16 +388,7 @@ export default function AdminDashboard() {
           </div>
         );
       case "testimonials":
-        return (
-          <div>
-            <h1 className="text-3xl font-heading font-bold text-gray-900 mb-8">
-              Testimonial Management
-            </h1>
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              <p className="text-gray-600">Testimonial management features coming soon...</p>
-            </div>
-          </div>
-        );
+        return <TestimonialsManager />;
       case "inquiries":
         return renderInquiriesManagement();
       case "settings":
