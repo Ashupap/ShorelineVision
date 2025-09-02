@@ -80,8 +80,8 @@ sudo chown -R $USER:$USER /var/www/alashore-marine/
 ```bash
 cd /var/www/alashore-marine/ShorelineVision
 
-# Install Node.js dependencies
-npm install
+# Install Node.js dependencies (including dev dependencies for build)
+npm install --include=dev
 
 # Install required PostgreSQL packages
 npm install connect-pg-simple
