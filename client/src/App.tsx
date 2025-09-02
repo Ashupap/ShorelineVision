@@ -36,7 +36,7 @@ function Router() {
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={Blog} />
         <Route path="/submit-testimonial" component={SubmitTestimonial} />
-        <Route path="/auth" component={AuthPage} />
+        <Route path="/meadmin" component={AuthPage} />
         <ProtectedRoute path="/admin" component={Admin} requireAdmin={true} />
         <Route component={NotFound} />
       </Switch>

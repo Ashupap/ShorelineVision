@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Fish, Shield, Globe, Users } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +28,6 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
   const { user, isLoading, loginMutation, registerMutation } = useAuth();
-  const [activeTab, setActiveTab] = useState("login");
 
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -95,13 +93,7 @@ export default function AuthPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="login">Login</TabsTrigger>
-                    <TabsTrigger value="register">Register</TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="login" className="space-y-4">
+                <div className="space-y-4">
                     <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="login-username">Username</Label>
@@ -152,101 +144,7 @@ export default function AuthPage() {
                         )}
                       </Button>
                     </form>
-                  </TabsContent>
-                  
-                  <TabsContent value="register" className="space-y-4">
-                    <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="register-firstName">First Name</Label>
-                          <Input
-                            id="register-firstName"
-                            data-testid="input-register-firstName"
-                            {...registerForm.register("firstName")}
-                            placeholder="First name"
-                            disabled={registerMutation.isPending}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="register-lastName">Last Name</Label>
-                          <Input
-                            id="register-lastName"
-                            data-testid="input-register-lastName"
-                            {...registerForm.register("lastName")}
-                            placeholder="Last name"
-                            disabled={registerMutation.isPending}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="register-username">Username *</Label>
-                        <Input
-                          id="register-username"
-                          data-testid="input-register-username"
-                          {...registerForm.register("username")}
-                          placeholder="Choose a username"
-                          disabled={registerMutation.isPending}
-                        />
-                        {registerForm.formState.errors.username && (
-                          <p className="text-sm text-destructive">
-                            {registerForm.formState.errors.username.message}
-                          </p>
-                        )}
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="register-email">Email</Label>
-                        <Input
-                          id="register-email"
-                          data-testid="input-register-email"
-                          type="email"
-                          {...registerForm.register("email")}
-                          placeholder="your.email@example.com"
-                          disabled={registerMutation.isPending}
-                        />
-                        {registerForm.formState.errors.email && (
-                          <p className="text-sm text-destructive">
-                            {registerForm.formState.errors.email.message}
-                          </p>
-                        )}
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="register-password">Password *</Label>
-                        <Input
-                          id="register-password"
-                          data-testid="input-register-password"
-                          type="password"
-                          {...registerForm.register("password")}
-                          placeholder="Create a secure password"
-                          disabled={registerMutation.isPending}
-                        />
-                        {registerForm.formState.errors.password && (
-                          <p className="text-sm text-destructive">
-                            {registerForm.formState.errors.password.message}
-                          </p>
-                        )}
-                      </div>
-                      
-                      <Button
-                        type="submit"
-                        data-testid="button-register"
-                        className="w-full"
-                        disabled={registerMutation.isPending}
-                      >
-                        {registerMutation.isPending ? (
-                          <>
-                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                            Creating account...
-                          </>
-                        ) : (
-                          "Create Account"
-                        )}
-                      </Button>
-                    </form>
-                  </TabsContent>
-                </Tabs>
+                </div>
               </CardContent>
             </Card>
           </div>
