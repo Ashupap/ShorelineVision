@@ -202,15 +202,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const testimonialData = publicTestimonialSchema.parse(req.body);
       
-      // Set published to true for customer submissions to show immediately
+      // Set published to false for customer submissions - require admin approval
       const testimonial = await storage.createTestimonial({
         ...testimonialData,
-        published: true
+        published: false
       });
       
       res.status(201).json({ 
         success: true, 
-        message: "Thank you for your testimonial! It has been published.",
+        message: "Thank you for your testimonial! It will be reviewed and published soon.",
         testimonial 
       });
     } catch (error) {

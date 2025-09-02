@@ -99,8 +99,8 @@ export default function SubmitTestimonial() {
               Thank You!
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-              Your testimonial has been successfully submitted and is now live on our website. 
-              We appreciate you taking the time to share your experience with Alashore Marine.
+              Your testimonial has been successfully submitted and will be reviewed by our team. 
+              Once approved, it will appear on our website. We appreciate you taking the time to share your experience with Alashore Marine.
             </p>
             <div className="space-y-4">
               <Button 

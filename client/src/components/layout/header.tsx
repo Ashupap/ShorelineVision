@@ -31,7 +31,6 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
     { name: "Sustainability", href: "/sustainability" },
     { name: "Media", href: "/media" },
     { name: "Blog", href: "/blog" },
-    { name: "Testimonials", href: "/submit-testimonial" },
     { name: "Contact", href: "/contact" },
   ];
 
