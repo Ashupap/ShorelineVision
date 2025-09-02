@@ -15,6 +15,7 @@ const Sustainability = lazy(() => import("@/pages/sustainability"));
 const Media = lazy(() => import("@/pages/media"));
 const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
+const SubmitTestimonial = lazy(() => import("@/pages/submit-testimonial"));
 const Admin = lazy(() => import("@/pages/admin"));
 const TempLogin = lazy(() => import("@/pages/temp-login"));
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -35,6 +36,7 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={Blog} />
+        <Route path="/submit-testimonial" component={SubmitTestimonial} />
         <Route path="/temp-login" component={TempLogin} />
         <Route path="/admin" component={Admin} />
         <Route component={NotFound} />

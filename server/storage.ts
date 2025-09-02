@@ -131,12 +131,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createBlogPost(post: InsertBlogPost, authorId: string): Promise<BlogPost> {
-    const result = await db
+    const [created] = await db
       .insert(blogPosts)
-      .values({ ...post, authorId });
+      .values({ ...post, authorId })
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(blogPosts).where(eq(blogPosts.id, insertId));
     return created;
   }
 
@@ -169,12 +168,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
-    const result = await db
+    const [created] = await db
       .insert(testimonials)
-      .values(testimonial);
+      .values(testimonial)
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(testimonials).where(eq(testimonials.id, insertId));
     return created;
   }
 
@@ -207,12 +205,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createProduct(product: InsertProduct): Promise<Product> {
-    const result = await db
+    const [created] = await db
       .insert(products)
-      .values(product);
+      .values(product)
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(products).where(eq(products.id, insertId));
     return created;
   }
 
@@ -241,12 +238,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createInquiry(inquiry: InsertInquiry): Promise<Inquiry> {
-    const result = await db
+    const [created] = await db
       .insert(inquiries)
-      .values(inquiry);
+      .values(inquiry)
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(inquiries).where(eq(inquiries.id, insertId));
     return created;
   }
 
@@ -279,12 +275,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createWebsiteContent(content: InsertWebsiteContent): Promise<WebsiteContent> {
-    const result = await db
+    const [created] = await db
       .insert(websiteContent)
-      .values(content);
+      .values(content)
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(websiteContent).where(eq(websiteContent.id, insertId));
     return created;
   }
 
@@ -317,12 +312,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createMediaFile(media: InsertMediaFile & { uploadedBy: string }): Promise<MediaFile> {
-    const result = await db
+    const [created] = await db
       .insert(mediaFiles)
-      .values(media);
+      .values(media)
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(mediaFiles).where(eq(mediaFiles.id, insertId));
     return created;
   }
 
@@ -355,12 +349,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createWebsiteSetting(setting: InsertWebsiteSetting): Promise<WebsiteSetting> {
-    const result = await db
+    const [created] = await db
       .insert(websiteSettings)
-      .values(setting);
+      .values(setting)
+      .returning();
     
-    const insertId = result[0].insertId;
-    const [created] = await db.select().from(websiteSettings).where(eq(websiteSettings.id, insertId));
     return created;
   }
 

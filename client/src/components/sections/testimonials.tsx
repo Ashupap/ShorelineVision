@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Star, User, Quote } from "lucide-react";
+import { Star, User, Quote, MessageSquarePlus } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
 import type { Testimonial } from "@shared/schema";
 
 export default function Testimonials() {
@@ -93,9 +95,27 @@ export default function Testimonials() {
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Don't just take our word for it
           </h2>
-          <p className="text-white/90 text-lg leading-relaxed">
+          <p className="text-white/90 text-lg leading-relaxed mb-8">
             Witness it first hand, directly from our lovely customers
           </p>
+          
+          {/* Call-to-Action Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/submit-testimonial">
+              <Button 
+                className="bg-white text-teal-600 hover:bg-gray-50 hover:text-teal-700 px-6 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                data-testid="button-share-experience"
+              >
+                <MessageSquarePlus className="w-5 h-5 mr-2" />
+                Share Your Experience
+              </Button>
+            </Link>
+          </motion.div>
         </motion.div>
 
         {/* Right Side - White Background with Centered Card */}

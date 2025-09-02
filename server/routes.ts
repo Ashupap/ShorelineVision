@@ -189,6 +189,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public endpoint for customer testimonial submissions
+  app.post('/api/testimonials/submit', async (req, res) => {
+    try {
+      // Create a specific schema for public submissions (no admin-only fields)
+      const publicTestimonialSchema = insertTestimonialSchema.pick({
+        name: true,
+        company: true,
+        content: true,
+        rating: true
+      });
+      
+      const testimonialData = publicTestimonialSchema.parse(req.body);
+      
+      // Set published to true for customer submissions to show immediately
+      const testimonial = await storage.createTestimonial({
+        ...testimonialData,
+        published: true
+      });
+      
+      res.status(201).json({ 
+        success: true, 
+        message: "Thank you for your testimonial! It has been published.",
+        testimonial 
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid testimonial data", errors: error.errors });
+      }
+      console.error("Error creating testimonial:", error);
+      res.status(500).json({ message: "Failed to submit testimonial" });
+    }
+  });
+
   app.post('/api/testimonials', isAuthenticated, async (req, res) => {
     try {
       const testimonialData = insertTestimonialSchema.parse(req.body);
