@@ -715,9 +715,9 @@ export default function Media() {
                   whileHover={{ scale: 1.1, x: -5 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setCurrentGalleryIndex(prev => Math.max(0, prev - 1))}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
+                  className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-3 md:p-4 text-white hover:bg-black/40 transition-all duration-300"
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={20} className="md:w-6 md:h-6" />
                 </motion.button>
               )}
               
@@ -726,14 +726,14 @@ export default function Media() {
                   whileHover={{ scale: 1.1, x: 5 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setCurrentGalleryIndex(prev => Math.min(Math.max(0, filteredImages.length - 4), prev + 1))}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-4 text-white hover:bg-black/40 transition-all duration-300"
+                  className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 backdrop-blur-md border border-white/20 rounded-full p-3 md:p-4 text-white hover:bg-black/40 transition-all duration-300"
                 >
-                  <ChevronRight size={24} />
+                  <ChevronRight size={20} className="md:w-6 md:h-6" />
                 </motion.button>
               )}
 
-              {/* Dynamic Grid Layout */}
-              <div className="grid grid-cols-12 grid-rows-6 gap-4 h-[800px] md:h-[600px]">
+              {/* Responsive Grid Layout */}
+              <div className="md:grid md:grid-cols-12 md:grid-rows-6 md:gap-4 md:h-[600px] space-y-4 md:space-y-0">
                 {filteredImages.slice(currentGalleryIndex, currentGalleryIndex + 4).map((image, index) => {
                   const actualIndex = currentGalleryIndex + index;
                   const isCenter = index === 1;
@@ -748,13 +748,16 @@ export default function Media() {
                       whileHover={{ scale: isCenter ? 1.02 : 1.05 }}
                       onClick={() => setLightboxIndex(actualIndex)}
                       className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer ${
+                        /* Mobile: Stack vertically with varying heights */
                         isCenter 
-                          ? "col-span-6 row-span-4 col-start-4 row-start-2" 
-                          : index === 0 
-                            ? "col-span-3 row-span-2 col-start-1 row-start-1" 
-                            : index === 2 
-                              ? "col-span-3 row-span-2 col-start-10 row-start-1" 
-                              : "col-span-3 row-span-2 col-start-1 row-start-4"
+                          ? "h-64 sm:h-80 md:col-span-6 md:row-span-4 md:col-start-4 md:row-start-2 md:h-auto" 
+                          : "h-48 sm:h-64 " + (
+                            index === 0 
+                              ? "md:col-span-3 md:row-span-2 md:col-start-1 md:row-start-1 md:h-auto" 
+                              : index === 2 
+                                ? "md:col-span-3 md:row-span-2 md:col-start-10 md:row-start-1 md:h-auto" 
+                                : "md:col-span-3 md:row-span-2 md:col-start-1 md:row-start-4 md:h-auto"
+                          )
                       }`}
                     >
                       <img
