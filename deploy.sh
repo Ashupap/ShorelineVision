@@ -153,10 +153,10 @@ print_status "Updating database schema..."
 npm run db:push
 print_success "Database schema updated"
 
-# Build the application (TypeScript compilation)
-print_status "Compiling TypeScript to JavaScript..."
-npx tsc
-print_success "TypeScript compiled successfully"
+# Build the application
+print_status "Building application for production..."
+npm run build
+print_success "Application built successfully"
 
 # Create systemd service file
 print_status "Setting up systemd service..."
@@ -175,7 +175,7 @@ User=$APP_USER
 WorkingDirectory=$APP_DIR
 Environment=NODE_ENV=production
 EnvironmentFile=$APP_DIR/.env
-ExecStart=/usr/bin/node $APP_DIR/server/index.js
+ExecStart=/usr/bin/node $APP_DIR/dist/index.js
 Restart=always
 RestartSec=10
 StandardOutput=syslog
@@ -207,74 +207,7 @@ EOF
 
 print_success "Log rotation configured"
 
-# Set up nginx configuration (optional)
-if command -v nginx &> /dev/null; then
-    print_status "Setting up Nginx reverse proxy..."
-    NGINX_CONFIG="/etc/nginx/sites-available/alashore-marine"
-    
-    sudo tee "$NGINX_CONFIG" > /dev/null << 'EOF'
-server {
-    listen 80;
-    server_name your-domain.com www.your-domain.com;
-    
-    # Redirect HTTP to HTTPS
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name your-domain.com www.your-domain.com;
-    
-    # SSL Configuration (update paths to your certificates)
-    # ssl_certificate /path/to/your/certificate.crt;
-    # ssl_certificate_key /path/to/your/private.key;
-    
-    # Security headers
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    add_header X-XSS-Protection "1; mode=block";
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    
-    # Proxy to Node.js app
-    location / {
-        proxy_pass http://localhost:5000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-        proxy_redirect off;
-    }
-    
-    # Static files (if serving directly through nginx)
-    location /uploads/ {
-        alias $APP_DIR/uploads/;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-    
-    # Security: Hide sensitive files
-    location ~ /\. {
-        deny all;
-    }
-    
-    location ~ ^/(\.env|package\.json|server/) {
-        deny all;
-    }
-}
-EOF
-
-    # Enable the site (but don't activate yet)
-    print_warning "Nginx configuration created but not activated."
-    print_warning "Please update the server_name and SSL certificates in $NGINX_CONFIG"
-    print_warning "Then run: sudo ln -s $NGINX_CONFIG /etc/nginx/sites-enabled/"
-    print_warning "And: sudo systemctl reload nginx"
-else
-    print_warning "Nginx not found, skipping reverse proxy setup"
-fi
+# Skip nginx configuration as requested
 
 # Reload systemd and start service
 print_status "Starting Alashore Marine service..."
@@ -297,38 +230,16 @@ fi
 print_status "Service status:"
 sudo systemctl status alashore-marine --no-pager -l
 
-# Setup firewall (if ufw is available)
-if command -v ufw &> /dev/null; then
-    print_status "Configuring firewall..."
-    sudo ufw allow ssh
-    sudo ufw allow 80/tcp
-    sudo ufw allow 443/tcp
-    sudo ufw allow 5000/tcp  # Direct access to Node.js (remove if using nginx)
-    print_success "Firewall rules added"
-else
-    print_warning "UFW not found, please configure firewall manually"
-fi
+# Skip firewall configuration as requested
 
 # Final instructions
 echo ""
 print_success "🎉 Deployment completed successfully!"
-echo ""
-print_status "Next steps:"
-echo "1. Update your domain DNS to point to this server"
-echo "2. Configure SSL certificates (Let's Encrypt recommended)"
-echo "3. Test the application at http://your-server-ip:5000"
-echo "4. Create your first admin account at /auth"
 echo ""
 print_status "Useful commands:"
 echo "- Check logs: sudo journalctl -u alashore-marine -f"
 echo "- Restart service: sudo systemctl restart alashore-marine"
 echo "- Stop service: sudo systemctl stop alashore-marine"
 echo "- Update app: ./deploy.sh"
-echo ""
-print_warning "Remember to:"
-echo "- Set up SSL certificates for HTTPS"
-echo "- Configure regular database backups"
-echo "- Monitor application logs"
-echo "- Keep the system updated"
 echo ""
 print_success "Alashore Marine is ready for production! 🐟"
