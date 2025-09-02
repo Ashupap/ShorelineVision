@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, memo, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import ContactFormModal from "@/components/contact-form-modal";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
@@ -21,6 +22,7 @@ import selectLogo from "@assets/SELECT_1755944927384.png";
 const Home = memo(function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
