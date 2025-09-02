@@ -1,8 +1,9 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+import mysql from 'mysql2/promise';
+import { drizzle } from 'drizzle-orm/mysql2';
 import * as schema from "@shared/schema";
 
-const DATABASE_URL = process.env.DATABASE_URL;
+// Use a default DATABASE_URL for development if not set
+const DATABASE_URL = process.env.DATABASE_URL || "mysql://root:password@localhost:3306/alashore_marine";
 
 if (!DATABASE_URL) {
   throw new Error(
@@ -10,6 +11,6 @@ if (!DATABASE_URL) {
   );
 }
 
-// Create PostgreSQL connection
-const sql = postgres(DATABASE_URL!);
-export const db = drizzle(sql, { schema });
+// Create connection pool
+const pool = mysql.createPool(DATABASE_URL);
+export const db = drizzle(pool, { schema, mode: 'default' });
