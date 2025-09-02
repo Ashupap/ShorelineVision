@@ -24,7 +24,7 @@ import {
   type WebsiteSetting,
   type InsertWebsiteSetting,
 } from "@shared/schema";
-import { db } from "./db";
+import { db } from "./db-dev-override";
 import { eq, desc, like, and } from "drizzle-orm";
 
 // Interface for storage operations

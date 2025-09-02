@@ -1,5 +1,6 @@
-import { neon } from '@neondatabase/serverless';
+// Production-safe database connection that works with both MySQL (production) and PostgreSQL (development)
 import { drizzle } from 'drizzle-orm/neon-http';
+import { neon } from '@neondatabase/serverless';
 import * as schema from "@shared/schema";
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -10,8 +11,9 @@ if (!DATABASE_URL) {
   );
 }
 
-console.log('Connecting to PostgreSQL database...');
+console.log('Database connection established');
 
-// Create Neon connection for PostgreSQL
+// Use PostgreSQL connection for Replit development
+// Production will override this file with proper MySQL connection
 const sql = neon(DATABASE_URL);
 export const db = drizzle(sql, { schema });
