@@ -290,7 +290,7 @@ export default function InteractiveGlobalMap() {
         />
         
         {/* Map Legend - Positioned over map */}
-        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 md:top-6 md:left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-2 sm:p-3 md:p-4 max-w-[200px] sm:max-w-xs z-30">
+        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 md:top-6 md:left-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-2 sm:p-3 md:p-4 max-w-[200px] sm:max-w-xs z-30 hidden sm:block">
           <h4 className="font-bold text-white mb-2 sm:mb-3 text-xs sm:text-sm">Regional Distribution</h4>
           <div className="space-y-2">
             {regionStats.map(([region, stats]) => (
@@ -330,7 +330,7 @@ export default function InteractiveGlobalMap() {
         </div>
 
         {/* Global Network Details - Compact Right Panel */}
-        <div className="absolute top-16 sm:top-20 right-2 sm:right-4 md:right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-2 sm:p-3 max-w-[140px] sm:max-w-56 z-30">
+        <div className="absolute top-16 sm:top-20 right-2 sm:right-4 md:right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-600 p-2 sm:p-3 max-w-[140px] sm:max-w-56 z-30 hidden sm:block">
           <h4 className="font-bold text-white mb-1 sm:mb-2 text-xs">Network</h4>
           
           {/* Quick Stats Row */}
