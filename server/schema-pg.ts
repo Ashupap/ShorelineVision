@@ -1,3 +1,4 @@
+// PostgreSQL-compatible schema that mirrors the MySQL structure for production compatibility
 import { sql } from 'drizzle-orm';
 import {
   index,
@@ -14,7 +15,6 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session storage table.
-// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
 export const sessions = pgTable(
   "sessions",
   {
@@ -28,7 +28,6 @@ export const sessions = pgTable(
 );
 
 // User storage table.
-// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
 export const users = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey(),
   email: varchar("email", { length: 255 }).unique(),
@@ -67,7 +66,7 @@ export const testimonials = pgTable("testimonials", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdateFn(() => new Date()),
 });
 
-// Products table
+// Products table  
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
@@ -99,14 +98,14 @@ export const inquiries = pgTable("inquiries", {
 // Website content management table
 export const websiteContent = pgTable("website_content", {
   id: serial("id").primaryKey(),
-  section: varchar("section", { length: 100 }).notNull().unique(), // hero, about, contact, etc.
+  section: varchar("section", { length: 100 }).notNull().unique(),
   title: varchar("title", { length: 500 }),
   subtitle: varchar("subtitle", { length: 500 }),
   content: text("content"),
   imageUrl: varchar("image_url", { length: 512 }),
   buttonText: varchar("button_text", { length: 100 }),
   buttonLink: varchar("button_link", { length: 255 }),
-  additionalData: json("additional_data"), // For flexible content storage
+  additionalData: json("additional_data"),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdateFn(() => new Date()),
@@ -131,7 +130,7 @@ export const websiteSettings = pgTable("website_settings", {
   id: serial("id").primaryKey(),
   key: varchar("key", { length: 100 }).notNull().unique(),
   value: text("value"),
-  type: varchar("type", { length: 50 }).default("text"), // text, number, boolean, json
+  type: varchar("type", { length: 50 }).default("text"),
   description: varchar("description", { length: 255 }),
   category: varchar("category", { length: 100 }).default("general"),
   createdAt: timestamp("created_at").defaultNow(),

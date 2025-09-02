@@ -1,9 +1,8 @@
-import mysql from 'mysql2/promise';
-import { drizzle } from 'drizzle-orm/mysql2';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
 import * as schema from "@shared/schema";
 
-// Use a default DATABASE_URL for development if not set
-const DATABASE_URL = process.env.DATABASE_URL || "mysql://root:password@localhost:3306/alashore_marine";
+const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!DATABASE_URL) {
   throw new Error(
@@ -11,6 +10,8 @@ if (!DATABASE_URL) {
   );
 }
 
-// Create connection pool
-const pool = mysql.createPool(DATABASE_URL);
-export const db = drizzle(pool, { schema, mode: 'default' });
+console.log('Connecting to PostgreSQL database...');
+
+// Create Neon connection for PostgreSQL
+const sql = neon(DATABASE_URL);
+export const db = drizzle(sql, { schema });
