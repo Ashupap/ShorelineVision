@@ -155,9 +155,8 @@ print_success "Database schema updated"
 
 # Build the application
 print_status "Building application for production..."
-npm run build 2>/dev/null || {
-    print_warning "No build script found, skipping build step"
-}
+npm run build
+print_success "Application built successfully"
 
 # Create systemd service file
 print_status "Setting up systemd service..."
@@ -176,7 +175,7 @@ User=$APP_USER
 WorkingDirectory=$APP_DIR
 Environment=NODE_ENV=production
 EnvironmentFile=$APP_DIR/.env
-ExecStart=/usr/bin/node server/index.js
+ExecStart=/usr/bin/node $APP_DIR/dist/index.js
 Restart=always
 RestartSec=10
 StandardOutput=syslog
