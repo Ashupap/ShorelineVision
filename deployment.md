@@ -334,6 +334,14 @@ server {
     listen 80;
     server_name your-domain.com www.your-domain.com;  # Replace with your domain or use _
 
+    # Serve favicon files directly
+    location ~ ^/(favicon\.ico|favicon\.png|favicon-16x16\.png|favicon-32x32\.png|apple-touch-icon\.png|android-chrome-192x192\.png|android-chrome-512x512\.png|site\.webmanifest)$ {
+        root /var/www/alashore-marine/ShorelineVision/client/public;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
     # Serve static files directly
     location /uploads/ {
         alias /var/www/alashore-marine/ShorelineVision/uploads/;
