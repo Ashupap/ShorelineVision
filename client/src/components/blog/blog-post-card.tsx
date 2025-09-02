@@ -23,7 +23,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
             className="w-full h-48 overflow-hidden"
           >
             <PerformanceImage
-              src={post.featuredImage.includes('unsplash') ? `${post.featuredImage}&q=85&w=800&h=400` : post.featuredImage}
+              src={post.featuredImage && post.featuredImage.includes('unsplash') ? `${post.featuredImage}&q=85&w=800&h=400` : post.featuredImage || '/placeholder-blog.jpg'}
               alt={post.title}
               className="w-full h-48 object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

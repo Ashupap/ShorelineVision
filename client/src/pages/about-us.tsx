@@ -650,7 +650,7 @@ export default function AboutUs() {
                         {/* Photo Container */}
                         <div className="relative h-64 overflow-hidden">
                           <PerformanceImage
-                            src={leader.avatar.includes('unsplash') ? `${leader.avatar}&q=85&w=800&h=600` : leader.avatar}
+                            src={leader.avatar && leader.avatar.includes('unsplash') ? `${leader.avatar}&q=85&w=800&h=600` : leader.avatar || '/placeholder-avatar.jpg'}
                             alt={leader.name}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             sizes="(max-width: 768px) 200px, 288px"

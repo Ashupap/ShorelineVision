@@ -294,7 +294,7 @@ export default function Products() {
                         className="w-full h-64 overflow-hidden"
                       >
                         <PerformanceImage
-                          src={product.featuredImage.includes('unsplash') ? `${product.featuredImage}&q=85&w=800&h=600` : product.featuredImage}
+                          src={product.featuredImage && product.featuredImage.includes('unsplash') ? `${product.featuredImage}&q=85&w=800&h=600` : product.featuredImage || '/placeholder-product.jpg'}
                           alt={product.name}
                           className="w-full h-64 object-cover"
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
