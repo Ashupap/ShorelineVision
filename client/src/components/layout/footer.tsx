@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Anchor, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { PerformanceImage } from "@/components/ui/performance-image";
+import logoImage from "@assets/Asset 3_1756100807050.png";
 
 export default function Footer() {
   const groupCompanies = [
@@ -45,11 +47,15 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-ocean-blue to-marine-teal rounded-lg flex items-center justify-center">
-                <Anchor className="text-white" size={20} />
-              </div>
-              <span className="text-xl font-heading font-bold">Alashore Marine</span>
+            <div className="flex items-center space-x-3 mb-6">
+              <PerformanceImage
+                src={logoImage}
+                alt="Alashore Marine Exports"
+                className="h-12 w-auto object-contain"
+                priority={true}
+                loading="eager"
+                data-testid="footer-logo"
+              />
             </div>
             <p className="text-light-marine mb-6">
               At Alashore Marine - we care about our People, our Products & the Farmers. 
@@ -173,16 +179,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-700 pt-8 text-center text-light-marine">
           <p>
-            Copyright 2024 Alashore Marine Exports Pvt. Ltd. | Developed by{" "}
-            <a
-              href="https://movedigitals.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-marine-teal transition-colors"
-              data-testid="link-developer"
-            >
-              MoveDigitals
-            </a>
+            Copyright 2025 Alashore Marine Exports Pvt. Ltd.
           </p>
         </div>
       </div>
