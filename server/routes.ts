@@ -2,7 +2,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./simpleAuth";
+import { setupAuth, requireAuth, requireAdmin } from "./auth";
 import { 
   insertBlogPostSchema, 
   insertTestimonialSchema, 
@@ -52,9 +52,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
   // Auth middleware
-  await setupAuth(app);
+  setupAuth(app);
 
-  // Authentication is now handled in simpleAuth.ts
+  // Authentication is now handled in auth.ts
 
   // Blog routes
   app.get('/api/blog', async (req, res) => {
@@ -102,20 +102,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/blog', isAuthenticated, async (req: any, res) => {
+  app.post('/api/blog', requireAuth, async (req: any, res) => {
     try {
       const postData = insertBlogPostSchema.parse(req.body);
       
-      // Get author ID from either temp user or regular Replit auth
-      let authorId: string;
-      const tempUser = (req.session as any)?.tempUser;
-      if (tempUser) {
-        authorId = tempUser.id;
-      } else if (req.user && req.user.claims) {
-        authorId = req.user.claims.sub;
-      } else {
-        return res.status(401).json({ message: "Unable to determine user identity" });
-      }
+      // Get author ID from authenticated user
+      const authorId = req.user.id;
       
       // Generate slug from title
       const slug = postData.title
@@ -134,7 +126,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/blog/:id', isAuthenticated, async (req, res) => {
+  app.put('/api/blog/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -162,7 +154,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/blog/:id', isAuthenticated, async (req, res) => {
+  app.delete('/api/blog/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -222,7 +214,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/testimonials', isAuthenticated, async (req, res) => {
+  app.post('/api/testimonials', requireAuth, async (req, res) => {
     try {
       const testimonialData = insertTestimonialSchema.parse(req.body);
       const testimonial = await storage.createTestimonial(testimonialData);
@@ -236,7 +228,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/testimonials/:id', isAuthenticated, async (req, res) => {
+  app.put('/api/testimonials/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -255,7 +247,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/testimonials/:id', isAuthenticated, async (req, res) => {
+  app.delete('/api/testimonials/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -282,7 +274,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/products', isAuthenticated, async (req, res) => {
+  app.post('/api/products', requireAuth, async (req, res) => {
     try {
       const productData = insertProductSchema.parse(req.body);
       const product = await storage.createProduct(productData);
@@ -296,7 +288,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/products/:id', isAuthenticated, async (req, res) => {
+  app.put('/api/products/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -315,7 +307,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/products/:id', isAuthenticated, async (req, res) => {
+  app.delete('/api/products/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -331,7 +323,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Inquiry routes
-  app.get('/api/inquiries', isAuthenticated, async (req, res) => {
+  app.get('/api/inquiries', requireAuth, async (req, res) => {
     try {
       const inquiries = await storage.getInquiries();
       res.json(inquiries);
@@ -355,7 +347,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/inquiries/:id', isAuthenticated, async (req, res) => {
+  app.put('/api/inquiries/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -397,7 +389,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/content', isAuthenticated, async (req, res) => {
+  app.post('/api/content', requireAuth, async (req, res) => {
     try {
       const contentData = insertWebsiteContentSchema.parse(req.body);
       const content = await storage.createWebsiteContent(contentData);
@@ -411,7 +403,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/content/:section', isAuthenticated, async (req, res) => {
+  app.put('/api/content/:section', requireAuth, async (req, res) => {
     try {
       const section = req.params.section;
       const contentData = insertWebsiteContentSchema.partial().parse(req.body);
@@ -426,7 +418,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/content/:section', isAuthenticated, async (req, res) => {
+  app.delete('/api/content/:section', requireAuth, async (req, res) => {
     try {
       const section = req.params.section;
       await storage.deleteWebsiteContentBySection(section);
@@ -438,7 +430,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Media Files routes
-  app.get('/api/media', isAuthenticated, async (req, res) => {
+  app.get('/api/media', requireAuth, async (req, res) => {
     try {
       const category = req.query.category as string;
       const mediaFiles = await storage.getMediaFiles(category);
@@ -449,7 +441,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/media/:id', isAuthenticated, async (req, res) => {
+  app.get('/api/media/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -469,22 +461,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // File upload endpoint
-  app.post('/api/media/upload', isAuthenticated, upload.single('file'), async (req: any, res) => {
+  app.post('/api/media/upload', requireAuth, upload.single('file'), async (req: any, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      // Handle both temp user and regular auth user
-      let uploadedBy;
-      const tempUser = (req.session as any)?.tempUser;
-      if (tempUser) {
-        uploadedBy = tempUser.id;
-      } else if (req.user && req.user.claims) {
-        uploadedBy = req.user.claims.sub;
-      } else {
-        uploadedBy = 'anonymous';
-      }
+      // Get user ID from authenticated user
+      const uploadedBy = req.user.id;
 
       const fileUrl = `/uploads/media/${req.file.filename}`;
       
@@ -507,20 +491,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/media', isAuthenticated, async (req: any, res) => {
+  app.post('/api/media', requireAuth, async (req: any, res) => {
     try {
       const mediaData = insertMediaFileSchema.parse(req.body);
       
-      // Handle both temp user and regular auth user
-      let uploadedBy;
-      const tempUser = (req.session as any)?.tempUser;
-      if (tempUser) {
-        uploadedBy = tempUser.id;
-      } else if (req.user && req.user.claims) {
-        uploadedBy = req.user.claims.sub;
-      } else {
-        uploadedBy = 'anonymous';
-      }
+      // Get user ID from authenticated user
+      const uploadedBy = req.user.id;
       
       const mediaFile = await storage.createMediaFile({ ...mediaData, uploadedBy });
       res.status(201).json(mediaFile);
@@ -533,7 +509,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/media/:id', isAuthenticated, async (req, res) => {
+  app.put('/api/media/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -552,7 +528,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/media/:id', isAuthenticated, async (req, res) => {
+  app.delete('/api/media/:id', requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
@@ -568,7 +544,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Website Settings routes
-  app.get('/api/settings', isAuthenticated, async (req, res) => {
+  app.get('/api/settings', requireAuth, async (req, res) => {
     try {
       const category = req.query.category as string;
       const settings = await storage.getWebsiteSettings(category);
@@ -593,7 +569,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/settings', isAuthenticated, async (req, res) => {
+  app.post('/api/settings', requireAuth, async (req, res) => {
     try {
       const settingData = insertWebsiteSettingSchema.parse(req.body);
       const setting = await storage.createWebsiteSetting(settingData);
@@ -607,7 +583,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/settings/:key', isAuthenticated, async (req, res) => {
+  app.put('/api/settings/:key', requireAuth, async (req, res) => {
     try {
       const key = req.params.key;
       const settingData = insertWebsiteSettingSchema.partial().parse(req.body);
@@ -622,7 +598,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/settings/:key', isAuthenticated, async (req, res) => {
+  app.delete('/api/settings/:key', requireAuth, async (req, res) => {
     try {
       const key = req.params.key;
       await storage.deleteWebsiteSettingByKey(key);

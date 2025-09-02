@@ -4,7 +4,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Suspense, lazy } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { AuthProvider } from "@/hooks/use-auth";
+import { ProtectedRoute } from "@/lib/protected-route";
 import BeautifulLoader from "@/components/ui/beautiful-loader";
 
 // Lazy load pages for better performance
@@ -17,14 +18,12 @@ const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const SubmitTestimonial = lazy(() => import("@/pages/submit-testimonial"));
 const Admin = lazy(() => import("@/pages/admin"));
-const TempLogin = lazy(() => import("@/pages/temp-login"));
+const AuthPage = lazy(() => import("@/pages/auth-page"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 // Beautiful loading component
 
 function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
-
   return (
     <Suspense fallback={<BeautifulLoader />}>
       <Switch>
@@ -37,8 +36,8 @@ function Router() {
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={Blog} />
         <Route path="/submit-testimonial" component={SubmitTestimonial} />
-        <Route path="/temp-login" component={TempLogin} />
-        <Route path="/admin" component={Admin} />
+        <Route path="/auth" component={AuthPage} />
+        <ProtectedRoute path="/admin" component={Admin} requireAdmin={true} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
@@ -48,10 +47,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

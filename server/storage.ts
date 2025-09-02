@@ -9,6 +9,7 @@ import {
   websiteSettings,
   type User,
   type UpsertUser,
+  type InsertUser,
   type BlogPost,
   type InsertBlogPost,
   type Testimonial,
@@ -29,9 +30,12 @@ import { eq, desc, like, and } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
-  // User operations
-  // (IMPORTANT) these user operations are mandatory for Replit Auth.
+  // User operations for local authentication
   getUser(id: string): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
+  updateUser(id: string, user: Partial<InsertUser>): Promise<User>;
   upsertUser(user: UpsertUser): Promise<User>;
   
   // Blog operations
@@ -86,28 +90,66 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  // User operations
-  // (IMPORTANT) these user operations are mandatory for Replit Auth.
+  // User operations for local authentication
 
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async createUser(userData: InsertUser): Promise<User> {
+    const [created] = await db
+      .insert(users)
+      .values(userData)
+      .returning();
+    
+    return created;
+  }
+
+  async updateUser(id: string, userData: Partial<InsertUser>): Promise<User> {
+    await db
+      .update(users)
+      .set({ ...userData, updatedAt: new Date() })
+      .where(eq(users.id, id));
+    
+    const [updated] = await db.select().from(users).where(eq(users.id, id));
+    return updated;
+  }
+
   async upsertUser(userData: UpsertUser): Promise<User> {
-    // MySQL doesn't have onConflictDoUpdate, so we'll first try to insert
-    // If that fails, we'll update
+    // For PostgreSQL compatibility with onConflictDoUpdate
     try {
-      await db.insert(users).values(userData);
-      const [user] = await db.select().from(users).where(eq(users.id, userData.id));
+      const [user] = await db
+        .insert(users)
+        .values(userData)
+        .onConflictDoUpdate({
+          target: users.id,
+          set: {
+            ...userData,
+            updatedAt: new Date(),
+          },
+        })
+        .returning();
+      
       return user;
     } catch (error) {
-      // If insert fails due to duplicate key, update instead
-      await db.update(users)
-        .set({ ...userData, updatedAt: new Date() })
-        .where(eq(users.id, userData.id));
-      const [user] = await db.select().from(users).where(eq(users.id, userData.id));
-      return user;
+      // Fallback for older PostgreSQL versions
+      const existingUser = await this.getUser(userData.id!);
+      if (existingUser) {
+        return await this.updateUser(userData.id!, userData);
+      } else {
+        return await this.createUser(userData as InsertUser);
+      }
     }
   }
 

@@ -1,38 +1,19 @@
-import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import AdminDashboard from "@/components/admin/admin-dashboard";
+import { Loader2 } from "lucide-react";
 
 export default function Admin() {
-  const { toast } = useToast();
-  const { isAuthenticated, isLoading } = useAuth();
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      toast({
-        title: "Unauthorized",
-        description: "Please log in to access the admin panel",
-        variant: "destructive",
-      });
-      setTimeout(() => {
-        window.location.href = "/temp-login";
-      }, 500);
-      return;
-    }
-  }, [isAuthenticated, isLoading, toast]);
+  const { user, isLoading } = useAuth();
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-ocean-blue"></div>
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    return null;
-  }
-
+  // This page is protected by ProtectedRoute with requireAdmin
+  // so we know the user is authenticated and has admin role
   return <AdminDashboard />;
 }

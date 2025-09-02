@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { X, BarChart3, FileText, Star, Cog, Fish, Edit3, Image, Mail, Globe } from "lucide-react";
+import { X, BarChart3, FileText, Star, Cog, Fish, Edit3, Image, Mail, Globe, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
 
 interface AdminSidebarProps {
   activeSection: string;
@@ -8,6 +9,8 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({ activeSection, onSectionChange }: AdminSidebarProps) {
+  const { user, logoutMutation } = useAuth();
+  
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: BarChart3 },
     { id: "content", label: "Website Content", icon: Edit3 },
@@ -20,7 +23,7 @@ export default function AdminSidebar({ activeSection, onSectionChange }: AdminSi
   ];
 
   const handleLogout = () => {
-    window.location.href = "/api/logout";
+    logoutMutation.mutate();
   };
 
   const goToHome = () => {
@@ -66,14 +69,25 @@ export default function AdminSidebar({ activeSection, onSectionChange }: AdminSi
         ))}
       </nav>
 
-      <div className="absolute bottom-6 left-6 right-6">
+      <div className="absolute bottom-6 left-6 right-6 space-y-4">
+        {user && (
+          <div className="text-center border-t border-gray-600 pt-4">
+            <p className="text-sm text-gray-300">Signed in as</p>
+            <p className="font-semibold text-white">{user.username}</p>
+            {user.role && (
+              <p className="text-xs text-gray-400 capitalize">{user.role}</p>
+            )}
+          </div>
+        )}
         <Button
           onClick={handleLogout}
           variant="outline"
           className="w-full text-white border-white hover:bg-white hover:text-deep-navy"
           data-testid="button-logout"
+          disabled={logoutMutation.isPending}
         >
-          Logout
+          <LogOut size={16} className="mr-2" />
+          {logoutMutation.isPending ? "Signing out..." : "Sign Out"}
         </Button>
       </div>
     </motion.div>

@@ -27,14 +27,18 @@ export const sessions = pgTable(
   }),
 );
 
-// User storage table.
-// (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
+// User storage table for local authentication.
 export const users = pgTable("users", {
-  id: varchar("id", { length: 255 }).primaryKey(),
+  id: varchar("id", { length: 255 }).primaryKey().default(sql`gen_random_uuid()`),
+  username: varchar("username", { length: 255 }).notNull().unique(),
   email: varchar("email", { length: 255 }).unique(),
+  password: varchar("password", { length: 255 }).notNull(),
   firstName: varchar("first_name", { length: 255 }),
   lastName: varchar("last_name", { length: 255 }),
   profileImageUrl: varchar("profile_image_url", { length: 512 }),
+  role: varchar("role", { length: 50 }).default('user'),
+  isActive: boolean("is_active").default(true),
+  lastLoginAt: timestamp("last_login_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -141,6 +145,7 @@ export const websiteSettings = pgTable("website_settings", {
 // Schema types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;
 
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = typeof blogPosts.$inferInsert;
@@ -208,6 +213,14 @@ export const insertWebsiteSettingSchema = createInsertSchema(websiteSettings).om
   updatedAt: true,
 });
 
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  lastLoginAt: true,
+});
+
+export type InsertUserSchema = z.infer<typeof insertUserSchema>;
 export type InsertBlogPostSchema = z.infer<typeof insertBlogPostSchema>;
 export type InsertTestimonialSchema = z.infer<typeof insertTestimonialSchema>;
 export type InsertProductSchema = z.infer<typeof insertProductSchema>;

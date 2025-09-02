@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import AdminSidebar from "./admin-sidebar";
 import { useQuery } from "@tanstack/react-query";
-import { isUnauthorizedError } from "@/lib/authUtils";
+import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import type { BlogPost, Product, Testimonial, Inquiry } from "@shared/schema";
 import BlogEditor from "@/components/blog/blog-editor";
