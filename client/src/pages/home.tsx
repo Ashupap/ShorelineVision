@@ -184,14 +184,14 @@ const Home = memo(function Home() {
                             y: y
                           }}
                           animate={{
-                            y: [0, -8, 0],
-                            scale: [1, 1.1, 1]
+                            y: [0, -4, 0],
+                            scale: [1, 1.05, 1]
                           }}
                           transition={{
-                            duration: 3 + Math.random() * 2,
+                            duration: 4 + Math.random() * 2,
                             repeat: Infinity,
                             ease: "easeInOut",
-                            delay: Math.random() * 2
+                            delay: Math.random() * 3
                           }}
                           whileHover={{
                             scale: 1.6,
@@ -202,7 +202,7 @@ const Home = memo(function Home() {
                           <motion.div
                             animate={{ rotate: ringIndex % 2 === 0 ? [0, -360] : [360, 0] }}
                             transition={{
-                              duration: ring.duration,
+                              duration: ring.duration * 1.5,
                               repeat: Infinity,
                               ease: "linear"
                             }}
@@ -217,9 +217,9 @@ const Home = memo(function Home() {
                                 rotateY: 10
                               }}
                             >
-                              {/* Enhanced ripple effect */}
+                              {/* Enhanced ripple effect - optimized for mobile */}
                               <motion.div
-                                className="absolute inset-0 bg-gradient-to-br from-coral-accent/30 to-golden-orange/30 rounded-2xl opacity-0 group-hover:opacity-100"
+                                className="absolute inset-0 bg-gradient-to-br from-coral-accent/30 to-golden-orange/30 rounded-2xl opacity-0 group-hover:opacity-100 hidden md:block"
                                 initial={{ scale: 0, rotate: 0 }}
                                 whileHover={{
                                   scale: [0, 2, 1],
@@ -227,9 +227,9 @@ const Home = memo(function Home() {
                                   transition: { duration: 0.8 }
                                 }}
                               />
-                              {/* Glow effect */}
+                              {/* Glow effect - disabled on mobile */}
                               <motion.div
-                                className="absolute inset-0 bg-white/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100"
+                                className="absolute inset-0 bg-white/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 hidden md:block"
                                 animate={{
                                   scale: [1, 1.2, 1],
                                   opacity: [0, 0.6, 0]
@@ -253,8 +253,8 @@ const Home = memo(function Home() {
                   </motion.div>
                 ))}
 
-                {/* Enhanced Floating Particles */}
-                {Array.from({ length: 12 }).map((_, index) => {
+                {/* Enhanced Floating Particles - reduced on mobile */}
+                {Array.from({ length: 6 }).map((_, index) => {
                   const randomLeft = 20 + Math.random() * 60;
                   const randomTop = 20 + Math.random() * 60;
                   const randomSize = 2 + Math.random() * 4;
@@ -272,16 +272,16 @@ const Home = memo(function Home() {
                         top: `${randomTop}%`
                       }}
                       animate={{
-                        x: [0, Math.random() * 500 - 250, Math.random() * 300 - 150, 0],
-                        y: [0, Math.random() * 400 - 200, Math.random() * 200 - 100, 0],
-                        opacity: [0.2, 0.8, 0.5, 0.2],
-                        scale: [0.5, 1.5, 1, 0.5]
+                        x: [0, Math.random() * 300 - 150, Math.random() * 200 - 100, 0],
+                        y: [0, Math.random() * 250 - 125, Math.random() * 150 - 75, 0],
+                        opacity: [0.2, 0.6, 0.4, 0.2],
+                        scale: [0.5, 1.2, 1, 0.5]
                       }}
                       transition={{
-                        duration: 10 + Math.random() * 8,
+                        duration: 12 + Math.random() * 6,
                         repeat: Infinity,
                         ease: "easeInOut",
-                        delay: Math.random() * 5
+                        delay: Math.random() * 8
                       }}
                     />
                   );
