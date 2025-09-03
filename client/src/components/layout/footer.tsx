@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Anchor, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/Asset 4_1756901194390.png";
+import logoImage from "@assets/Asset 3_1756100807050.png";
 
 export default function Footer() {
   const groupCompanies = [
