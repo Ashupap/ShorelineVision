@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Express } from "express";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
+import createMemoryStore from "memorystore";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
@@ -31,16 +32,14 @@ async function comparePasswords(supplied: string, stored: string): Promise<boole
 
 export function setupAuth(app: Express) {
   console.log('Setting up authentication routes...');
-  const PostgresSessionStore = connectPg(session);
+  const MemoryStore = createMemoryStore(session);
   
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
-    store: new PostgresSessionStore({
-      conString: process.env.DATABASE_URL,
-      createTableIfMissing: false,
-      tableName: 'session',
+    store: new MemoryStore({
+      checkPeriod: 86400000, // prune expired entries every 24h
     }),
     cookie: {
       secure: process.env.NODE_ENV === 'production',
