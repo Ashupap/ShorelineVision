@@ -10,6 +10,7 @@ import ContactFormModal from "@/components/contact-form-modal";
 import BlueWorldMap from "@/components/blue-world-map";
 import InteractiveGlobalMap from "@/components/interactive-global-map";
 import processingFacilityBg from "@assets/generated_images/Seafood_processing_facility_background_fd3ca7c1.png";
+import factoryImage from "@assets/4-1 (1)_1756901765521.png";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -407,10 +408,12 @@ export default function AboutUs() {
                   transition={{ duration: 0.3 }}
                   className="rounded-xl overflow-hidden shadow-2xl"
                 >
-                  <img
-                    src="https://images.unsplash.com/photo-1565615833231-e8c91a38a012?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-                    alt="Modern seafood processing facility"
-                    className="w-full h-auto"
+                  <PerformanceImage
+                    src={factoryImage}
+                    alt="Alashore Marine modern seafood processing facility - aerial view"
+                    className="w-full h-auto object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={false}
                   />
                 </motion.div>
               </motion.div>
