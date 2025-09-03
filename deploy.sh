@@ -88,7 +88,14 @@ print_success "Dependencies installed"
 
 # Environment variables check
 print_status "Checking environment variables..."
-ENV_FILE=".env"
+# Check for production environment file first
+if [ -f ".env.production" ]; then
+    ENV_FILE=".env.production"
+    print_status "Using .env.production for production deployment"
+else
+    ENV_FILE=".env"
+fi
+
 if [ ! -f "$ENV_FILE" ]; then
     print_warning "No .env file found. Creating template..."
     cat > "$ENV_FILE" << 'EOF'
