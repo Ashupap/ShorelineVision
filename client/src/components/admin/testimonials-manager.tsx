@@ -214,7 +214,7 @@ export default function TestimonialsManager() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center mb-3">
-            <div className="flex mr-3">{renderStars(testimonial.rating)}</div>
+            <div className="flex mr-3">{renderStars(testimonial.rating || 5)}</div>
             <span className="text-sm text-gray-500">
               {testimonial.createdAt ? formatDistanceToNow(new Date(testimonial.createdAt)) : 'Recently'} ago
             </span>
