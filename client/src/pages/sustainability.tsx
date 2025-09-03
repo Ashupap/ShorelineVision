@@ -1034,29 +1034,29 @@ export default function Sustainability() {
               </p>
             </motion.div>
 
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* People Value Card */}
               <motion.div
                 initial={{ opacity: 0, x: -60 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                className="relative bg-white/10 backdrop-blur-md p-8 lg:p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
                 data-testid="value-people"
               >
                 
-                <div className="relative z-10 flex items-center mb-10">
-                  <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
-                    <Users className="text-white" size={44} />
+                <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start mb-8 lg:mb-10">
+                  <div className="w-20 h-20 lg:w-24 lg:h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-6 lg:mr-8 border border-white/20">
+                    <Users className="text-white" size={40} />
                   </div>
-                  <div>
-                    <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
+                  <div className="text-center sm:text-left">
+                    <h3 className="text-2xl lg:text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
                       Our People
                     </h3>
-                    <span className="text-coral-accent text-lg font-medium drop-shadow-lg">Team Excellence</span>
+                    <span className="text-coral-accent text-base lg:text-lg font-medium drop-shadow-lg">Team Excellence</span>
                   </div>
                 </div>
-                <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
+                <p className="relative z-10 text-gray-200 mb-8 lg:mb-10 text-lg lg:text-xl leading-relaxed drop-shadow-lg text-center sm:text-left">
                   We believe our team is our greatest asset. We invest in their growth, well-being, and professional development to create a thriving workplace culture.
                 </p>
                 <div className="relative z-10 grid md:grid-cols-2 gap-6">
@@ -1085,26 +1085,26 @@ export default function Sustainability() {
 
               {/* Products Value Card */}
               <motion.div
-                initial={{ opacity: 0, x: -60 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                className="relative bg-white/10 backdrop-blur-md p-8 lg:p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
                 data-testid="value-products"
               >
                 
-                <div className="relative z-10 flex items-center mb-10">
-                  <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
-                    <Package className="text-white" size={44} />
+                <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start mb-8 lg:mb-10">
+                  <div className="w-20 h-20 lg:w-24 lg:h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-6 lg:mr-8 border border-white/20">
+                    <Package className="text-white" size={40} />
                   </div>
-                  <div>
-                    <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
+                  <div className="text-center sm:text-left">
+                    <h3 className="text-2xl lg:text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
                       Our Products
                     </h3>
-                    <span className="text-coral-accent text-lg font-medium drop-shadow-lg">Quality Excellence</span>
+                    <span className="text-coral-accent text-base lg:text-lg font-medium drop-shadow-lg">Quality Excellence</span>
                   </div>
                 </div>
-                <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
+                <p className="relative z-10 text-gray-200 mb-8 lg:mb-10 text-lg lg:text-xl leading-relaxed drop-shadow-lg text-center sm:text-left">
                   Quality is our cornerstone. Every product meets the highest international standards through rigorous testing and quality control processes.
                 </p>
                 <div className="relative z-10 grid md:grid-cols-2 gap-6">
@@ -1133,26 +1133,26 @@ export default function Sustainability() {
 
               {/* Farmers Value Card */}
               <motion.div
-                initial={{ opacity: 0, x: -60 }}
+                initial={{ opacity: 0, x: 60 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.6 }}
                 viewport={{ once: true }}
-                className="relative bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
+                className="relative bg-white/10 backdrop-blur-md p-8 lg:p-12 rounded-3xl border border-white/20 shadow-2xl overflow-hidden"
                 data-testid="value-farmers"
               >
                 
-                <div className="relative z-10 flex items-center mb-10">
-                  <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mr-8 border border-white/20">
-                    <Droplets className="text-white" size={44} />
+                <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start mb-8 lg:mb-10">
+                  <div className="w-20 h-20 lg:w-24 lg:h-24 bg-white/30 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-4 sm:mb-0 sm:mr-6 lg:mr-8 border border-white/20">
+                    <Droplets className="text-white" size={40} />
                   </div>
-                  <div>
-                    <h3 className="text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
+                  <div className="text-center sm:text-left">
+                    <h3 className="text-2xl lg:text-4xl font-heading font-semibold mb-2 text-white drop-shadow-lg">
                       Our Farmers
                     </h3>
-                    <span className="text-coral-accent text-lg font-medium drop-shadow-lg">Partnership Excellence</span>
+                    <span className="text-coral-accent text-base lg:text-lg font-medium drop-shadow-lg">Partnership Excellence</span>
                   </div>
                 </div>
-                <p className="relative z-10 text-gray-200 mb-10 text-xl leading-relaxed drop-shadow-lg">
+                <p className="relative z-10 text-gray-200 mb-8 lg:mb-10 text-lg lg:text-xl leading-relaxed drop-shadow-lg text-center sm:text-left">
                   We support sustainable farming practices and farmer development through partnerships, training, and fair business relationships.
                 </p>
                 <div className="relative z-10 grid md:grid-cols-2 gap-6">
