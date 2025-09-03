@@ -79,14 +79,14 @@ async function createAdmin() {
   try {
     console.log("🔗 Connecting to database...");
     
-    // Check if user already exists
+    // Check if user already exists (by email since username might not exist)
     const existingUser = await pool.query(
-      "SELECT username FROM users WHERE username = $1",
-      [username]
+      "SELECT email FROM users WHERE email = $1",
+      [email || username + '@localhost']
     );
 
     if (existingUser.rows.length > 0) {
-      console.error(`❌ Error: User '${username}' already exists`);
+      console.error(`❌ Error: User with email '${email || username + '@localhost'}' already exists`);
       process.exit(1);
     }
 
@@ -94,19 +94,16 @@ async function createAdmin() {
     console.log("🔐 Hashing password...");
     const hashedPassword = await hashPassword(password);
 
-    // Create the user
+    // Create the user (using available columns)
     console.log("👤 Creating admin user...");
     const result = await pool.query(
-      `INSERT INTO users (username, password, email, "firstName", "lastName", role, "createdAt", "updatedAt") 
-       VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW()) 
-       RETURNING id, username, email, "firstName", "lastName", role`,
+      `INSERT INTO users (email, "first_name", "last_name", "created_at", "updated_at") 
+       VALUES ($1, $2, $3, NOW(), NOW()) 
+       RETURNING id, email, "first_name", "last_name"`,
       [
-        username,
-        hashedPassword,
-        email || null,
-        firstName || null,
-        lastName || null,
-        "admin"
+        email || username + '@localhost',
+        firstName || username,
+        lastName || 'Admin'
       ]
     );
 
@@ -115,10 +112,11 @@ async function createAdmin() {
     console.log("\n✅ Admin user created successfully!");
     console.log("📋 User Details:");
     console.log(`   ID: ${newUser.id}`);
-    console.log(`   Username: ${newUser.username}`);
-    console.log(`   Email: ${newUser.email || 'Not provided'}`);
-    console.log(`   Name: ${[newUser.firstName, newUser.lastName].filter(Boolean).join(' ') || 'Not provided'}`);
-    console.log(`   Role: ${newUser.role}`);
+    console.log(`   Email: ${newUser.email}`);
+    console.log(`   Name: ${[newUser.first_name, newUser.last_name].filter(Boolean).join(' ')}`);
+    
+    console.log("\n⚠️  Note: This user was created for the old authentication system.");
+    console.log("   You'll need to run the database migration to add the new authentication columns.");
     
     console.log("\n🚀 You can now login at:");
     console.log("   Development: http://localhost:5000/meadmin");
