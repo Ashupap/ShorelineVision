@@ -11,6 +11,7 @@ import BlueWorldMap from "@/components/blue-world-map";
 import InteractiveGlobalMap from "@/components/interactive-global-map";
 import processingFacilityBg from "@assets/generated_images/Seafood_processing_facility_background_fd3ca7c1.png";
 import factoryImage from "@assets/4-1 (1)_1756901765521.png";
+import mdImage from "@assets/Untitled-design-4 (1)_1756902789995.jpg";
 
 export default function AboutUs() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -469,10 +470,12 @@ export default function AboutUs() {
                     </div>
                   </div>
                   <div className="relative">
-                    <img
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800"
+                    <PerformanceImage
+                      src={mdImage}
                       alt="Managing Director - Gyana Ranjan Dash"
                       className="w-full h-full object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority={false}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ocean-blue/20 to-transparent"></div>
                   </div>
@@ -592,7 +595,7 @@ export default function AboutUs() {
                     {
                       name: "Gyana Ranjan Dash",
                       position: "Managing Director",
-                      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: mdImage,
                     },
                     {
                       name: "Madhusudan Dash",
@@ -623,7 +626,7 @@ export default function AboutUs() {
                     {
                       name: "Gyana Ranjan Dash",
                       position: "Managing Director",
-                      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: mdImage,
                     },
                     {
                       name: "Madhusudan Dash",
