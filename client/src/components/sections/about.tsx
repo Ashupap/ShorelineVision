@@ -104,8 +104,8 @@ export default function About() {
                       }}
                     />
                     {/* Image title overlay */}
-                    <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
-                      <p className="font-semibold text-sm">{images[currentImage].title}</p>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/60 backdrop-blur-sm text-white px-6 py-3 rounded-lg">
+                      <p className="font-semibold text-lg text-center">{images[currentImage].title}</p>
                     </div>
                   </motion.div>
                 </motion.div>
