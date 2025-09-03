@@ -13,59 +13,8 @@ export default function Testimonials() {
   
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
-  // Default testimonials data if API returns empty
-  const defaultTestimonials = [
-    {
-      id: 1,
-      name: "Nihar Tripathy",
-      company: "",
-      content: "Alashore Marine has an excellent shrimp processing unit, making them a leading seafood exporter in Odisha. They consistently deliver top-quality products that stand out in the industry.",
-      rating: 5,
-      avatar: null
-    },
-    {
-      id: 2,
-      name: "Abu Sadek Md.",
-      company: "",
-      content: "Alashore Marine shines as a top-notch seafood processing and exporting organization in India. Exceptional quality and service!",
-      rating: 5,
-      avatar: null
-    },
-    {
-      id: 3,
-      name: "Shrinibas Mohanty",
-      company: "",
-      content: "Alashore Marine's products exceed expectations, elevating my business offerings with unparalleled quality. Satisfied customer!",
-      rating: 5,
-      avatar: null
-    },
-    {
-      id: 4,
-      name: "Parthapratim Hira",
-      company: "",
-      content: "Exceptional exporter! Alashore Marine is a very good exporter. Their products are excellent, and they are known for high-quality standards.",
-      rating: 5,
-      avatar: null
-    },
-    {
-      id: 5,
-      name: "Debangshu Chakraborty",
-      company: "",
-      content: "Alashore Marine's export prawns offer premium quality at reasonable rates. A trusted choice for exceptional seafood!",
-      rating: 5,
-      avatar: null
-    },
-    {
-      id: 6,
-      name: "Devesh Sharma",
-      company: "",
-      content: "Highly commendable! Unit is well-maintained, emphasizing cleanliness and hygiene as top priorities. Greatly appreciated!",
-      rating: 5,
-      avatar: null
-    }
-  ];
-
-  const displayTestimonials = testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials;
+  // Only show testimonials from database
+  const displayTestimonials = testimonials || [];
   
   // Auto-rotate testimonials every 5 seconds
   useEffect(() => {
@@ -122,6 +71,12 @@ export default function Testimonials() {
         <div className="bg-white flex items-center justify-center p-8 lg:p-16">
           {isLoading ? (
             <div className="w-full max-w-md h-64 bg-gray-200 rounded-lg animate-pulse"></div>
+          ) : displayTestimonials.length === 0 ? (
+            <div className="w-full max-w-md text-center p-8">
+              <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-500 text-lg">No testimonials available yet.</p>
+              <p className="text-gray-400 text-sm mt-2">Be the first to share your experience!</p>
+            </div>
           ) : (
             <motion.div
               key={currentTestimonialIndex}
