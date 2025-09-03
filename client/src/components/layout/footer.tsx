@@ -52,7 +52,7 @@ export default function Footer() {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-16 w-auto object-contain filter brightness-110"
+                  className="h-16 w-auto object-contain filter brightness-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
                   priority={true}
                   loading="eager"
                   data-testid="footer-logo"
