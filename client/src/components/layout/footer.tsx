@@ -62,7 +62,8 @@ export default function Footer() {
                     maxWidth: 'none',
                     maxHeight: 'none',
                     objectFit: 'contain',
-                    display: 'block'
+                    display: 'block',
+                    filter: 'drop-shadow(0 0 0 1px white) drop-shadow(0 0 0 2px rgba(255,255,255,0.5))'
                   }}
                 />
                 {/* Glowing effect underneath */}
