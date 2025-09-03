@@ -313,7 +313,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         </motion.div>
 
 
-        <div className="flex items-center justify-between h-14 sm:h-16">
+        <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
           {/* Logo */}
           <Link href="/">
             <motion.div
@@ -451,7 +451,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
 
               {/* Logo Container */}
               <motion.div
-                className={`relative z-10 h-10 sm:h-12 lg:h-14 w-auto transition-all duration-500 ${
+                className={`relative z-10 h-12 sm:h-14 lg:h-16 w-auto transition-all duration-500 overflow-visible ${
                   isScrolled 
                     ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]' 
                     : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
@@ -470,9 +470,10 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-10 sm:h-12 lg:h-14 w-auto object-contain"
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain max-w-none"
                   priority={true}
                   loading="eager"
+                  style={{ clipPath: 'none', overflow: 'visible' }}
                 />
               </motion.div>
             </motion.div>

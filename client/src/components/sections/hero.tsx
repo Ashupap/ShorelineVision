@@ -62,7 +62,7 @@ const Hero = memo(function Hero() {
   return (
     <section 
       ref={containerRef} 
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative h-screen flex items-center justify-center overflow-visible"
       style={{ minHeight: '100vh' }} // Prevent layout shift
     >
       {/* Background Video with Parallax */}
@@ -287,7 +287,7 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full max-w-full lg:-ml-8 lg:pl-0"
+          className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full max-w-full lg:-ml-8 lg:pl-0 overflow-visible"
         >
           {/* Slider Container */}
           <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg aspect-square rounded-2xl overflow-visible flex items-center justify-center lg:justify-start">
@@ -328,12 +328,12 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-4"
+                  className="w-full h-full flex items-center justify-center p-2 sm:p-4 overflow-visible"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`max-w-full max-h-full object-contain filter brightness-110 contrast-105 ${
+                    className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 512px"
@@ -342,7 +342,9 @@ const Hero = memo(function Hero() {
                     style={{
                       imageRendering: 'crisp-edges',
                       transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden'
+                      backfaceVisibility: 'hidden',
+                      maxWidth: 'none',
+                      overflow: 'visible'
                     }}
                   />
                 </motion.div>
