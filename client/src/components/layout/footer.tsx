@@ -47,15 +47,28 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="flex items-center space-x-3 mb-6">
-              <PerformanceImage
-                src={logoImage}
-                alt="Alashore Marine Exports"
-                className="h-12 w-auto object-contain"
-                priority={true}
-                loading="eager"
-                data-testid="footer-logo"
-              />
+            <div className="flex items-center space-x-3 mb-6 overflow-visible logo-container">
+              <div className="relative overflow-visible" style={{ overflow: 'visible !important' }}>
+                <PerformanceImage
+                  src={logoImage}
+                  alt="Alashore Marine Exports"
+                  className="h-16 w-auto object-contain filter brightness-110"
+                  priority={true}
+                  loading="eager"
+                  data-testid="footer-logo"
+                  style={{ 
+                    clipPath: 'none', 
+                    overflow: 'visible',
+                    maxWidth: 'none',
+                    maxHeight: 'none',
+                    objectFit: 'contain',
+                    display: 'block'
+                  }}
+                />
+                {/* Glowing effect underneath */}
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-2 bg-gradient-to-r from-transparent via-marine-teal/40 to-transparent rounded-full blur-md animate-pulse" />
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-coral-accent/30 to-transparent rounded-full blur-sm" />
+              </div>
             </div>
             <p className="text-light-marine mb-6">
               At Alashore Marine - we care about our People, our Products & the Farmers. 
