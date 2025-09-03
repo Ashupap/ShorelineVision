@@ -53,9 +53,34 @@ export function throttleScroll(callback: () => void, delay: number = 16) {
   };
 }
 
-// Critical resource preloader
+// Critical resource preloader with DNS prefetch
 export function preloadCriticalResources() {
   if (typeof window !== 'undefined') {
+    // DNS prefetch for external domains
+    const domains = [
+      'fonts.googleapis.com',
+      'fonts.gstatic.com', 
+      'images.unsplash.com',
+      'unsplash.com'
+    ];
+    
+    domains.forEach(domain => {
+      const link = document.createElement('link');
+      link.rel = 'dns-prefetch';
+      link.href = `//${domain}`;
+      document.head.appendChild(link);
+    });
+    
+    // Preconnect to critical domains
+    const preconnectDomains = ['fonts.googleapis.com', 'fonts.gstatic.com'];
+    preconnectDomains.forEach(domain => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = `https://${domain}`;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+    });
+    
     // Preload hero video
     const videoLink = document.createElement('link');
     videoLink.rel = 'preload';
@@ -118,4 +143,64 @@ export function measureWebVitals() {
     
     clsObserver.observe({ entryTypes: ['layout-shift'] });
   }
+}
+
+// Initialize all performance optimizations
+export function initializePerformance() {
+  if (typeof window !== 'undefined') {
+    // Run critical optimizations immediately
+    preloadCriticalResources();
+    
+    // Run monitoring after page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', measureWebVitals);
+    } else {
+      measureWebVitals();
+    }
+    
+    // Prefetch likely next pages on hover
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a[href^="/"]') as HTMLAnchorElement;
+      if (link && !link.dataset.prefetched) {
+        link.dataset.prefetched = 'true';
+        const prefetchLink = document.createElement('link');
+        prefetchLink.rel = 'prefetch';
+        prefetchLink.href = link.href;
+        document.head.appendChild(prefetchLink);
+      }
+    });
+  }
+}
+
+// Reduce layout shifts by setting explicit dimensions
+export function preventLayoutShifts() {
+  // Set explicit dimensions for images to prevent CLS
+  const style = document.createElement('style');
+  style.textContent = `
+    img:not([width]):not([height]) {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+    
+    /* Prevent font swap flash */
+    @font-face {
+      font-family: 'Inter';
+      font-display: swap;
+    }
+    
+    /* Optimize animations for performance */
+    * {
+      will-change: auto;
+    }
+    
+    .animate-in {
+      will-change: transform, opacity;
+    }
+    
+    .animate-in.complete {
+      will-change: auto;
+    }
+  `;
+  document.head.appendChild(style);
 }

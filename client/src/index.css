@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
 
+/* Performance optimizations - prevent layout shifts */
+* {
+  box-sizing: border-box;
+}
+
+/* Critical rendering path optimization */
+img, video {
+  height: auto;
+  max-width: 100%;
+}
+
+/* Prevent font flash by defining fallbacks */
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* Mobile optimization for animations - prevent flickering */
 @media (max-width: 768px) {
   /* Reduce animation intensity on mobile */
@@ -13,9 +29,19 @@
     backdrop-filter: blur(4px) !important;
   }
   
-  /* Prevent layout shifts */
+  /* Prevent layout shifts on mobile */
   * {
     will-change: auto !important;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
