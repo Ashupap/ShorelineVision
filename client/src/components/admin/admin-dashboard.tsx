@@ -19,7 +19,8 @@ import {
   Trash2, 
   Plus,
   Calendar,
-  Tag
+  Tag,
+  Image as ImageIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
@@ -252,7 +253,7 @@ export default function AdminDashboard() {
         </Button>
       </div>
       <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-        <Image className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+        <ImageIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-gray-900 mb-2">No media files yet</h3>
         <p className="text-gray-600 mb-6">Upload images and files to get started.</p>
         <Button 
