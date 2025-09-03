@@ -8,11 +8,37 @@
 import { scrypt, randomBytes } from "crypto";
 import { promisify } from "util";
 import pkg from "pg";
+import { readFileSync } from "fs";
 const { Pool } = pkg;
-import dotenv from "dotenv";
+
+// Load environment variables from .env file
+function loadEnv() {
+  try {
+    const envFile = readFileSync('.env', 'utf8');
+    const envVars = {};
+    
+    envFile.split('\n').forEach(line => {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        const [key, ...valueParts] = trimmed.split('=');
+        if (key && valueParts.length > 0) {
+          const value = valueParts.join('=').replace(/^["']|["']$/g, '');
+          envVars[key.trim()] = value;
+          process.env[key.trim()] = value;
+        }
+      }
+    });
+    
+    return envVars;
+  } catch (error) {
+    console.error("❌ Error: Could not read .env file");
+    console.error("Make sure you have a .env file in the current directory");
+    process.exit(1);
+  }
+}
 
 // Load environment variables
-dotenv.config();
+loadEnv();
 
 const scryptAsync = promisify(scrypt);
 
