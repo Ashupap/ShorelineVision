@@ -188,7 +188,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
           isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}
       >
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative overflow-visible">
         {/* Sea Creatures Swimming Across Entire Navbar */}
         {/* Swimming Shrimp */}
         <motion.div
@@ -313,7 +313,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         </motion.div>
 
 
-        <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
+        <div className="flex items-center justify-between min-h-16 sm:min-h-18 lg:min-h-20 py-2 overflow-visible">
           {/* Logo */}
           <Link href="/">
             <motion.div
@@ -322,8 +322,9 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
               transition={{ duration: 0.8, delay: 0.2 }}
               whileHover={{ scale: 1.05, rotate: 1 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 cursor-pointer relative"
+              className="flex items-center space-x-2 cursor-pointer relative overflow-visible logo-container"
               data-testid="link-logo"
+              style={{ minWidth: 'fit-content', minHeight: 'fit-content' }}
             >
               {/* Pearl Grey Foam/Vapor Effect - Permanent Background */}
               <motion.div
@@ -451,11 +452,12 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
 
               {/* Logo Container */}
               <motion.div
-                className={`relative z-10 h-12 sm:h-14 lg:h-16 w-auto transition-all duration-500 overflow-visible ${
+                className={`relative z-10 w-auto transition-all duration-500 overflow-visible ${
                   isScrolled 
                     ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]' 
                     : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                 }`}
+                style={{ minWidth: 'fit-content', minHeight: 'fit-content', overflow: 'visible' }}
                 animate={{
                   filter: isScrolled 
                     ? ["brightness(1.1) contrast(1.25)", "brightness(1.15) contrast(1.3)", "brightness(1.1) contrast(1.25)"]
@@ -470,10 +472,17 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain max-w-none"
+                  className="h-16 sm:h-18 lg:h-20 w-auto object-contain"
                   priority={true}
                   loading="eager"
-                  style={{ clipPath: 'none', overflow: 'visible' }}
+                  style={{ 
+                    clipPath: 'none', 
+                    overflow: 'visible',
+                    maxWidth: 'none',
+                    maxHeight: 'none',
+                    objectFit: 'contain',
+                    display: 'block'
+                  }}
                 />
               </motion.div>
             </motion.div>
