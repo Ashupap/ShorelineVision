@@ -142,7 +142,7 @@ export default function About() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-coral-accent text-white p-6 rounded-xl shadow-lg z-10"
+              className="absolute -bottom-6 -left-6 bg-coral-accent text-white p-6 rounded-xl shadow-lg z-10"
             >
               <h4 className="text-2xl font-bold">15+</h4>
               <p className="text-sm">Years Experience</p>
