@@ -313,7 +313,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         </motion.div>
 
 
-        <div className="flex items-center justify-between min-h-16 sm:min-h-18 lg:min-h-20 py-2 overflow-visible">
+        <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20 overflow-visible">
           {/* Logo */}
           <Link href="/">
             <motion.div
@@ -472,7 +472,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-16 sm:h-18 lg:h-20 w-auto object-contain"
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
                   priority={true}
                   loading="eager"
                   style={{ 

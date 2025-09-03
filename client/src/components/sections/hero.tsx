@@ -288,9 +288,10 @@ const Hero = memo(function Hero() {
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
           className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full max-w-full lg:-ml-8 lg:pl-0 overflow-visible"
+          style={{ overflow: 'visible !important' }}
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg aspect-square rounded-2xl overflow-visible flex items-center justify-center lg:justify-start">
+          <div className="relative w-full h-full max-w-sm sm:max-w-md lg:max-w-lg aspect-square rounded-2xl flex items-center justify-center lg:justify-start hero-image-container" style={{ overflow: 'visible !important' }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -313,7 +314,7 @@ const Hero = memo(function Hero() {
                   duration: 0.8,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full hero-image-container"
               >
                 {/* Ken Burns Effect Container */}
                 <motion.div
@@ -328,7 +329,8 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-2 sm:p-4 overflow-visible"
+                  className="w-full h-full flex items-center justify-center p-2 sm:p-4"
+                  style={{ overflow: 'visible !important' }}
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}

@@ -12,6 +12,13 @@
   max-height: none !important;
 }
 
+/* Prevent hero image clipping */
+.hero-image-container, .hero-image-container * {
+  overflow: visible !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
 /* Critical rendering path optimization */
 img, video {
   height: auto;
