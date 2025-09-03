@@ -30,6 +30,7 @@ async function comparePasswords(supplied: string, stored: string): Promise<boole
 }
 
 export function setupAuth(app: Express) {
+  console.log('Setting up authentication routes...');
   const PostgresSessionStore = connectPg(session);
   
   const sessionSettings: session.SessionOptions = {
@@ -137,6 +138,7 @@ export function setupAuth(app: Express) {
   });
 
   // Login endpoint
+  console.log('Registering POST /api/login route');
   app.post("/api/login", (req, res, next) => {
     passport.authenticate("local", (err: any, user: any, info: any) => {
       if (err) {
