@@ -1,25 +1,47 @@
 import nodemailer from 'nodemailer';
 import type { Inquiry } from '@shared/schema';
 
-// Create Gmail transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+// Check if email credentials are configured
+const isEmailConfigured = () => {
+  return !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD && process.env.NOTIFICATION_EMAIL);
+};
 
-// Verify the connection
-transporter.verify((error: any, success: any) => {
-  if (error) {
-    console.error('Gmail SMTP connection error:', error);
-  } else {
-    console.log('Gmail SMTP server is ready to send emails');
-  }
-});
+// Create Gmail transporter only if credentials are available
+let transporter: nodemailer.Transporter | null = null;
+
+if (isEmailConfigured()) {
+  transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
+  // Verify the connection
+  transporter.verify((error: any, success: any) => {
+    if (error) {
+      console.error('Gmail SMTP connection error:', error);
+    } else {
+      console.log('Gmail SMTP server is ready to send emails');
+    }
+  });
+} else {
+  console.warn('Email credentials not configured. Email notifications will be disabled.');
+  console.warn('Required environment variables: GMAIL_USER, GMAIL_APP_PASSWORD, NOTIFICATION_EMAIL');
+  console.warn('Current status:', {
+    GMAIL_USER: !!process.env.GMAIL_USER,
+    GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD,
+    NOTIFICATION_EMAIL: !!process.env.NOTIFICATION_EMAIL
+  });
+}
 
 export async function sendInquiryNotification(inquiry: Inquiry): Promise<boolean> {
+  if (!transporter || !isEmailConfigured()) {
+    console.warn('Email not configured, skipping admin notification');
+    return false;
+  }
+
   try {
     const emailHtml = `
 <!DOCTYPE html>
@@ -142,6 +164,11 @@ Reply to customer: ${inquiry.email}
 }
 
 export async function sendInquiryConfirmation(inquiry: Inquiry): Promise<boolean> {
+  if (!transporter || !isEmailConfigured()) {
+    console.warn('Email not configured, skipping customer confirmation');
+    return false;
+  }
+
   try {
     const confirmationHtml = `
 <!DOCTYPE html>
