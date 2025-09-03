@@ -3,6 +3,7 @@ import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, requireAuth, requireAdmin } from "./auth";
+import { sendInquiryNotification, sendInquiryConfirmation } from "./email-service";
 import { 
   insertBlogPostSchema, 
   insertTestimonialSchema, 
@@ -342,6 +343,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const inquiryData = insertInquirySchema.parse(req.body);
       const inquiry = await storage.createInquiry(inquiryData);
+      
+      // Send email notifications asynchronously (don't block the response)
+      Promise.all([
+        sendInquiryNotification(inquiry),
+        sendInquiryConfirmation(inquiry)
+      ]).catch((emailError) => {
+        console.error("Failed to send email notifications:", emailError);
+        // Don't fail the request if email fails
+      });
+      
       res.status(201).json(inquiry);
     } catch (error) {
       if (error instanceof z.ZodError) {
