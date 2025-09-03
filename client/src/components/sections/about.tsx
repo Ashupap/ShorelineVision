@@ -1,9 +1,34 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "wouter";
+import { useState, useEffect } from "react";
 import { PerformanceImage } from "@/components/ui/performance-image";
+import factoryImage from "@assets/4-1 (1)_1756901765521.png";
+import processingImage from "@assets/2-1_1756901827544.png";
 
 export default function About() {
   const [, navigate] = useLocation();
+  const [currentImage, setCurrentImage] = useState(0);
+  
+  const images = [
+    {
+      src: factoryImage,
+      alt: "Alashore Marine aerial view of modern seafood processing facility",
+      title: "State-of-the-Art Facility"
+    },
+    {
+      src: processingImage,
+      alt: "Professional seafood processing team in hygienic environment",
+      title: "Quality Processing"
+    }
+  ];
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 4000); // Change every 4 seconds
+    
+    return () => clearInterval(interval);
+  }, [images.length]);
 
   return (
     <section id="about" className="py-20 bg-gradient-to-br from-light-marine to-white">
@@ -49,20 +74,50 @@ export default function About() {
             viewport={{ once: true }}
             className="relative"
           >
-            {/* High-quality seafood processing facility image */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="rounded-xl overflow-hidden shadow-2xl"
-            >
-              <PerformanceImage
-                src="https://images.unsplash.com/photo-1565615833231-e8c91a38a012?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80"
-                alt="Modern seafood processing facility"
-                className="w-full h-auto object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority={false}
-              />
-            </motion.div>
+            {/* Image Carousel */}
+            <div className="relative rounded-xl overflow-hidden shadow-2xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImage}
+                  initial={{ opacity: 0, x: 300 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -300 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="relative"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <PerformanceImage
+                      src={images[currentImage].src}
+                      alt={images[currentImage].alt}
+                      className="w-full h-[400px] object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority={currentImage === 0}
+                    />
+                    {/* Image title overlay */}
+                    <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
+                      <p className="font-semibold text-sm">{images[currentImage].title}</p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
+              
+              {/* Carousel indicators */}
+              <div className="absolute bottom-4 right-4 flex space-x-2">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                      index === currentImage ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
+                    }`}
+                    data-testid={`carousel-indicator-${index}`}
+                  />
+                ))}
+              </div>
+            </div>
             
             {/* Floating quality badge */}
             <motion.div
