@@ -42,9 +42,10 @@ export function setupAuth(app: Express) {
       checkPeriod: 86400000, // prune expired entries every 24h
     }),
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
+      secure: false, // Set to false for now since we're not using HTTPS yet
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+      sameSite: 'lax',
     },
   };
 
