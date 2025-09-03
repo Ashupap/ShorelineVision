@@ -61,21 +61,27 @@ export function setupAuth(app: Express) {
       },
       async (username, password, done) => {
         try {
+          console.log('Passport strategy: authenticating user:', username);
           const user = await storage.getUserByUsername(username);
           if (!user || !user.isActive) {
+            console.log('User not found or inactive:', username);
             return done(null, false, { message: 'Invalid credentials' });
           }
           
+          console.log('User found, checking password for:', username);
           const isValidPassword = await comparePasswords(password, user.password);
           if (!isValidPassword) {
+            console.log('Invalid password for user:', username);
             return done(null, false, { message: 'Invalid credentials' });
           }
           
+          console.log('Authentication successful for user:', username);
           // Update last login time
           await storage.updateUser(user.id, { lastLoginAt: new Date() });
           
           return done(null, user);
         } catch (error) {
+          console.error('Passport strategy error:', error);
           return done(error);
         }
       }
@@ -140,8 +146,10 @@ export function setupAuth(app: Express) {
   // Login endpoint
   console.log('Registering POST /api/login route');
   app.post("/api/login", (req, res, next) => {
+    console.log('Login attempt:', req.body.username);
     passport.authenticate("local", (err: any, user: any, info: any) => {
       if (err) {
+        console.error('Login error:', err);
         return res.status(500).json({ message: "Login failed" });
       }
       if (!user) {
