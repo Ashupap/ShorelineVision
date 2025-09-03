@@ -291,7 +291,7 @@ const Hero = memo(function Hero() {
           style={{ overflow: 'visible !important' }}
         >
           {/* Slider Container */}
-          <div className="relative w-1/5 h-1/5 max-w-[20%] max-h-[20%] aspect-square rounded-2xl flex items-center justify-center lg:justify-start hero-image-container" style={{ overflow: 'visible !important' }}>
+          <div className="relative w-3/5 h-3/5 max-w-[60%] max-h-[60%] aspect-square rounded-2xl flex items-center justify-center lg:justify-start hero-image-container" style={{ overflow: 'visible !important' }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
