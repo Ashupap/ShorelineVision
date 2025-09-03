@@ -112,7 +112,7 @@ SESSION_SECRET=your_very_secure_session_secret_at_least_32_characters_long
 
 # Application Configuration
 NODE_ENV=production
-PORT=8000
+PORT=3000
 
 # Optional: Email configuration for contact forms
 # SMTP_HOST=smtp.gmail.com
