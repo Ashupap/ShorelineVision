@@ -93,8 +93,15 @@ export default function About() {
                       src={images[currentImage].src}
                       alt={images[currentImage].alt}
                       className="w-full h-[400px] object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                       priority={currentImage === 0}
+                      loading={currentImage === 0 ? "eager" : "lazy"}
+                      placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmMGY5ZmY7c3RvcC1vcGFjaXR5OjAuNCIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNlMGY3ZmE7c3RvcC1vcGFjaXR5OjAuNCIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0idXJsKCNncmFkKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNjM3M0IzIiBvcGFjaXR5PSIwLjciPkxvYWRpbmcuLi48L3RleHQ+PC9zdmc+"
+                      style={{
+                        imageRendering: 'crisp-edges',
+                        transform: 'translateZ(0)',
+                        backfaceVisibility: 'hidden'
+                      }}
                     />
                     {/* Image title overlay */}
                     <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
@@ -103,6 +110,16 @@ export default function About() {
                   </motion.div>
                 </motion.div>
               </AnimatePresence>
+              
+              {/* Preload next image for smoother transitions */}
+              <div className="hidden">
+                <PerformanceImage
+                  src={images[(currentImage + 1) % images.length].src}
+                  alt="Preloaded image"
+                  loading="lazy"
+                  className="opacity-0"
+                />
+              </div>
               
               {/* Carousel indicators */}
               <div className="absolute bottom-4 right-4 flex space-x-2">
