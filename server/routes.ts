@@ -368,6 +368,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.delete('/api/inquiries/:id', requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid inquiry ID" });
+      }
+      
+      await storage.deleteInquiry(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting inquiry:", error);
+      res.status(500).json({ message: "Failed to delete inquiry" });
+    }
+  });
+
   // Website Content routes
   app.get('/api/content', async (req, res) => {
     try {

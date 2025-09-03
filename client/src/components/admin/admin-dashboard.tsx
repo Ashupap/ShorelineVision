@@ -10,6 +10,7 @@ import ContentEditor from "./content-editor";
 import MediaManager from "./media-manager";
 import BlogManager from "./blog-manager";
 import TestimonialsManager from "./testimonials-manager";
+import InquiriesManager from "./inquiries-manager";
 import { 
   BarChart3, 
   FileText, 
@@ -391,7 +392,7 @@ export default function AdminDashboard() {
       case "testimonials":
         return <TestimonialsManager />;
       case "inquiries":
-        return renderInquiriesManagement();
+        return <InquiriesManager />;
       case "settings":
         return renderWebsiteSettings();
       default:
