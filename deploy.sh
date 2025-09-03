@@ -165,6 +165,12 @@ print_status "Building application for production..."
 npm run build
 print_success "Application built successfully"
 
+# Copy built files to server public directory
+print_status "Copying static files to server directory..."
+mkdir -p server/public
+cp -r dist/public/* server/public/
+print_success "Static files copied successfully"
+
 # Create systemd service file
 print_status "Setting up systemd service..."
 SERVICE_FILE="/etc/systemd/system/alashore-marine.service"
