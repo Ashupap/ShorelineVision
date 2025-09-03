@@ -46,6 +46,7 @@ export function setupAuth(app: Express) {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       sameSite: 'lax',
+      domain: undefined, // Let browser determine domain automatically
     },
   };
 
@@ -209,9 +210,17 @@ export function setupAuth(app: Express) {
 
 // Middleware to require authentication
 export const requireAuth = (req: any, res: any, next: any) => {
+  console.log('requireAuth check - isAuthenticated:', req.isAuthenticated());
+  console.log('requireAuth check - user:', req.user ? 'exists' : 'null');
+  console.log('requireAuth check - session:', req.session ? 'exists' : 'null');
+  console.log('requireAuth check - sessionID:', req.sessionID);
+  
   if (!req.isAuthenticated() || !req.user) {
+    console.log('Authentication failed - returning 401');
     return res.status(401).json({ message: "Unauthorized" });
   }
+  
+  console.log('Authentication successful - proceeding');
   next();
 };
 
