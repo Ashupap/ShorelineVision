@@ -114,11 +114,10 @@ SESSION_SECRET=your_very_secure_session_secret_at_least_32_characters_long
 NODE_ENV=production
 PORT=4000
 
-# Optional: Email configuration for contact forms
-# SMTP_HOST=smtp.gmail.com
-# SMTP_PORT=587
-# SMTP_USER=your_email@gmail.com
-# SMTP_PASS=your_app_password
+# Email Configuration for Inquiry Notifications (Required)
+GMAIL_USER=your_gmail_address@gmail.com
+GMAIL_APP_PASSWORD=your_gmail_app_password
+NOTIFICATION_EMAIL=your_admin_email@company.com
 EOF
     print_warning "Please edit $ENV_FILE with your actual configuration before continuing!"
     print_warning "Press Enter to continue after updating the .env file..."

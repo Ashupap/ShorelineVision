@@ -4,6 +4,14 @@ This is a full-stack web application for Alashore Marine Exports Pvt. Ltd., a se
 
 # Recent Changes
 
+**September 3, 2025**
+- **Implemented complete email notification system for inquiries**:
+  - Gmail SMTP integration using Gmail App Password for secure authentication
+  - Dual email system: admin notifications + customer confirmations
+  - Professional HTML email templates with Alashore Marine branding
+  - Non-blocking async email delivery for optimal performance
+  - Production-ready email service with proper error handling
+
 **August 27, 2025**
 - Successfully migrated project from Replit Agent with PostgreSQL database setup and schema deployment
 - Enhanced company logo with improved visibility, brightness/contrast filters, and smooth animations
@@ -40,6 +48,7 @@ The backend follows a REST API pattern built with Express.js:
 - **Database Layer**: Drizzle ORM for type-safe database operations with PostgreSQL
 - **Authentication**: Replit Auth integration with session-based authentication using express-session
 - **API Design**: RESTful endpoints for blog posts, products, testimonials, and inquiries
+- **Email Service**: Gmail SMTP integration for inquiry notifications and customer confirmations
 - **Error Handling**: Centralized error handling middleware with proper HTTP status codes
 
 ## Data Storage
@@ -94,8 +103,32 @@ Key database tables:
 - **express-session**: Session management
 - **connect-pg-simple**: PostgreSQL session store
 
+### Email and Communication
+- **Nodemailer**: Email sending library with Gmail SMTP support
+- **Gmail SMTP**: Secure email delivery using Gmail App Passwords
+- **HTML Email Templates**: Professional branded email layouts
+
 ### Development and Build Tools
 - **TypeScript**: Type safety across the stack
 - **ESBuild**: Fast JavaScript bundler for production
 - **PostCSS**: CSS processing with Autoprefixer
 - **tsx**: TypeScript execution for development
+
+## Environment Variables
+Required environment variables for production deployment:
+
+### Database Configuration
+- `DATABASE_URL`: PostgreSQL connection string
+- `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`: Database credentials
+
+### Authentication
+- `SESSION_SECRET`: Secure session encryption key
+
+### Email Service
+- `GMAIL_USER`: Gmail address for sending emails
+- `GMAIL_APP_PASSWORD`: Gmail App Password (not regular password)
+- `NOTIFICATION_EMAIL`: Email address to receive admin notifications
+
+### Application
+- `NODE_ENV`: Set to 'production' for production deployment
+- `PORT`: Server port (default: 4000 for production)
