@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
-import { useState, useEffect, useRef, memo, useMemo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { Link } from "wouter";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
@@ -8,10 +8,10 @@ import shrimpImage from "@assets/shrimp-optimized.webp";
 import pomfretImage from "@assets/Pomfret_1755943114147.png";
 
 const Hero = memo(function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
 
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -200]);
@@ -19,12 +19,11 @@ const Hero = memo(function Hero() {
   const scaleEffect = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
   const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
   const y = useSpring(parallaxY, springConfig);
-  
+
   const [currentText, setCurrentText] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
   const seafoodTypes = ["Seafood", "Vannamei", "Pomfret"];
 
-  // Seafood images in the exact order specified
   const seafoodImages = [
     {
       src: shrimpImage,
@@ -37,7 +36,7 @@ const Hero = memo(function Hero() {
   useEffect(() => {
     const textInterval = setInterval(() => {
       setCurrentText((prev) => (prev + 1) % seafoodTypes.length);
-    }, 2500); // Change every 2.5 seconds
+    }, 2500);
 
     return () => clearInterval(textInterval);
   }, [seafoodTypes.length]);
@@ -45,10 +44,11 @@ const Hero = memo(function Hero() {
   useEffect(() => {
     const imageInterval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % seafoodImages.length);
-    }, 4000); // Change every 4 seconds for longer viewing
+    }, 4000);
 
     return () => clearInterval(imageInterval);
   }, [seafoodImages.length]);
+
   const scrollToAbout = () => {
     const element = document.querySelector("#about");
     if (element) {
@@ -56,37 +56,35 @@ const Hero = memo(function Hero() {
     }
   };
 
-
   return (
-    <section 
-      ref={containerRef} 
-      className="relative h-screen lg:h-screen flex items-center justify-center overflow-visible py-4 sm:py-8 lg:py-0"
-      style={{ height: '100vh' }} // Exact viewport height for desktop
+    <section
+      ref={containerRef}
+      // Use min-h-screen to ensure content fits, especially on mobile.
+      // Use flexbox for vertical centering, which is more reliable than absolute positioning.
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden py-4 sm:py-8 lg:py-0"
     >
       {/* Background Video with Parallax */}
-      <motion.div 
+      <motion.div
         style={{ scale: scaleEffect, opacity: parallaxOpacity }}
         className="absolute inset-0 z-0"
       >
-        <video 
-          autoPlay 
-          muted 
-          loop 
+        <video
+          autoPlay
+          muted
+          loop
           playsInline
           preload="auto"
           width="1920"
           height="1080"
+          // Use object-cover to make sure the video fills the container without distortion
           className="w-full h-full object-cover"
-          style={{ 
-            willChange: 'transform',
-            aspectRatio: '16/9'
-          }}
+          style={{ willChange: 'transform' }}
         >
           <source src={factoryVideo} type="video/mp4" />
         </video>
         {/* Enhanced Video overlay with gradient animation */}
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             background: [
               "linear-gradient(45deg, rgba(20, 78, 117, 0.9), rgba(29, 155, 155, 0.85), rgba(15, 23, 42, 0.9))",
               "linear-gradient(45deg, rgba(29, 155, 155, 0.9), rgba(15, 23, 42, 0.85), rgba(20, 78, 117, 0.9))",
@@ -103,20 +101,20 @@ const Hero = memo(function Hero() {
       <div className="absolute top-20 right-4 sm:right-20 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 bg-coral-accent/20 rounded-full backdrop-blur-sm border border-white/20 z-5 opacity-60" />
       <div className="absolute bottom-20 sm:bottom-32 left-4 sm:left-16 w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24 bg-marine-teal/30 rounded-full backdrop-blur-sm border border-white/30 z-5 opacity-60" />
       <div className="absolute top-1/2 left-2 sm:left-10 w-8 sm:w-12 lg:w-16 h-8 sm:h-12 lg:h-16 bg-white/20 rounded-full backdrop-blur-sm z-5 opacity-40" />
-      
+
       {/* Static bubble effects to prevent layout shifts */}
       <div className="absolute top-1/3 right-1/4 sm:right-1/3 w-10 sm:w-16 lg:w-20 h-10 sm:h-16 lg:h-20 bg-marine-teal/25 rounded-full backdrop-blur-sm border border-white/25 z-5 opacity-40" />
       <div className="absolute bottom-1/3 sm:bottom-1/4 right-1/5 sm:right-1/4 w-14 sm:w-20 lg:w-28 h-14 sm:h-20 lg:h-28 bg-coral-accent/15 rounded-full backdrop-blur-sm border border-white/15 z-5 opacity-30" />
       <div className="absolute top-2/3 sm:top-3/4 left-1/4 sm:left-1/3 w-8 sm:w-10 lg:w-14 h-8 sm:h-10 lg:h-14 bg-white/25 rounded-full backdrop-blur-sm z-5 opacity-35" />
-      
+
       {/* Swimming Sea Creatures - Mobile Responsive */}
       <motion.div
-        animate={{ 
+        animate={{
           x: [-50, 1920 + 50],
           y: [0, -20, 0, 20, 0],
           rotate: [0, 5, 0, -5, 0]
         }}
-        transition={{ 
+        transition={{
           duration: 25,
           repeat: Infinity,
           ease: "linear",
@@ -126,12 +124,12 @@ const Hero = memo(function Hero() {
         style={{ clipPath: 'polygon(0% 50%, 60% 0%, 100% 50%, 60% 100%)' }}
       />
       <motion.div
-        animate={{ 
+        animate={{
           x: [1920 + 50, -100],
           y: [0, 15, 0, -15, 0],
           rotate: [180, 185, 180, 175, 180]
         }}
-        transition={{ 
+        transition={{
           duration: 30,
           repeat: Infinity,
           ease: "linear",
@@ -141,12 +139,12 @@ const Hero = memo(function Hero() {
         style={{ clipPath: 'polygon(0% 50%, 60% 0%, 100% 50%, 60% 100%)' }}
       />
       <motion.div
-        animate={{ 
+        animate={{
           x: [-40, 1920 + 40],
           y: [0, -10, 0, 10, 0],
           rotate: [0, 3, 0, -3, 0]
         }}
-        transition={{ 
+        transition={{
           duration: 35,
           repeat: Infinity,
           ease: "linear",
@@ -157,9 +155,10 @@ const Hero = memo(function Hero() {
       />
 
       {/* Enhanced Responsive Layout */}
-      <motion.div 
+      <motion.div
         style={{ y }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-0 items-center h-full max-w-full"
+        // Use a grid with dynamic ordering to handle mobile vs desktop layout
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-0 items-center justify-center h-full max-w-full"
       >
         {/* Enhanced Text and Buttons */}
         <motion.div
@@ -177,8 +176,8 @@ const Hero = memo(function Hero() {
             <Sparkles className="text-coral-accent mr-2" size={20} />
             <span className="text-white/90 font-medium">Premium Quality Since 2012</span>
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
@@ -193,7 +192,9 @@ const Hero = memo(function Hero() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-coral-accent inline-block relative"
             >
-              {seafoodTypes[currentText]}
+              <AnimatePresence mode="wait">
+                <span key={currentText}>{seafoodTypes[currentText]}</span>
+              </AnimatePresence>
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
@@ -219,8 +220,8 @@ const Hero = memo(function Hero() {
               India
             </motion.span>
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
@@ -228,8 +229,8 @@ const Hero = memo(function Hero() {
           >
             Your quest for quality seafood ends here
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
@@ -237,7 +238,7 @@ const Hero = memo(function Hero() {
           >
             <Link href="/contact#contact-form">
               <motion.button
-                whileHover={{ 
+                whileHover={{
                   scale: 1.08,
                   boxShadow: "0 25px 50px rgba(255, 107, 107, 0.3)"
                 }}
@@ -256,7 +257,7 @@ const Hero = memo(function Hero() {
             </Link>
             <Link href="/products#products">
               <motion.button
-                whileHover={{ 
+                whileHover={{
                   scale: 1.08,
                   backgroundColor: "rgba(255, 255, 255, 0.1)",
                   borderColor: "rgba(255, 107, 107, 1)"
@@ -285,11 +286,12 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative lg:col-span-1 order-1 lg:order-2 w-full"
+          // Center image container on small screens using flexbox and auto margins
+          className="relative lg:col-span-1 order-1 lg:order-2 w-full flex items-center justify-center lg:block"
           style={{ zIndex: 20 }}
         >
           {/* Responsive Container with Aspect Ratio */}
-          <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[280px] md:h-[280px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px] mx-auto hero-image-container overflow-hidden">
+          <div className="relative w-full aspect-square max-w-[160px] sm:max-w-[200px] md:max-w-[280px] lg:max-w-lg xl:max-w-xl hero-image-container overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -312,18 +314,34 @@ const Hero = memo(function Hero() {
                   duration: 0.8,
                   ease: "easeInOut",
                 }}
-                className="relative w-full h-full"
-                style={{ 
+                // Ensures the motion.div takes up full space
+                className="absolute inset-0"
+                style={{
                   zIndex: 25
                 }}
               >
-                {/* Static Container - No Ken Burns Effect */}
-                <div className="w-full h-full flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5"
+                {/* Ken Burns Effect Container */}
+                <motion.div
+                  animate={{
+                    scale: [1, 1.05, 1.02],
+                    x: [0, -4, 2],
+                    y: [0, -2, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                  // Center image within the container
+                  className="w-full h-full flex items-center justify-center"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`w-full h-full object-contain object-center filter brightness-110 contrast-105 ${
+                    // Use object-contain to prevent the image from being cropped or distorted
+                    // Ensure the image scales down correctly within its parent container
+                    className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
                     sizes="(max-width: 384px) 160px, (max-width: 640px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 448px, 512px"
@@ -334,10 +352,12 @@ const Hero = memo(function Hero() {
                     style={{
                       imageRendering: 'auto',
                       transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden'
+                      backfaceVisibility: 'hidden',
+                      maxWidth: 'none',
+                      maxHeight: 'none'
                     }}
                   />
-                </div>
+                </motion.div>
               </motion.div>
             </AnimatePresence>
 
