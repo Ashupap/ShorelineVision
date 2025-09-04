@@ -23,7 +23,7 @@ const Hero = memo(function Hero() {
   
   const [currentText, setCurrentText] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
-  const seafoodTypes = ["Seafood", "Vannamei", "Pomfret", "Sheer Fish"];
+  const seafoodTypes = ["Seafood", "Vannamei", "Pomfret"];
 
   // Seafood images in the exact order specified
   const seafoodImages = [
@@ -33,7 +33,6 @@ const Hero = memo(function Hero() {
       title: "Vannamei Shrimp",
     },
     { src: pomfretImage, alt: "Fresh Pomfret Fish", title: "Pomfret Fish" },
-    { src: sheerFishImage, alt: "Premium Sheer Fish", title: "Sheer Fish" },
   ];
 
   useEffect(() => {
@@ -345,7 +344,7 @@ const Hero = memo(function Hero() {
                     placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYzJhM2E7c3RvcC1vcGFjaXR5OjAuMSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxNDRlNGE7c3RvcC1vcGFjaXR5OjAuMSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNncmFkKSIvPjwvc3ZnPg=="
                     style={{
                       imageRendering: 'auto',
-                      transform: currentImage === 2 ? 'translateZ(0) scale(0.7)' : 'translateZ(0)',
+                      transform: 'translateZ(0)',
                       backfaceVisibility: 'hidden',
                       maxWidth: 'none',
                       maxHeight: 'none'
