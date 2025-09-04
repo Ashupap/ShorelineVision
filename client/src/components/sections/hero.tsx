@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo, useMemo } from "react";
 import { Link } from "wouter";
 import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
-import shrimpImage from "@assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png";
+import shrimpImage from "@assets/generated_images/Premium_vannamei_shrimp_product_photo_b6df160b.png";
 import pomfretImage from "@assets/Pomfret_1755943114147.png";
 import sheerFishImage from "@assets/Sheer Fish_1755943118147.png";
 

@@ -1,8 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+/* Font imports moved to HTML head for better performance */
 
-/* Performance optimizations - prevent layout shifts */
+/* Performance optimizations - prevent layout shifts and forced reflows */
 * {
   box-sizing: border-box;
+}
+
+/* Prevent forced reflows by promoting elements to compositing layers */
+.motion-safe\\:transform,
+.motion-safe\\:transition,
+.motion-element {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Complete animations to remove will-change */
+.motion-complete {
+  will-change: auto;
 }
 
 /* Prevent logo clipping in header */

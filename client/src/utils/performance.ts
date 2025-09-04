@@ -90,9 +90,9 @@ export function preloadCriticalResources() {
     
     // Preload critical images
     const criticalImages = [
-      '/attached_assets/ChatGPT Image Jun 18, 2025, 04_26_01 PM_1755932209807.png',
-      '/attached_assets/Pomfret_1755943114147.png',
-      '/attached_assets/Sheer Fish_1755943118147.png'
+      '/attached_assets/generated_images/Premium_vannamei_shrimp_product_photo_b6df160b.png',
+      '/attached_assets/generated_images/Fresh_pomfret_fish_2d9ae908.png',
+      '/attached_assets/generated_images/Fresh_sheer_fish_527da6a7.png'
     ];
     
     criticalImages.forEach(src => {
