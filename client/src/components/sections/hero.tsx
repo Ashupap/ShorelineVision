@@ -289,7 +289,7 @@ const Hero = memo(function Hero() {
           style={{ zIndex: 20 }}
         >
           {/* Responsive Container with Aspect Ratio */}
-          <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto hero-image-container">
+          <div className="relative w-full aspect-square max-w-[280px] sm:max-w-[320px] md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto hero-image-container">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -330,7 +330,7 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-3 sm:p-4 md:p-5 lg:p-6"
+                  className="w-full h-full flex items-center justify-center p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
