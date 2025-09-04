@@ -320,22 +320,8 @@ const Hero = memo(function Hero() {
                   zIndex: 25
                 }}
               >
-                {/* Ken Burns Effect Container */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.05, 1.02],
-                    x: [0, -4, 2],
-                    y: [0, -2, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                  // Center image within the container with padding
-                  className="w-full h-full flex items-center justify-center p-2"
-                >
+                {/* Static Container - No Ken Burns scaling */}
+                <div className="w-full h-full flex items-center justify-center p-2">
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
@@ -355,7 +341,7 @@ const Hero = memo(function Hero() {
                       backfaceVisibility: 'hidden'
                     }}
                   />
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
 
