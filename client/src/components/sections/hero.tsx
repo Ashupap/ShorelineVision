@@ -290,8 +290,8 @@ const Hero = memo(function Hero() {
           className="relative lg:col-span-1 order-1 lg:order-2 w-full flex items-center justify-center lg:block"
           style={{ zIndex: 20 }}
         >
-          {/* Responsive Container with Aspect Ratio */}
-          <div className="relative w-full aspect-square max-w-[160px] sm:max-w-[200px] md:max-w-[280px] lg:max-w-lg xl:max-w-xl hero-image-container overflow-hidden">
+          {/* Responsive Container with Strict Mobile Constraints */}
+          <div className="relative w-[140px] h-[140px] sm:w-[180px] sm:h-[180px] md:w-[240px] md:h-[240px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px] hero-image-container overflow-hidden mx-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -333,8 +333,8 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  // Center image within the container
-                  className="w-full h-full flex items-center justify-center"
+                  // Center image within the container with padding
+                  className="w-full h-full flex items-center justify-center p-2"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
@@ -344,7 +344,7 @@ const Hero = memo(function Hero() {
                     className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    sizes="(max-width: 384px) 160px, (max-width: 640px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 448px, 512px"
+                    sizes="(max-width: 384px) 140px, (max-width: 640px) 180px, (max-width: 768px) 240px, (max-width: 1024px) 400px, 500px"
                     width={512}
                     height={512}
                     priority={true}
@@ -352,9 +352,7 @@ const Hero = memo(function Hero() {
                     style={{
                       imageRendering: 'auto',
                       transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden',
-                      maxWidth: 'none',
-                      maxHeight: 'none'
+                      backfaceVisibility: 'hidden'
                     }}
                   />
                 </motion.div>
