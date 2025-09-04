@@ -62,7 +62,7 @@ const Hero = memo(function Hero() {
   return (
     <section 
       ref={containerRef} 
-      className="relative h-screen flex items-center justify-center overflow-visible"
+      className="relative min-h-screen flex items-center justify-center overflow-visible py-4 sm:py-8"
       style={{ minHeight: '100vh' }} // Prevent layout shift
     >
       {/* Background Video with Parallax */}
@@ -291,7 +291,7 @@ const Hero = memo(function Hero() {
           style={{ zIndex: 20 }}
         >
           {/* Responsive Container with Aspect Ratio */}
-          <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto hero-image-container">
+          <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto hero-image-container">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -339,6 +339,8 @@ const Hero = memo(function Hero() {
                     alt={seafoodImages[currentImage].alt}
                     className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
+                    } ${
+                      currentImage === 2 ? "scale-90" : ""
                     }`}
                     sizes="(max-width: 384px) 280px, (max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, (max-width: 1280px) 512px, (max-width: 1536px) 576px, 640px"
                     priority={true}
