@@ -6,7 +6,7 @@ import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/shrimp-optimized.webp";
 import pomfretImage from "@assets/Pomfret_1755943114147.png";
-import sheerFishImage from "@assets/Sheer Fish_1755943118147.png";
+import sheerFishImage from "@assets/Sheer Fish_1756967927107.webp";
 
 const Hero = memo(function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -322,7 +322,7 @@ const Hero = memo(function Hero() {
                 {/* Ken Burns Effect Container */}
                 <motion.div
                   animate={{
-                    scale: currentImage === 2 ? [0.35, 0.375, 0.36] : [1, 1.05, 1.02],
+                    scale: currentImage === 2 ? [0.8, 0.85, 0.82] : [1, 1.05, 1.02],
                     x: [0, -4, 2],
                     y: [0, -2, 0],
                   }}
