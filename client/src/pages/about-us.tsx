@@ -599,27 +599,27 @@ export default function AboutUs() {
                     {
                       name: "Madhusudan Dash",
                       position: "Director",
-                      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: "https://avatar.iran.liara.run/public/boy?username=madhusudan",
                     },
                     {
                       name: "Bishnupriya Dash",
                       position: "Shareholder",
-                      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: "https://avatar.iran.liara.run/public/girl?username=bishnupriya",
                     },
                     {
                       name: "Monalina Panda",
                       position: "Director",
-                      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: "https://avatar.iran.liara.run/public/girl?username=monalina",
                     },
                     {
                       name: "Rashmikanta Panda",
                       position: "Director",
-                      avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: "https://avatar.iran.liara.run/public/boy?username=rashmikanta",
                     },
                     {
                       name: "Debasish Dash",
                       position: "Director",
-                      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: "https://avatar.iran.liara.run/public/boy?username=debasish",
                     },
                     // Duplicate for seamless loop
                     {
@@ -630,7 +630,7 @@ export default function AboutUs() {
                     {
                       name: "Madhusudan Dash",
                       position: "Director",
-                      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+                      avatar: "https://avatar.iran.liara.run/public/boy?username=madhusudan",
                     },
                   ].map((leader, index) => (
                     <motion.div
