@@ -599,27 +599,27 @@ export default function AboutUs() {
                     {
                       name: "Madhusudan Dash",
                       position: "Director",
-                      avatar: "https://avatar.iran.liara.run/public/boy?username=madhusudan",
+                      avatar: "https://ui-avatars.com/api/?name=M+D&size=400&background=9ca3af&color=fff&format=png",
                     },
                     {
                       name: "Bishnupriya Dash",
                       position: "Shareholder",
-                      avatar: "https://avatar.iran.liara.run/public/girl?username=bishnupriya",
+                      avatar: "https://ui-avatars.com/api/?name=B+D&size=400&background=9ca3af&color=fff&format=png",
                     },
                     {
                       name: "Monalina Panda",
                       position: "Director",
-                      avatar: "https://avatar.iran.liara.run/public/girl?username=monalina",
+                      avatar: "https://ui-avatars.com/api/?name=M+P&size=400&background=9ca3af&color=fff&format=png",
                     },
                     {
                       name: "Rashmikanta Panda",
                       position: "Director",
-                      avatar: "https://avatar.iran.liara.run/public/boy?username=rashmikanta",
+                      avatar: "https://ui-avatars.com/api/?name=R+P&size=400&background=9ca3af&color=fff&format=png",
                     },
                     {
                       name: "Debasish Dash",
                       position: "Director",
-                      avatar: "https://avatar.iran.liara.run/public/boy?username=debasish",
+                      avatar: "https://ui-avatars.com/api/?name=D+D&size=400&background=9ca3af&color=fff&format=png",
                     },
                     // Duplicate for seamless loop
                     {
@@ -630,7 +630,7 @@ export default function AboutUs() {
                     {
                       name: "Madhusudan Dash",
                       position: "Director",
-                      avatar: "https://avatar.iran.liara.run/public/boy?username=madhusudan",
+                      avatar: "https://ui-avatars.com/api/?name=M+D&size=400&background=9ca3af&color=fff&format=png",
                     },
                   ].map((leader, index) => (
                     <motion.div
