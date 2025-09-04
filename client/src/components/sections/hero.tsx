@@ -322,7 +322,7 @@ const Hero = memo(function Hero() {
                 {/* Ken Burns Effect Container */}
                 <motion.div
                   animate={{
-                    scale: currentImage === 2 ? [0.5, 0.525, 0.51] : [1, 1.05, 1.02],
+                    scale: currentImage === 2 ? [0.35, 0.375, 0.36] : [1, 1.05, 1.02],
                     x: [0, -4, 2],
                     y: [0, -2, 0],
                   }}
