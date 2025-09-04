@@ -314,7 +314,7 @@ const Hero = memo(function Hero() {
                   duration: 0.8,
                   ease: "easeInOut",
                 }}
-                className="relative w-full h-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto"
+                className="relative w-full h-full mx-auto"
                 style={{ 
                   zIndex: 25,
                   overflow: 'visible'
@@ -333,7 +333,7 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-2 sm:p-4"
+                  className="w-full h-full flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4"
                   style={{ overflow: 'visible' }}
                 >
                   <PerformanceImage

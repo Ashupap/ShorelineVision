@@ -26,10 +26,12 @@
   max-height: none !important;
 }
 
-/* Contained floating hero image container - prevent clipping within bounds */
+/* Responsive floating hero image container - scales with screen size */
 .hero-image-container {
   position: relative;
   overflow: visible !important;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-image-container * {
@@ -43,6 +45,38 @@
   object-position: center;
   max-width: none;
   max-height: none;
+}
+
+/* Responsive image sizing based on screen width */
+@media (max-width: 480px) {
+  .hero-image-container {
+    width: 85%;
+    height: 85%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .hero-image-container {
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-image-container {
+    width: 95%;
+    height: 95%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hero-image-container {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* Critical rendering path optimization */
