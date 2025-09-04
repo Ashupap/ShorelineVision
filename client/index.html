@@ -2,16 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Alashore Marine Exports - Premium Seafood Exporter | India</title>
     <meta name="description" content="Alashore Marine Exports - Leading seafood exporter from India. Premium quality vannamei shrimp, fish, and marine products. Serving 90+ customers globally with sustainable practices." />
     <meta name="keywords" content="seafood export, vannamei shrimp, marine products, India seafood, premium fish, sustainable fishing, Alashore Marine" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Alashore Marine Exports Pvt. Ltd." />
+    <link rel="canonical" href="https://alashoremarine.com" />
     
     <!-- Performance optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://alashoremarine.com">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://alashoremarine.com">
     
     <!-- Preload critical resources -->
     <link rel="modulepreload" href="/src/main.tsx" />
@@ -31,12 +36,18 @@
     <meta property="og:description" content="Leading seafood exporter from India with 90+ global customers. Premium quality marine products with sustainable practices." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://alashoremarine.com" />
-    <meta property="og:image" content="/seafood-hero.jpg" />
+    <meta property="og:image" content="/attached_assets/shrimp-optimized.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Alashore Marine Exports" />
+    <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Alashore Marine Exports - Premium Seafood Exporter" />
     <meta name="twitter:description" content="Leading seafood exporter from India with 90+ global customers." />
+    <meta name="twitter:image" content="/attached_assets/shrimp-optimized.webp" />
+    <meta name="twitter:site" content="@AlashoreL" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=8" />
@@ -50,6 +61,35 @@
     
     <!-- Theme and manifest -->
     <meta name="theme-color" content="#1e40af" />
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Alashore Marine Exports Pvt. Ltd.",
+      "url": "https://alashoremarine.com",
+      "logo": "https://alashoremarine.com/attached_assets/Asset 3_1_1756973310181.png",
+      "description": "Leading seafood exporter from India specializing in premium quality vannamei shrimp and marine products.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+        "addressRegion": "Odisha"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-7381050536",
+        "contactType": "customer service",
+        "email": "alashoremarine@gmail.com"
+      },
+      "sameAs": [
+        "https://www.facebook.com/AlashoreMarine/",
+        "https://www.instagram.com/alashoremarine/",
+        "https://twitter.com/AlashoreL",
+        "https://www.linkedin.com/company/alashore-marine-private-limited/"
+      ]
+    }
+    </script>
     
     <style>
       /* Enhanced Critical CSS for optimal performance */
@@ -131,6 +171,7 @@
         image-rendering: crisp-edges;
         image-rendering: -webkit-optimize-contrast;
         content-visibility: auto;
+        contain: layout style paint;
       }
       
       /* GPU acceleration for animations */

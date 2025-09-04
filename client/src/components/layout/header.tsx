@@ -194,7 +194,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         <motion.div
           className="absolute text-lg pointer-events-none"
           animate={{
-            x: [-60, window.innerWidth + 60],
+            x: [-60, 1200],
             y: [0, -3, 2, -1, 0],
             rotate: [0, 2, -1, 1, 0]
           }}
@@ -218,7 +218,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         <motion.div
           className="absolute text-base pointer-events-none"
           animate={{
-            x: [window.innerWidth + 60, -60],
+            x: [1200, -60],
             y: [0, 4, -2, 3, 0],
             rotate: [180, 182, 178, 181, 180],
             scale: [1, 1.1, 0.9, 1.05, 1]
@@ -244,7 +244,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         <motion.div
           className="absolute text-sm pointer-events-none"
           animate={{
-            x: [-50, window.innerWidth + 50, -50],
+            x: [-50, 1200, -50],
             y: [0, -2, 1, -3, 0],
             rotate: [0, -5, 5, -3, 0]
           }}
@@ -292,7 +292,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
         <motion.div
           className="absolute text-sm pointer-events-none"
           animate={{
-            x: [window.innerWidth + 50, -50],
+            x: [1200, -50],
             y: [0, -4, 2, -3, 0],
             rotate: [180, 185, 175, 182, 180]
           }}
