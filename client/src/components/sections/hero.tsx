@@ -338,7 +338,7 @@ const Hero = memo(function Hero() {
                     className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    sizes="(max-width: 384px) 256px, (max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 512px, 640px"
+                    sizes="(max-width: 384px) 200px, (max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 512px, 640px"
                     width={640}
                     height={640}
                     priority={true}
