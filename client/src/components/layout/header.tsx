@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Menu, X, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/Asset 4_1756970694429.webp";
+import logoImage from "@assets/image_1756971513323.png";
 
 interface HeaderProps {
   onEnquiryClick?: () => void;
@@ -457,7 +457,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
                     ? 'filter brightness-110 contrast-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]' 
                     : 'filter brightness-125 contrast-150 saturate-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                 }`}
-                style={{ minWidth: 'fit-content', minHeight: 'fit-content', overflow: 'visible' }}
+                style={{ minWidth: 'fit-content', minHeight: 'fit-content', overflow: 'visible', width: 'auto' }}
                 animate={{
                   filter: isScrolled 
                     ? ["brightness(1.1) contrast(1.25)", "brightness(1.15) contrast(1.3)", "brightness(1.1) contrast(1.25)"]
@@ -472,7 +472,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain max-w-none"
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
                   priority={true}
                   loading="eager"
                   style={{ 

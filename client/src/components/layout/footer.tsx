@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Anchor, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/Asset 4_1756970694429.webp";
+import logoImage from "@assets/image_1756971513323.png";
 
 export default function Footer() {
   const groupCompanies = [
@@ -47,12 +47,12 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="flex items-center space-x-3 mb-6 overflow-visible logo-container">
-              <div className="relative overflow-visible" style={{ overflow: 'visible !important' }}>
+            <div className="flex items-center space-x-3 mb-6 overflow-visible logo-container" style={{ width: 'auto', minWidth: 'fit-content' }}>
+              <div className="relative overflow-visible" style={{ overflow: 'visible !important', width: 'auto', minWidth: 'fit-content' }}>
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-16 w-auto object-contain filter brightness-110 max-w-none"
+                  className="h-16 w-auto object-contain filter brightness-110"
                   priority={true}
                   loading="eager"
                   data-testid="footer-logo"
