@@ -477,7 +477,6 @@ export default function AboutUs() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                       priority={false}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ocean-blue/20 to-transparent"></div>
                   </div>
                 </div>
               </div>
