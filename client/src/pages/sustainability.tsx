@@ -1065,20 +1065,24 @@ export default function Sustainability() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 min-h-[60px]"
+                    className="flex flex-col items-center text-center p-4"
                   >
-                    <Users className="text-coral-accent mr-4" size={20} />
-                    <span className="text-sm sm:text-base lg:text-lg drop-shadow">Professional Development</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-3 shadow-lg">
+                      <Award className="text-white" size={28} />
+                    </div>
+                    <span className="text-sm sm:text-base text-white drop-shadow font-medium">Professional Development</span>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 min-h-[60px]"
+                    className="flex flex-col items-center text-center p-4"
                   >
-                    <Users className="text-coral-accent mr-4" size={20} />
-                    <span className="text-sm sm:text-base lg:text-lg drop-shadow">Workplace Culture</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mb-3 shadow-lg">
+                      <Users className="text-white" size={28} />
+                    </div>
+                    <span className="text-sm sm:text-base text-white drop-shadow font-medium">Workplace Culture</span>
                   </motion.div>
                 </div>
               </motion.div>
@@ -1113,20 +1117,24 @@ export default function Sustainability() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 min-h-[60px]"
+                    className="flex flex-col items-center text-center p-4"
                   >
-                    <Package className="text-coral-accent mr-4" size={20} />
-                    <span className="text-sm sm:text-base lg:text-lg drop-shadow">International Standards</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mb-3 shadow-lg">
+                      <Shield className="text-white" size={28} />
+                    </div>
+                    <span className="text-sm sm:text-base text-white drop-shadow font-medium">International Standards</span>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 min-h-[60px]"
+                    className="flex flex-col items-center text-center p-4"
                   >
-                    <Package className="text-coral-accent mr-4" size={20} />
-                    <span className="text-sm sm:text-base lg:text-lg drop-shadow">Quality Control</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mb-3 shadow-lg">
+                      <FlaskConical className="text-white" size={28} />
+                    </div>
+                    <span className="text-sm sm:text-base text-white drop-shadow font-medium">Quality Control</span>
                   </motion.div>
                 </div>
               </motion.div>
@@ -1161,20 +1169,24 @@ export default function Sustainability() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 min-h-[60px]"
+                    className="flex flex-col items-center text-center p-4"
                   >
-                    <Droplets className="text-coral-accent mr-4" size={20} />
-                    <span className="text-sm sm:text-base lg:text-lg drop-shadow">Sustainable Practices</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-3 shadow-lg">
+                      <Leaf className="text-white" size={28} />
+                    </div>
+                    <span className="text-sm sm:text-base text-white drop-shadow font-medium">Sustainable Practices</span>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-white bg-white/20 backdrop-blur-md p-4 rounded-xl border border-white/30 min-h-[60px]"
+                    className="flex flex-col items-center text-center p-4"
                   >
-                    <Droplets className="text-coral-accent mr-4" size={20} />
-                    <span className="text-sm sm:text-base lg:text-lg drop-shadow">Fair Partnerships</span>
+                    <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-full flex items-center justify-center mb-3 shadow-lg">
+                      <Users className="text-white" size={28} />
+                    </div>
+                    <span className="text-sm sm:text-base text-white drop-shadow font-medium">Fair Partnerships</span>
                   </motion.div>
                 </div>
               </motion.div>
