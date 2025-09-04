@@ -6,7 +6,6 @@ import { PerformanceImage } from "@/components/ui/performance-image";
 import factoryVideo from "@assets/Alashore-Marine-Factory_1755929476699.mp4";
 import shrimpImage from "@assets/shrimp-optimized.webp";
 import pomfretImage from "@assets/Pomfret_1755943114147.png";
-import sheerFishImage from "@assets/Sheer Fish_1756967927107.webp";
 
 const Hero = memo(function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,8 +60,8 @@ const Hero = memo(function Hero() {
   return (
     <section 
       ref={containerRef} 
-      className="relative min-h-screen flex items-center justify-center overflow-visible py-4 sm:py-8"
-      style={{ minHeight: '100vh' }} // Prevent layout shift
+      className="relative h-screen lg:h-screen flex items-center justify-center overflow-visible py-4 sm:py-8 lg:py-0"
+      style={{ height: '100vh' }} // Exact viewport height for desktop
     >
       {/* Background Video with Parallax */}
       <motion.div 
