@@ -287,11 +287,20 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full max-w-full lg:-ml-8 lg:pl-0 overflow-visible"
-          style={{ overflow: 'visible !important' }}
+          className="relative flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
+          style={{ 
+            height: 'clamp(300px, 50vh, 500px)',
+            maxHeight: '80vh',
+            minHeight: '300px'
+          }}
         >
           {/* Slider Container */}
-          <div className="relative w-3/4 h-3/4 max-w-[75%] max-h-[75%] aspect-square rounded-2xl flex items-center justify-center lg:justify-start hero-image-container" style={{ overflow: 'visible !important' }}>
+          <div className="relative w-full h-full max-w-lg flex items-center justify-center lg:justify-start hero-image-container" 
+               style={{ 
+                 aspectRatio: '1/1',
+                 maxHeight: '100%',
+                 maxWidth: '100%'
+               }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -329,8 +338,11 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-2 sm:p-4"
-                  style={{ overflow: 'visible !important' }}
+                  className="w-full h-full flex items-center justify-center p-4 sm:p-6 md:p-8"
+                  style={{ 
+                    position: 'relative',
+                    overflow: 'visible'
+                  }}
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
@@ -338,15 +350,17 @@ const Hero = memo(function Hero() {
                     className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 512px"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 400px"
                     priority={true}
                     placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYzJhM2E7c3RvcC1vcGFjaXR5OjAuMSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxNDRlNGE7c3RvcC1vcGFjaXR5OjAuMSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNncmFkKSIvPjwvc3ZnPg=="
                     style={{
-                      imageRendering: 'crisp-edges',
+                      imageRendering: 'auto',
                       transform: 'translateZ(0)',
                       backfaceVisibility: 'hidden',
-                      maxWidth: 'none',
-                      overflow: 'visible'
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      objectPosition: 'center'
                     }}
                   />
                 </motion.div>
