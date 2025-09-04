@@ -322,7 +322,7 @@ const Hero = memo(function Hero() {
                 {/* Ken Burns Effect Container */}
                 <motion.div
                   animate={{
-                    scale: currentImage === 2 ? [0.8, 0.85, 0.82] : [1, 1.05, 1.02],
+                    scale: [1, 1.05, 1.02],
                     x: [0, -4, 2],
                     y: [0, -2, 0],
                   }}
@@ -339,8 +339,6 @@ const Hero = memo(function Hero() {
                     alt={seafoodImages[currentImage].alt}
                     className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
-                    } ${
-                      currentImage === 2 ? "scale-50" : ""
                     }`}
                     sizes="(max-width: 384px) 280px, (max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, (max-width: 1280px) 512px, (max-width: 1536px) 576px, 640px"
                     priority={true}
