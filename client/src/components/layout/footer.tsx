@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Anchor, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/Asset 3_1756100807050.png";
+import logoImage from "@assets/Asset 4_1756970694429.webp";
 
 export default function Footer() {
   const groupCompanies = [
@@ -52,7 +52,7 @@ export default function Footer() {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-16 w-auto object-contain filter brightness-110"
+                  className="h-16 w-auto object-contain filter brightness-110 max-w-none"
                   priority={true}
                   loading="eager"
                   data-testid="footer-logo"

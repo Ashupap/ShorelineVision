@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Menu, X, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/Asset 3_1756100807050.png";
+import logoImage from "@assets/Asset 4_1756970694429.webp";
 
 interface HeaderProps {
   onEnquiryClick?: () => void;
@@ -472,7 +472,7 @@ export default function Header({ onEnquiryClick }: HeaderProps = {}) {
                 <PerformanceImage
                   src={logoImage}
                   alt="Alashore Marine Exports"
-                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain max-w-none"
                   priority={true}
                   loading="eager"
                   style={{ 
