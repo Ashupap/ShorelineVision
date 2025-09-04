@@ -287,20 +287,10 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
-          style={{ 
-            height: 'clamp(300px, 50vh, 500px)',
-            maxHeight: '80vh',
-            minHeight: '300px'
-          }}
+          className="relative h-64 sm:h-80 md:h-96 lg:h-full flex items-center justify-center lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
         >
           {/* Slider Container */}
-          <div className="relative w-full h-full max-w-lg flex items-center justify-center lg:justify-start hero-image-container" 
-               style={{ 
-                 aspectRatio: '1/1',
-                 maxHeight: '100%',
-                 maxWidth: '100%'
-               }}>
+          <div className="relative w-full h-full max-w-md mx-auto flex items-center justify-center hero-image-container">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -338,11 +328,7 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-4 sm:p-6 md:p-8"
-                  style={{ 
-                    position: 'relative',
-                    overflow: 'visible'
-                  }}
+                  className="w-full h-full flex items-center justify-center p-2 sm:p-4"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
@@ -356,11 +342,7 @@ const Hero = memo(function Hero() {
                     style={{
                       imageRendering: 'auto',
                       transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden',
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      objectPosition: 'center'
+                      backfaceVisibility: 'hidden'
                     }}
                   />
                 </motion.div>
