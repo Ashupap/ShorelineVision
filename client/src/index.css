@@ -26,7 +26,7 @@
   max-height: none !important;
 }
 
-/* Responsive floating hero image container - scales with screen size */
+/* Fully responsive hero image container with aspect ratio */
 .hero-image-container {
   position: relative;
   overflow: visible !important;
@@ -45,47 +45,6 @@
   object-position: center;
   max-width: none;
   max-height: none;
-}
-
-/* Responsive image sizing based on screen width */
-@media (max-width: 480px) {
-  .hero-image-container {
-    width: 85%;
-    height: 85%;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .hero-image-container {
-    width: 90%;
-    height: 90%;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .hero-image-container {
-    width: 70%;
-    height: 70%;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 1025px) and (max-width: 1440px) {
-  .hero-image-container {
-    width: 65%;
-    height: 65%;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 1441px) {
-  .hero-image-container {
-    width: 60%;
-    height: 60%;
-    margin: 0 auto;
-  }
 }
 
 /* Critical rendering path optimization */

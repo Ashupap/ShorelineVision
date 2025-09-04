@@ -282,16 +282,16 @@ const Hero = memo(function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Seafood Image Slider - Contained Floating */}
+        {/* Responsive Seafood Image Slider */}
         <motion.div
           initial={{ opacity: 0, x: 80, rotateY: -30 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          className="relative h-64 sm:h-80 md:h-96 lg:h-full lg:col-span-1 order-1 lg:order-2 w-full lg:-ml-8 lg:pl-0"
+          className="relative lg:col-span-1 order-1 lg:order-2 w-full"
           style={{ zIndex: 20 }}
         >
-          {/* Contained Floating Image Container */}
-          <div className="relative w-full h-full flex items-center justify-center hero-image-container" style={{ zIndex: 20, overflow: 'visible' }}>
+          {/* Responsive Container with Aspect Ratio */}
+          <div className="relative w-full aspect-square max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto hero-image-container">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -314,10 +314,9 @@ const Hero = memo(function Hero() {
                   duration: 0.8,
                   ease: "easeInOut",
                 }}
-                className="relative w-full h-full mx-auto"
+                className="relative w-full h-full"
                 style={{ 
-                  zIndex: 25,
-                  overflow: 'visible'
+                  zIndex: 25
                 }}
               >
                 {/* Ken Burns Effect Container */}
@@ -333,8 +332,7 @@ const Hero = memo(function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
-                  className="w-full h-full flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4"
-                  style={{ overflow: 'visible' }}
+                  className="w-full h-full flex items-center justify-center p-3 sm:p-4 md:p-5 lg:p-6"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
@@ -342,7 +340,7 @@ const Hero = memo(function Hero() {
                     className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    sizes="(max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 512px"
+                    sizes="(max-width: 384px) 280px, (max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, (max-width: 1280px) 512px, (max-width: 1536px) 576px, 640px"
                     priority={true}
                     placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYzJhM2E7c3RvcC1vcGFjaXR5OjAuMSIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxNDRlNGE7c3RvcC1vcGFjaXR5OjAuMSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNncmFkKSIvPjwvc3ZnPg=="
                     style={{
@@ -370,7 +368,7 @@ const Hero = memo(function Hero() {
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-2/3 h-6 bg-black/40 rounded-full blur-md"
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3/4 h-4 bg-black/30 rounded-full blur-lg"
               style={{ zIndex: 15 }}
             />
           </div>
