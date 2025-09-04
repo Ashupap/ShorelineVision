@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Menu, X, Shield, Mail, Phone, Building2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/Asset 3_1_1756973092265.png";
+import logoImage from "@assets/Asset 3_1_1756973310181.png";
 
 interface HeaderProps {
   onEnquiryClick?: () => void;
