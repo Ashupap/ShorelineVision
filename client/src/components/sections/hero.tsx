@@ -289,7 +289,7 @@ const Hero = memo(function Hero() {
           style={{ zIndex: 20 }}
         >
           {/* Responsive Container with Aspect Ratio */}
-          <div className="relative w-full aspect-square max-w-[160px] sm:max-w-[200px] md:max-w-[280px] lg:max-w-lg xl:max-w-xl mx-auto hero-image-container overflow-hidden">
+          <div className="relative w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[280px] md:h-[280px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px] mx-auto hero-image-container overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -317,20 +317,8 @@ const Hero = memo(function Hero() {
                   zIndex: 25
                 }}
               >
-                {/* Ken Burns Effect Container */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.05, 1.02],
-                    x: [0, -4, 2],
-                    y: [0, -2, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                  className="w-full h-full flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5"
+                {/* Static Container - No Ken Burns Effect */}
+                <div className="w-full h-full flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5"
                 >
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
@@ -346,12 +334,10 @@ const Hero = memo(function Hero() {
                     style={{
                       imageRendering: 'auto',
                       transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden',
-                      maxWidth: 'none',
-                      maxHeight: 'none'
+                      backfaceVisibility: 'hidden'
                     }}
                   />
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
 
