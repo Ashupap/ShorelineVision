@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Anchor, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { PerformanceImage } from "@/components/ui/performance-image";
-import logoImage from "@assets/image_1756971513323.png";
+import logoImage from "@assets/Asset 3_1756100807050.png";
 
 export default function Footer() {
   const groupCompanies = [
@@ -60,6 +60,8 @@ export default function Footer() {
                     clipPath: 'none', 
                     overflow: 'visible',
                     maxWidth: 'none',
+                    width: 'auto',
+                    minWidth: 'fit-content',
                     maxHeight: 'none',
                     objectFit: 'contain',
                     display: 'block',
