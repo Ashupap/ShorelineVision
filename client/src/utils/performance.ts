@@ -90,7 +90,7 @@ export function preloadCriticalResources() {
     
     // Preload critical images
     const criticalImages = [
-      '/attached_assets/generated_images/Premium_vannamei_shrimp_product_photo_b6df160b.png',
+      '/attached_assets/shrimp-optimized.webp',
       '/attached_assets/generated_images/Fresh_pomfret_fish_2d9ae908.png',
       '/attached_assets/generated_images/Fresh_sheer_fish_527da6a7.png'
     ];
