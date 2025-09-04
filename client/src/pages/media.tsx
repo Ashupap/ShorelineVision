@@ -404,12 +404,16 @@ export default function Media() {
                             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10" />
                             
                             {/* Certificate Image */}
-                            <div className="relative p-2 h-full flex items-center justify-center">
+                            <div className="relative p-4 h-full flex items-center justify-center">
                               <PerformanceImage
                                 src={award.image}
                                 alt="Award Certificate"
-                                className="w-full h-auto max-h-full object-contain rounded-lg"
-                                style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' }}
+                                className="w-full h-full object-contain rounded-lg"
+                                style={{ 
+                                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+                                  maxWidth: '100%',
+                                  maxHeight: '100%'
+                                }}
                                 sizes="(max-width: 768px) 280px, 320px"
                                 priority={index === currentSlide}
                                 data-testid={`award-image-${index}`}
