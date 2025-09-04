@@ -289,7 +289,7 @@ const Hero = memo(function Hero() {
           style={{ zIndex: 20 }}
         >
           {/* Responsive Container with Aspect Ratio */}
-          <div className="relative w-full aspect-square max-w-[280px] sm:max-w-[320px] md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto hero-image-container">
+          <div className="relative w-full aspect-square max-w-[200px] sm:max-w-[240px] md:max-w-[300px] lg:max-w-lg xl:max-w-xl mx-auto hero-image-container overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentImage}
@@ -335,10 +335,10 @@ const Hero = memo(function Hero() {
                   <PerformanceImage
                     src={seafoodImages[currentImage].src}
                     alt={seafoodImages[currentImage].alt}
-                    className={`w-full h-full object-contain filter brightness-110 contrast-105 ${
+                    className={`max-w-full max-h-full object-contain filter brightness-110 contrast-105 ${
                       currentImage === 1 ? "mix-blend-multiply" : ""
                     }`}
-                    sizes="(max-width: 384px) 280px, (max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 512px"
+                    sizes="(max-width: 384px) 200px, (max-width: 640px) 240px, (max-width: 768px) 300px, (max-width: 1024px) 448px, 512px"
                     width={512}
                     height={512}
                     priority={true}
