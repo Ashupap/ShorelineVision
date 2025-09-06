@@ -103,8 +103,9 @@ export default function ProductsManager() {
       });
     },
     onError: (error: Error) => {
+      console.error("Update product error:", error);
       toast({
-        title: "Error",
+        title: "Error", 
         description: error.message || "Failed to update product",
         variant: "destructive",
       });
