@@ -239,12 +239,46 @@ print_success "Systemd service file created"
 
 # Verify the service file was created correctly
 print_status "Verifying systemd service file..."
+print_status "Expected entry point: $SERVER_ENTRY_POINT"
+print_status "Actual ExecStart line in service file:"
+sudo grep "ExecStart" "$SERVICE_FILE" || print_error "ExecStart line not found"
+
 if sudo cat "$SERVICE_FILE" | grep -q "ExecStart=/usr/bin/node $SERVER_ENTRY_POINT"; then
     print_success "Service file verified - using correct entry point"
 else
-    print_warning "Service file verification: checking actual content..."
-    print_status "ExecStart line in service file:"
-    sudo grep "ExecStart" "$SERVICE_FILE" || print_error "ExecStart line not found"
+    print_error "Service file verification FAILED!"
+    print_error "The ExecStart line does not match expected entry point"
+    print_status "Attempting to fix service file..."
+    
+    # Create a corrected service file
+    cat > /tmp/alashore-marine-fixed.service << EOF
+[Unit]
+Description=Alashore Marine Seafood Export Website
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=$APP_USER
+WorkingDirectory=$APP_DIR
+Environment=NODE_ENV=production
+EnvironmentFile=$APP_DIR/.env
+ExecStart=/usr/bin/node $SERVER_ENTRY_POINT
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=alashore-marine
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    
+    sudo mv /tmp/alashore-marine-fixed.service "$SERVICE_FILE"
+    print_success "Service file corrected"
+    
+    # Verify again
+    print_status "Re-verifying corrected service file:"
+    sudo grep "ExecStart" "$SERVICE_FILE"
 fi
 
 # Set up log rotation
