@@ -17,25 +17,12 @@ import { z } from "zod";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { ObjectStorageService } from "./objectStorage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Multer configuration for file uploads
-  const storage_config = multer.diskStorage({
-    destination: function (req, file, cb) {
-      const uploadPath = path.join(process.cwd(), 'uploads/media');
-      if (!fs.existsSync(uploadPath)) {
-        fs.mkdirSync(uploadPath, { recursive: true });
-      }
-      cb(null, uploadPath);
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, uniqueSuffix + path.extname(file.originalname));
-    }
-  });
-
+  // Multer configuration for file uploads (using memory storage for object storage)
   const upload = multer({ 
-    storage: storage_config,
+    storage: multer.memoryStorage(),
     limits: {
       fileSize: 10 * 1024 * 1024, // 10MB limit
     },
@@ -49,6 +36,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  const objectStorageService = new ObjectStorageService();
+
   // Serve uploaded files statically
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
@@ -59,6 +48,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Auth middleware
   setupAuth(app);
+
+  // Public object serving endpoint
+  app.get("/public-objects/:filePath(*)", async (req, res) => {
+    const filePath = req.params.filePath;
+    try {
+      const file = await objectStorageService.searchPublicObject(filePath);
+      if (!file) {
+        return res.status(404).json({ error: "File not found" });
+      }
+      objectStorageService.downloadObject(file, res);
+    } catch (error) {
+      console.error("Error searching for public object:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  });
 
   // Authentication is now handled in auth.ts
 
@@ -495,7 +499,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // File upload endpoint
+  // File upload endpoint using object storage
   app.post('/api/media/upload', requireAuth, upload.single('file'), async (req: any, res) => {
     try {
       if (!req.file) {
@@ -505,10 +509,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get user ID from authenticated user
       const uploadedBy = req.user.id;
 
-      const fileUrl = `/uploads/media/${req.file.filename}`;
+      // Upload to object storage
+      const fileUrl = await objectStorageService.uploadFileBuffer(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
       
       const mediaData = {
-        filename: req.file.filename,
+        filename: req.file.originalname,
         originalName: req.file.originalname,
         mimeType: req.file.mimetype,
         size: req.file.size,
@@ -519,7 +528,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const mediaFile = await storage.createMediaFile(mediaData);
-      res.status(201).json(mediaFile);
+      res.status(201).json({ 
+        ...mediaFile,
+        url: fileUrl
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).json({ message: "Failed to upload file" });
