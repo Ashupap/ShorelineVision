@@ -174,30 +174,42 @@ else
     print_warning "No dist/public directory found, skipping static file copy"
 fi
 
-# Ensure server entry point exists
-if [ ! -f "server/index.js" ]; then
-    print_error "Server entry point not found at server/index.js"
-    print_status "Checking for alternative entry points..."
-    if [ -f "dist/index.js" ]; then
-        print_status "Found dist/index.js, updating service configuration..."
-        SERVER_ENTRY_POINT="$APP_DIR/dist/index.js"
-    elif [ -f "dist/server/index.js" ]; then
-        print_status "Found dist/server/index.js, updating service configuration..."
-        SERVER_ENTRY_POINT="$APP_DIR/dist/server/index.js"
-    else
-        print_error "No valid server entry point found!"
-        exit 1
-    fi
-else
+# Ensure server entry point exists and get absolute path
+print_status "Determining server entry point..."
+if [ -f "dist/index.js" ]; then
+    SERVER_ENTRY_POINT="$APP_DIR/dist/index.js"
+    print_success "Found built server at: $SERVER_ENTRY_POINT"
+elif [ -f "dist/server/index.js" ]; then
+    SERVER_ENTRY_POINT="$APP_DIR/dist/server/index.js"
+    print_success "Found built server at: $SERVER_ENTRY_POINT"
+elif [ -f "server/index.js" ]; then
     SERVER_ENTRY_POINT="$APP_DIR/server/index.js"
+    print_success "Found source server at: $SERVER_ENTRY_POINT"
+else
+    print_error "No valid server entry point found!"
+    print_error "Checked locations:"
+    print_error "  - $APP_DIR/dist/index.js"
+    print_error "  - $APP_DIR/dist/server/index.js"
+    print_error "  - $APP_DIR/server/index.js"
+    exit 1
 fi
-print_success "Server entry point: $SERVER_ENTRY_POINT"
+
+# Verify the file actually exists
+if [ ! -f "$SERVER_ENTRY_POINT" ]; then
+    print_error "Server entry point file does not exist: $SERVER_ENTRY_POINT"
+    exit 1
+fi
 
 # Create systemd service file
 print_status "Setting up systemd service..."
 SERVICE_FILE="/etc/systemd/system/alashore-marine.service"
 APP_DIR=$(pwd)
 APP_USER=$(whoami)
+
+print_status "Service configuration:"
+print_status "  Working Directory: $APP_DIR"
+print_status "  Server Entry Point: $SERVER_ENTRY_POINT"
+print_status "  User: $APP_USER"
 
 sudo tee "$SERVICE_FILE" > /dev/null << EOF
 [Unit]
