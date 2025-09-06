@@ -204,20 +204,23 @@ export default function BlogManager() {
         </div>
       </div>
 
-      {/* Blog Posts List */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      {/* Blog Posts Grid */}
+      <div className="grid gap-6">
         {isLoading ? (
-          <div className="p-6">
-            <div className="space-y-4">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="h-20 bg-gray-200 rounded-lg" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
+                <div className="h-48 bg-gray-200" />
+                <div className="p-6 space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="h-3 bg-gray-200 rounded w-full" />
+                  <div className="h-3 bg-gray-200 rounded w-2/3" />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         ) : filteredPosts.length === 0 ? (
-          <div className="p-12 text-center">
+          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
             <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {searchTerm ? "No posts found" : "No blog posts yet"}
@@ -240,70 +243,55 @@ export default function BlogManager() {
             )}
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
-            {filteredPosts.map((post) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPosts.map((post, index) => (
               <motion.div
                 key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-6 hover:bg-gray-50 transition-colors"
-                data-testid={`blog-post-${post.id}`}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                data-testid={`blog-post-card-${post.id}`}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {post.title}
-                      </h3>
-                      <Badge 
-                        variant={post.published ? "default" : "secondary"}
-                        className={post.published ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}
-                      >
-                        {post.published ? "Published" : "Draft"}
-                      </Badge>
-                    </div>
-                    
-                    {post.excerpt && (
-                      <p className="text-gray-600 mb-3 line-clamp-2">
-                        {post.excerpt}
-                      </p>
-                    )}
-                    
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <Calendar size={14} className="mr-1" />
-                        {formatDistanceToNow(new Date(post.createdAt!), { addSuffix: true })}
-                      </div>
-                      {post.updatedAt && post.updatedAt !== post.createdAt && (
-                        <div className="flex items-center">
-                          <Edit size={14} className="mr-1" />
-                          Updated {formatDistanceToNow(new Date(post.updatedAt), { addSuffix: true })}
-                        </div>
-                      )}
-                    </div>
+                {/* Featured Image */}
+                {post.featuredImage && (
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={post.featuredImage.includes('unsplash') ? `${post.featuredImage}&q=85&w=400&h=300` : post.featuredImage}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleEdit(post)}
-                      data-testid={`button-edit-blog-post-${post.id}`}
+                )}
+                
+                <div className="p-6">
+                  {/* Header with Status */}
+                  <div className="flex items-start justify-between mb-3">
+                    <Badge 
+                      variant={post.published ? "default" : "secondary"}
+                      className={post.published ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}
                     >
-                      <Edit size={16} />
-                    </Button>
-                    
+                      {post.published ? "Published" : "Draft"}
+                    </Badge>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
                           size="sm"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity"
                           data-testid={`button-blog-post-menu-${post.id}`}
                         >
                           <MoreVertical size={16} />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => handleEdit(post)}
+                          data-testid={`button-edit-blog-post-${post.id}`}
+                        >
+                          <Edit size={16} className="mr-2" />
+                          Edit
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => handleTogglePublish(post)}
                           data-testid={`button-toggle-publish-${post.id}`}
@@ -330,6 +318,52 @@ export default function BlogManager() {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-ocean-blue transition-colors">
+                    {post.title}
+                  </h3>
+                  
+                  {/* Excerpt */}
+                  {post.excerpt && (
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                  )}
+                  
+                  {/* Category */}
+                  <div className="mb-4">
+                    <span className="inline-block bg-ocean-blue/10 text-ocean-blue px-2 py-1 rounded-full text-xs font-medium">
+                      {post.category}
+                    </span>
+                  </div>
+                  
+                  {/* Footer with dates and actions */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="text-xs text-gray-500">
+                      <div className="flex items-center mb-1">
+                        <Calendar size={12} className="mr-1" />
+                        {formatDistanceToNow(new Date(post.createdAt!), { addSuffix: true })}
+                      </div>
+                      {post.updatedAt && post.updatedAt !== post.createdAt && (
+                        <div className="flex items-center text-gray-400">
+                          <Edit size={12} className="mr-1" />
+                          Updated {formatDistanceToNow(new Date(post.updatedAt), { addSuffix: true })}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(post)}
+                      className="text-ocean-blue hover:text-deep-navy hover:bg-ocean-blue/10"
+                      data-testid={`button-edit-blog-post-${post.id}`}
+                    >
+                      <Edit size={14} className="mr-1" />
+                      Edit
+                    </Button>
                   </div>
                 </div>
               </motion.div>
