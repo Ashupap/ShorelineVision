@@ -85,12 +85,22 @@ export default function Products() {
   ];
 
   // Always prioritize database products over default products
-  const displayProducts = (products && Array.isArray(products) && products.length > 0) ? products : defaultProducts;
+  const allProducts = (products && Array.isArray(products) && products.length > 0) ? products : defaultProducts;
+  
+  // Sort products by order field (smaller first), then by id as fallback
+  const sortedProducts = allProducts
+    .slice()
+    .sort((a, b) => {
+      const orderA = a.order || 0;
+      const orderB = b.order || 0;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.id - b.id; // fallback to id if order is same
+    });
 
   const categories = ["All", "HON/HL", "PD/PDTO", "PUD", "EZPL", "FISH"];
   const filteredProducts = selectedCategory === "All" 
-    ? displayProducts 
-    : displayProducts.filter(product => product.category === selectedCategory);
+    ? sortedProducts 
+    : sortedProducts.filter(product => product.category === selectedCategory);
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background relative">

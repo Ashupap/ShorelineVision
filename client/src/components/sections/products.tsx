@@ -38,46 +38,62 @@ export default function Products() {
       name: "Frozen Peeled & Deveined Tail On IQF",
       description: "Premium quality individually quick frozen shrimp, peeled and deveined with tail on for optimal presentation.",
       featuredImage: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      category: "IQF Shrimp"
+      category: "IQF Shrimp",
+      order: 1
     },
     {
       id: 2,
       name: "Frozen Peeled & Deveined Tail-off IQF",
       description: "Expertly processed shrimp with tails removed, perfect for quick cooking and preparation in various dishes.",
       featuredImage: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      category: "IQF Shrimp"
+      category: "IQF Shrimp",
+      order: 2
     },
     {
       id: 3,
       name: "Raw Frozen Headless EZ Peel IQF",
       description: "Easy-to-peel headless shrimp, flash frozen to maintain freshness and quality for extended shelf life.",
       featuredImage: "https://pixabay.com/get/ge6101e05d916ad16ff53ee5c4ccaf2a11417049b9d90037ad187786d5ccbce0df11f3c823f6a54d998a07b397989a8f9997c3c6dc3644e660dab061f1e73f324_1280.jpg",
-      category: "Raw Frozen"
+      category: "Raw Frozen",
+      order: 3
     },
     {
       id: 4,
       name: "Frozen Headless Shell-On",
       description: "Traditional shell-on shrimp, headless and frozen to preserve natural flavors and textures.",
       featuredImage: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
-      category: "Shell-On"
+      category: "Shell-On",
+      order: 4
     },
     {
       id: 5,
       name: "Raw Frozen Peeled & Un-Deveined IQF",
       description: "Peeled but un-deveined shrimp for customers who prefer to prepare their seafood with maximum control.",
       featuredImage: "https://pixabay.com/get/g5d2aaa5fc362d29f751e53e8bbfeb2a274c7219423c08ed89ec685a50d349395e4006e1818183d253be2da4ad8d4cb8071d2b62b2560df308b959bd324250d81_1280.jpg",
-      category: "Raw Frozen"
+      category: "Raw Frozen",
+      order: 5
     },
     {
       id: 6,
       name: "Frozen Headless",
       description: "Whole headless shrimp, perfect for traditional cooking methods and authentic seafood preparations.",
       featuredImage: "https://pixabay.com/get/gfac91fb21705eec985853c2f4492bb19800929a7885976bb69ac7d558e3437e50558ff0cddad3c17400dc95f8137baa527ac9c30a406fbd5514e37ed94e230de_1280.jpg",
-      category: "Whole Shrimp"
+      category: "Whole Shrimp",
+      order: 6
     }
   ];
 
-  const displayProducts = products && products.length > 0 ? products : defaultProducts;
+  // Sort products by order field (smaller first), then by id as fallback
+  const sortedProducts = (products && products.length > 0 ? products : defaultProducts)
+    .slice()
+    .sort((a: any, b: any) => {
+      const orderA = a.order || 0;
+      const orderB = b.order || 0;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.id - b.id; // fallback to id if order is same
+    });
+  
+  const displayProducts = sortedProducts;
 
   return (
     <section id="products" className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
