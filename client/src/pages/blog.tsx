@@ -233,14 +233,14 @@ export default function Blog() {
                   </div>
                 ))}
               </div>
-            ) : posts && posts.length > 0 ? (
+            ) : posts && Array.isArray(posts) && posts.length > 0 ? (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
-                {(posts || []).map((post: any, index: number) => (
+                {posts.map((post: any, index: number) => (
                   <motion.div
                     key={post.id}
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
