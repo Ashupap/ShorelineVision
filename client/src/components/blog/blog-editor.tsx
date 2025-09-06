@@ -105,12 +105,12 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
     },
   });
 
-  const onSubmit = (data: InsertBlogPostSchema) => {
+  const onSubmit = async (data: InsertBlogPostSchema) => {
     console.log("Form submitted with data:", data);
     console.log("Form errors:", form.formState.errors);
     
     // Convert markdown content to HTML
-    const htmlContent = marked(data.content);
+    const htmlContent = await marked(data.content);
     
     // Generate slug from title if not provided
     const slugifiedData = {

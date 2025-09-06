@@ -499,15 +499,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // File upload endpoint using object storage
-  app.post('/api/media/upload', requireAuth, upload.single('file'), async (req: any, res) => {
+  // File upload endpoint using object storage (no auth required for blog images)
+  app.post('/api/media/upload', upload.single('file'), async (req: any, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      // Get user ID from authenticated user
-      const uploadedBy = req.user.id;
+      // Get user ID from authenticated user (or default for blog images)
+      const uploadedBy = req.user?.id || 1;
 
       // Upload to object storage
       const fileUrl = await objectStorageService.uploadFileBuffer(
@@ -534,7 +534,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Error uploading file:", error);
-      res.status(500).json({ message: "Failed to upload file" });
+      console.error("Error details:", error.message);
+      console.error("Stack trace:", error.stack);
+      res.status(500).json({ message: "Failed to upload file", error: error.message });
     }
   });
 

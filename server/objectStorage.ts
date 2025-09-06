@@ -145,25 +145,33 @@ export class ObjectStorageService {
 
   // Upload file buffer to object storage
   async uploadFileBuffer(fileBuffer: Buffer, filename: string, mimeType: string): Promise<string> {
-    const privateObjectDir = this.getPrivateObjectDir();
-    const objectId = randomUUID();
-    const extension = filename.split('.').pop();
-    const objectName = `${objectId}.${extension}`;
-    const fullPath = `${privateObjectDir}/uploads/${objectName}`;
+    try {
+      const privateObjectDir = this.getPrivateObjectDir();
+      
+      const objectId = randomUUID();
+      const extension = filename.split('.').pop() || 'jpg';
+      const objectName = `${objectId}.${extension}`;
+      const fullPath = `${privateObjectDir}/uploads/${objectName}`;
 
-    const { bucketName, objectName: finalObjectName } = parseObjectPath(fullPath);
-    const bucket = objectStorageClient.bucket(bucketName);
-    const file = bucket.file(finalObjectName);
+      const { bucketName, objectName: finalObjectName } = parseObjectPath(fullPath);
+      
+      const bucket = objectStorageClient.bucket(bucketName);
+      const file = bucket.file(finalObjectName);
 
-    // Upload the file
-    await file.save(fileBuffer, {
-      metadata: {
-        contentType: mimeType,
-      },
-    });
+      // Upload the file
+      await file.save(fileBuffer, {
+        metadata: {
+          contentType: mimeType,
+        },
+      });
 
-    // Return public URL
-    return `/public-objects/uploads/${objectName}`;
+      // Return public URL
+      const publicUrl = `/public-objects/uploads/${objectName}`;
+      return publicUrl;
+    } catch (error) {
+      console.error("Object storage upload failed:", error);
+      throw error;
+    }
   }
 }
 
