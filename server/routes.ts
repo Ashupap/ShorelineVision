@@ -307,9 +307,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Product validation errors:", error.errors);
+        console.error("Request body:", req.body);
         return res.status(400).json({ message: "Invalid product data", errors: error.errors });
       }
       console.error("Error updating product:", error);
+      console.error("Request body:", req.body);
+      console.error("Product ID:", req.params.id);
       res.status(500).json({ message: "Failed to update product" });
     }
   });
