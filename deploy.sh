@@ -155,9 +155,9 @@ else
 fi
 
 # Run database migrations
-print_status "Updating database schema..."
-npm run db:push
-print_success "Database schema updated"
+print_status "Running database migrations..."
+npm run db:push --force
+print_success "Database schema updated successfully"
 
 # Build the application
 print_status "Building application for production..."
