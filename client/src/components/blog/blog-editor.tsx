@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { marked } from "marked";
 
 interface BlogEditorProps {
   onClose: () => void;
@@ -108,9 +109,13 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
     console.log("Form submitted with data:", data);
     console.log("Form errors:", form.formState.errors);
     
+    // Convert markdown content to HTML
+    const htmlContent = marked(data.content);
+    
     // Generate slug from title if not provided
     const slugifiedData = {
       ...data,
+      content: htmlContent,
       slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
     };
     
@@ -344,26 +349,102 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                     <FormLabel className="text-lg font-semibold text-gray-900">Content</FormLabel>
                     <FormControl>
                       <div className="border-2 border-gray-200 rounded-xl overflow-hidden focus-within:border-ocean-blue">
-                        <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 text-sm text-gray-600">
-                          💡 Tip: Use HTML tags for formatting (e.g., &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt;)
+                        {/* Formatting Toolbar */}
+                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3 border-b border-gray-200">
+                          <div className="flex items-center justify-between">
+                            <div className="text-sm font-medium text-gray-700">
+                              ✍️ Content Editor
+                            </div>
+                            <div className="flex items-center space-x-2 text-xs text-gray-600">
+                              <span className="bg-white px-2 py-1 rounded border">
+                                💡 <strong>Ctrl+B</strong> for bold
+                              </span>
+                              <span className="bg-white px-2 py-1 rounded border">
+                                💡 <strong>Ctrl+I</strong> for italic
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <Textarea
-                          rows={16}
-                          placeholder="Write your blog content here using HTML formatting...
+                        
+                        {/* Content area with better formatting */}
+                        <div className="relative">
+                          <Textarea
+                            rows={18}
+                            placeholder="Write your blog content here! You can use simple formatting:
 
-Example:
-<h2>Section Title</h2>
-<p>Your paragraph content goes here with <strong>bold text</strong> and <em>italic text</em>.</p>
+# Main Heading
+## Section Heading
+### Subsection
 
-<h3>Subsection</h3>
-<ul>
-  <li>First point</li>
-  <li>Second point</li>
-</ul>"
-                          {...field}
-                          className="border-0 focus:ring-0 resize-none rounded-none text-base leading-relaxed"
-                          data-testid="textarea-content"
-                        />
+**Bold text** or *italic text*
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+
+1. Numbered list item
+2. Another numbered item
+
+> This is a quote or important note
+
+---
+
+The editor will automatically convert these to proper HTML when you publish!"
+                            {...field}
+                            className="border-0 focus:ring-0 resize-none rounded-none text-base leading-relaxed font-mono"
+                            data-testid="textarea-content"
+                            onKeyDown={(e) => {
+                              // Simple keyboard shortcuts for formatting
+                              if (e.ctrlKey || e.metaKey) {
+                                if (e.key === 'b') {
+                                  e.preventDefault();
+                                  const textarea = e.target as HTMLTextAreaElement;
+                                  const start = textarea.selectionStart;
+                                  const end = textarea.selectionEnd;
+                                  const selectedText = textarea.value.substring(start, end);
+                                  const beforeText = textarea.value.substring(0, start);
+                                  const afterText = textarea.value.substring(end);
+                                  const newText = `${beforeText}**${selectedText}**${afterText}`;
+                                  field.onChange(newText);
+                                  setTimeout(() => {
+                                    textarea.setSelectionRange(start + 2, end + 2);
+                                  }, 0);
+                                } else if (e.key === 'i') {
+                                  e.preventDefault();
+                                  const textarea = e.target as HTMLTextAreaElement;
+                                  const start = textarea.selectionStart;
+                                  const end = textarea.selectionEnd;
+                                  const selectedText = textarea.value.substring(start, end);
+                                  const beforeText = textarea.value.substring(0, start);
+                                  const afterText = textarea.value.substring(end);
+                                  const newText = `${beforeText}*${selectedText}*${afterText}`;
+                                  field.onChange(newText);
+                                  setTimeout(() => {
+                                    textarea.setSelectionRange(start + 1, end + 1);
+                                  }, 0);
+                                }
+                              }
+                            }}
+                          />
+                        </div>
+                        
+                        {/* Format Helper */}
+                        <div className="bg-gray-50 px-4 py-2 border-t border-gray-200 text-xs text-gray-600">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <strong>Headings:</strong> # Main, ## Section, ### Sub
+                            </div>
+                            <div>
+                              <strong>Text:</strong> **bold**, *italic*, `code`
+                            </div>
+                            <div>
+                              <strong>Lists:</strong> - bullet or 1. numbered
+                            </div>
+                            <div>
+                              <strong>Quote:</strong> {"> Important note"}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </FormControl>
                     <FormMessage />
