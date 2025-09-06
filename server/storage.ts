@@ -262,6 +262,9 @@ export class DatabaseStorage implements IStorage {
       .where(eq(products.id, id));
     
     const [updated] = await db.select().from(products).where(eq(products.id, id));
+    if (!updated) {
+      throw new Error(`Product with id ${id} not found`);
+    }
     return updated;
   }
 
