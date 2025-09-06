@@ -118,6 +118,12 @@ PORT=4000
 GMAIL_USER=your_gmail_address@gmail.com
 GMAIL_APP_PASSWORD=your_gmail_app_password
 NOTIFICATION_EMAIL=your_admin_email@company.com
+
+# File Upload Configuration (Optional - for advanced cloud storage)
+# Leave these blank to use local file storage
+# DEFAULT_OBJECT_STORAGE_BUCKET_ID=
+# PUBLIC_OBJECT_SEARCH_PATHS=
+# PRIVATE_OBJECT_DIR=
 EOF
     print_warning "Please edit $ENV_FILE with your actual configuration before continuing!"
     print_warning "Press Enter to continue after updating the .env file..."
@@ -210,6 +216,12 @@ if [ -d "dist/public" ]; then
 else
     print_warning "No dist/public directory found, skipping static file copy"
 fi
+
+# Create uploads directory for local file storage (fallback)
+print_status "Setting up file upload directories..."
+mkdir -p uploads/media
+chmod 755 uploads/media
+print_success "File upload directories created"
 
 # Get absolute path first
 APP_DIR=$(realpath .)

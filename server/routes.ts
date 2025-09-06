@@ -509,12 +509,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get user ID from authenticated user (or default for blog images)
       const uploadedBy = req.user?.id || 1;
 
-      // Upload to object storage
-      const fileUrl = await objectStorageService.uploadFileBuffer(
-        req.file.buffer,
-        req.file.originalname,
-        req.file.mimetype
-      );
+      // Check if object storage is available, fallback to local storage in production
+      let fileUrl: string;
+      
+      try {
+        // Try object storage first
+        fileUrl = await objectStorageService.uploadFileBuffer(
+          req.file.buffer,
+          req.file.originalname,
+          req.file.mimetype
+        );
+      } catch (storageError: any) {
+        console.log("Object storage failed, using fallback:", storageError?.message);
+        
+        // Fallback to local storage for production
+        const uploadsDir = path.join(process.cwd(), 'uploads/media');
+        if (!fs.existsSync(uploadsDir)) {
+          fs.mkdirSync(uploadsDir, { recursive: true });
+        }
+        
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const filename = uniqueSuffix + path.extname(req.file.originalname);
+        const filepath = path.join(uploadsDir, filename);
+        
+        fs.writeFileSync(filepath, req.file.buffer);
+        fileUrl = `/uploads/media/${filename}`;
+        console.log("Using local file storage:", fileUrl);
+      }
       
       const mediaData = {
         filename: req.file.originalname,
@@ -532,11 +553,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...mediaFile,
         url: fileUrl
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error uploading file:", error);
-      console.error("Error details:", error.message);
-      console.error("Stack trace:", error.stack);
-      res.status(500).json({ message: "Failed to upload file", error: error.message });
+      console.error("Error details:", error?.message);
+      console.error("Stack trace:", error?.stack);
+      res.status(500).json({ message: "Failed to upload file", error: error?.message || "Unknown error" });
     }
   });
 
