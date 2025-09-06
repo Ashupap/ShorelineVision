@@ -6,20 +6,24 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import Autoplay from "embla-carousel-autoplay";
 import type { Product } from "@shared/schema";
 
-// Function to get category color
+// Function to get category color (case-insensitive)
 const getCategoryColor = (category: string) => {
   const colors = {
-    "HON/HL": "bg-emerald-500/90",
-    "PD/PDTO": "bg-blue-500/90", 
-    "PUD": "bg-purple-500/90",
-    "EZPL": "bg-orange-500/90",
-    "FISH": "bg-red-500/90",
-    "Raw Frozen": "bg-cyan-500/90",
-    "IQF Shrimp": "bg-teal-500/90",
-    "Shell-On": "bg-indigo-500/90",
-    "Whole Shrimp": "bg-pink-500/90"
+    "hon/hl": "bg-emerald-500/90",
+    "pd/pdto": "bg-blue-500/90", 
+    "pud": "bg-purple-500/90",
+    "ezpl": "bg-orange-500/90",
+    "fish": "bg-red-500/90",
+    "raw frozen": "bg-cyan-500/90",
+    "iqf shrimp": "bg-teal-500/90",
+    "shell-on": "bg-indigo-500/90",
+    "whole shrimp": "bg-pink-500/90",
+    "shrimp": "bg-cyan-500/90",
+    "crab": "bg-orange-600/90"
   };
-  return colors[category as keyof typeof colors] || "bg-ocean-blue/90";
+  
+  const normalizedCategory = category.toLowerCase();
+  return colors[normalizedCategory as keyof typeof colors] || "bg-ocean-blue/90";
 };
 
 export default function Products() {
