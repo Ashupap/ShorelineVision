@@ -174,15 +174,19 @@ else
     print_warning "No dist/public directory found, skipping static file copy"
 fi
 
+# Get absolute path first
+APP_DIR=$(realpath .)
+print_status "Working directory: $APP_DIR"
+
 # Ensure server entry point exists and get absolute path
 print_status "Determining server entry point..."
-if [ -f "dist/index.js" ]; then
+if [ -f "$APP_DIR/dist/index.js" ]; then
     SERVER_ENTRY_POINT="$APP_DIR/dist/index.js"
     print_success "Found built server at: $SERVER_ENTRY_POINT"
-elif [ -f "dist/server/index.js" ]; then
+elif [ -f "$APP_DIR/dist/server/index.js" ]; then
     SERVER_ENTRY_POINT="$APP_DIR/dist/server/index.js"
     print_success "Found built server at: $SERVER_ENTRY_POINT"
-elif [ -f "server/index.js" ]; then
+elif [ -f "$APP_DIR/server/index.js" ]; then
     SERVER_ENTRY_POINT="$APP_DIR/server/index.js"
     print_success "Found source server at: $SERVER_ENTRY_POINT"
 else
@@ -191,12 +195,18 @@ else
     print_error "  - $APP_DIR/dist/index.js"
     print_error "  - $APP_DIR/dist/server/index.js"
     print_error "  - $APP_DIR/server/index.js"
+    print_status "Current directory contents:"
+    ls -la
+    print_status "Dist directory contents:"
+    ls -la dist/ 2>/dev/null || print_error "dist/ directory does not exist"
     exit 1
 fi
 
 # Verify the file actually exists
 if [ ! -f "$SERVER_ENTRY_POINT" ]; then
     print_error "Server entry point file does not exist: $SERVER_ENTRY_POINT"
+    print_status "File system check:"
+    ls -la "$SERVER_ENTRY_POINT" 2>/dev/null || print_error "File definitely does not exist"
     exit 1
 fi
 
@@ -205,6 +215,11 @@ print_status "Setting up systemd service..."
 SERVICE_FILE="/etc/systemd/system/alashore-marine.service"
 APP_DIR=$(pwd)
 APP_USER=$(whoami)
+
+# Ensure APP_DIR is absolute path
+if [[ ! "$APP_DIR" = /* ]]; then
+    APP_DIR="$(pwd)"
+fi
 
 print_status "Service configuration:"
 print_status "  Working Directory: $APP_DIR"
