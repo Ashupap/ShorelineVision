@@ -156,34 +156,47 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
       transition={{ duration: 0.3 }}
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
     >
-      <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-2xl font-heading font-bold text-gray-900">
-            Create New Blog Post
-          </h2>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClose}
-            data-testid="button-close-editor"
-          >
-            <X size={20} />
-          </Button>
+      <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden shadow-2xl">
+        {/* Header with gradient */}
+        <div className="bg-gradient-to-r from-ocean-blue to-marine-teal text-white p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-heading font-bold">
+                Create New Blog Post
+              </h2>
+              <p className="text-blue-100 mt-1">
+                Share insights and stories with your audience
+              </p>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="text-white hover:bg-white/20"
+              data-testid="button-close-editor"
+            >
+              <X size={20} />
+            </Button>
+          </div>
         </div>
 
-        <div className="p-6">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Scrollable Content */}
+        <div className="overflow-y-auto max-h-[calc(95vh-100px)]">
+          <div className="p-8">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {/* Title Field with modern styling */}
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Post Title</FormLabel>
+                    <FormLabel className="text-lg font-semibold text-gray-900">Post Title</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter post title..."
+                        placeholder="Enter an engaging title for your blog post..."
                         {...field}
+                        className="text-lg p-4 border-2 border-gray-200 focus:border-ocean-blue rounded-xl"
                         data-testid="input-title"
                       />
                     </FormControl>
@@ -297,89 +310,133 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
                 />
               </div>
 
+              {/* Excerpt Field */}
               <FormField
                 control={form.control}
                 name="excerpt"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Excerpt</FormLabel>
+                    <FormLabel className="text-lg font-semibold text-gray-900">Excerpt</FormLabel>
                     <FormControl>
                       <Textarea
-                        rows={3}
-                        placeholder="Brief description of the post..."
+                        rows={4}
+                        placeholder="Write a compelling summary that will appear in post previews..."
                         {...field}
                         value={field.value || ""}
+                        className="border-2 border-gray-200 focus:border-ocean-blue rounded-xl p-4 resize-none"
                         data-testid="textarea-excerpt"
                       />
                     </FormControl>
+                    <div className="text-sm text-gray-500 mt-1">
+                      Recommended: 150-160 characters for optimal display
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
+              {/* Content Field with rich text area */}
               <FormField
                 control={form.control}
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Content</FormLabel>
+                    <FormLabel className="text-lg font-semibold text-gray-900">Content</FormLabel>
                     <FormControl>
-                      <Textarea
-                        rows={12}
-                        placeholder="Write your blog content here..."
-                        {...field}
-                        data-testid="textarea-content"
-                      />
+                      <div className="border-2 border-gray-200 rounded-xl overflow-hidden focus-within:border-ocean-blue">
+                        <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 text-sm text-gray-600">
+                          💡 Tip: Use HTML tags for formatting (e.g., &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt;)
+                        </div>
+                        <Textarea
+                          rows={16}
+                          placeholder="Write your blog content here using HTML formatting...
+
+Example:
+<h2>Section Title</h2>
+<p>Your paragraph content goes here with <strong>bold text</strong> and <em>italic text</em>.</p>
+
+<h3>Subsection</h3>
+<ul>
+  <li>First point</li>
+  <li>Second point</li>
+</ul>"
+                          {...field}
+                          className="border-0 focus:ring-0 resize-none rounded-none text-base leading-relaxed"
+                          data-testid="textarea-content"
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="published"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value || false}
-                        onCheckedChange={field.onChange}
-                        data-testid="checkbox-published"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>Publish immediately</FormLabel>
-                    </div>
-                  </FormItem>
-                )}
-              />
+              {/* Publishing controls */}
+              <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-6 border border-blue-200">
+                <FormField
+                  control={form.control}
+                  name="published"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center space-x-4 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value || false}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-published"
+                          className="w-5 h-5"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel className="text-lg font-semibold text-gray-900">
+                          Publish immediately
+                        </FormLabel>
+                        <p className="text-sm text-gray-600">
+                          {field.value 
+                            ? "This post will be visible to the public immediately" 
+                            : "Save as draft - you can publish later from the admin panel"
+                          }
+                        </p>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-              <div className="flex justify-end space-x-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={onClose}
-                  data-testid="button-cancel"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={createBlogPost.isPending}
-                  className="bg-ocean-blue hover:bg-deep-navy"
-                  data-testid="button-publish"
-                  onClick={() => {
-                    console.log("Publish button clicked");
-                    console.log("Form is valid:", form.formState.isValid);
-                    console.log("Form errors:", form.formState.errors);
-                  }}
-                >
-                  {createBlogPost.isPending ? "Publishing..." : "Publish Post"}
-                </Button>
+              {/* Action buttons */}
+              <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+                <div className="text-sm text-gray-500">
+                  💡 Don't forget to add a compelling featured image to attract readers
+                </div>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={onClose}
+                    className="px-8 py-3"
+                    data-testid="button-cancel"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={createBlogPost.isPending}
+                    className="bg-gradient-to-r from-ocean-blue to-marine-teal hover:from-deep-navy hover:to-ocean-blue text-white px-8 py-3 font-semibold"
+                    data-testid="button-publish"
+                  >
+                    {createBlogPost.isPending ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Publishing...
+                      </>
+                    ) : (
+                      form.watch('published') ? "Publish Post" : "Save Draft"
+                    )}
+                  </Button>
+                </div>
               </div>
             </form>
           </Form>
+          </div>
         </div>
       </div>
     </motion.div>
