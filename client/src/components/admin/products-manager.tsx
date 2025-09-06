@@ -200,11 +200,11 @@ export default function ProductsManager() {
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
+    // Validate file size (max 1MB for base64 encoding)
+    if (file.size > 1 * 1024 * 1024) {
       toast({
         title: "Error",
-        description: "Image size must be less than 5MB",
+        description: "Image size must be less than 1MB",
         variant: "destructive",
       });
       return;
@@ -213,24 +213,57 @@ export default function ProductsManager() {
     setUploadingImage(true);
 
     try {
-      // Convert to base64 for preview/storage
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setFormData(prev => ({ ...prev, featuredImage: dataUrl }));
+      // Compress and convert to base64
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate new dimensions (max 800px width/height)
+        const maxSize = 800;
+        let { width, height } = img;
+        
+        if (width > height) {
+          if (width > maxSize) {
+            height = (height * maxSize) / width;
+            width = maxSize;
+          }
+        } else {
+          if (height > maxSize) {
+            width = (width * maxSize) / height;
+            height = maxSize;
+          }
+        }
+        
+        // Set canvas size and draw compressed image
+        canvas.width = width;
+        canvas.height = height;
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        // Convert to base64 with compression
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        
+        setFormData(prev => ({ ...prev, featuredImage: compressedDataUrl }));
         toast({
           title: "Success",
-          description: "Image uploaded successfully",
+          description: "Image uploaded and compressed successfully",
         });
         setUploadingImage(false);
       };
-      reader.onerror = () => {
+      
+      img.onerror = () => {
         toast({
           title: "Error",
-          description: "Failed to upload image",
+          description: "Failed to process image",
           variant: "destructive",
         });
         setUploadingImage(false);
+      };
+      
+      // Load image from file
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target?.result as string;
       };
       reader.readAsDataURL(file);
     } catch (error) {
@@ -559,7 +592,7 @@ export default function ProductsManager() {
                 </div>
               )}
               <p className="text-xs text-gray-500">
-                Upload an image file (max 5MB) or enter a URL above
+                Upload an image file (max 1MB, will be compressed to 800px) or enter a URL above
               </p>
             </div>
             
