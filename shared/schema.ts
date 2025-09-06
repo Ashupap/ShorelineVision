@@ -76,7 +76,7 @@ export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description").notNull(),
-  featuredImage: varchar("featured_image", { length: 512 }),
+  featuredImage: text("featured_image"),
   category: varchar("category", { length: 100 }).notNull(),
   specifications: text("specifications"),
   published: boolean("published").default(true),
