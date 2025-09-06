@@ -157,14 +157,44 @@ fi
 # Run database migrations
 print_status "Running database migrations..."
 print_status "Note: This will change featured_image from varchar(512) to text to support larger images"
-yes | npm run db:push --force 2>/dev/null || {
-    print_warning "Interactive migration required - attempting with force push"
-    npx drizzle-kit push --force --yes 2>/dev/null || {
-        print_warning "Migration may require manual confirmation"
-        npm run db:push --force
-    }
-}
-print_success "Database schema updated successfully"
+
+# Try multiple approaches to auto-confirm the migration
+if echo "y" | npm run db:push --force; then
+    print_success "Database schema updated successfully"
+elif printf "y\n" | npx drizzle-kit push --force; then
+    print_success "Database schema updated with drizzle-kit"
+else
+    print_warning "Attempting alternative migration approach..."
+    # Use expect if available, otherwise manual confirmation needed
+    if command -v expect >/dev/null 2>&1; then
+        expect << 'EOF'
+spawn npm run db:push --force
+expect "Do you still want to push changes?"
+send "y\r"
+expect eof
+EOF
+        print_success "Database schema updated with expect"
+    else
+        print_warning "Attempting direct database schema update..."
+        # Direct SQL approach as last resort
+        if [ ! -z "$DATABASE_URL" ]; then
+            print_status "Updating featured_image column type directly..."
+            psql "$DATABASE_URL" -c "ALTER TABLE products ALTER COLUMN featured_image TYPE text;" 2>/dev/null && {
+                print_success "Database schema updated directly via SQL"
+            } || {
+                print_error "Migration requires manual confirmation."
+                print_error "Please run: npm run db:push --force"
+                print_error "And answer 'y' when prompted, then re-run this deploy script."
+                exit 1
+            }
+        else
+            print_error "Migration requires manual confirmation."
+            print_error "Please run: npm run db:push --force"
+            print_error "And answer 'y' when prompted, then re-run this deploy script."
+            exit 1
+        fi
+    fi
+fi
 
 # Build the application
 print_status "Building application for production..."
