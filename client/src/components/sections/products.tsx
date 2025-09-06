@@ -6,6 +6,22 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import Autoplay from "embla-carousel-autoplay";
 import type { Product } from "@shared/schema";
 
+// Function to get category color
+const getCategoryColor = (category: string) => {
+  const colors = {
+    "HON/HL": "bg-emerald-500/90",
+    "PD/PDTO": "bg-blue-500/90", 
+    "PUD": "bg-purple-500/90",
+    "EZPL": "bg-orange-500/90",
+    "FISH": "bg-red-500/90",
+    "Raw Frozen": "bg-cyan-500/90",
+    "IQF Shrimp": "bg-teal-500/90",
+    "Shell-On": "bg-indigo-500/90",
+    "Whole Shrimp": "bg-pink-500/90"
+  };
+  return colors[category as keyof typeof colors] || "bg-ocean-blue/90";
+};
+
 export default function Products() {
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products?published=true"],
@@ -127,7 +143,7 @@ export default function Products() {
                       <div className="relative z-10 h-full flex flex-col justify-end p-6 text-white">
                         {/* Category Badge */}
                         <div className="absolute top-4 right-4">
-                          <span className="bg-ocean-blue/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                          <span className={`backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(product.category)}`}>
                             {product.category}
                           </span>
                         </div>

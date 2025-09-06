@@ -87,7 +87,7 @@ export default function Products() {
   // Always prioritize database products over default products
   const displayProducts = (products && Array.isArray(products) && products.length > 0) ? products : defaultProducts;
 
-  const categories = ["All", "Raw Frozen", "IQF Shrimp", "Fish"];
+  const categories = ["All", "HON/HL", "PD/PDTO", "PUD", "EZPL", "FISH"];
   const filteredProducts = selectedCategory === "All" 
     ? displayProducts 
     : displayProducts.filter(product => product.category === selectedCategory);
