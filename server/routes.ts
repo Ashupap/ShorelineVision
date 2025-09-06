@@ -24,7 +24,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const upload = multer({ 
     storage: multer.memoryStorage(),
     limits: {
-      fileSize: 10 * 1024 * 1024, // 10MB limit
+      fileSize: 50 * 1024 * 1024, // 50MB limit
     },
     fileFilter: function (req, file, cb) {
       // Allow only image files
@@ -48,6 +48,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Auth middleware
   setupAuth(app);
+
+  // Serve uploaded files from local storage (fallback for production)
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
   // Public object serving endpoint
   app.get("/public-objects/:filePath(*)", async (req, res) => {
