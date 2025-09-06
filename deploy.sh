@@ -154,46 +154,46 @@ else
     exit 1
 fi
 
-# Run database migrations
-print_status "Running database migrations..."
-print_status "Note: This will change featured_image from varchar(512) to text to support larger images"
+# Run database migrations - SAFE MODE
+print_status "Checking database schema..."
 
-# Try multiple approaches to auto-confirm the migration
-if echo "y" | npm run db:push --force; then
-    print_success "Database schema updated successfully"
-elif printf "y\n" | npx drizzle-kit push --force; then
-    print_success "Database schema updated with drizzle-kit"
+# First, backup existing data before any migrations
+if [ ! -z "$DATABASE_URL" ]; then
+    print_status "Creating data backup before migration..."
+    mkdir -p backups
+    pg_dump "$DATABASE_URL" > "backups/pre-migration-$(date +%Y%m%d-%H%M%S).sql" 2>/dev/null || {
+        print_warning "Could not create backup, but continuing..."
+    }
+fi
+
+# Use safe SQL migration instead of drizzle-kit for production
+print_status "Applying safe schema migration for featured_image column..."
+if [ ! -z "$DATABASE_URL" ]; then
+    # Safe migration: ALTER COLUMN instead of recreating table
+    psql "$DATABASE_URL" -c "
+        DO \$\$
+        BEGIN
+            -- Only alter if column exists and is varchar
+            IF EXISTS (
+                SELECT 1 FROM information_schema.columns 
+                WHERE table_name = 'products' 
+                AND column_name = 'featured_image' 
+                AND data_type = 'character varying'
+            ) THEN
+                ALTER TABLE products ALTER COLUMN featured_image TYPE text;
+                RAISE NOTICE 'Successfully updated featured_image column to text type';
+            ELSE
+                RAISE NOTICE 'Column already correct type or does not exist';
+            END IF;
+        END \$\$;
+    " && {
+        print_success "Database schema updated safely"
+    } || {
+        print_error "Safe migration failed. Database unchanged."
+        exit 1
+    }
 else
-    print_warning "Attempting alternative migration approach..."
-    # Use expect if available, otherwise manual confirmation needed
-    if command -v expect >/dev/null 2>&1; then
-        expect << 'EOF'
-spawn npm run db:push --force
-expect "Do you still want to push changes?"
-send "y\r"
-expect eof
-EOF
-        print_success "Database schema updated with expect"
-    else
-        print_warning "Attempting direct database schema update..."
-        # Direct SQL approach as last resort
-        if [ ! -z "$DATABASE_URL" ]; then
-            print_status "Updating featured_image column type directly..."
-            psql "$DATABASE_URL" -c "ALTER TABLE products ALTER COLUMN featured_image TYPE text;" 2>/dev/null && {
-                print_success "Database schema updated directly via SQL"
-            } || {
-                print_error "Migration requires manual confirmation."
-                print_error "Please run: npm run db:push --force"
-                print_error "And answer 'y' when prompted, then re-run this deploy script."
-                exit 1
-            }
-        else
-            print_error "Migration requires manual confirmation."
-            print_error "Please run: npm run db:push --force"
-            print_error "And answer 'y' when prompted, then re-run this deploy script."
-            exit 1
-        fi
-    fi
+    print_warning "No DATABASE_URL found, skipping migration"
 fi
 
 # Build the application
