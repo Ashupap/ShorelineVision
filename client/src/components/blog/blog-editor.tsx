@@ -72,23 +72,46 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
 
   const uploadImage = useMutation({
     mutationFn: async (file: File) => {
+      console.log("=== CLIENT UPLOAD DEBUG START ===");
+      console.log("File details:", {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified
+      });
+
       const formData = new FormData();
       formData.append('file', file);
       formData.append('alt', file.name);
       formData.append('category', 'blog');
 
+      console.log("FormData created, making request to /api/media/upload");
+      console.log("FormData entries:", Array.from(formData.entries()).map(([key, value]) => 
+        key === 'file' ? [key, `File: ${file.name} (${file.size} bytes)`] : [key, value]
+      ));
+      
       const response = await fetch('/api/media/upload', {
         method: 'POST',
         body: formData,
       });
 
+      console.log("Response status:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        const errorText = await response.text();
+        console.log("Error response body:", errorText);
+        console.log("=== CLIENT UPLOAD DEBUG ERROR ===");
+        throw new Error(`Upload failed: ${response.status} - ${errorText}`);
       }
 
-      return response.json();
+      const data = await response.json();
+      console.log("Upload response data:", data);
+      console.log("=== CLIENT UPLOAD DEBUG SUCCESS ===");
+      return data;
     },
     onSuccess: (data) => {
+      console.log("Upload mutation success, setting form value:", data.url);
       form.setValue('featuredImage', data.url);
       setSelectedFileName(""); // Clear the filename after successful upload
       toast({
@@ -97,6 +120,8 @@ export default function BlogEditor({ onClose }: BlogEditorProps) {
       });
     },
     onError: (error) => {
+      console.log("=== CLIENT UPLOAD DEBUG ERROR ===");
+      console.error("Upload mutation error:", error);
       toast({
         title: "Upload Failed",
         description: error.message || "Failed to upload image",

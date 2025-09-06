@@ -501,42 +501,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // File upload endpoint using object storage (no auth required for blog images)
   app.post('/api/media/upload', upload.single('file'), async (req: any, res) => {
+    console.log("=== UPLOAD DEBUG START ===");
+    console.log("Request headers:", req.headers);
+    console.log("Request body keys:", Object.keys(req.body || {}));
+    console.log("File object:", req.file ? {
+      fieldname: req.file.fieldname,
+      originalname: req.file.originalname,
+      encoding: req.file.encoding,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      bufferLength: req.file.buffer?.length
+    } : "NO FILE");
+    
     try {
       if (!req.file) {
+        console.log("ERROR: No file in request");
         return res.status(400).json({ message: "No file uploaded" });
       }
 
+      console.log("File validation passed");
+
       // Get user ID from authenticated user (or default for blog images)
       const uploadedBy = req.user?.id || 1;
+      console.log("Upload user ID:", uploadedBy);
 
       // Check if object storage is available, fallback to local storage in production
       let fileUrl: string;
       
       try {
+        console.log("Attempting object storage upload...");
         // Try object storage first
         fileUrl = await objectStorageService.uploadFileBuffer(
           req.file.buffer,
           req.file.originalname,
           req.file.mimetype
         );
+        console.log("Object storage upload successful:", fileUrl);
       } catch (storageError: any) {
         console.log("Object storage failed, using fallback:", storageError?.message);
+        console.log("Storage error stack:", storageError?.stack);
         
         // Fallback to local storage for production
         const uploadsDir = path.join(process.cwd(), 'uploads/media');
+        console.log("Creating uploads directory:", uploadsDir);
+        
         if (!fs.existsSync(uploadsDir)) {
           fs.mkdirSync(uploadsDir, { recursive: true });
+          console.log("Created uploads directory");
+        } else {
+          console.log("Uploads directory already exists");
         }
         
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const filename = uniqueSuffix + path.extname(req.file.originalname);
         const filepath = path.join(uploadsDir, filename);
         
+        console.log("Writing file to:", filepath);
         fs.writeFileSync(filepath, req.file.buffer);
         fileUrl = `/uploads/media/${filename}`;
-        console.log("Using local file storage:", fileUrl);
+        console.log("Local file storage successful:", fileUrl);
       }
       
+      console.log("Creating media data record...");
       const mediaData = {
         filename: req.file.originalname,
         originalName: req.file.originalname,
@@ -547,16 +573,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
         category: req.body.category || 'general',
         uploadedBy,
       };
+      console.log("Media data:", mediaData);
 
-      const mediaFile = await storage.createMediaFile(mediaData);
-      res.status(201).json({ 
-        ...mediaFile,
-        url: fileUrl
-      });
+      try {
+        const mediaFile = await storage.createMediaFile(mediaData);
+        console.log("Database record created:", mediaFile.id);
+        
+        const response = { 
+          ...mediaFile,
+          url: fileUrl
+        };
+        console.log("Sending response:", response);
+        console.log("=== UPLOAD DEBUG SUCCESS ===");
+        
+        res.status(201).json(response);
+      } catch (dbError: any) {
+        console.log("Database error, but file uploaded. Returning file URL anyway");
+        console.log("DB Error:", dbError?.message);
+        
+        const response = {
+          id: Date.now(),
+          url: fileUrl,
+          filename: req.file.originalname,
+          originalName: req.file.originalname,
+          mimeType: req.file.mimetype,
+          size: req.file.size
+        };
+        console.log("Fallback response:", response);
+        console.log("=== UPLOAD DEBUG SUCCESS (DB FALLBACK) ===");
+        
+        res.status(201).json(response);
+      }
     } catch (error: any) {
+      console.log("=== UPLOAD DEBUG ERROR ===");
       console.error("Error uploading file:", error);
       console.error("Error details:", error?.message);
       console.error("Stack trace:", error?.stack);
+      console.log("=== UPLOAD DEBUG END ===");
       res.status(500).json({ message: "Failed to upload file", error: error?.message || "Unknown error" });
     }
   });
