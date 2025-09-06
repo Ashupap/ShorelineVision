@@ -19,7 +19,9 @@ import {
   Eye,
   EyeOff,
   Image as ImageIcon,
-  Package
+  Package,
+  Upload,
+  Camera
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Product } from "@shared/schema";
@@ -51,6 +53,7 @@ export default function ProductsManager() {
   const [formData, setFormData] = useState<ProductFormData>(initialFormData);
   const [filterCategory, setFilterCategory] = useState<string>("all");
   const [showUnpublished, setShowUnpublished] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -180,6 +183,64 @@ export default function ProductsManager() {
       id: product.id,
       productData: { published: !product.published }
     });
+  };
+
+  // Handle image upload
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Error",
+        description: "Please select an image file",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "Error",
+        description: "Image size must be less than 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setUploadingImage(true);
+
+    try {
+      // Convert to base64 for preview/storage
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        setFormData(prev => ({ ...prev, featuredImage: dataUrl }));
+        toast({
+          title: "Success",
+          description: "Image uploaded successfully",
+        });
+        setUploadingImage(false);
+      };
+      reader.onerror = () => {
+        toast({
+          title: "Error",
+          description: "Failed to upload image",
+          variant: "destructive",
+        });
+        setUploadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload image",
+        variant: "destructive",
+      });
+      setUploadingImage(false);
+    }
   };
 
   const isSubmitting = createProductMutation.isPending || updateProductMutation.isPending;
@@ -438,27 +499,68 @@ export default function ProductsManager() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="featuredImage">Featured Image URL</Label>
-              <Input
-                id="featuredImage"
-                value={formData.featuredImage}
-                onChange={(e) => setFormData(prev => ({ ...prev, featuredImage: e.target.value }))}
-                placeholder="https://example.com/image.jpg"
-                type="url"
-                data-testid="input-product-image"
-              />
+              <Label htmlFor="featuredImage">Featured Image</Label>
+              <div className="flex gap-2">
+                <Input
+                  id="featuredImage"
+                  value={formData.featuredImage}
+                  onChange={(e) => setFormData(prev => ({ ...prev, featuredImage: e.target.value }))}
+                  placeholder="https://example.com/image.jpg or upload below"
+                  type="url"
+                  className="flex-1"
+                  data-testid="input-product-image"
+                />
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    disabled={uploadingImage}
+                    data-testid="input-upload-image"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={uploadingImage}
+                    className="px-3"
+                    data-testid="button-upload-image"
+                  >
+                    {uploadingImage ? (
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+                    ) : (
+                      <Upload size={16} />
+                    )}
+                  </Button>
+                </div>
+              </div>
               {formData.featuredImage && (
                 <div className="mt-2">
-                  <img 
-                    src={formData.featuredImage} 
-                    alt="Preview" 
-                    className="w-32 h-32 object-cover rounded-lg border"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
+                  <div className="relative inline-block">
+                    <img 
+                      src={formData.featuredImage} 
+                      alt="Preview" 
+                      className="w-32 h-32 object-cover rounded-lg border"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setFormData(prev => ({ ...prev, featuredImage: "" }))}
+                      className="absolute -top-2 -right-2 h-6 w-6 p-0 rounded-full bg-white"
+                      data-testid="button-remove-image"
+                    >
+                      <X size={12} />
+                    </Button>
+                  </div>
                 </div>
               )}
+              <p className="text-xs text-gray-500">
+                Upload an image file (max 5MB) or enter a URL above
+              </p>
             </div>
             
             <div className="space-y-2">
