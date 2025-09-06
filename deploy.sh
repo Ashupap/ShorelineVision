@@ -167,8 +167,31 @@ print_success "Application built successfully"
 # Copy built files to server public directory
 print_status "Copying static files to server directory..."
 mkdir -p server/public
-cp -r dist/public/* server/public/
-print_success "Static files copied successfully"
+if [ -d "dist/public" ]; then
+    cp -r dist/public/* server/public/
+    print_success "Static files copied successfully"
+else
+    print_warning "No dist/public directory found, skipping static file copy"
+fi
+
+# Ensure server entry point exists
+if [ ! -f "server/index.js" ]; then
+    print_error "Server entry point not found at server/index.js"
+    print_status "Checking for alternative entry points..."
+    if [ -f "dist/index.js" ]; then
+        print_status "Found dist/index.js, updating service configuration..."
+        SERVER_ENTRY_POINT="$APP_DIR/dist/index.js"
+    elif [ -f "dist/server/index.js" ]; then
+        print_status "Found dist/server/index.js, updating service configuration..."
+        SERVER_ENTRY_POINT="$APP_DIR/dist/server/index.js"
+    else
+        print_error "No valid server entry point found!"
+        exit 1
+    fi
+else
+    SERVER_ENTRY_POINT="$APP_DIR/server/index.js"
+fi
+print_success "Server entry point: $SERVER_ENTRY_POINT"
 
 # Create systemd service file
 print_status "Setting up systemd service..."
@@ -187,7 +210,7 @@ User=$APP_USER
 WorkingDirectory=$APP_DIR
 Environment=NODE_ENV=production
 EnvironmentFile=$APP_DIR/.env
-ExecStart=/usr/bin/node $APP_DIR/dist/index.js
+ExecStart=/usr/bin/node $SERVER_ENTRY_POINT
 Restart=always
 RestartSec=10
 StandardOutput=syslog
