@@ -9,6 +9,7 @@ import BlogEditor from "@/components/blog/blog-editor";
 import ContentEditor from "./content-editor";
 import MediaManager from "./media-manager";
 import BlogManager from "./blog-manager";
+import ProductsManager from "./products-manager";
 import TestimonialsManager from "./testimonials-manager";
 import InquiriesManager from "./inquiries-manager";
 import { 
@@ -379,16 +380,7 @@ export default function AdminDashboard() {
       case "blog":
         return renderBlogManagement();
       case "products":
-        return (
-          <div>
-            <h1 className="text-3xl font-heading font-bold text-gray-900 mb-8">
-              Product Management
-            </h1>
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              <p className="text-gray-600">Product management features coming soon...</p>
-            </div>
-          </div>
-        );
+        return <ProductsManager />;
       case "testimonials":
         return <TestimonialsManager />;
       case "inquiries":
