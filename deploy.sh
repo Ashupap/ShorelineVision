@@ -213,13 +213,8 @@ fi
 # Create systemd service file
 print_status "Setting up systemd service..."
 SERVICE_FILE="/etc/systemd/system/alashore-marine.service"
-APP_DIR=$(pwd)
+# APP_DIR already set above with realpath
 APP_USER=$(whoami)
-
-# Ensure APP_DIR is absolute path
-if [[ ! "$APP_DIR" = /* ]]; then
-    APP_DIR="$(pwd)"
-fi
 
 print_status "Service configuration:"
 print_status "  Working Directory: $APP_DIR"
