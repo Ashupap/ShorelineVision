@@ -211,7 +211,7 @@ print_status "  Working Directory: $APP_DIR"
 print_status "  Server Entry Point: $SERVER_ENTRY_POINT"
 print_status "  User: $APP_USER"
 
-sudo tee "$SERVICE_FILE" > /dev/null << EOF
+cat > /tmp/alashore-marine.service << EOF
 [Unit]
 Description=Alashore Marine Seafood Export Website
 After=network.target postgresql.service
@@ -233,7 +233,19 @@ SyslogIdentifier=alashore-marine
 WantedBy=multi-user.target
 EOF
 
+sudo mv /tmp/alashore-marine.service "$SERVICE_FILE"
+
 print_success "Systemd service file created"
+
+# Verify the service file was created correctly
+print_status "Verifying systemd service file..."
+if sudo cat "$SERVICE_FILE" | grep -q "ExecStart=/usr/bin/node $SERVER_ENTRY_POINT"; then
+    print_success "Service file verified - using correct entry point"
+else
+    print_warning "Service file verification: checking actual content..."
+    print_status "ExecStart line in service file:"
+    sudo grep "ExecStart" "$SERVICE_FILE" || print_error "ExecStart line not found"
+fi
 
 # Set up log rotation
 print_status "Setting up log rotation..."
