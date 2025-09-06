@@ -200,11 +200,11 @@ export default function ProductsManager() {
       return;
     }
 
-    // Validate file size (max 1MB for base64 encoding)
-    if (file.size > 1 * 1024 * 1024) {
+    // Validate file size (max 10MB before compression)
+    if (file.size > 10 * 1024 * 1024) {
       toast({
         title: "Error",
-        description: "Image size must be less than 1MB",
+        description: "Image size must be less than 10MB",
         variant: "destructive",
       });
       return;
@@ -592,7 +592,7 @@ export default function ProductsManager() {
                 </div>
               )}
               <p className="text-xs text-gray-500">
-                Upload an image file (max 1MB, will be compressed to 800px) or enter a URL above
+                Upload an image file (max 10MB, will be automatically compressed) or enter a URL above
               </p>
             </div>
             
